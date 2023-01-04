@@ -29,7 +29,7 @@ int Partition(vector<int>& v, int left, int right)
 			highIndex--;
 		}
 
-		if (lowIndex < highIndex)
+		if (lowIndex <= highIndex)
 			std::swap(v[lowIndex], v[highIndex]);
 	}
 
@@ -52,6 +52,8 @@ void QuickSort(vector<int>& v, int left, int right)
 int main()
 {
 	vector<int> v = { 55 ,30 ,15 ,100 ,1 ,5 ,70 ,30 };
+
+	//sort(v.begin(), v.end());
 	QuickSort(v, 0, v.size() - 1);
 
 	// 병합 정렬
