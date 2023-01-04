@@ -38,11 +38,6 @@ int main()
 	__int64 start = GetTickCount64();
 	int count = 0;
 
-	for (int i = 0; i < 100; i++)
-	{
-		cache[i] = -1;
-	}
-
 	cout << fibonacci(150, count) << endl;
 	cout << count << endl;
 	__int64 end = GetTickCount64();
