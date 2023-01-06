@@ -7,40 +7,57 @@
 
 using namespace std;
 
+string arr[4] = { "aya", "ye", "woo", "ma" };
+vector<bool> visited = vector<bool>(4, false);
+unordered_map<string, int> allBabbling;
+
+void MakeString(int index, string word)
+{
+	// 기저
+	if (word.size() >= 10)
+		return;
+	
+	// 캐쉬
+	
+	// 구하기
+	string makeWord = word + arr[index];
+	visited[index] = true;
+	allBabbling[makeWord]++;
+
+	for (int nextIndex = 0; nextIndex < 4; nextIndex++)
+	{
+		if (visited[nextIndex] == true)
+			continue;
+		if (index == nextIndex)
+			continue;
+		MakeString(nextIndex, makeWord);
+	}
+
+	visited[index] = false;
+}
+
+int solution(vector<string> babbling)
+{
+	int answer = 0;
+
+	for (int i = 0; i < 4; i++)
+	{
+		MakeString(i, "");
+	}
+	
+	for (auto str : babbling)
+	{
+		if (allBabbling.count(str)!= 0)
+			answer++;
+	}
+	return answer;
+}
+
 int main()
 {
-	vector<string> quiz = { "3 - 4 = -3", "5 + 6 = 11" };
-	vector<vector<string>> quizV(quiz.size(), vector<string>(0));
-	stringstream streamquiz;
-	for (int i = 0; i < quiz.size(); i++)
-	{
-		string temp;
-		streamquiz.str(quiz[i]);
-		while (streamquiz >> temp)
-			quizV[i].push_back(temp);
-		streamquiz.clear();
-			
-	}
-	for (int i = 0; i < quizV.size(); i++)
-	{
-		int a = stoi(quizV[i][0]);
-		int b = stoi(quizV[i][2]);
-		int c = stoi(quizV[i][4]);
-		if (quizV[i][1] == "-")
-		{
-			if (a - b == c)
-				return "O";
-			else
-				return "X";
-		}
-		else
-		{
-			if (a + b == c)
-				return "O";
-			else
-				return "X";
-		}
-	}
+	vector<string> t = { "aya", "yee", "u", "maa", "wyeoo" };
+	int answer = solution(t);
+	
 
 	return 0;
 }
