@@ -1,63 +1,39 @@
-﻿#include <iostream>
+#include <iostream>
 #include <vector>
-#include <string>
-#include <sstream>
-#include <algorithm>
-#include <unordered_map>
 
 using namespace std;
 
-string arr[4] = { "aya", "ye", "woo", "ma" };
-vector<bool> visited = vector<bool>(4, false);
-unordered_map<string, int> allBabbling;
-
-void MakeString(int index, string word)
+struct Line
 {
-	// 기저
-	if (word.size() >= 10)
-		return;
-	
-	// 캐쉬
-	
-	// 구하기
-	string makeWord = word + arr[index];
-	visited[index] = true;
-	allBabbling[makeWord]++;
+    Line(int x1, int x2) : x1(x1), x2(x2) {}
+    int x1;
+    int x2;
+};
 
-	for (int nextIndex = 0; nextIndex < 4; nextIndex++)
-	{
-		if (visited[nextIndex] == true)
-			continue;
-		if (index == nextIndex)
-			continue;
-		MakeString(nextIndex, makeWord);
-	}
+int solution(vector<vector<int>> lines) {
+    vector<Line> v;
+    for (int i = 0; i < lines.size(); i++)
+        v.push_back(Line(lines[i][0],lines[i][1]));
+    int answer = 0;
 
-	visited[index] = false;
-}
-
-int solution(vector<string> babbling)
-{
-	int answer = 0;
-
-	for (int i = 0; i < 4; i++)
-	{
-		MakeString(i, "");
-	}
-	
-	for (auto str : babbling)
-	{
-		if (allBabbling.count(str)!= 0)
-			answer++;
-	}
-	return answer;
+    for (int i = 0; i < v.size() - 1; i++)
+    {
+        for (int j = i + 1; j < v.size(); j++)
+        {
+            int temp;
+            if (v[i].x1 < v[j].x1)
+            {
+                if (v[i].x2 > v[j].x2)
+                {
+                     temp = v[i].x2 - v[j].x1;
+                }
+            }
+        }
+    }
 }
 
 int main()
 {
-	vector<string> t = { "aya", "yee", "u", "maa", "wyeoo" };
-	int answer = solution(t);
-	
 
-	return 0;
+    return 0;
 }

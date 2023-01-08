@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Practice.cpp">
+    <ClCompile Include="Babbling.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="FiniteDecimal.cpp">
@@ -25,6 +25,15 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Factorization.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="DangerCheck.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="LCM.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Practice.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
