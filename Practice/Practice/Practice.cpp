@@ -3,30 +3,28 @@
 #include <string>
 #include <unordered_map>
 #include <algorithm>
+#include <list>
 
 using namespace std;
 
-int solution(vector<int> numbers) {
+int solution(int n) {
     int answer = 0;
-    unordered_map<int, int> uMap;
+    vector<int> v;
 
-    for (int num : numbers)
+    for (int count = 0; n != 0; n /= 3, count++)
     {
-        uMap[num]++;
-    }
-    
-    for (int i = 1; i < 10; i++)
-    {
-        if (uMap[i] == 0)
-            answer += i;
+        v.push_back(n % 3);
     }
 
+    for (int i = v.size() - 1, j = 0; i >= 0; i--, j++)
+    {
+        answer += v[i] * pow(3, j);
+    }
     return answer;
 }
 
-int main()
+int main(void)
 {
-    solution({ 1, 2, 3, 4, 6, 7, 8, 0 });
-
+    solution(45);
     return 0;
 }
