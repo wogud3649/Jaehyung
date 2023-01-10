@@ -24,6 +24,9 @@
 #include <d3dcompiler.h>
 #include <DirectXMath.h>
 
+// DirectXTex
+#include "../DirectXTex/DirectXTex.h"
+
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
 
