@@ -133,9 +133,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     return (int) msg.wParam;
 }
 
-
-
-
 //
 //  함수: MyRegisterClass()
 //
@@ -176,7 +173,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
-   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
+   hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
       CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
    if (!hWnd)
@@ -360,6 +357,7 @@ void InitDevice()
 
     D3D11_SUBRESOURCE_DATA initData = {};
     initData.pSysMem = vertices;
+
     device->CreateBuffer(&bd, &initData, vertexBuffer.GetAddressOf());
 }
 
@@ -384,7 +382,7 @@ void Render()
     deviceContext->VSSetShader(vertexShader.Get(), nullptr, 0);
     deviceContext->PSSetShader(pixelShader.Get(), nullptr, 0);
 
-    deviceContext->Draw(3, 0);
+    deviceContext->Draw(1, 0);
 
     swapChain->Present(0, 0);
 
