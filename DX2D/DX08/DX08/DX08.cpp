@@ -364,28 +364,52 @@ void InitDevice()
 
     Vertex vertex;
 
+    //vertex.pos = { -0.5f, 0.5f, 0.0f }; // 왼쪽 위
+    //vertex.uv = { 0.0f, 0.0f };
+    //vertices.push_back(vertex);
+
+    //vertex.pos = { 0.5f, -0.5f, 0.0f }; // 오른쪽 아래
+    //vertex.uv = { -1.0f, 1.0f };
+    //vertices.push_back(vertex);
+
+    //vertex.pos = { -0.5f, -0.5f, 0.0f }; // 왼쪽 아래
+    //vertex.uv = { 0.0f, 1.0f };
+    //vertices.push_back(vertex);
+
+    //vertex.pos = { -0.5f, 0.5f, 0.0f }; // 왼쪽 위
+    //vertex.uv = { 0.0f, 0.0f };
+    //vertices.push_back(vertex);
+
+    //vertex.pos = { 0.5f, 0.5f, 0.0f }; // 오른쪽 위
+    //vertex.uv = { -1.0f, 0.0f };
+    //vertices.push_back(vertex);
+
+    //vertex.pos = { 0.5f, -0.5f, 0.0f }; // 오른쪽 아래
+    //vertex.uv = { -1.0f, 1.0f };
+    //vertices.push_back(vertex);
+
     vertex.pos = { -0.5f, 0.5f, 0.0f }; // 왼쪽 위
-    vertex.uv = { 0.0f, 0.0f };
-    vertices.push_back(vertex);
-
-    vertex.pos = { 0.5f, -0.5f, 0.0f }; // 오른쪽 아래
-    vertex.uv = { 1.0f, 1.0f };
-    vertices.push_back(vertex);
-
-    vertex.pos = { -0.5f, -0.5f, 0.0f }; // 왼쪽 아래
-    vertex.uv = { 0.0f, 1.0f };
-    vertices.push_back(vertex);
-
-    vertex.pos = { -0.5f, 0.5f, 0.0f }; // 왼쪽 위
-    vertex.uv = { 0.0f, 0.0f };
-    vertices.push_back(vertex);
-
-    vertex.pos = { 0.5f, 0.5f, 0.0f }; // 오른쪽 위
     vertex.uv = { 1.0f, 0.0f };
     vertices.push_back(vertex);
 
     vertex.pos = { 0.5f, -0.5f, 0.0f }; // 오른쪽 아래
+    vertex.uv = { 2.0f, 1.0f };
+    vertices.push_back(vertex);
+
+    vertex.pos = { -0.5f, -0.5f, 0.0f }; // 왼쪽 아래
     vertex.uv = { 1.0f, 1.0f };
+    vertices.push_back(vertex);
+
+    vertex.pos = { -0.5f, 0.5f, 0.0f }; // 왼쪽 위
+    vertex.uv = { 1.0f, 0.0f };
+    vertices.push_back(vertex);
+
+    vertex.pos = { 0.5f, 0.5f, 0.0f }; // 오른쪽 위
+    vertex.uv = { 2.0f, 0.0f };
+    vertices.push_back(vertex);
+
+    vertex.pos = { 0.5f, -0.5f, 0.0f }; // 오른쪽 아래
+    vertex.uv = { 2.0f, 1.0f };
     vertices.push_back(vertex);
 
     D3D11_BUFFER_DESC bd = {};
@@ -408,7 +432,7 @@ void InitDevice()
 
     D3D11_SAMPLER_DESC sampDesc = {};
     sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
-    sampDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+    sampDesc.AddressU = D3D11_TEXTURE_ADDRESS_MIRROR;
     sampDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
     sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
     sampDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;

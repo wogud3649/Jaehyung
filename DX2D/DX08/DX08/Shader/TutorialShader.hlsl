@@ -3,14 +3,14 @@ SamplerState samp : register(s0);
 
 struct VertexInput
 {
-	float pos : POSITION;
-	float uv : UV;
+	float4 pos : POSITION;
+	float2 uv : UV;
 };
 
 struct PixelInput
 {
-	float pos : SV_POSITION;
-	float uv : UV;
+	float4 pos : SV_POSITION;
+	float2 uv : UV;
 };
 
 PixelInput VS(VertexInput input)
