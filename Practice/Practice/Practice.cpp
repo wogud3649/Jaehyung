@@ -7,24 +7,49 @@
 
 using namespace std;
 
-int solution(int n) {
+int trio = 0;
+
+void dfs(const vector<int>& number, vector<bool>& visited, int index, int count, int sum)
+{
+    // 기저
+    visited[index] = true;
+    if (count == 3)
+    {
+        if (sum == 0)
+            trio++;
+        return;
+    }
+
+    // 캐시
+    
+    // 구하기
+    for (int i = 0; i < number.size(); i++)
+    {
+        if (i == index)
+            continue;
+        if (visited[i])
+            continue;
+        dfs(number, visited, i, ++count, sum + number[i]);
+        visited[i] = false;
+    }
+    return;
+}
+
+int solution(vector<int> number) {
+    vector<bool> visited(number.size(), false);
     int answer = 0;
-    vector<int> v;
-
-    for (int count = 0; n != 0; n /= 3, count++)
+    for (int i = 0; i < number.size(); i++)
     {
-        v.push_back(n % 3);
+        int count = 1;
+        dfs(number, visited, i, count, number[i]);
     }
 
-    for (int i = v.size() - 1, j = 0; i >= 0; i--, j++)
-    {
-        answer += v[i] * pow(3, j);
-    }
     return answer;
 }
 
 int main(void)
 {
-    solution(45);
+    solution({ -2, 3, 0, 2, -5 });
+
     return 0;
 }
