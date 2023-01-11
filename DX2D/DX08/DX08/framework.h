@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <malloc.h>
 #include <memory.h>
+#include <memory>
 #include <tchar.h>
 #include <vector>
 #include <unordered_map>
@@ -32,3 +33,27 @@
 
 using namespace std;
 using namespace DirectX;
+
+#define WIN_WIDTH 1280
+#define WIN_HEIGHT 720
+#define DEVICE Device::GetInstance()->GetDevice()
+#define DC Device::GetInstance()->GetDeviceContext()
+
+// Framework
+#include "Framework/Device/Device.h"
+
+// Render
+#include "Framework/Render/VertexLayout.h"
+#include "Framework/Render/VertexBuffer.h"
+#include "Framework/Render/VertexShader.h"
+#include "Framework/Render/PixelShader.h"
+
+// Texture
+#include "Framework/Texture/SRV.h"
+#include "Framework/Texture/SamplerState.h"
+
+// Scene
+#include "Scene/Scene.h"
+
+// Program
+#include "Program/Program.h"
