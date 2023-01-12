@@ -3,12 +3,14 @@
 
 TutorialScene::TutorialScene()
 {
-	_vertexBuffer = make_shared<VertexBuffer>();
+	_quad = make_shared<Quad>(L"Resource/Texture/SpyFamily2.png");
 
-	_vs = make_shared<VertexShader>(L"Shader/TutorialShader.hlsl");
-	_ps = make_shared<PixelShader>(L"Shader/TutorialShader.hlsl");
-	_srv = make_shared<SRV>(L"Resource/Texture/Pochita.png");
-	_sampler = make_shared<SamplerState>();
+	_view = make_shared<MatrixBuffer>();
+	_projection = make_shared<MatrixBuffer>();
+
+	XMMATRIX projectM = XMMatrixOrthographicLH(WIN_WIDTH, WIN_HEIGHT, 0.0f, 1.0f);
+
+	_projection->SetData(projectM);
 }
 
 TutorialScene::~TutorialScene()
@@ -17,19 +19,16 @@ TutorialScene::~TutorialScene()
 
 void TutorialScene::Update()
 {
+	_quad->Update();
+
+	_view->Update();
+	_projection->Update();
 }
 
 void TutorialScene::Render()
 {
-	_vertexBuffer->Set(0);
+	_view->SetVSBuffer(1);
+	_projection->SetVSBuffer(2);
 
-	DC->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-	_srv->Set(0);
-	_sampler->Set(0);
-
-	_vs->Set();
-	_ps->Set();
-
-	DC->Draw(6, 0);
+	_quad->Render();
 }
