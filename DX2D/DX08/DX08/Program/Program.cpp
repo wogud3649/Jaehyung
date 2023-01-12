@@ -1,5 +1,5 @@
-#include "Program.h"
 #include "framework.h"
+#include "Program.h"
 
 #include "../Scene/TutorialScene.h"
 
@@ -10,7 +10,6 @@ Program::Program()
 
 Program::~Program()
 {
-
 }
 
 void Program::Update()
@@ -21,6 +20,7 @@ void Program::Update()
 void Program::Render()
 {
 	Device::GetInstance()->Clear();
+
 
 	_scene->Render();
 

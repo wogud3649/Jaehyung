@@ -3,9 +3,11 @@
 
 SRV::SRV(wstring file)
 {
+    // Textrue를 준비하고, shader 넘기는 작업
     ScratchImage image;
     LoadFromWICFile(file.c_str(), WIC_FLAGS_NONE, nullptr, image);
 
+    // 판박이 아저씨 고용하는 작업
     CreateShaderResourceView(DEVICE.Get(), image.GetImages(), image.GetImageCount(), image.GetMetadata(), IN shaderResourceView.GetAddressOf());
 }
 

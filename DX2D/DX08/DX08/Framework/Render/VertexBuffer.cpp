@@ -20,7 +20,7 @@ void VertexBuffer::CreateVertices()
     vertices.push_back(vertex);
 
     vertex.pos = { 0.5f, -0.5f, 0.0f }; // 오른쪽 아래
-    vertex.uv = { -1.0f, 1.0f };
+    vertex.uv = { 1.0f, 1.0f };
     vertices.push_back(vertex);
 
     vertex.pos = { -0.5f, -0.5f, 0.0f }; // 왼쪽 아래
@@ -32,11 +32,11 @@ void VertexBuffer::CreateVertices()
     vertices.push_back(vertex);
 
     vertex.pos = { 0.5f, 0.5f, 0.0f }; // 오른쪽 위
-    vertex.uv = { -1.0f, 0.0f };
+    vertex.uv = { 1.0f, 0.0f };
     vertices.push_back(vertex);
 
     vertex.pos = { 0.5f, -0.5f, 0.0f }; // 오른쪽 아래
-    vertex.uv = { -1.0f, 1.0f };
+    vertex.uv = { 1.0f, 1.0f };
     vertices.push_back(vertex);
 
     stride = sizeof(Vertex);

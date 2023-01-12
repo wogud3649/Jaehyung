@@ -1,3 +1,4 @@
+#pragma once
 class Program
 {
 public:
@@ -9,6 +10,5 @@ public:
 
 private:
 	shared_ptr<Scene> _scene;
-
 };
 

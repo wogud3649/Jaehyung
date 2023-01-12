@@ -1,10 +1,10 @@
-#include "TutorialScene.h"
 #include "framework.h"
+#include "TutorialScene.h"
 
 TutorialScene::TutorialScene()
 {
 	_vertexBuffer = make_shared<VertexBuffer>();
-	
+
 	_vs = make_shared<VertexShader>(L"Shader/TutorialShader.hlsl");
 	_ps = make_shared<PixelShader>(L"Shader/TutorialShader.hlsl");
 	_srv = make_shared<SRV>(L"Resource/Texture/Pochita.png");
@@ -17,7 +17,6 @@ TutorialScene::~TutorialScene()
 
 void TutorialScene::Update()
 {
-
 }
 
 void TutorialScene::Render()

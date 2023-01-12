@@ -1,5 +1,5 @@
-Texture2D map : register(t0);
-SamplerState samp : register(s0);
+Texture2D map: register(t0);
+SamplerState samp :register(s0);
 
 struct VertexInput
 {
@@ -10,7 +10,7 @@ struct VertexInput
 struct PixelInput
 {
 	float4 pos : SV_POSITION;
-	float2 uv : UV;
+	float2 uv: UV;
 };
 
 PixelInput VS(VertexInput input)
@@ -25,5 +25,5 @@ PixelInput VS(VertexInput input)
 // SV : SystemValue
 float4 PS(PixelInput input) : SV_TARGET
 {
-	return map.Sample(samp, input.uv);
+	return map.Sample(samp,input.uv);
 }

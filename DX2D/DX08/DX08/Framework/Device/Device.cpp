@@ -6,8 +6,8 @@ Device* Device::_instance = nullptr;
 Device::Device(HWND hWnd)
 : _hWnd(hWnd)
 {
-	CreateDeviceAndSwapChain();
-	CreateDoubleBuffer();
+    CreateDeviceAndSwapChain();
+    CreateDoubleBuffer();
 }
 
 Device::~Device()
@@ -37,7 +37,7 @@ void Device::CreateDeviceAndSwapChain()
     sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
     sd.BufferDesc.RefreshRate.Numerator = 60;
     sd.BufferDesc.RefreshRate.Denominator = 1;
-    // Numerator / Denominator = 화면 프레임 갱신 속도...
+    // Numertor / Denominator = 화면 프레임 갱신 속도... 
     sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
     sd.OutputWindow = _hWnd;
     sd.SampleDesc.Count = 1;
@@ -84,11 +84,11 @@ void Device::Clear()
 {
     FLOAT myColorR = 0 / 255.0f;
     FLOAT myColorG = (float)0xA3 / 255.0f;
-    FLOAT myColorB = (float)0xB2 / 255.0f;
+    FLOAT myColorB = (float)0xD2 / 255.0f;
 
     FLOAT clearColor[4] = { myColorR, myColorG, myColorB, 1.0f };
 
-    DC->ClearRenderTargetView(Device::GetInstance().Get(), clearColor);
+    _deviceContext->ClearRenderTargetView(Device::GetInstance()->GetRenderTarget().Get(), clearColor);
 }
 
 void Device::Present()

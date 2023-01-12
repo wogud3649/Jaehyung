@@ -8,6 +8,7 @@
 
 HWND hWnd;
 
+
 // 전역 변수:
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
@@ -44,6 +45,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     
     // 생성
     Device::Create(hWnd);
+    //InitDevice();
     shared_ptr<Program> program = make_shared<Program>();
 
     MSG msg = {};
@@ -61,7 +63,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
         else
         {
-            // 메인루프
             program->Update();
             program->Render();
         }
