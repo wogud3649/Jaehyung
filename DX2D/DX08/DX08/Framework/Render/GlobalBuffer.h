@@ -19,7 +19,7 @@ public:
 
 	void SetData(XMMATRIX value)
 	{
-		_data.matrix = value;
+		_data.matrix = XMMatrixTranspose(value);
 	}
 
 private:

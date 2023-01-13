@@ -4,13 +4,14 @@
 TutorialScene::TutorialScene()
 {
 	_quad = make_shared<Quad>(L"Resource/Texture/SpyFamily2.png");
+	_quad->GetTransform()->GetPos() = { WIN_WIDTH * 0.5f, WIN_HEIGHT * 0.5f };
+	_quad->GetTransform()->GetScale() *= 0.5;
 
-	_view = make_shared<MatrixBuffer>();
-	_projection = make_shared<MatrixBuffer>();
+	_quad2 = make_shared<Quad>(L"Resource/Texture/Pochita.png");
+	_quad2->GetTransform()->SetParent(_quad->GetTransform());
+	_quad2->GetTransform()->GetPos().x += 500;
 
-	XMMATRIX projectM = XMMatrixOrthographicLH(WIN_WIDTH, WIN_HEIGHT, 0.0f, 1.0f);
-
-	_projection->SetData(projectM);
+	XMMATRIX projectM = XMMatrixOrthographicOffCenterLH(0, WIN_WIDTH, 0, WIN_HEIGHT, -1.0f, 1.0f);
 }
 
 TutorialScene::~TutorialScene()
@@ -19,16 +20,38 @@ TutorialScene::~TutorialScene()
 
 void TutorialScene::Update()
 {
+	if (GetAsyncKeyState('A') & 0x8001)
+	{
+		_quad->GetTransform()->GetPos().x -= 0.5f;
+	}
+	if (GetAsyncKeyState('D') & 0x8001)
+	{
+		_quad->GetTransform()->GetPos().x += 0.5f;
+	}
+	if (GetAsyncKeyState('W') & 0x8001)
+	{
+		_quad->GetTransform()->GetScale().x += 0.001f;
+		_quad->GetTransform()->GetScale().y += 0.001f;
+	}
+	if (GetAsyncKeyState('S') & 0x8001)
+	{
+		_quad->GetTransform()->GetScale().x -= 0.001f;
+		_quad->GetTransform()->GetScale().y -= 0.001f;
+	}
+	if (GetAsyncKeyState('P') & 0x8001)
+	{
+		_quad->GetTransform()->GetAngle() += 0.001f;
+	}
+	if (GetAsyncKeyState('O') & 0x8001)
+	{
+		_quad->GetTransform()->GetAngle() -= 0.001f;
+	}
 	_quad->Update();
-
-	_view->Update();
-	_projection->Update();
+	_quad2->Update();
 }
 
 void TutorialScene::Render()
 {
-	_view->SetVSBuffer(1);
-	_projection->SetVSBuffer(2);
-
 	_quad->Render();
+	_quad2->Render();
 }

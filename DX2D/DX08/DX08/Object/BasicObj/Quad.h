@@ -11,6 +11,8 @@ public:
 	void CreateMaterial(wstring file);
 	void CreateMesh();
 
+	shared_ptr<Transform> GetTransform() { return _transform; }
+
 private:
 	Vector2 _size;
 
@@ -25,6 +27,5 @@ private:
 	shared_ptr<SRV>				_srv;
 	shared_ptr<SamplerState>	_sampler;
 
-	shared_ptr<MatrixBuffer> _world;
+	shared_ptr<Transform> _transform;
 };
-

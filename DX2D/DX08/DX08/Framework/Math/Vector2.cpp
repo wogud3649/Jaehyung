@@ -87,6 +87,14 @@ Vector2& Vector2::operator=(const Vector2& other)
 	return (*this);
 }
 
+Vector2& Vector2::operator*=(const float& value)
+{
+	this->x *= value;
+	this->y *= value;
+
+	return (*this);
+}
+
 Vector2& Vector2::operator++()
 {
 	++x;

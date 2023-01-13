@@ -10,7 +10,5 @@ public:
 
 private:
 	shared_ptr<Quad> _quad;
-
-	shared_ptr<MatrixBuffer> _view;
-	shared_ptr<MatrixBuffer> _projection;
+	shared_ptr<Quad> _quad2;
 };

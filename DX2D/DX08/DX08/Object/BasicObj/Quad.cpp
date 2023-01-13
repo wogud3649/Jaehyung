@@ -6,7 +6,7 @@ Quad::Quad(wstring file)
     CreateMaterial(file);
     CreateMesh();
 
-    _world = make_shared<MatrixBuffer>();
+    _transform = make_shared<Transform>();
 }
 
 Quad::~Quad()
@@ -15,7 +15,7 @@ Quad::~Quad()
 
 void Quad::Update()
 {
-    _world->Update();
+    _transform->Update();
 }
 
 void Quad::Render()
@@ -28,7 +28,7 @@ void Quad::Render()
     _srv->Set(0);
     _sampler->Set(0);
 
-    _world->SetVSBuffer(0);
+    _transform->SetBuffer(0);
 
     _vs->Set();
     _ps->Set();
@@ -38,8 +38,8 @@ void Quad::Render()
 
 void Quad::CreateMaterial(wstring file)
 {
-	_vs = make_shared<VertexShader>(L"Shader/TutorialShader.hlsl");
-	_ps = make_shared<PixelShader>(L"Shader/TutorialShader.hlsl");
+	_vs = make_shared<VertexShader>(L"Shader/TutorialVertexShader.hlsl");
+	_ps = make_shared<PixelShader>(L"Shader/TutorialPixelShader.hlsl");
 	_srv = make_shared<SRV>(file);
     _size = _srv->GetImageSize();
 
