@@ -81,13 +81,13 @@
     <ClInclude Include="Object\GameObj\SolarSystem\Planet.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Object\GameObj\SolarSystem\Sun.h">
+    <ClInclude Include="Types.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Object\GameObj\SolarSystem\Earth.h">
+    <ClInclude Include="Framework\Texture\BlendState.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Object\GameObj\SolarSystem\Moon.h">
+    <ClInclude Include="Framework\Texture\StateManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -146,13 +146,10 @@
     <ClCompile Include="Object\GameObj\SolarSystem\Planet.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Object\GameObj\SolarSystem\Sun.cpp">
+    <ClCompile Include="Framework\Texture\BlendState.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Object\GameObj\SolarSystem\Earth.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\GameObj\SolarSystem\Moon.cpp">
+    <ClCompile Include="Framework\Texture\StateManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

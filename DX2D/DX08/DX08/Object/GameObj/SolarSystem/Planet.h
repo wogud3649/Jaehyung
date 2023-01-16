@@ -2,14 +2,28 @@
 class Planet
 {
 public:
-	Planet();
-	virtual ~Planet();
+	Planet(wstring path);
+	~Planet();
 
-	virtual void Update() abstract;
-	virtual void Render() abstract;
+	void Update();
+	void Render();
 
-	virtual shared_ptr<Transform> GetTransform() abstract;
+	void SetParent(shared_ptr<Transform> transform) { _quad->GetTransform()->SetParent(transform); }
+	shared_ptr<Transform> GetVirtualTransform() { return _virtualTrans; }
+	shared_ptr<Transform> GetTransform() { return _quad->GetTransform(); }
+
+	void SetPos(Vector2 pos);
+	void SetScale(Vector2 scale);
+
+	float& GetSpeed() { return _speed; }
 
 private:
+	shared_ptr<Quad> _quad;
+	// 컴포넌트 패턴
+	// 부품 붙이기
+
+	shared_ptr<Transform> _virtualTrans;
+
+	float _speed = 0.0001f;
 };
 
