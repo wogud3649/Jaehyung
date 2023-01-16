@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Object\GameObj\SolarSystem\Earth.h" />
     <ClInclude Include="Framework\Render\ConstantBuffer.h" />
     <ClInclude Include="Framework\Device\Device.h" />
     <ClInclude Include="DX08.h" />
@@ -160,6 +161,8 @@
     <ClInclude Include="Framework\Render\VertexLayout.h" />
     <ClInclude Include="Framework\Render\IndexBuffer.h" />
     <ClInclude Include="Framework\Render\GlobalBuffer.h" />
+    <ClInclude Include="Object\GameObj\SolarSystem\Moon.h" />
+    <ClInclude Include="Object\GameObj\SolarSystem\Planet.h" />
     <ClInclude Include="Program\Program.h" />
     <ClInclude Include="Object\BasicObj\Quad.h" />
     <ClInclude Include="Resource.h" />
@@ -167,6 +170,7 @@
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Framework\Texture\SRV.h" />
     <ClInclude Include="Scene\SolarSystemScene.h" />
+    <ClInclude Include="Object\GameObj\SolarSystem\Sun.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Scene\TutorialScene.h" />
     <ClInclude Include="Framework\Render\VertexBuffer.h" />
@@ -174,6 +178,7 @@
     <ClInclude Include="Framework\Math\Transform.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Object\GameObj\SolarSystem\Earth.cpp" />
     <ClCompile Include="Framework\Render\ConstantBuffer.cpp" />
     <ClCompile Include="Framework\Device\Device.cpp" />
     <ClCompile Include="DX08.cpp" />
@@ -190,6 +195,8 @@
     <ClCompile Include="Framework\Math\Vector2.cpp" />
     <ClCompile Include="Framework\Render\PixelShader.cpp" />
     <ClCompile Include="Framework\Render\IndexBuffer.cpp" />
+    <ClCompile Include="Object\GameObj\SolarSystem\Moon.cpp" />
+    <ClCompile Include="Object\GameObj\SolarSystem\Planet.cpp" />
     <ClCompile Include="Program\Program.cpp" />
     <ClCompile Include="Framework\Texture\SamplerState.cpp" />
     <ClCompile Include="Object\BasicObj\Quad.cpp" />
@@ -200,6 +207,7 @@
     <ClCompile Include="Framework\Texture\SRV.cpp" />
     <ClCompile Include="Framework\Math\Transform.cpp" />
     <ClCompile Include="Scene\SolarSystemScene.cpp" />
+    <ClCompile Include="Object\GameObj\SolarSystem\Sun.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX08.rc" />

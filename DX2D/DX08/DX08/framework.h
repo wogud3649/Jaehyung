@@ -60,7 +60,15 @@ using namespace DirectX;
 #include "Framework/Texture/SamplerState.h"
 
 // Object
+// BasicObj
 #include "Object/BasicObj/Quad.h"
+
+// GameObj
+// SollarSystem
+#include "Object/GameObj/SolarSystem/Planet.h"
+#include "Object/GameObj/SolarSystem/Moon.h"
+#include "Object/GameObj/SolarSystem/Earth.h"
+#include "Object/GameObj/SolarSystem/Sun.h"
 
 // Scene
 #include "Scene/Scene.h"

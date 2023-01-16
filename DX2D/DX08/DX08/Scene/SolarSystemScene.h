@@ -10,6 +10,10 @@ public:
 	virtual void Render() override;
 
 private:
+	shared_ptr<Sun> _sun;
+	shared_ptr<Earth> _earth;
+	shared_ptr<Quad> _moon;
+
 	// 과제
 	// Planet 클래스 만들기
 	// - 멤버변수 Quad
