@@ -25,9 +25,9 @@ void Quad::Render()
 
     DC->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-    StateManager::GetInstance()->GetAlpha()->SetState();
+    ALPHA->SetState();
     _srv->Set(0);
-    StateManager::GetInstance()->GetSampler()->Set(0);
+    SAMPLER->Set(0);
 
     _transform->SetBuffer(0);
 

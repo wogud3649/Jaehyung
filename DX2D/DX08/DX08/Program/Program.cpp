@@ -35,7 +35,8 @@ void Program::Render()
 	_view->SetVSBuffer(1);
 	_proj->SetVSBuffer(2);
 
-	StateManager::GetInstance()->GetAlpha()
+	ALPHA->SetState();
+
 	_scene->Render();
 
 	Device::GetInstance()->Present();

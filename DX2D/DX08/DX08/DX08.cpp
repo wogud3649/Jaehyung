@@ -72,6 +72,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     // 삭제
     StateManager::Delete();
     Device::Delete();
+
     return (int) msg.wParam;
 }
 
@@ -115,7 +116,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
-   Rect rc = { 0, 0, WIN_WIDTH, WIN_HEIGHT };
+   RECT rc = { 0, 0, WIN_WIDTH, WIN_HEIGHT };
 
    AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, false);
 
