@@ -1,55 +1,93 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <map>
 #include <unordered_map>
 #include <algorithm>
 #include <list>
 
 using namespace std;
 
-int trio = 0;
+string solution(int a, int b) {
+    string answer = "";
+    string days[7] = {
+    "THU",
+    "FRI",
+    "SAT",
+    "SUN",
+    "MON",
+    "TUE",
+    "WED"
+    };
+    int day = b;
 
-void dfs(const vector<int>& number, vector<bool>& visited, int index, int count, int sum)
-{
-    // 기저
-    visited[index] = true;
-    if (count == 3)
+    switch (a)
     {
-        if (sum == 0)
-            trio++;
-        return;
+    case 2:
+    {
+        day += 31;
+        break;
+    }
+    case 3:
+    {
+        day += 60;
+        break;
+    }
+    case 4:
+    {
+        day += 91;
+        break;
+    }
+    case 5:
+    {
+        day += 121;
+        break;
+    }
+    case 6:
+    {
+        day += 152;
+        break;
+    }
+    case 7:
+    {
+        day += 182;
+        break;
+    }
+    case 8:
+    {
+        day += 213;
+        break;
+    }
+    case 9:
+    {
+        day += 244;
+        break;
+    }
+    case 10:
+    {
+        day += 274;
+        break;
+    }
+    case 11:
+    {
+        day += 305;
+        break;
+    }
+    case 12:
+    {
+        day += 335;
+        break;
+    }
+    default:
+        break;
     }
 
-    // 캐시
-    
-    // 구하기
-    for (int i = 0; i < number.size(); i++)
-    {
-        if (i == index)
-            continue;
-        if (visited[i])
-            continue;
-        dfs(number, visited, i, ++count, sum + number[i]);
-        visited[i] = false;
-    }
-    return;
-}
-
-int solution(vector<int> number) {
-    vector<bool> visited(number.size(), false);
-    int answer = 0;
-    for (int i = 0; i < number.size(); i++)
-    {
-        int count = 1;
-        dfs(number, visited, i, count, number[i]);
-    }
-
-    return answer;
+    return days[day % 7];
 }
 
 int main(void)
 {
-    solution({ -2, 3, 0, 2, -5 });
+    solution(5, 24);
 
     return 0;
 }

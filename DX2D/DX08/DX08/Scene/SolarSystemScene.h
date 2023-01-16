@@ -11,8 +11,12 @@ public:
 
 private:
 	shared_ptr<Sun> _sun;
+	shared_ptr<Transform> _sunTrans;
+
 	shared_ptr<Earth> _earth;
-	shared_ptr<Quad> _moon;
+	shared_ptr<Transform> _earthTrans;
+	
+	shared_ptr<Moon> _moon;
 
 	// 과제
 	// Planet 클래스 만들기

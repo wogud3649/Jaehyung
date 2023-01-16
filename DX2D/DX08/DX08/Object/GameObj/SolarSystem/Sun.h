@@ -12,6 +12,5 @@ public:
 
 private:
 	shared_ptr<Quad> _sun;
-	shared_ptr<Earth> _earth;
 };
 
