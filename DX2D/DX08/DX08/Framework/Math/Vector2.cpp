@@ -144,6 +144,22 @@ bool Vector2::IsBetween(const Vector2& a, const Vector2& b)
 	return false;
 }
 
+float Vector2::Angle()
+{
+	return atan2(y, x);
+}
+
+float Vector2::Angle(const Vector2& other)
+{
+	float dot = this->Dot(other);
+	float aLength = this->Length();
+	float bLength = other.Length();
+
+	float cos = dot / (aLength * bLength);
+
+	return acosf(cos);
+}
+
 Vector2 Vector2::NormalVector2()
 {
 	Vector2 temp;

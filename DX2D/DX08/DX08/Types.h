@@ -12,3 +12,8 @@
 #define SAMPLER StateManager::GetInstance()->GetSampler()
 #define ALPHA StateManager::GetInstance()->GetAlpha()
 #define ADDITIVE StateManager::GetInstance()->GetAdditive()
+
+#define MOUSE_POS InputManager::GetInstance()->GetMousePos()
+#define KEY_DOWN(k) InputManager::GetInstance()->Down(k)
+#define KEY_PRESS(k) InputManager::GetInstance()->Press(k)
+#define KEY_UP(k) InputManager::GetInstance()->Up(k)

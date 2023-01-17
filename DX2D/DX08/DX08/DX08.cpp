@@ -45,6 +45,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     // 생성
     Device::Create(hWnd);
 
+    Timer::Create();
+    InputManager::Create();
     StateManager::Create();
 
     shared_ptr<Program> program = make_shared<Program>();
@@ -71,6 +73,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // 삭제
     StateManager::Delete();
+    InputManager::Delete();
+    Timer::Delete();
     Device::Delete();
 
     return (int) msg.wParam;
@@ -146,7 +150,6 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
 //
 //
-Vector2 mousePos;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -172,9 +175,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     case WM_MOUSEMOVE:
     {
-        mousePos.x = static_cast<float>(LOWORD(lParam));
-        mousePos.y = WIN_HEIGHT - static_cast<float>(HIWORD(lParam));
-
+        InputManager::GetInstance()->SetMousePos(Vector2(static_cast<float>(LOWORD(lParam)),WIN_HEIGHT - static_cast<float>(HIWORD(lParam))));
+        InputManager::GetInstance()->Update();
         break;
     }
 

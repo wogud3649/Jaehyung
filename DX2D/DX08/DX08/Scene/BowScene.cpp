@@ -21,10 +21,7 @@ BowScene::~BowScene()
 
 void BowScene::Update()
 {
-	Vector2 dir = Vector2(mousePos.x - CENTER_X, mousePos.y - CENTER_Y).NormalVector2();
-	float angle = acos(dir.x);
-	if (dir.y <= 0)
-		angle *= -1;
+	float angle = Vector2(MOUSE_POS.x - CENTER_X, MOUSE_POS.y - CENTER_Y).Angle();
 
 	_bow->GetTransform()->GetAngle() = angle;
 
@@ -35,7 +32,7 @@ void BowScene::Update()
 		_bow->GetVirtualTransforms()[i]->GetAngle() = _bow->GetTransform()->GetAngle();
 	}
 
-	if (GetAsyncKeyState(VK_LBUTTON) & 0x0001)
+	if (KEY_DOWN(VK_LBUTTON))
 	{
 		auto iter = find_if(_arrows.begin(), _arrows.end(), [](const shared_ptr<Arrow>& a)->bool
 			{

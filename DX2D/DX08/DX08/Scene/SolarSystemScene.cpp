@@ -25,7 +25,7 @@ SolarSystemScene::~SolarSystemScene()
 
 void SolarSystemScene::Update()
 {
-	_sun->SetPos(mousePos);
+	_sun->SetPos(MOUSE_POS);
 	_sun->Update();
 	_earth->Update();
 	_moon->Update();

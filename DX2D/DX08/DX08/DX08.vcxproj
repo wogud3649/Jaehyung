@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Framework\Utility\InputManager.h" />
     <ClInclude Include="Object\GameObj\Bow\Arrow.h" />
     <ClInclude Include="Object\GameObj\Bow\Bow.h" />
     <ClInclude Include="Scene\BowScene.h" />
@@ -178,9 +179,11 @@
     <ClInclude Include="Framework\Render\VertexBuffer.h" />
     <ClInclude Include="Framework\Render\VertexShader.h" />
     <ClInclude Include="Framework\Math\Transform.h" />
+    <ClInclude Include="Framework\Utility\Timer.h" />
     <ClInclude Include="Types.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Framework\Utility\InputManager.cpp" />
     <ClCompile Include="Object\GameObj\Bow\Arrow.cpp" />
     <ClCompile Include="Object\GameObj\Bow\Bow.cpp" />
     <ClCompile Include="Scene\BowScene.cpp" />
@@ -213,6 +216,7 @@
     <ClCompile Include="Framework\Math\Transform.cpp" />
     <ClCompile Include="Scene\SolarSystemScene.cpp" />
     <ClCompile Include="Framework\Texture\StateManager.cpp" />
+    <ClCompile Include="Framework\Utility\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX08.rc" />

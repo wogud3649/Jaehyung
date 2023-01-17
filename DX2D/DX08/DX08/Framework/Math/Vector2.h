@@ -30,6 +30,9 @@ public:
 
 	bool IsBetween(const Vector2& a, const Vector2& b);
 
+	float Angle();
+	float Angle(const Vector2& other);
+
 	Vector2 NormalVector2();
 	void Normalize();
 
