@@ -1,10 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <string>
-#include <map>
-#include <unordered_map>
-#include <algorithm>
-#include <list>
 
 using namespace std;
 
@@ -14,7 +9,7 @@ int solution(int n) {
     for (int i = 2; i <= n; i++)
     {
         check = true;
-        for (int j = 2; j*j < i; j++)
+        for (int j = 2; j * j < i; j++)
         {
             if (i % j == 0)
             {

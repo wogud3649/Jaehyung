@@ -54,5 +54,11 @@
     <ClCompile Include="Trio.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Service.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="PrimeNumber.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
