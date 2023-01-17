@@ -5,7 +5,6 @@
 Bow::Bow(wstring path)
 {
 	_quad = make_shared<Quad>(path);
-	_virtual = make_shared<Transform>();
 
 	for (int i = 0; i < _virtualSize; i++)
 	{

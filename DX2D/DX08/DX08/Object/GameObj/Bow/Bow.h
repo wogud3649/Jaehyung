@@ -9,7 +9,6 @@ public:
 	void Render();
 
 	void SetParent(shared_ptr<Transform> transform) { _quad->GetTransform()->SetParent(transform); }
-	shared_ptr<Transform> GetVirtualTransform() { return _virtual; }
 	vector<shared_ptr<Transform>> GetVirtualTransforms() { return _virtuals; }
 	shared_ptr<Transform> GetTransform() { return _quad->GetTransform(); }
 
@@ -20,7 +19,6 @@ public:
 
 private:
 	shared_ptr<Quad> _quad;
-	shared_ptr<Transform> _virtual;
 
 	vector<shared_ptr<Transform>> _virtuals;
 	int _virtualSize = 30;

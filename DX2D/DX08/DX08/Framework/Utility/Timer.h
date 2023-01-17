@@ -15,7 +15,7 @@ public:
 		if (_instance != nullptr)
 			delete _instance;
 	}
-	static Timer* getInstance()
+	static Timer* GetInstance()
 	{
 		if (_instance != nullptr)
 			return _instance;

@@ -123,12 +123,12 @@ float Vector2::Manhattan(const Vector2& other) const
 	return abs(x - other.x) + abs(y - other.y);
 }
 
-float Vector2::Dot(const Vector2& other)
+float Vector2::Dot(const Vector2& other) const
 {
 	return x * other.x + y * other.y;
 }
 
-float Vector2::Cross(const Vector2& other)
+float Vector2::Cross(const Vector2& other) const
 {
 	return x * other.y - y * other.x;
 }
@@ -144,12 +144,12 @@ bool Vector2::IsBetween(const Vector2& a, const Vector2& b)
 	return false;
 }
 
-float Vector2::Angle()
+float Vector2::Angle() const
 {
 	return atan2(y, x);
 }
 
-float Vector2::Angle(const Vector2& other)
+float Vector2::Angle(const Vector2& other) const
 {
 	float dot = this->Dot(other);
 	float aLength = this->Length();

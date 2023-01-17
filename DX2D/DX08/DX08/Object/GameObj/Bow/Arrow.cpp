@@ -21,7 +21,7 @@ void Arrow::Update()
 		count = 0;
 	}
 
-	_quad->GetTransform()->GetPos().x += 0.2;
+	_quad->GetTransform()->GetPos().x += 0.2 * Timer::GetInstance()->GetDeltaTime() * 5000.0f;
 	count++;
 
 	_quad->Update();

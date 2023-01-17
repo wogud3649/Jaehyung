@@ -25,13 +25,13 @@ public:
 
 	float Length() const;
 	float Manhattan(const Vector2& other) const;
-	float Dot(const Vector2& other);
-	float Cross(const Vector2& other);
+	float Dot(const Vector2& other) const;
+	float Cross(const Vector2& other) const;
 
 	bool IsBetween(const Vector2& a, const Vector2& b);
 
-	float Angle();
-	float Angle(const Vector2& other);
+	float Angle() const;
+	float Angle(const Vector2& other) const;
 
 	Vector2 NormalVector2();
 	void Normalize();
