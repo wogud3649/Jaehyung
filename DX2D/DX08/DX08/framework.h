@@ -63,6 +63,7 @@ using namespace DirectX;
 
 // Bow
 #include "Object/GameObj/Bow/Bow.h"
+#include "Object/GameObj/Bow/Arrow.h"
 
 // SolarSystem
 #include "Object/GameObj/SolarSystem/Planet.h"

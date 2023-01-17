@@ -10,6 +10,9 @@ public:
 
 private:
 	shared_ptr<Bow> _bow;
-	shared_ptr<Bow> _arrow;
+	shared_ptr<Transform> _virtual;
+
+	vector<shared_ptr<Arrow>> _arrows;
+	int _arrSize = 30;
 };
 

@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Object\GameObj\Bow\Arrow.h" />
     <ClInclude Include="Object\GameObj\Bow\Bow.h" />
     <ClInclude Include="Scene\BowScene.h" />
     <ClInclude Include="Framework\Texture\BlendState.h" />
@@ -180,6 +181,7 @@
     <ClInclude Include="Types.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Object\GameObj\Bow\Arrow.cpp" />
     <ClCompile Include="Object\GameObj\Bow\Bow.cpp" />
     <ClCompile Include="Scene\BowScene.cpp" />
     <ClCompile Include="Framework\Texture\BlendState.cpp" />
