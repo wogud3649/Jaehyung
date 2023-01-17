@@ -25,6 +25,11 @@ void BowScene::Update()
 
 	_bow->GetTransform()->GetAngle() = angle;
 
+	if (KEY_DOWN(VK_SPACE))
+	{
+
+	}
+
 	for (int i = 0; i < _arrSize; i++)
 	{
 		if (_arrows[i]->GetActive())
