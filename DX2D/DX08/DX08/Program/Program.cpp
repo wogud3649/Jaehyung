@@ -3,10 +3,11 @@
 
 #include "../Scene/TutorialScene.h"
 #include "../Scene/SolarSystemScene.h"
+#include "../Scene/BowScene.h"
 
 Program::Program()
 {
-	_scene = make_shared<SolarSystemScene>();
+	_scene = make_shared<BowScene>();
 
 	_view = make_shared<MatrixBuffer>();
 	_proj = make_shared<MatrixBuffer>();
