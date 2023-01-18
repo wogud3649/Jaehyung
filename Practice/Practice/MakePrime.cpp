@@ -1,10 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <string>
-#include <map>
-#include <unordered_map>
-#include <algorithm>
-#include <list>
 
 using namespace std;
 

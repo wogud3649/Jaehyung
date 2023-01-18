@@ -60,5 +60,11 @@
     <ClCompile Include="PrimeNumber.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="SubString.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="MakePrime.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
