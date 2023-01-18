@@ -9,7 +9,7 @@ TutorialScene::TutorialScene()
 
 	_quad2 = make_shared<Quad>(L"Resource/Texture/Pochita.png");
 	_quad2->GetTransform()->SetParent(_quad->GetTransform());
-	_quad2->GetTransform()->GetPos().x += 500;
+	_quad2->GetTransform()->MoveX(500);
 
 	XMMATRIX projectM = XMMatrixOrthographicOffCenterLH(0, WIN_WIDTH, 0, WIN_HEIGHT, -1.0f, 1.0f);
 }
@@ -22,29 +22,29 @@ void TutorialScene::Update()
 {
 	if (GetAsyncKeyState('A') & 0x8001)
 	{
-		_quad->GetTransform()->GetPos().x -= 0.5f;
+		_quad->GetTransform()->MoveX(-0.5f);
 	}
 	if (GetAsyncKeyState('D') & 0x8001)
 	{
-		_quad->GetTransform()->GetPos().x += 0.5f;
+		_quad->GetTransform()->MoveX(0.5f);
 	}
 	if (GetAsyncKeyState('W') & 0x8001)
 	{
-		_quad->GetTransform()->GetScale().x += 0.001f;
-		_quad->GetTransform()->GetScale().y += 0.001f;
+		_quad->GetTransform()->AddScaleX(0.001f);
+		_quad->GetTransform()->AddScaleY(0.001f);
 	}
 	if (GetAsyncKeyState('S') & 0x8001)
 	{
-		_quad->GetTransform()->GetScale().x -= 0.001f;
-		_quad->GetTransform()->GetScale().y -= 0.001f;
+		_quad->GetTransform()->AddScaleX(-0.001f);
+		_quad->GetTransform()->AddScaleY(-0.001f);
 	}
 	if (GetAsyncKeyState('P') & 0x8001)
 	{
-		_quad->GetTransform()->GetAngle() += 0.001f;
+		_quad->GetTransform()->AddAngle(0.001f);
 	}
 	if (GetAsyncKeyState('O') & 0x8001)
 	{
-		_quad->GetTransform()->GetAngle() -= 0.001f;
+		_quad->GetTransform()->AddAngle(-0.001f);
 	}
 	_quad->Update();
 	_quad2->Update();

@@ -20,4 +20,4 @@
 #define KEY_PRESS(k) InputManager::GetInstance()->Press(k)
 #define KEY_UP(k) InputManager::GetInstance()->Up(k)
 
-//#define DELTA_TIME Timer::GetInstance()->
+#define DELTA_TIME Timer::GetInstance()->GetDeltaTime()

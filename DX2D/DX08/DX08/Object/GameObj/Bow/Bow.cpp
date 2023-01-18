@@ -2,14 +2,14 @@
 #include "Bow.h"
 
 
-Bow::Bow(wstring path)
+Bow::Bow()
 {
-	_quad = make_shared<Quad>(path);
+	_quad = make_shared<Quad>(L"Resource/Texture/Bow.png");
+	_quad->GetTransform()->SetPos(Vector2(100, 100));
+	_quad->GetTransform()->SetScale(Vector2(2, 2));
 
-	for (int i = 0; i < _virtualSize; i++)
-	{
-		_virtuals.push_back(make_shared<Transform>());
-	}
+	for (int i = 0; i < _arrowSize; i++)
+		_arrows.push_back(make_shared<Arrow>());
 }
 
 Bow::~Bow()
@@ -18,33 +18,36 @@ Bow::~Bow()
 
 void Bow::Update()
 {
-	_quad->Update();
+	Vector2 direction = Vector2(MOUSE_POS.x - GetPos().x, MOUSE_POS.y - GetPos().y);
+	_quad->GetTransform()->SetAngle(direction.Angle());
 
-	for (int i = 0; i < _virtualSize; i++)
+	if (KEY_UP(VK_LBUTTON))
 	{
-		_virtuals[i]->Update();
+		Fire(direction);
 	}
+	_quad->Update();
+	for (auto arrow : _arrows)
+		arrow->Update();
 }
 
 void Bow::Render()
 {
 	_quad->Render();
+	for (auto arrow : _arrows)
+		arrow->Render();
 }
 
-void Bow::SetPos(Vector2 pos)
+void Bow::Fire(Vector2 direction)
 {
-	_quad->GetTransform()->GetPos() = pos;
-	for (int i = 0; i < _virtualSize; i++)
+	auto iter = find_if(_arrows.begin(), _arrows.end(), [](const shared_ptr<Arrow>& arrow)->bool
+		{
+			return (arrow->GetActive() == false);
+		});
+	if (iter != _arrows.end())
 	{
-		_virtuals[i]->GetPos() = pos;
-	}
-}
-
-void Bow::SetScale(Vector2 scale)
-{
-	_quad->GetTransform()->GetScale() = scale;
-	for (int i = 0; i < _virtualSize; i++)
-	{
-		_virtuals[i]->GetScale() = scale;
+		(*iter)->GetTransform()->SetPos(_quad->GetTransform()->GetPos());
+		(*iter)->GetTransform()->SetAngle(direction.Angle());
+		(*iter)->SetDirection(direction);
+		(*iter)->SetActive(true);
 	}
 }

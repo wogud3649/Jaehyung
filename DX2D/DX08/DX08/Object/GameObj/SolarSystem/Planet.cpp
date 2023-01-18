@@ -15,9 +15,9 @@ Planet::~Planet()
 
 void Planet::Update()
 {
-	_quad->GetTransform()->GetAngle() += _speed;
+	_quad->GetTransform()->AddAngle(_speed);
 
-	_virtualTrans->GetAngle() += _speed * 2;
+	_virtualTrans->AddAngle(_speed * 2);
 
 	_quad->Update();
 	_virtualTrans->Update();

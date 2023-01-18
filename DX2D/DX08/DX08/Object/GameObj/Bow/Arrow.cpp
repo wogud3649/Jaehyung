@@ -1,10 +1,10 @@
 #include "framework.h"
 #include "Arrow.h"
 
-Arrow::Arrow(wstring path)
+Arrow::Arrow()
 {
 	_quad = make_shared<Quad>(L"Resource/Texture/Bullet.png");
-	count = 0;
+	_quad->GetTransform()->SetScale(Vector2(0.2f, 0.2f));
 }
 
 Arrow::~Arrow()
@@ -15,14 +15,14 @@ void Arrow::Update()
 {
 	if (_isActive == false)
 		return;
-	if (count >= 5000)
+	if (_duration > 3.0)
 	{
 		_isActive = false;
-		count = 0;
+		_duration = 0.0;
 	}
 
-	_quad->GetTransform()->GetPos().x += 0.2 * Timer::GetInstance()->GetDeltaTime() * 5000.0f;
-	count++;
+	_quad->GetTransform()->Move(_dir * _speed * DELTA_TIME);
+	_duration += DELTA_TIME;
 
 	_quad->Update();
 }
@@ -33,4 +33,10 @@ void Arrow::Render()
 		return;
 
 	_quad->Render();
+}
+
+void Arrow::SetDirection(Vector2 dir)
+{
+	dir.Normalize();
+	_dir = dir;
 }

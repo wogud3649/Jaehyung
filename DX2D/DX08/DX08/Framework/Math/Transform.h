@@ -10,9 +10,21 @@ public:
 	void Update();
 	void SetBuffer(UINT slot);
 
-	Vector2& GetScale() { return _scale; }
-	float& GetAngle() { return _angle; }
-	Vector2& GetPos() { return _pos; }
+	void SetScale(Vector2 scale) { _scale = scale; }
+	void AddScaleX(float x) { _scale.x += x; }
+	void AddScaleY(float y) { _scale.y += y; }
+
+	void SetAngle(float angle) { _angle = angle; }
+	void AddAngle(float angle) { _angle += angle; }
+
+	void SetPos(Vector2 pos) { _pos = pos; }
+	void Move(Vector2 pos) { _pos += pos; }
+	void MoveX(float x) { _pos.x += x; }
+	void MoveY(float y) { _pos.y += y; }
+
+	Vector2 GetScale() { return _scale; }
+	float GetAngle() { return _angle; }
+	Vector2 GetPos() { return _pos; }
 
 	void SetParent(shared_ptr<Transform> parent) { _parent = parent; }
 
