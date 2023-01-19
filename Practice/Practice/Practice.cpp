@@ -8,48 +8,48 @@
 
 using namespace std;
 
-bool PrimeCheck(int num)
-{
-    bool check = true;
-    for (int i = 2; i * i <= num; i++)
+vector<int> solution(int N, vector<int> stages) {
+    vector<int> answer;
+    unordered_map<int, int> clear;
+    unordered_map<int, int> reach;
+    vector<pair<int, float>> percent;
+    for (int i = 1; i < N + 1; i++)
     {
-        if (num % i == 0)
+        percent.push_back(make_pair(i, 0));
+        for (int j = 0; j < stages.size(); j++)
         {
-            check = false;
-            break;
+            if (stages[j] == i)
+            {
+                reach[i]++;
+            }
+            if (stages[j] > i)
+            {
+                clear[i]++;
+            }
         }
+        if (clear[i] == 0 && reach[i] == 0)
+        {
+            percent[i - 1].second = 0;
+            continue;
+        }
+        percent[i-1].second = float(reach[i]) / float(reach[i] + clear[i]);
     }
-    return check;
-}
-
-void MakePrime(const vector<int>& nums, int count, int index, int sum, int& answer)
-{
-    if (count == 3)
+    stable_sort(percent.begin(), percent.end(), [](const pair<int, float>& a, const pair<int, float>& b)->bool
+        {
+            return a.second > b.second;
+        });
+    
+    for (int i = 0; i < percent.size(); i++)
     {
-        if (PrimeCheck(sum))
-            answer++;
-        return;
+        answer.push_back(percent[i].first);
     }
 
-    for (int i = index + 1; i < nums.size(); i++)
-    {
-        MakePrime(nums, count + 1, i, sum + nums[i], answer);
-    }
-}
-
-int solution(vector<int> nums) {
-    int answer = 0;
-    int numSize = nums.size();
-    for (int i = 0; i < numSize - 2; i++)
-    {
-        MakePrime(nums, 1, i, nums[i], answer);
-    }
     return answer;
 }
 
 int main(void)
 {
-    solution({ 1,2,7,6,4 });
+    solution(5, { 2,1,2,4,3,3 });
 
     return 0;
 }
