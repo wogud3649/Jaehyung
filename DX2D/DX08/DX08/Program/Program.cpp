@@ -4,10 +4,11 @@
 #include "../Scene/TutorialScene.h"
 #include "../Scene/SolarSystemScene.h"
 #include "../Scene/BowScene.h"
+#include "../Scene/CollisionScene.h"
 
 Program::Program()
 {
-	_scene = make_shared<BowScene>();
+	_scene = make_shared<CollisionScene>();
 
 	_view = make_shared<MatrixBuffer>();
 	_proj = make_shared<MatrixBuffer>();
@@ -38,10 +39,20 @@ void Program::Render()
 
 	_view->SetVSBuffer(1);
 	_proj->SetVSBuffer(2);
+	_scene->PreRender();
+
+	ImGui_ImplDX11_NewFrame();
+	ImGui_ImplWin32_NewFrame();
+	ImGui::NewFrame();
 
 	ALPHA->SetState();
 
 	_scene->Render();
+
+	ImGui::Text("FPS : %d", Timer::GetInstance()->GetFPS());
+	_scene->PostRender();
+	ImGui::Render();
+	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
 	Device::GetInstance()->Present();
 }

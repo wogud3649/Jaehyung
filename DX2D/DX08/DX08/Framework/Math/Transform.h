@@ -22,9 +22,9 @@ public:
 	void MoveX(float x) { _pos.x += x; }
 	void MoveY(float y) { _pos.y += y; }
 
-	Vector2 GetScale() { return _scale; }
-	float GetAngle() { return _angle; }
-	Vector2 GetPos() { return _pos; }
+	Vector2& GetScale() { return _scale; }
+	float& GetAngle() { return _angle; }
+	Vector2& GetPos() { return _pos; }
 
 	void SetParent(shared_ptr<Transform> parent) { _parent = parent; }
 

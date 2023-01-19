@@ -26,3 +26,23 @@ private:
 	Data _data;
 };
 
+class ColorBuffer : public ConstantBuffer
+{
+public:
+	struct Data
+	{
+		XMFLOAT4 color = { 0,1,0,1 };
+	};
+
+	// 상수버퍼 규칙
+	// 16바이트의 배수로 올려야한다.
+	ColorBuffer()
+		: ConstantBuffer(&_data, sizeof(_data))
+	{
+	}
+
+	virtual ~ColorBuffer() {}
+
+	Data _data;
+};
+

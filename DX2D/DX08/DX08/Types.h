@@ -21,3 +21,6 @@
 #define KEY_UP(k) InputManager::GetInstance()->Up(k)
 
 #define DELTA_TIME Timer::GetInstance()->GetDeltaTime()
+#define RUN_TIME Timer::GetInstance()->GetRunTime()
+
+#define SRV_ADD(k) SRVManager::GetInstance()->AddSRV(k)

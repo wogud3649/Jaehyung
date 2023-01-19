@@ -7,6 +7,7 @@ public:
 
 	virtual void Update() override;
 	virtual void Render() override;
+	virtual void PostRender();
 
 private:
 	shared_ptr<Bow> _bow;

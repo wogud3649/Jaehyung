@@ -7,7 +7,7 @@ public:
 
 	void CreateVertexBuffer();
 
-	void Set(int slot = 0);
+	void IASet(int slot = 0);
 
 private:
 	Microsoft::WRL::ComPtr<ID3D11Buffer> vertexBuffer;

@@ -20,7 +20,7 @@ void Quad::Update()
 
 void Quad::Render()
 {
-    _vertexBuffer->Set(0);
+    _vertexBuffer->IASet(0);
     _indexBuffer->IASetIndexBuffer();
 
     DC->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -41,7 +41,7 @@ void Quad::CreateMaterial(wstring file)
 {
 	_vs = make_shared<VertexShader>(L"Shader/TutorialVertexShader.hlsl");
 	_ps = make_shared<PixelShader>(L"Shader/TutorialPixelShader.hlsl");
-	_srv = make_shared<SRV>(file);
+    _srv = SRV_ADD(file);
     _size = _srv->GetImageSize();
 }
 

@@ -28,6 +28,11 @@
 // DirectXTex
 #include "../DirectXTex/DirectXTex.h"
 
+// ImGui
+#include "../ImGUI/imgui.h"
+#include "../ImGUI/imgui_impl_dx11.h"
+#include "../ImGUI/imgui_impl_win32.h"
+
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
 
@@ -52,12 +57,16 @@ using namespace DirectX;
 #include "Framework/Render/VertexShader.h"
 #include "Framework/Render/PixelShader.h"
 
+// Collider
+#include "Framework/Collider/RectCollider.h"
+
 // Utility
 #include "Framework/Utility/InputManager.h"
 #include "Framework/Utility/Timer.h"
 
 // Texture
 #include "Framework/Texture/SRV.h"
+#include "Framework/Texture/SRVManager.h"
 #include "Framework/Texture/SamplerState.h"
 #include "Framework/Texture/BlendState.h"
 #include "Framework/Texture/StateManager.h"

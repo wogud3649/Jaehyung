@@ -21,7 +21,7 @@ void Bow::Update()
 	Vector2 direction = Vector2(MOUSE_POS.x - GetPos().x, MOUSE_POS.y - GetPos().y);
 	_quad->GetTransform()->SetAngle(direction.Angle());
 
-	if (KEY_UP(VK_LBUTTON))
+	if (KEY_DOWN(VK_LBUTTON))
 	{
 		Fire(direction);
 	}
