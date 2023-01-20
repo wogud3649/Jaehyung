@@ -49,19 +49,12 @@ void CircleCollider::CreateData()
 void CircleCollider::CreateVertices()
 {
 	Vertex_Basic vertex;
+	float theta;
 
-	vertex.pos = { -_radius, 0.0f, 0.0f }; // 왼쪽
-	_vertices.push_back(vertex);
-
-	vertex.pos = { 0.0f, _radius, 0.0f }; // 위
-	_vertices.push_back(vertex);
-
-	vertex.pos = { _radius, 0.0f, 0.0f }; // 오른쪽
-	_vertices.push_back(vertex);
-
-	vertex.pos = { 0.0f, -_radius, 0.0f }; // 아래
-	_vertices.push_back(vertex);
-
-	vertex.pos = { -_radius, 0.0f, 0.0f }; // 왼쪽
-	_vertices.push_back(vertex);
+	for (int i = 0; i < 361; i++)
+	{
+		theta = i * PI / 180;
+		vertex = { _radius * cos(theta), _radius * sin(theta), 0.0f };
+		_vertices.push_back(vertex);
+	}
 }

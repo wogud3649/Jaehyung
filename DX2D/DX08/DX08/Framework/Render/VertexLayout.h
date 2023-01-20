@@ -11,6 +11,7 @@ struct Vertex_Basic
 
     XMFLOAT3 pos;
 };
+
 struct Vertex
 {
     Vertex() {}

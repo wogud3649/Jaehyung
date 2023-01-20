@@ -52,18 +52,18 @@ void RectCollider::CreateVertices()
 
     Vector2 halfSize = _size * 0.5f;
 
-    vertex.pos = { -halfSize.x, halfSize.y, 0.0f }; // 왼쪽 위
+    vertex = { -halfSize.x, halfSize.y, 0.0f }; // 왼쪽 위
     _vertices.push_back(vertex);
 
-    vertex.pos = { halfSize.x, halfSize.y, 0.0f }; // 오른쪽 위
+    vertex = { halfSize.x, halfSize.y, 0.0f }; // 오른쪽 위
     _vertices.push_back(vertex);
 
-    vertex.pos = { halfSize.x, -halfSize.y, 0.0f }; // 오른쪽 아래
+    vertex = { halfSize.x, -halfSize.y, 0.0f }; // 오른쪽 아래
     _vertices.push_back(vertex);
 
-    vertex.pos = { -halfSize.x, -halfSize.y, 0.0f }; // 왼쪽 아래
+    vertex = { -halfSize.x, -halfSize.y, 0.0f }; // 왼쪽 아래
     _vertices.push_back(vertex);
 
-    vertex.pos = { -halfSize.x, halfSize.y, 0.0f }; // 왼쪽 위
+    vertex = { -halfSize.x, halfSize.y, 0.0f }; // 왼쪽 위
     _vertices.push_back(vertex);
 }
