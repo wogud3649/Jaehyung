@@ -7,7 +7,10 @@ CollisionScene::CollisionScene()
 	_rect->GetTransform()->GetPos() = Vector2(CENTER_X, CENTER_Y);
 
 	_circle = make_shared<CircleCollider>(50.0f);
-	_circle->GetTransform()->GetPos() = Vector2(CENTER_X, CENTER_Y);
+	_circle->GetTransform()->GetPos() = Vector2(CENTER_X+200, CENTER_Y+100);
+
+	_circle2 = make_shared<CircleCollider>(70.0f);
+	_circle2->GetTransform()->SetParent(_rect->GetTransform());
 }
 
 CollisionScene::~CollisionScene()
@@ -16,12 +19,40 @@ CollisionScene::~CollisionScene()
 
 void CollisionScene::Update()
 {
-	//_rect->Update();
+	_rect->Update();
 	_circle->Update();
+	_circle2->Update();
+
+	if (_circle->IsCollision(_circle2))
+	{
+		_circle->SetRed();
+		_circle2->SetRed();
+	}
+	else
+	{
+		_circle->SetGreen();
+		_circle2->SetGreen();
+	}
 }
 
 void CollisionScene::Render()
 {
-	//_rect->Render();
+	_rect->Render();
 	_circle->Render();
+	_circle2->Render();
+}
+
+void CollisionScene::PostRender()
+{
+	ImGui::SliderFloat2("Rect Pos", (float*)&_rect->GetTransform()->GetPos(), 0, WIN_WIDTH);
+	ImGui::SliderFloat2("Circle1 Pos", (float*)&_circle->GetTransform()->GetPos(), 0, WIN_WIDTH);
+	ImGui::SliderFloat2("Circle2 Pos", (float*)&_circle2->GetTransform()->GetPos(), 0, WIN_WIDTH);
+
+	float circle2_scale = _circle2->GetTransform()->GetScale().x;
+	ImGui::SliderFloat("Circle2 Scale", (float*)&circle2_scale, 0, 3);
+	_circle2->GetTransform()->GetScale() = Vector2(circle2_scale, circle2_scale);
+
+	float rect_scale = _rect->GetTransform()->GetScale().x;
+	ImGui::SliderFloat("Rect Scale", (float*)&rect_scale, 0, 3);
+	_rect->GetTransform()->GetScale() = Vector2(rect_scale, rect_scale);
 }

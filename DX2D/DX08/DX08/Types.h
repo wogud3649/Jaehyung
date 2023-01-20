@@ -4,9 +4,9 @@
 #define CENTER_X 640
 #define CENTER_Y 360
 
-#define LERP(s, e, t) s + (e - s) * t
-
 #define PI 3.141592
+
+#define LERP(s, e, t) s + (e - s) * t
 
 #define DEVICE Device::GetInstance()->GetDevice()
 #define DC Device::GetInstance()->GetDeviceContext()

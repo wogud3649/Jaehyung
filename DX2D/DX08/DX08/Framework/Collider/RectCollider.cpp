@@ -32,6 +32,35 @@ void RectCollider::Render()
     DC->Draw(_vertices.size(), 0);
 }
 
+RectCollider::OBB_DESC RectCollider::GetOBB()
+{
+    OBB_DESC desc;
+    desc.position = _transform->GetWorldPos();
+
+    XMFLOAT4X4 matrix;
+    XMStoreFloat4x4(&matrix, _transform->GetMatrix());
+
+    desc.direction[0] = { matrix._11,matrix._12 };
+    desc.direction[1] = { matrix._21,matrix._22 };
+    desc.direction[0].Normalize();
+    desc.direction[1].Normalize();
+
+    Vector2 halfSize = _size * 0.5f;
+
+    desc.length[0] = halfSize.x * _transform->GetWorldScale().x;
+    desc.length[1] = halfSize.y * _transform->GetWorldScale().y;
+
+    return OBB_DESC();
+}
+
+float RectCollider::SeparateAxis(Vector2 separate, Vector2 e1, Vector2 e2)
+{
+    float r1 = abs(separate.Dot(e1));
+    float r2 = abs(separate.Dot(e2));
+
+    return r1 + r2;
+}
+
 void RectCollider::CreateData()
 {
     CreateVertices();

@@ -10,6 +10,8 @@ public:
 
 	shared_ptr<Transform> GetTransform() { return _transform; }
 
+	bool IsCollision(shared_ptr<CircleCollider> other);
+
 	void SetRed() { _colorBuffer->_data.color = { 1,0,0,1 }; }
 	void SetGreen() { _colorBuffer->_data.color = { 0,1,0,1 }; }
 

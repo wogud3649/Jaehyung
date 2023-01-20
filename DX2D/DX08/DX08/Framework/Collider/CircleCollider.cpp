@@ -32,6 +32,14 @@ void CircleCollider::Render()
 	DC->Draw(_vertices.size(), 0);
 }
 
+bool CircleCollider::IsCollision(shared_ptr<CircleCollider> other)
+{
+	float radiusSum = this->_radius * this->GetTransform()->GetWorldScale().x + other->_radius * other->GetTransform()->GetWorldScale().x;
+	float distance = (other->_transform->GetWorldPos() - this->_transform->GetPos()).Length();
+
+	return distance < radiusSum;
+}
+
 void CircleCollider::CreateData()
 {
 	CreateVertices();
@@ -49,12 +57,11 @@ void CircleCollider::CreateData()
 void CircleCollider::CreateVertices()
 {
 	Vertex_Basic vertex;
-	float theta;
+	float theta = PI / 9.0f;
 
-	for (int i = 0; i < 361; i++)
+	for (int i = 0; i < 19; i++)
 	{
-		theta = i * PI / 180;
-		vertex = { _radius * cos(theta), _radius * sin(theta), 0.0f };
+		vertex = { _radius * cos(theta * i), _radius * sin(theta * i), 0.0f };
 		_vertices.push_back(vertex);
 	}
 }
