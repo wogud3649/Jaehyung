@@ -8,22 +8,13 @@
 
 using namespace std;
 
-vector<int> solution(string s) {
-    vector<int> answer;
-    unordered_map<char, int> uMap;
+int solution(int k, int m, vector<int> score) {
+    int answer = 0;
+    sort(score.begin(), score.end(), greater<int>());
 
-    for (int i = 0; i < s.size(); i++)
+    for (int i = m - 1; i < score.size(); i += m)
     {
-        int beforeIndex = uMap[s[i]]-1;
-        if (beforeIndex != -1)
-        {
-            answer.push_back(i-beforeIndex);
-        }
-        else
-        {
-            answer.push_back(-1);
-        }
-        uMap[s[i]] = i+1;
+        answer += score[i] * m;
     }
 
     return answer;
@@ -31,7 +22,7 @@ vector<int> solution(string s) {
 
 int main(void)
 {
-    solution("bananaaaaaaaaaab");
+    solution(3, 4, { 1, 2, 3, 1, 2, 3, 1 });
 
     return 0;
 }
