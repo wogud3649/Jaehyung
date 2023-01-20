@@ -50,7 +50,7 @@ void RectCollider::CreateVertices()
 {
     Vertex_Basic vertex;
 
-    Vector2 halfSize = _size * 0.3f;
+    Vector2 halfSize = _size * 0.5f;
 
     vertex.pos = { -halfSize.x, halfSize.y, 0.0f }; // ¿ÞÂÊ À§
     _vertices.push_back(vertex);

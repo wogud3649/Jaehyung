@@ -59,6 +59,7 @@ using namespace DirectX;
 
 // Collider
 #include "Framework/Collider/RectCollider.h"
+#include "Framework/Collider/CircleCollider.h"
 
 // Utility
 #include "Framework/Utility/InputManager.h"

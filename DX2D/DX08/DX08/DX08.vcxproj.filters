@@ -221,9 +221,9 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Shader\TutorialShader.hlsl" />
+    <FxCompile Include="Shader\TextureShader.hlsl" />
     <FxCompile Include="Shader\TutorialVertexShader.hlsl" />
-    <FxCompile Include="Shader\TutorialPixelShader.hlsl" />
+    <FxCompile Include="Shader\TexturePixelShader.hlsl" />
     <FxCompile Include="Shader\Collider\ColliderVertexShader.hlsl" />
     <FxCompile Include="Shader\Collider\ColliderPixelShader.hlsl" />
   </ItemGroup>
