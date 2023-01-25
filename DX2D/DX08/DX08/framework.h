@@ -58,8 +58,8 @@ using namespace DirectX;
 #include "Framework/Render/PixelShader.h"
 
 // Collider
-#include "Framework/Collider/RectCollider.h"
 #include "Framework/Collider/CircleCollider.h"
+#include "Framework/Collider/RectCollider.h"
 
 // Utility
 #include "Framework/Utility/InputManager.h"

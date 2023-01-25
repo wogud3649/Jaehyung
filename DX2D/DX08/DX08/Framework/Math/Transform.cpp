@@ -44,7 +44,7 @@ Vector2 Transform::GetWorldPos()
 Vector2 Transform::GetWorldScale()
 {
 	XMFLOAT4X4 temp;
-	XMStoreFloat4x4(&temp, _srtMatrix);
+	XMStoreFloat4x4(&temp, _scaleM);
 
 	return Vector2(temp._11, temp._22);
 }

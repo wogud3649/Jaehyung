@@ -15,6 +15,8 @@ public:
 	void SetRed() { _colorBuffer->_data.color = { 1,0,0,1 }; }
 	void SetGreen() { _colorBuffer->_data.color = { 0,1,0,1 }; }
 
+	float GetRadius() { return _radius; }
+
 private:
 	void CreateData();
 	void CreateVertices();
