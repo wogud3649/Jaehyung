@@ -32,6 +32,53 @@ void RectCollider::Render()
     DC->Draw(_vertices.size(), 0);
 }
 
+bool RectCollider::IsCollision(shared_ptr<RectCollider> other)
+{
+    Vector2 CenterToCenter = this->GetOBB().position - other->GetOBB().position;
+
+    Vector2 standards[4] = {
+        this->GetOBB().direction[0],
+        this->GetOBB().direction[1],
+        other->GetOBB().direction[0],
+        other->GetOBB().direction[0]
+    };
+    
+    float lengths[4] = {
+        this->GetOBB().length[0],
+        this->GetOBB().length[1],
+        other->GetOBB().length[0],
+        other->GetOBB().length[1]
+    };
+
+    float temp1, temp2;
+
+    //case1
+    temp1 = abs(CenterToCenter.Dot(standards[0]));
+    temp2 = SeparateAxis(standards[0], standards[2] * lengths[2], standards[3] *lengths[3]);
+    if (temp1 > temp2)
+        return false;
+
+    //case2
+    temp1 = abs(CenterToCenter.Dot(standards[1]));
+    temp2 = SeparateAxis(standards[1], standards[2] * lengths[2], standards[3] *lengths[3]);
+    if (temp1 > temp2)
+        return false;
+
+    //case3
+    temp1 = abs(CenterToCenter.Dot(standards[2]));
+    temp2 = SeparateAxis(standards[2], standards[0] * lengths[0], standards[1] *lengths[1]);
+    if (temp1 > temp2)
+        return false;
+
+    //case4
+    temp1 = abs(CenterToCenter.Dot(standards[3]));
+    temp2 = SeparateAxis(standards[3], standards[0] * lengths[0], standards[1] *lengths[1]);
+    if (temp1 > temp2)
+        return false;
+
+    return true;
+}
+
 RectCollider::OBB_DESC RectCollider::GetOBB()
 {
     OBB_DESC desc;
@@ -55,8 +102,9 @@ RectCollider::OBB_DESC RectCollider::GetOBB()
 
 float RectCollider::SeparateAxis(Vector2 separate, Vector2 e1, Vector2 e2)
 {
-    float r1 = abs(separate.Dot(e1));
-    float r2 = abs(separate.Dot(e2));
+    Vector2 normalVec = separate.NormalVector2();
+    float r1 = abs(normalVec.Dot(e1));
+    float r2 = abs(normalVec.Dot(e2));
 
     return r1 + r2;
 }
