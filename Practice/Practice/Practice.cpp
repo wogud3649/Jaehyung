@@ -8,13 +8,25 @@
 
 using namespace std;
 
-int solution(int k, int m, vector<int> score) {
+int solution(int n, vector<int> lost, vector<int> reserve) {
     int answer = 0;
-    sort(score.begin(), score.end(), greater<int>());
+    vector<bool> attend(n, true);
 
-    for (int i = m - 1; i < score.size(); i += m)
+    for (int lostNum : lost)
     {
-        answer += score[i] * m;
+        attend[lostNum - 1] = false;
+    }
+
+    for (int i = 0; i < reserve.size(); i++)
+    {
+        int curNum = reserve[i] - 1;
+        if (attend[curNum] == false)
+        {
+            attend[curNum] = true;
+            continue;
+        }
+        if (curNum == 0)
+
     }
 
     return answer;
@@ -22,7 +34,7 @@ int solution(int k, int m, vector<int> score) {
 
 int main(void)
 {
-    solution(3, 4, { 1, 2, 3, 1, 2, 3, 1 });
+    solution(5, { 2,4 }, { 1, 2, 3, 5 });
 
     return 0;
 }
