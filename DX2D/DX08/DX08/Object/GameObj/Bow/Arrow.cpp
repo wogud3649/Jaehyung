@@ -5,6 +5,10 @@ Arrow::Arrow()
 {
 	_quad = make_shared<Quad>(L"Resource/Texture/Bullet.png");
 	_quad->GetTransform()->SetScale(Vector2(0.2f, 0.2f));
+
+	_col = make_shared<CircleCollider>(50);
+	_col->GetTransform()->SetParent(_quad->GetTransform());
+	_col->GetTransform()->GetPos().x += 150;
 }
 
 Arrow::~Arrow()
@@ -15,7 +19,7 @@ void Arrow::Update()
 {
 	if (_isActive == false)
 		return;
-	if (_duration > 3.0)
+	if (_duration > 5.0)
 	{
 		_isActive = false;
 		_duration = 0.0;
@@ -25,6 +29,7 @@ void Arrow::Update()
 	_duration += DELTA_TIME;
 
 	_quad->Update();
+	_col->Update();
 }
 
 void Arrow::Render()
@@ -33,6 +38,7 @@ void Arrow::Render()
 		return;
 
 	_quad->Render();
+	//_col->Render();
 }
 
 void Arrow::SetDirection(Vector2 dir)

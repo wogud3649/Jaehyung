@@ -4,6 +4,8 @@
 BowScene::BowScene()
 {
 	_bow = make_shared<Bow>();
+	
+	_monster = make_shared<Bow_Monster>();
 }
 
 BowScene::~BowScene()
@@ -13,11 +15,13 @@ BowScene::~BowScene()
 void BowScene::Update()
 {
 	_bow->Update();
+	_monster->Update();
 }
 
 void BowScene::Render()
 {
 	_bow->Render();
+	_monster->Render();
 }
 
 void BowScene::PostRender()

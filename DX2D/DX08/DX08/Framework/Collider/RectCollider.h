@@ -1,5 +1,7 @@
 #pragma once
-class RectCollider
+class CircleCollider;
+
+class RectCollider : public Collider
 {
 public:
 	struct OBB_DESC
@@ -12,35 +14,33 @@ public:
 	RectCollider(Vector2 size);
 	~RectCollider();
 
-	void Update();
-	void Render();
+	float Left() { return _transform->GetWorldPos().x - _size.x * 0.5f * _transform->GetWorldScale().x; }
+	float Right() { return _transform->GetWorldPos().x + _size.x * 0.5f * _transform->GetWorldScale().x; }
+	float Top() { return _transform->GetWorldPos().y + _size.y * 0.5f * _transform->GetWorldScale().y; }
+	float Bottom() { return _transform->GetWorldPos().y - _size.y * 0.5f * _transform->GetWorldScale().y; }
 
-	shared_ptr<Transform> GetTransform() { return _transform; }
+	virtual void CreateData() override;
 
-	bool IsCollision(shared_ptr<RectCollider> other);
-	bool IsCollision(shared_ptr<CircleCollider> circle);
+	virtual void Update() override;
+	virtual void Render() override;
 
-	void SetRed() { _colorBuffer->_data.color = { 1,0,0,1 }; }
-	void SetGreen() { _colorBuffer->_data.color = { 0,1,0,1 }; }
+	virtual bool IsCollision(Vector2 pos) override;
+	virtual bool IsCollision(shared_ptr<CircleCollider> other, bool isObb = false) override;
+	virtual bool IsCollision(shared_ptr<RectCollider> other, bool isObb = false) override;
+
+	bool IsAABB(shared_ptr<RectCollider> other);
+	bool IsAABB(shared_ptr<CircleCollider> other);
+
+	bool IsOBB(shared_ptr<RectCollider> other);
+	bool IsOBB(shared_ptr<CircleCollider> other);
 
 	OBB_DESC GetOBB();
 
 	float SeparateAxis(Vector2 separate, Vector2 e1, Vector2 e2);
 
 private:
-	void CreateData();
 	void CreateVertices();
 
 	Vector2 _size = { 0,0 };
-
-	vector<Vertex_Basic> _vertices;
-
-	shared_ptr<VertexShader> _vs;
-	shared_ptr<PixelShader> _ps;
-
-	shared_ptr<VertexBuffer> _vertexBuffer;
-	shared_ptr<ColorBuffer> _colorBuffer;
-
-	shared_ptr<Transform> _transform;
 };
 

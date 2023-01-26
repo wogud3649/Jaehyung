@@ -58,8 +58,9 @@ using namespace DirectX;
 #include "Framework/Render/PixelShader.h"
 
 // Collider
-#include "Framework/Collider/CircleCollider.h"
+#include "Framework/Collider/Collider.h"
 #include "Framework/Collider/RectCollider.h"
+#include "Framework/Collider/CircleCollider.h"
 
 // Utility
 #include "Framework/Utility/InputManager.h"
@@ -78,6 +79,7 @@ using namespace DirectX;
 // Bow
 #include "Object/GameObj/Bow/Arrow.h"
 #include "Object/GameObj/Bow/Bow.h"
+#include "Object/GameObj/Bow/Bow_Monster.h"
 
 // SolarSystem
 #include "Object/GameObj/SolarSystem/Planet.h"

@@ -18,9 +18,11 @@ public:
 
 	Vector2 GetPos() { return Vector2(_quad->GetTransform()->GetPos()); }
 	bool GetActive() { return _isActive; }
+	shared_ptr<CircleCollider>& GetCollider() { return _col; }
 
 private:
 	shared_ptr<Quad> _quad;
+	shared_ptr<CircleCollider> _col;
 
 	Vector2 _dir = { 0,0 };
 	float _speed = 500.0f;

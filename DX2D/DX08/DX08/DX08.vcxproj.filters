@@ -117,6 +117,12 @@
     <ClInclude Include="Framework\Collider\CircleCollider.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Framework\Collider\Collider.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\GameObj\Bow\Bow_Monster.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DX08.cpp">
@@ -206,6 +212,12 @@
     <ClCompile Include="Framework\Collider\CircleCollider.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Framework\Collider\Collider.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\GameObj\Bow\Bow_Monster.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX08.rc">
@@ -221,9 +233,8 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Shader\TextureShader.hlsl" />
     <FxCompile Include="Shader\TutorialVertexShader.hlsl" />
-    <FxCompile Include="Shader\TexturePixelShader.hlsl" />
+    <FxCompile Include="Shader\TutorialPixelShader.hlsl" />
     <FxCompile Include="Shader\Collider\ColliderVertexShader.hlsl" />
     <FxCompile Include="Shader\Collider\ColliderPixelShader.hlsl" />
   </ItemGroup>

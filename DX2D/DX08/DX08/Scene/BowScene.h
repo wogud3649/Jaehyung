@@ -11,5 +11,6 @@ public:
 
 private:
 	shared_ptr<Bow> _bow;
+	shared_ptr<Bow_Monster> _monster;
 };
 
