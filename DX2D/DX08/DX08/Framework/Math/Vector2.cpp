@@ -2,20 +2,17 @@
 #include "Vector2.h"
 
 Vector2::Vector2()
-: x(0)
-, y(0)
+: XMFLOAT2()
 {
 }
 
 Vector2::Vector2(float x, float y)
-: x(x)
-, y(y)
+: XMFLOAT2(x, y)
 {
 }
 
 Vector2::Vector2(int x, int y)
-: x((float)x)
-, y((float)y)
+: XMFLOAT2((float)x, (float)y)
 {
 }
 

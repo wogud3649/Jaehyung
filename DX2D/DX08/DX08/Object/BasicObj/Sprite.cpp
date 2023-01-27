@@ -1,59 +1,40 @@
 #include "framework.h"
-#include "Quad.h"
+#include "Sprite.h"
 
-Quad::Quad()
+Sprite::Sprite(wstring file, Vector2 maxFrame)
+: _maxFrame(maxFrame)
 {
-}
-
-Quad::Quad(wstring file)
-{
-    CreateMaterial(file);
-    CreateMesh();
+    Sprite::CreateMaterial(file);
+    Sprite::CreateMesh();
 
     _transform = make_shared<Transform>();
+    _spriteBuffer = make_shared<SpriteBuffer>();
+    _spriteBuffer->_data.maxFrame = maxFrame;
 }
 
-Quad::~Quad()
+Sprite::~Sprite()
 {
 }
 
-void Quad::Update()
+void Sprite::Update()
 {
-    _transform->Update();
+    _spriteBuffer->Update();
+    Quad::Update();
 }
 
-void Quad::Render()
+void Sprite::Render()
 {
-    _vertexBuffer->IASet(0);
-    _indexBuffer->IASetIndexBuffer();
-
-    DC->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-    ALPHA->SetState();
-    _srv->Set(0);
-    SAMPLER->Set(0);
-
-    _transform->SetBuffer(0);
-
-    _vs->Set();
-    _ps->Set();
-
-    DC->DrawIndexed(6, 0, 0);
+    _spriteBuffer->SetPSBuffer(0);
+    Quad::Render();
 }
 
-void Quad::CreateMaterial(wstring file)
-{
-    _vs = ADD_VS(L"Shader/TextureVertexShader.hlsl");
-	_ps = ADD_PS(L"Shader/TutorialPixelShader.hlsl");
-    _srv = SRV_ADD(file);
-    _size = _srv->GetImageSize();
-}
-
-void Quad::CreateMesh()
+void Sprite::CreateMesh()
 {
     Vertex vertex;
 
     Vector2 halfSize = _size * 0.5f;
+    halfSize.x = halfSize.x / _maxFrame.x;
+    halfSize.y = halfSize.y / _maxFrame.y;
 
     vertex.pos = { -halfSize.x, halfSize.y, 0.0f }; // ¿ÞÂÊ À§
     vertex.uv = { 0.0f, 0.0f };
@@ -81,4 +62,12 @@ void Quad::CreateMesh()
 
     _vertexBuffer = make_shared<VertexBuffer>(_vertices.data(), sizeof(Vertex), 4);
     _indexBuffer = make_shared<IndexBuffer>(_indices.data(), 6);
+}
+
+void Sprite::CreateMaterial(wstring file)
+{
+	_vs = ADD_VS(L"Shader/TextureVertexShader.hlsl");
+	_ps = ADD_PS(L"Shader/SpritePixelShader.hlsl");
+	_srv = SRV_ADD(file);
+	_size = _srv->GetImageSize();
 }

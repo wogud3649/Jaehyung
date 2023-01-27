@@ -10,6 +10,11 @@ Transform::~Transform()
 {
 }
 
+void Transform::UpdateSRT()
+{ 
+	//TODO;
+}
+
 void Transform::Update()
 {
 	// SRT Matrix ¼³Á¤
@@ -35,6 +40,8 @@ void Transform::SetBuffer(UINT slot)
 
 Vector2 Transform::GetWorldPos()
 {
+	UpdateSRT();
+
 	XMFLOAT4X4 temp;
 	XMStoreFloat4x4(&temp, _srtMatrix);
 
@@ -43,6 +50,8 @@ Vector2 Transform::GetWorldPos()
 
 Vector2 Transform::GetWorldScale()
 {
+	UpdateSRT();
+
 	XMFLOAT4X4 temp;
 	XMStoreFloat4x4(&temp, _scaleM);
 

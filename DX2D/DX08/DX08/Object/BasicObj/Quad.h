@@ -2,19 +2,23 @@
 class Quad
 {
 public:
+	Quad();
 	Quad(wstring file);
 	~Quad();
 
-	void Update();
-	void Render();
+	virtual void Update();
+	virtual void Render();
 
-	void CreateMaterial(wstring file);
-	void CreateMesh();
+	virtual void CreateMaterial(wstring file);
+	virtual void CreateMesh();
+
+	void SetVS(shared_ptr<VertexShader> shader) { _vs = shader; }
+	void SetPS(shared_ptr<PixelShader> shader) { _ps = shader; }
 
 	shared_ptr<Transform> GetTransform() { return _transform; }
 	Vector2& GetSize() { return _size; }
 
-private:
+protected:
 	Vector2 _size;
 
 	vector<UINT> _indices;

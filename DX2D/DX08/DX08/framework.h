@@ -54,8 +54,10 @@ using namespace DirectX;
 #include "Framework/Render/VertexLayout.h"
 #include "Framework/Render/VertexBuffer.h"
 #include "Framework/Render/IndexBuffer.h"
+#include "Framework/Render/Shader.h"
 #include "Framework/Render/VertexShader.h"
 #include "Framework/Render/PixelShader.h"
+#include "Framework/Render/ShaderManager.h"
 
 // Collider
 #include "Framework/Collider/Collider.h"
@@ -75,6 +77,7 @@ using namespace DirectX;
 
 // Object
 #include "Object/BasicObj/Quad.h"
+#include "Object/BasicObj/Sprite.h"
 
 // Bow
 #include "Object/GameObj/Bow/Bow_Monster.h"

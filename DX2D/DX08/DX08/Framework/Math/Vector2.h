@@ -1,5 +1,5 @@
 #pragma once
-class Vector2
+class Vector2 : public XMFLOAT2
 {
 public:
 	Vector2();
@@ -35,9 +35,5 @@ public:
 
 	Vector2 NormalVector2();
 	void Normalize();
-
-public:
-	float x;
-	float y;
 };
 

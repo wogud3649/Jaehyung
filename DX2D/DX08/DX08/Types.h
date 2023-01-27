@@ -3,6 +3,7 @@
 #define WIN_HEIGHT 720
 #define CENTER_X 640
 #define CENTER_Y 360
+#define CENTER Vector2(CENTER_X, CENTER_Y)
 
 #define PI 3.141592
 
@@ -24,3 +25,6 @@
 #define RUN_TIME Timer::GetInstance()->GetRunTime()
 
 #define SRV_ADD(k) SRVManager::GetInstance()->AddSRV(k)
+
+#define ADD_VS(k) ShaderManager::GetInstance()->AddVS(k)
+#define ADD_PS(k) ShaderManager::GetInstance()->AddPS(k)

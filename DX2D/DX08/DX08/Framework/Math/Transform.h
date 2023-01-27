@@ -7,6 +7,7 @@ public:
 	Transform();
 	~Transform();
 
+	void UpdateSRT();
 	void Update();
 	void SetBuffer(UINT slot);
 

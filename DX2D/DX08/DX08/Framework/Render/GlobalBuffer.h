@@ -26,6 +26,27 @@ private:
 	Data _data;
 };
 
+class SpriteBuffer : public ConstantBuffer
+{
+public:
+	struct Data
+	{
+		Vector2 maxFrame = { 0.0f,0.0f };
+		Vector2 curFrame = { 0.0f,0.0f };
+	};
+
+	// 상수버퍼 규칙
+	// 16바이트의 배수로 올려야한다.
+	SpriteBuffer()
+		: ConstantBuffer(&_data, sizeof(_data))
+	{
+	}
+
+	virtual ~SpriteBuffer() {}
+
+	Data _data;
+};
+
 class ColorBuffer : public ConstantBuffer
 {
 public:

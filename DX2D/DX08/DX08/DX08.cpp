@@ -56,6 +56,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     InputManager::Create();
     Timer::Create();
     SRVManager::Create();
+    ShaderManager::Create();
 
     shared_ptr<Program> program = make_shared<Program>();
 
@@ -79,7 +80,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
     }
 
-    SRVManager::Delete;
+    ShaderManager::Delete();
+    SRVManager::Delete();
     Timer::Delete();
     InputManager::Delete();
     StateManager::Delete();
