@@ -27,6 +27,9 @@ Program::~Program()
 
 void Program::Update()
 {
+	if (KEY_DOWN(VK_F1))
+		Collider::isDebug = !Collider::isDebug;
+
 	InputManager::GetInstance()->Update();
 	Timer::GetInstance()->Update();
 

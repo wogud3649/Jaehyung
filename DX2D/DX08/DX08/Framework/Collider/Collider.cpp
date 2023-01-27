@@ -1,6 +1,8 @@
 #include "framework.h"
 #include "Collider.h"
 
+bool Collider::isDebug = false;
+
 Collider::Collider()
 {
 }
