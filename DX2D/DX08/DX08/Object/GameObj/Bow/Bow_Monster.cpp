@@ -19,14 +19,33 @@ Bow_Monster::~Bow_Monster()
 
 void Bow_Monster::Update()
 {
+	if (!isActive)
+		return;
 	_quad->Update();
 	_col->Update();
-
-
 }
 
 void Bow_Monster::Render()
 {
+	if (!isActive)
+		return;
 	_quad->Render();
-	//_col->Render();
+	_col->Render();
+}
+
+void Bow_Monster::Damaged(int damage)
+{
+	_hp -= damage;
+	if (_hp <= 0)
+	{
+		isActive = false;
+		_col->isActive = false;
+	}
+}
+
+void Bow_Monster::Revive()
+{
+	_hp = _maxHp;
+	isActive = true;
+	_col->isActive = true;
 }

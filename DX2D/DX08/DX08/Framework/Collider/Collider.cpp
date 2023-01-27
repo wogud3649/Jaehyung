@@ -13,12 +13,18 @@ Collider::~Collider()
 
 void Collider::Update()
 {
+    if (!isActive)
+        return;
+
     _transform->Update();
     _colorBuffer->Update();
 }
 
 void Collider::Render()
 {
+    if (!isDebug || !isActive)
+        return;
+
     _transform->SetBuffer(0);
     _colorBuffer->SetPSBuffer(0);
 

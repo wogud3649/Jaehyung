@@ -96,7 +96,7 @@
     <ClInclude Include="Object\GameObj\Bow\Bow.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Object\GameObj\Bow\Arrow.h">
+    <ClInclude Include="Object\GameObj\Bow\Bow_Arrow.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Framework\Utility\InputManager.h">
@@ -191,7 +191,7 @@
     <ClCompile Include="Object\GameObj\Bow\Bow.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Object\GameObj\Bow\Arrow.cpp">
+    <ClCompile Include="Object\GameObj\Bow\Bow_Arrow.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Framework\Utility\InputManager.cpp">

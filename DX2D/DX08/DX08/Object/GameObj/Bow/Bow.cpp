@@ -9,7 +9,7 @@ Bow::Bow()
 	_quad->GetTransform()->SetScale(Vector2(2, 2));
 
 	for (int i = 0; i < _arrowSize; i++)
-		_arrows.push_back(make_shared<Arrow>());
+		_arrows.push_back(make_shared<Bow_Arrow>());
 }
 
 Bow::~Bow()
@@ -25,6 +25,7 @@ void Bow::Update()
 	{
 		Fire(direction);
 	}
+
 	_quad->Update();
 	for (auto arrow : _arrows)
 		arrow->Update();
@@ -37,9 +38,15 @@ void Bow::Render()
 		arrow->Render();
 }
 
+void Bow::SetTarget(shared_ptr<Bow_Monster> target)
+{
+	for (auto arrow : _arrows)
+		arrow->SetTarget(target);
+}
+
 void Bow::Fire(Vector2 direction)
 {
-	auto iter = find_if(_arrows.begin(), _arrows.end(), [](const shared_ptr<Arrow>& arrow)->bool
+	auto iter = find_if(_arrows.begin(), _arrows.end(), [](const shared_ptr<Bow_Arrow>& arrow)->bool
 		{
 			return (arrow->GetActive() == false);
 		});
@@ -48,6 +55,6 @@ void Bow::Fire(Vector2 direction)
 		(*iter)->GetTransform()->SetPos(_quad->GetTransform()->GetPos());
 		(*iter)->GetTransform()->SetAngle(direction.Angle());
 		(*iter)->SetDirection(direction);
-		(*iter)->SetActive(true);
+		(*iter)->EnAble();
 	}
 }
