@@ -19,6 +19,7 @@ void BowScene::Update()
 	{
 		_monster->Revive();
 	}
+
 	_bow->Update();
 	_monster->Update();
 }
