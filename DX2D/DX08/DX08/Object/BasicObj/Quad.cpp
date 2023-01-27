@@ -44,7 +44,7 @@ void Quad::Render()
 void Quad::CreateMaterial(wstring file)
 {
     _vs = ADD_VS(L"Shader/TextureVertexShader.hlsl");
-	_ps = ADD_PS(L"Shader/TutorialPixelShader.hlsl");
+	_ps = ADD_PS(L"Shader/TexturePixelShader.hlsl");
     _srv = SRV_ADD(file);
     _size = _srv->GetImageSize();
 }
