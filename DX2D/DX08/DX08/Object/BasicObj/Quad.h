@@ -12,6 +12,7 @@ public:
 	void CreateMesh();
 
 	shared_ptr<Transform> GetTransform() { return _transform; }
+	Vector2& GetSize() { return _size; }
 
 private:
 	Vector2 _size;

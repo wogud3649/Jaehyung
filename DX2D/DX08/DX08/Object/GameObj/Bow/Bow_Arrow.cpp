@@ -4,11 +4,11 @@
 Bow_Arrow::Bow_Arrow()
 {
 	_quad = make_shared<Quad>(L"Resource/Texture/Bullet.png");
-	_quad->GetTransform()->SetScale(Vector2(0.2f, 0.2f));
+	_quad->GetTransform()->SetScale(Vector2(0.1f, 0.1f));
 
 	_col = make_shared<CircleCollider>(50);
 	_col->GetTransform()->SetParent(_quad->GetTransform());
-	_col->GetTransform()->GetPos().x += 150;
+	_col->GetTransform()->GetPos().x += 300;
 }
 
 Bow_Arrow::~Bow_Arrow()

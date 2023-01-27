@@ -9,7 +9,7 @@
 
 Program::Program()
 {
-	_scene = make_shared<MyGameScene>();
+	_scene = make_shared<BowScene>();
 
 	_view = make_shared<MatrixBuffer>();
 	_proj = make_shared<MatrixBuffer>();

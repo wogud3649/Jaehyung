@@ -21,5 +21,7 @@ private:
 	int _maxHp = 100;
 	int _hp = _maxHp;
 	bool isActive = true;
+
+	shared_ptr<Quad> _hpImage;
 };
 

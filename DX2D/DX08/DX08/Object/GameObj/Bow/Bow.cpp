@@ -6,7 +6,7 @@ Bow::Bow()
 {
 	_quad = make_shared<Quad>(L"Resource/Texture/Bow.png");
 	_quad->GetTransform()->SetPos(Vector2(100, 100));
-	_quad->GetTransform()->SetScale(Vector2(2, 2));
+	_quad->GetTransform()->SetScale(Vector2(1.5f, 1.5f));
 
 	for (int i = 0; i < _arrowSize; i++)
 		_arrows.push_back(make_shared<Bow_Arrow>());
