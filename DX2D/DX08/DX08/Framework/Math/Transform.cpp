@@ -12,17 +12,16 @@ Transform::~Transform()
 
 void Transform::UpdateSRT()
 { 
-	//TODO;
-}
-
-void Transform::Update()
-{
-	// SRT Matrix ¼³Á¤
 	_scaleM = XMMatrixScaling(_scale.x, _scale.y, 1);
 	_rotationM = XMMatrixRotationZ(_angle);
 	_tranlateM = XMMatrixTranslation(_pos.x, _pos.y, 0);
 
 	_srtMatrix = _scaleM * _rotationM * _tranlateM;
+}
+
+void Transform::Update()
+{
+	UpdateSRT();
 
 	if (_parent.expired() == false)
 	{
