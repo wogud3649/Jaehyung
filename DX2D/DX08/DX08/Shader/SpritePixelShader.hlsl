@@ -7,6 +7,12 @@ cbuffer SpriteBuffer : register(b0)
 	float2 curFrame; // (1, 0)
 }
 
+cbuffer ReverseBuffer : register(b1)
+{
+	int reverse;
+	int padding[3];
+}
+
 struct PixelInput
 {
 	float4 pos : SV_POSITION;
@@ -16,6 +22,8 @@ struct PixelInput
 // SV : SystemValue
 float4 PS(PixelInput input) : SV_TARGET
 {
+	input.uv.x = abs(input.uv.x - reverse);
+
 	float2 spriteUV;
 	spriteUV.x = input.uv.x / maxFrame.x + curFrame.x / maxFrame.x;
 	spriteUV.y = input.uv.y / maxFrame.y + curFrame.y / maxFrame.y;

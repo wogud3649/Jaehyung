@@ -33,4 +33,8 @@ void SpriteScene::PostRender()
 {
 	ImGui::SliderInt("CurFrameX", &curFrameX, 0, 10);
 	ImGui::SliderInt("CurFrameY", &curFrameY, 0, 8);
+	if (ImGui::Button("Reverse", { 100, 100 }))
+	{
+		_sprite->SetReverse();
+	}
 }

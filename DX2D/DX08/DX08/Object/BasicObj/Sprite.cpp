@@ -10,6 +10,8 @@ Sprite::Sprite(wstring file, Vector2 maxFrame)
     _transform = make_shared<Transform>();
     _spriteBuffer = make_shared<SpriteBuffer>();
     _spriteBuffer->_data.maxFrame = maxFrame;
+
+    _reverseBuffer = make_shared<ReverseBuffer>();
 }
 
 Sprite::~Sprite()
@@ -19,12 +21,14 @@ Sprite::~Sprite()
 void Sprite::Update()
 {
     _spriteBuffer->Update();
+    _reverseBuffer->Update();
     Quad::Update();
 }
 
 void Sprite::Render()
 {
     _spriteBuffer->SetPSBuffer(0);
+    _reverseBuffer->SetPSBuffer(1);
     Quad::Render();
 }
 
@@ -70,4 +74,19 @@ void Sprite::CreateMaterial(wstring file)
 	_ps = ADD_PS(L"Shader/SpritePixelShader.hlsl");
 	_srv = SRV_ADD(file);
 	_size = _srv->GetImageSize();
+}
+
+void Sprite::SetReverse()
+{
+    if (_reverseBuffer->_data.reverse == 0)
+        _reverseBuffer->_data.reverse = 1;
+    else
+        _reverseBuffer->_data.reverse = 0;
+}
+
+void Sprite::SetActionClip(Action::Clip clip)
+{
+    Vector2 imageSize = clip._srv->GetImageSize();
+
+    _spriteBuffer->_data.curFrame = { clip._startPos.x / clip._size.x, clip._startPos.y / clip._size.y };
 }

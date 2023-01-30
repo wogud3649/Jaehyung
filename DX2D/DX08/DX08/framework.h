@@ -19,6 +19,7 @@
 #include <map>
 #include <algorithm>
 #include <string>
+#include <functional>
 #include <wrl/client.h>
 
 #include <d3d11.h>
@@ -74,6 +75,9 @@ using namespace DirectX;
 #include "Framework/Texture/SamplerState.h"
 #include "Framework/Texture/BlendState.h"
 #include "Framework/Texture/StateManager.h"
+
+// Animation
+#include "Framework/Animation/Action.h"
 
 // Object
 #include "Object/BasicObj/Quad.h"

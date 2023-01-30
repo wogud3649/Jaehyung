@@ -46,6 +46,27 @@ public:
 	Data _data;
 };
 
+class ReverseBuffer : public ConstantBuffer
+{
+public:
+	struct Data
+	{
+		int reverse = 0;
+		int padding[3];
+	};
+
+	// 상수버퍼 규칙
+	// 16바이트의 배수로 올려야한다.
+	ReverseBuffer()
+		: ConstantBuffer(&_data, sizeof(_data))
+	{
+	}
+
+	virtual ~ReverseBuffer() {}
+
+	Data _data;
+};
+
 class ColorBuffer : public ConstantBuffer
 {
 public:
