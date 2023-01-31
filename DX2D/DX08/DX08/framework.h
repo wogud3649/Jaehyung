@@ -88,6 +88,9 @@ using namespace DirectX;
 #include "Object/GameObj/Bow/Bow_Arrow.h"
 #include "Object/GameObj/Bow/Bow.h"
 
+// Zelda
+#include "Object/GameObj/Zelda/Zelda.h"
+
 // SolarSystem
 #include "Object/GameObj/SolarSystem/Planet.h"
 

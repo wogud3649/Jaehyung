@@ -194,6 +194,7 @@
     <ClInclude Include="Framework\Math\Transform.h" />
     <ClInclude Include="Framework\Utility\Timer.h" />
     <ClInclude Include="Types.h" />
+    <ClInclude Include="Object\GameObj\Zelda\Zelda.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene\ActionScene.cpp" />
@@ -243,6 +244,7 @@
     <ClCompile Include="Object\BasicObj\Sprite.cpp" />
     <ClCompile Include="Framework\Render\Shader.cpp" />
     <ClCompile Include="Framework\Render\ShaderManager.cpp" />
+    <ClCompile Include="Object\GameObj\Zelda\Zelda.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX08.rc" />

@@ -36,6 +36,7 @@ public:
 
 	Clip GetCurClip() { return _clips[_curClipIndex]; }
 	Action::Type GetRepeatType() { return _repeatType; }
+	string GetName() { return _name; }
 	bool IsPlay() { return _isPlay; }
 
 	void SetCallBack(function<void(void)> event) { _endEvent = event; }
@@ -45,7 +46,7 @@ private:
 	vector<Clip> _clips;
 
 	Type _repeatType;
-	bool _isPlay = true;
+	bool _isPlay = false;
 	UINT _curClipIndex = 0;
 
 	float _time = 0.0f;

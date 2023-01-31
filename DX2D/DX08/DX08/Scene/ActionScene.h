@@ -9,14 +9,7 @@ public:
 	virtual void Render() override;
 	virtual void PostRender() override;
 
-	void CreateAction();
-
-	void SetCheck() { _check = 1; }
-
 private:
-	shared_ptr<Sprite> _sprite;
-	shared_ptr<Action> _action;
-
-	int _check = 0;
+	shared_ptr<Zelda> _zelda;
 };
 
