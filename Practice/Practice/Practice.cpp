@@ -8,33 +8,14 @@
 
 using namespace std;
 
-int solution(int n, vector<int> lost, vector<int> reserve) {
-    int answer = 0;
-    vector<bool> attend(n, true);
-
-    for (int lostNum : lost)
-    {
-        attend[lostNum - 1] = false;
-    }
-
-    for (int i = 0; i < reserve.size(); i++)
-    {
-        int curNum = reserve[i] - 1;
-        if (attend[curNum] == false)
-        {
-            attend[curNum] = true;
-            continue;
-        }
-        if (curNum == 0)
-
-    }
-
+string solution(vector<int> numbers, string hand) {
+    string answer = "";
     return answer;
 }
 
 int main(void)
 {
-    solution(5, { 2,4 }, { 1, 2, 3, 5 });
+    solution({ 1, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5 }, "right");
 
     return 0;
 }

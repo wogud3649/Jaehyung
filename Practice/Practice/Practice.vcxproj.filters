@@ -15,61 +15,64 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Babbling.cpp">
+    <ClCompile Include="Solved\Babbling.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="FiniteDecimal.cpp">
+    <ClCompile Include="Solved\FiniteDecimal.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="GCD.cpp">
+    <ClCompile Include="Solved\GCD.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Factorization.cpp">
+    <ClCompile Include="Solved\Factorization.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="DangerCheck.cpp">
+    <ClCompile Include="Solved\DangerCheck.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="LCM.cpp">
+    <ClCompile Include="Solved\LCM.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Practice.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="OverlappingLines.cpp">
+    <ClCompile Include="Solved\OverlappingLines.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="SearchParallel.cpp">
+    <ClCompile Include="Solved\SearchParallel.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="AllFactors.cpp">
+    <ClCompile Include="Solved\AllFactors.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Collatz.cpp">
+    <ClCompile Include="Solved\Collatz.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Binarization.cpp">
+    <ClCompile Include="Solved\Binarization.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Trio.cpp">
+    <ClCompile Include="Solved\Trio.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Service.cpp">
+    <ClCompile Include="Solved\Service.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="PrimeNumber.cpp">
+    <ClCompile Include="Solved\PrimeNumber.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="SubString.cpp">
+    <ClCompile Include="Solved\SubString.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="MakePrime.cpp">
+    <ClCompile Include="Solved\MakePrime.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="StableSort.cpp">
+    <ClCompile Include="Solved\StableSort.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="DartGame.cpp">
+    <ClCompile Include="Solved\DartGame.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Solved\NumberMates.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

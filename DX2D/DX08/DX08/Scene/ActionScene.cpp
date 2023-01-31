@@ -38,9 +38,9 @@ void ActionScene::CreateAction()
 	vector<Action::Clip> clips;
 	float w = imageSize.x / 10.0f;
 	float h = imageSize.y / 8.0f;
-	float y = h * 4;
+	float y = h * 0;
 	
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 3; i++)
 	{
 		clips.emplace_back(w * i, y, w, h, SRV_ADD(L"Resource/Texture/zelda.png"));
 	}
