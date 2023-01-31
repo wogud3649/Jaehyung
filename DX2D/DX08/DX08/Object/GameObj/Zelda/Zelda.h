@@ -11,7 +11,7 @@ public:
 		FRONT_RUN,
 		LEFT_RUN,
 		BACK_RUN,
-		RIGHT_RUN,
+		RIGHT_RUN
 	};
 	
 	Zelda();

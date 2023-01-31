@@ -6,7 +6,7 @@ Zelda::Zelda()
 	_sprite = make_shared<Sprite>(L"Resource/Texture/zelda.png", Vector2(10.0f, 8.0f));
 
 	CreateAction();
-	SetAction(State::FRONT_IDLE);
+	SetAction(_state);
 	_curAction->Play();
 }
 
@@ -36,38 +36,25 @@ void Zelda::Update()
 		}
 	}
 
-	if (KEY_DOWN('A'))
-	{
-		SetAction(State::LEFT_RUN);
-	}
-	if (KEY_DOWN('W'))
-	{
-		SetAction(State::BACK_RUN);
-	}
-	if (KEY_DOWN('D'))
-	{
-		SetAction(State::RIGHT_RUN);
-	}
-	if (KEY_DOWN('S'))
-	{
-		SetAction(State::FRONT_RUN);
-	}
-
 	if (KEY_PRESS('A'))
 	{
 		_sprite->GetTransform()->GetPos().x -= _speed * DELTA_TIME;
+		SetAction(State::LEFT_RUN);
 	}
 	if (KEY_PRESS('W'))
 	{
 		_sprite->GetTransform()->GetPos().y += _speed * DELTA_TIME;
+		SetAction(State::BACK_RUN);
 	}
 	if (KEY_PRESS('D'))
 	{
 		_sprite->GetTransform()->GetPos().x += _speed * DELTA_TIME;
+		SetAction(State::RIGHT_RUN);
 	}
 	if (KEY_PRESS('S'))
 	{
 		_sprite->GetTransform()->GetPos().y -= _speed * DELTA_TIME;
+		SetAction(State::FRONT_RUN);
 	}
 
 	for (auto action : _actions)
@@ -149,8 +136,7 @@ void Zelda::CreateAction()
 
 	// Right IDLE
 	{
-		y = 3 * h;
-
+		y = 1 * h;
 		for (int i = 0; i < 3; i++)
 		{
 			clips.emplace_back(w * i, y, w, h, SRV_ADD(L"Resource/Texture/zelda.png"));
