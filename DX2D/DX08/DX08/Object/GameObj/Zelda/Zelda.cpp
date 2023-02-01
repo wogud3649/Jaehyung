@@ -136,7 +136,7 @@ void Zelda::CreateAction()
 
 	// Right IDLE
 	{
-		y = 1 * h;
+		y = 3 * h;
 		for (int i = 0; i < 3; i++)
 		{
 			clips.emplace_back(w * i, y, w, h, SRV_ADD(L"Resource/Texture/zelda.png"));
