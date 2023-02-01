@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:81fc8bef9c430eef4798d773d1c07476:0a24d1d9648871a0c832a15414ab18ef:a22b143eeeab56f9656a959a50acd29b$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="SpecialShootEffect.png" width="1433" height="994">
+    <sprite n="cuphead_explode_fx_0001.png" x="252" y="907" w="45" h="46" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_explode_fx_0002.png" x="186" y="907" w="64" h="67" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_explode_fx_0003.png" x="317" y="774" w="90" h="93" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_explode_fx_0004.png" x="186" y="774" w="129" h="131" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_explode_fx_0005.png" x="1" y="774" w="183" h="180" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_explode_fx_0006.png" x="409" y="770" w="227" h="223" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_explode_fx_0007.png" x="750" y="731" w="262" h="254" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_explode_fx_0008.png" x="1106" y="646" w="311" h="302" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_explode_fx_0009.png" x="1106" y="329" w="326" h="315" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_explode_fx_0010.png" x="1099" y="1" w="330" h="326" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_explode_fx_0011.png" x="757" y="1" w="340" h="335" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_explode_fx_0012.png" x="750" y="378" w="354" h="351" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_explode_fx_0013.png" x="377" y="391" w="371" h="377" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_explode_fx_0014.png" x="386" y="1" w="369" h="375" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_explode_fx_0015.png" x="1" y="391" w="374" h="381" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_explode_fx_0016.png" x="1" y="1" w="383" h="388" pX="0.5" pY="0.5"/>
+</TextureAtlas>

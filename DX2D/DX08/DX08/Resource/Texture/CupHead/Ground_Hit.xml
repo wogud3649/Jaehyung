@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:7ba7fb57c686f4c71bfdeaeef771eed4:5f325b59542f250decfa36db8726783b:a37bac36df8981a09a1586660286641b$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="Ground_Hit.png" width="1812" height="302">
+    <sprite n="cuphead_hit_0006(1).png" x="1" y="1" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_hit_0006(2).png" x="303" y="1" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_hit_0006(3).png" x="605" y="1" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_hit_0006(4).png" x="907" y="1" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_hit_0006(5).png" x="1209" y="1" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_hit_0006.png" x="1511" y="1" w="300" h="300" pX="0.5" pY="0.5"/>
+</TextureAtlas>

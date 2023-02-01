@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:cb4cc5a9bdc8a5622f5fea9486f032cc:be5827ef4c84aaf1bd6a4010b7e6bac4:51ecb0b37b22f8ab17923d232ca96395$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="GroundDiaUpReadySpecial.png" width="437" height="442">
+    <sprite n="cuphead_ex_diagonal_up_0001.png" x="303" y="142" w="111" h="142" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_ex_diagonal_up_0002.png" x="116" y="303" w="106" h="138" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_ex_diagonal_up_0003.png" x="224" y="303" w="108" h="134" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_ex_diagonal_up_0004.png" x="334" y="286" w="102" h="134" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_ex_diagonal_up_0005.png" x="1" y="303" w="113" h="138" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_ex_diagonal_up_0006.png" x="303" y="1" w="126" h="139" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_ex_up_0001 (9).png" x="1" y="1" w="300" h="300" pX="0.5" pY="0.5"/>
+</TextureAtlas>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:3886f8e7e2c6185766adc51953b4709f:dce47ff1d62f9fe3f939999b24436a8f:e6b2ff30dff730c8217a08a8c0efd99a$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="JumpDustA.png" width="504" height="836">
+    <sprite n="cuphead_jump_dust_a_0001.png" x="277" y="384" w="110" h="38" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_jump_dust_a_0002.png" x="277" y="317" w="165" h="65" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_jump_dust_a_0003.png" x="288" y="116" w="178" h="84" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_jump_dust_a_0004.png" x="288" y="1" w="195" h="113" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_jump_dust_a_0005.png" x="285" y="202" w="218" h="113" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_jump_dust_a_0006.png" x="268" y="424" w="234" h="126" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_jump_dust_a_0007.png" x="252" y="683" w="238" h="131" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_jump_dust_a_0008.png" x="258" y="552" w="245" h="129" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_jump_dust_a_0009.png" x="1" y="683" w="249" h="152" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_jump_dust_a_0010.png" x="1" y="536" w="255" h="145" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_jump_dust_a_0011.png" x="1" y="400" w="265" h="134" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_jump_dust_a_0012.png" x="1" y="265" w="274" h="133" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_jump_dust_a_0013.png" x="1" y="136" w="282" h="127" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_jump_dust_a_0014.png" x="1" y="1" w="285" h="133" pX="0.5" pY="0.5"/>
+</TextureAtlas>

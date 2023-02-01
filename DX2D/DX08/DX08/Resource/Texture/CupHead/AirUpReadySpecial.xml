@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:2cf864b53bf0ecc1797dd075fec4382c:11c7a2e651800e93bdedf28b9f82dba6:2483c616f3fee20ce462d9698b61ac80$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="AirUpReadySpecial.png" width="425" height="463">
+    <sprite n="cuphead_ex_up_air_0001.png" x="303" y="233" w="113" h="118" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_ex_up_air_0002.png" x="303" y="118" w="121" h="113" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_ex_up_air_0003.png" x="253" y="353" w="118" h="109" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_ex_up_air_0004.png" x="303" y="1" w="121" h="115" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_ex_up_air_0005.png" x="1" y="303" w="126" h="132" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_ex_up_air_0006.png" x="129" y="303" w="122" h="136" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_ex_up_air_0007.png" x="1" y="1" w="300" h="300" pX="0.5" pY="0.5"/>
+</TextureAtlas>

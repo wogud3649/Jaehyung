@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:d4ba961beac8821db9cd758eee90cb67:dd7d3257a10049afbcc50c233f44b0f6:e3ec7edc5b8d9f86719ed618cd6cc2ee$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="RunShot.png" width="759" height="485">
+    <sprite n="cuphead_idle_0001 (74).png" x="131" y="162" w="140" h="157" pX="0.5" pY="0.5" oX="82" oY="72" oW="300" oH="300"/>
+    <sprite n="cuphead_idle_0001 (75).png" x="410" y="308" w="130" h="148" pX="0.5" pY="0.5" oX="89" oY="78" oW="300" oH="300"/>
+    <sprite n="cuphead_idle_0001 (76).png" x="507" y="1" w="121" h="150" pX="0.5" pY="0.5" oX="104" oY="79" oW="300" oH="300"/>
+    <sprite n="cuphead_idle_0001 (77).png" x="149" y="321" w="121" h="157" pX="0.5" pY="0.5" oX="106" oY="72" oW="300" oH="300"/>
+    <sprite n="cuphead_idle_0001 (78).png" x="1" y="1" w="123" h="164" pX="0.5" pY="0.5" oX="107" oY="66" oW="300" oH="300"/>
+    <sprite n="cuphead_idle_0001 (79).png" x="126" y="1" w="126" h="159" pX="0.5" pY="0.5" oX="102" oY="69" oW="300" oH="300"/>
+    <sprite n="cuphead_idle_0001 (80).png" x="549" y="153" w="135" h="147" pX="0.5" pY="0.5" oX="91" oY="81" oW="300" oH="300"/>
+    <sprite n="cuphead_idle_0001 (81).png" x="405" y="155" w="142" h="151" pX="0.5" pY="0.5" oX="82" oY="77" oW="300" oH="300"/>
+    <sprite n="cuphead_idle_0001 (82).png" x="272" y="321" w="136" h="156" pX="0.5" pY="0.5" oX="89" oY="72" oW="300" oH="300"/>
+    <sprite n="cuphead_idle_0001 (83).png" x="273" y="160" w="130" h="152" pX="0.5" pY="0.5" oX="96" oY="76" oW="300" oH="300"/>
+    <sprite n="cuphead_idle_0001 (84).png" x="380" y="1" w="125" h="152" pX="0.5" pY="0.5" oX="105" oY="79" oW="300" oH="300"/>
+    <sprite n="cuphead_idle_0001 (85).png" x="254" y="1" w="124" h="157" pX="0.5" pY="0.5" oX="103" oY="74" oW="300" oH="300"/>
+    <sprite n="cuphead_idle_0001 (86).png" x="1" y="167" w="128" h="163" pX="0.5" pY="0.5" oX="100" oY="69" oW="300" oH="300"/>
+    <sprite n="cuphead_idle_0001 (87).png" x="630" y="1" w="128" h="145" pX="0.5" pY="0.5" oX="100" oY="85" oW="300" oH="300"/>
+    <sprite n="cuphead_idle_0001 (88).png" x="542" y="308" w="139" h="147" pX="0.5" pY="0.5" oX="89" oY="83" oW="300" oH="300"/>
+    <sprite n="cuphead_idle_0001 (89).png" x="1" y="332" w="146" h="152" pX="0.5" pY="0.5" oX="82" oY="78" oW="300" oH="300"/>
+</TextureAtlas>

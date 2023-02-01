@@ -3,7 +3,7 @@
 
 Zelda::Zelda()
 {
-	_sprite = make_shared<Sprite>(L"Resource/Texture/zelda.png", Vector2(10.0f, 8.0f));
+	_sprite = make_shared<Sprite>(L"Resource/Texture/zelda.png", Vector2(10.0f, 8.0f), Vector2(400, 400));
 
 	CreateAction();
 	SetAction(_state);
@@ -98,7 +98,6 @@ void Zelda::CreateAction()
 	// Front IDLE
 	{
 		y = 0;
-
 		for (int i = 0; i < 3; i++)
 		{
 			clips.emplace_back(w * i, y, w, h, SRV_ADD(L"Resource/Texture/zelda.png"));
@@ -111,7 +110,6 @@ void Zelda::CreateAction()
 	// Left IDLE
 	{
 		y = h;
-
 		for (int i = 0; i < 3; i++)
 		{
 			clips.emplace_back(w * i, y, w, h, SRV_ADD(L"Resource/Texture/zelda.png"));
@@ -124,7 +122,6 @@ void Zelda::CreateAction()
 	// Back IDLE
 	{
 		y = 2 * h;
-
 		for (int i = 0; i < 1; i++)
 		{
 			clips.emplace_back(w * i, y, w, h, SRV_ADD(L"Resource/Texture/zelda.png"));

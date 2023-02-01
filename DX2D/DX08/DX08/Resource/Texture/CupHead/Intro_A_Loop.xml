@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:a4fe4c82766e4faff2cdf4f5eba61d4e:60bdaec13a8dce23173f67e6e56dee94:88750a691b4b8d866a3922e6d6c0bb5f$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="Intro_A_Loop.png" width="302" height="2114">
+    <sprite n="cuphead_intro_a_0001(13).png" x="1" y="1" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_intro_a_0001(14).png" x="1" y="303" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_intro_a_0001(15).png" x="1" y="605" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_intro_a_0001(16).png" x="1" y="907" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_intro_a_0001(17).png" x="1" y="1209" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_intro_a_0001(18).png" x="1" y="1511" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_intro_a_0001(19).png" x="1" y="1813" w="300" h="300" pX="0.5" pY="0.5"/>
+</TextureAtlas>

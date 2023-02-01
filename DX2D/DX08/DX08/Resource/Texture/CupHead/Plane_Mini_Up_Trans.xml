@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:ac5334f3d31d85b353452ddb5a0522c4:112b8a53eb3e79d40fb66ce12b04ebf4:090dcf6e3b424df7adb9920875646ea6$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="Plane_Mini_Up_Trans.png" width="3322" height="302">
+    <sprite n="cuphead_plane_ex_Shrink_Up_Trans_0001.png" x="1" y="1" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_plane_ex_Shrink_Up_Trans_0002.png" x="303" y="1" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_plane_ex_Shrink_Up_Trans_0003.png" x="605" y="1" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_plane_ex_Shrink_Up_Trans_0004.png" x="907" y="1" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_plane_ex_Shrink_Up_Trans_0005.png" x="1209" y="1" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_plane_ex_Shrink_Up_Trans_0006.png" x="1511" y="1" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_plane_ex_Shrink_Up_Trans_0007.png" x="1813" y="1" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_plane_ex_Shrink_Up_Trans_0008.png" x="2115" y="1" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_plane_ex_Shrink_Up_Trans_0009.png" x="2417" y="1" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_plane_ex_Shrink_Up_Trans_0010.png" x="2719" y="1" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_plane_ex_Shrink_Up_Trans_0011.png" x="3021" y="1" w="300" h="300" pX="0.5" pY="0.5"/>
+</TextureAtlas>

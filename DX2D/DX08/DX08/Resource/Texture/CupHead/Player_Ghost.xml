@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:81bebf7d4e1664c097631c1abee2ccbb:3f066ea74fcbf5cf33b35e9bc9eb5d4f:56fa3ad68143441a1cdaa92b001a97ea$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="Player_Ghost.png" width="1812" height="1208">
+    <sprite n="cuphead_hit_0006(29).png" x="1" y="1" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_hit_0006(30).png" x="303" y="1" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_hit_0006(31).png" x="605" y="1" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_hit_0006(32).png" x="907" y="1" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_hit_0006(33).png" x="1209" y="1" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_hit_0006(34).png" x="1511" y="1" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_hit_0006(35).png" x="1" y="303" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_hit_0006(36).png" x="303" y="303" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_hit_0006(37).png" x="605" y="303" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_hit_0006(38).png" x="907" y="303" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_hit_0006(39).png" x="1209" y="303" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_hit_0006(40).png" x="1511" y="303" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_hit_0006(41).png" x="1" y="605" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_hit_0006(42).png" x="303" y="605" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_hit_0006(43).png" x="605" y="605" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_hit_0006(44).png" x="907" y="605" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_hit_0006(45).png" x="1209" y="605" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_hit_0006(46).png" x="1511" y="605" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_hit_0006(47).png" x="1" y="907" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_hit_0006(48).png" x="303" y="907" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_hit_0006(49).png" x="605" y="907" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_hit_0006(50).png" x="907" y="907" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_hit_0006(51).png" x="1209" y="907" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_hit_0006(52).png" x="1511" y="907" w="300" h="300" pX="0.5" pY="0.5"/>
+</TextureAtlas>

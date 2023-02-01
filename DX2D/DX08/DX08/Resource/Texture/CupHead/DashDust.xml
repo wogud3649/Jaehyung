@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:eaec3a0a29f3e3df5815e8673de086a3:902ff9cfd1b7d6563a2e076fd206c89a:797673f073f817888e5a4d60a2b5c7d8$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="DashDust.png" width="2035" height="208">
+    <sprite n="cuphead_run_0001 (16) (17).png" x="1830" y="1" w="102" h="131" pX="0.5" pY="0.5" oX="98" oY="85" oW="300" oH="300"/>
+    <sprite n="cuphead_run_0001 (16) (18).png" x="1934" y="1" w="100" h="125" pX="0.5" pY="0.5" oX="99" oY="88" oW="300" oH="300"/>
+    <sprite n="cuphead_run_0001 (16) (19).png" x="1722" y="1" w="106" h="131" pX="0.5" pY="0.5" oX="97" oY="85" oW="300" oH="300"/>
+    <sprite n="cuphead_run_0001 (16) (20).png" x="1604" y="1" w="116" h="142" pX="0.5" pY="0.5" oX="92" oY="78" oW="300" oH="300"/>
+    <sprite n="cuphead_run_0001 (16) (21).png" x="932" y="1" w="122" h="198" pX="0.5" pY="0.5" oX="82" oY="23" oW="300" oH="300"/>
+    <sprite n="cuphead_run_0001 (16) (22).png" x="655" y="1" w="137" h="198" pX="0.5" pY="0.5" oX="71" oY="22" oW="300" oH="300"/>
+    <sprite n="cuphead_run_0001 (16) (23).png" x="1348" y="1" w="125" h="187" pX="0.5" pY="0.5" oX="65" oY="21" oW="300" oH="300"/>
+    <sprite n="cuphead_run_0001 (16) (24).png" x="1215" y="1" w="131" h="191" pX="0.5" pY="0.5" oX="63" oY="23" oW="300" oH="300"/>
+    <sprite n="cuphead_run_0001 (16) (25).png" x="1056" y="1" w="157" h="194" pX="0.5" pY="0.5" oX="61" oY="24" oW="300" oH="300"/>
+    <sprite n="cuphead_run_0001 (16) (26).png" x="1475" y="1" w="127" h="185" pX="0.5" pY="0.5" oX="55" oY="36" oW="300" oH="300"/>
+    <sprite n="cuphead_run_0001 (16) (27).png" x="794" y="1" w="136" h="198" pX="0.5" pY="0.5" oX="51" oY="25" oW="300" oH="300"/>
+    <sprite n="cuphead_run_0001 (16) (28).png" x="293" y="1" w="142" h="203" pX="0.5" pY="0.5" oX="46" oY="23" oW="300" oH="300"/>
+    <sprite n="cuphead_run_0001 (16) (29).png" x="147" y="1" w="144" h="205" pX="0.5" pY="0.5" oX="45" oY="22" oW="300" oH="300"/>
+    <sprite n="cuphead_run_0001 (16) (30).png" x="1" y="1" w="144" h="206" pX="0.5" pY="0.5" oX="45" oY="22" oW="300" oH="300"/>
+    <sprite n="cuphead_run_0001 (16) (31).png" x="437" y="1" w="216" h="198" pX="0.5" pY="0.5" oX="18" oY="33" oW="300" oH="300"/>
+</TextureAtlas>

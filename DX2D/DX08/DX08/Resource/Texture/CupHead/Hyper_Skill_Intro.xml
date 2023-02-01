@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:5c2605190564bc4ac85594bcf2c06d44:50e15fd19b040266017db77eb5f0d9c3:dbc44bdfb857d29e490125c9edf050ab$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="Hyper_Skill_Intro.png" width="302" height="3926">
+    <sprite n="cuphead_super_beam_0009(0).png" x="1" y="1" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_super_beam_0009(1).png" x="1" y="303" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_super_beam_0009(5).png" x="1" y="605" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_super_beam_0009(6).png" x="1" y="907" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_super_beam_0009(7).png" x="1" y="1209" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_super_beam_0009(8).png" x="1" y="1511" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_super_beam_0009(9).png" x="1" y="1813" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_super_beam_0009(10).png" x="1" y="2115" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_super_beam_0009(11).png" x="1" y="2417" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_super_beam_0009(12).png" x="1" y="2719" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_super_beam_0009(13).png" x="1" y="3021" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_super_beam_0009(14).png" x="1" y="3323" w="300" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_super_beam_0009(15).png" x="1" y="3625" w="300" h="300" pX="0.5" pY="0.5"/>
+</TextureAtlas>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:903d3525d97caac777bc436bf3443f9b:7c4b11eac1c9856c010617dcf6e2a84a:5d4bc74980ac9e942669c69ffb8a912a$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="GroundStraightReadySpecial.png" width="2008" height="604">
+    <sprite n="cuphead_idle_0001 - 2021-11-28T155917.845.png" x="1" y="1" w="500" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_idle_0001 - 2021-11-28T155927.587.png" x="503" y="1" w="500" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_idle_0001 - 2021-11-28T155937.384.png" x="1005" y="1" w="500" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_idle_0001 - 2021-11-28T155947.356.png" x="1507" y="1" w="500" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_idle_0001 - 2021-11-28T155957.802.png" x="1" y="303" w="500" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_idle_0001 - 2021-11-28T160009.103.png" x="503" y="303" w="500" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_idle_0001 - 2021-11-28T1999999999.png" x="1005" y="303" w="500" h="300" pX="0.5" pY="0.5"/>
+</TextureAtlas>

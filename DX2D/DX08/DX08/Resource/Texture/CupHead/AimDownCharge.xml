@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:fc78c1d7d17685ba7f6fe098796c1c4f:72eb6e9e64b775009a0247e2666f9792:09f13ce419ec9d591c976520e71b73f3$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="AimDownCharge.png" width="105" height="498">
+    <sprite n="cuphead_idle_0001 (53).png" x="1" y="1" w="103" h="165" pX="0.5" pY="0.5" oX="101" oY="64" oW="300" oH="300"/>
+    <sprite n="cuphead_idle_0001 (54).png" x="1" y="334" w="101" h="163" pX="0.5" pY="0.5" oX="101" oY="66" oW="300" oH="300"/>
+    <sprite n="cuphead_idle_0001 (55).png" x="1" y="168" w="101" h="164" pX="0.5" pY="0.5" oX="103" oY="66" oW="300" oH="300"/>
+</TextureAtlas>

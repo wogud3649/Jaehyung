@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:d40a153f97af7c26eb8724dbcbcb9bfe:771d5a140e33b9ac343d8e6e1d9f1c68:fb77c32a0817a6a01b72fe5e2fe689b8$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="Plane_Down_Ready_Special.png" width="3208" height="1506">
+    <sprite n="cuphead_plane_ex_down_0001.png" x="1" y="1" w="800" h="500" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_plane_ex_down_0002.png" x="1" y="1005" w="800" h="500" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_plane_ex_down_0003.png" x="803" y="1" w="800" h="500" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_plane_ex_down_0004.png" x="803" y="503" w="800" h="500" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_plane_ex_down_0005.png" x="803" y="1005" w="800" h="500" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_plane_ex_down_0006.png" x="1605" y="1" w="800" h="500" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_plane_ex_down_0007.png" x="2407" y="1" w="800" h="500" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_plane_ex_down_0008.png" x="1605" y="503" w="800" h="500" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_plane_ex_down_0009.png" x="1605" y="1005" w="800" h="500" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_plane_ex_down_00010.png" x="1" y="503" w="800" h="500" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_plane_ex_down_0011.png" x="2407" y="503" w="800" h="500" pX="0.5" pY="0.5"/>
+</TextureAtlas>

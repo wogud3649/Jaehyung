@@ -46,6 +46,29 @@ public:
 	Data _data;
 };
 
+class ActionBuffer : public ConstantBuffer
+{
+public:
+	struct Data
+	{
+		Vector2 startPos;
+		Vector2 size;
+		Vector2 imageSize;
+		int padding[2];
+	};
+
+	// 상수버퍼 규칙
+	// 16바이트의 배수로 올려야한다.
+	ActionBuffer()
+		: ConstantBuffer(&_data, sizeof(_data))
+	{
+	}
+
+	virtual ~ActionBuffer() {}
+
+	Data _data;
+};
+
 class ReverseBuffer : public ConstantBuffer
 {
 public:

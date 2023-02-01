@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:e3efb74b392768416f165175cd584f65:f798e0dc98d632ff936abba3f272bb2f:b7aaa7b14a533393e068ff5cfd0f0d26$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="GroundDash.png" width="2008" height="604">
+    <sprite n="cuphead_idle_0001 - 2021-11-28T152408.209.png" x="1" y="1" w="500" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_idle_0001 - 2021-11-28T152419.050.png" x="503" y="1" w="500" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_idle_0001 - 2021-11-28T152429.247.png" x="1005" y="1" w="500" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_idle_0001 - 2021-11-28T152438.732.png" x="1507" y="1" w="500" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_idle_0001 - 2021-11-28T152449.976.png" x="1" y="303" w="500" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_idle_0001 - 2021-11-28T152503.265.png" x="503" y="303" w="500" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_idle_0001 - 2021-11-28T152513.783.png" x="1005" y="303" w="500" h="300" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_idle_0001 - 2021-11-28T152527.469.png" x="1507" y="303" w="500" h="300" pX="0.5" pY="0.5"/>
+</TextureAtlas>

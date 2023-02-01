@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:3500b63b678b455461935ea726191a19:bc7b55c883b5fa6556cb4c9161c75df8:dadf96b7016cdaf243b96dd906d3d2e6$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="Plane_Up_Ready_Special.png" width="3208" height="1506">
+    <sprite n="cuphead_plane_ex_up_0001.png" x="1" y="1" w="800" h="500" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_plane_ex_up_0002.png" x="1" y="503" w="800" h="500" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_plane_ex_up_0003.png" x="1" y="1005" w="800" h="500" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_plane_ex_up_0004.png" x="803" y="1" w="800" h="500" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_plane_ex_up_0005.png" x="803" y="503" w="800" h="500" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_plane_ex_up_0006.png" x="803" y="1005" w="800" h="500" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_plane_ex_up_0007.png" x="1605" y="1" w="800" h="500" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_plane_ex_up_0008.png" x="2407" y="1" w="800" h="500" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_plane_ex_up_0009.png" x="1605" y="503" w="800" h="500" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_plane_ex_up_0010.png" x="1605" y="1005" w="800" h="500" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_plane_ex_up_0011.png" x="2407" y="503" w="800" h="500" pX="0.5" pY="0.5"/>
+</TextureAtlas>

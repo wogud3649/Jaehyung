@@ -1,15 +1,35 @@
 #include "framework.h"
 #include "Sprite.h"
 
-Sprite::Sprite(wstring file, Vector2 maxFrame)
+Sprite::Sprite(wstring file, Vector2 size)
+: _clipSize(size)
+{
+    _maxFrame = { 1,1 };
+
+    Sprite::CreateMaterial(file);
+    Sprite::CreateMesh();
+
+
+    _transform = make_shared<Transform>();
+    _actionBuffer = make_shared<ActionBuffer>();
+    _actionBuffer->_data.imageSize = _srv->GetImageSize();
+
+    _reverseBuffer = make_shared<ReverseBuffer>();
+}
+
+Sprite::Sprite(wstring file, Vector2 maxFrame, Vector2 size)
 : _maxFrame(maxFrame)
+, _clipSize(size)
 {
     Sprite::CreateMaterial(file);
     Sprite::CreateMesh();
 
     _transform = make_shared<Transform>();
-    _spriteBuffer = make_shared<SpriteBuffer>();
-    _spriteBuffer->_data.maxFrame = maxFrame;
+    _actionBuffer = make_shared<ActionBuffer>();
+
+    _actionBuffer->_data.imageSize = _srv->GetImageSize();
+    _actionBuffer->_data.size.x = _actionBuffer->_data.imageSize.x / _maxFrame.x;
+    _actionBuffer->_data.size.y = _actionBuffer->_data.imageSize.y / _maxFrame.y;
 
     _reverseBuffer = make_shared<ReverseBuffer>();
 }
@@ -20,14 +40,14 @@ Sprite::~Sprite()
 
 void Sprite::Update()
 {
-    _spriteBuffer->Update();
+    _actionBuffer->Update();
     _reverseBuffer->Update();
     Quad::Update();
 }
 
 void Sprite::Render()
 {
-    _spriteBuffer->SetPSBuffer(0);
+    _actionBuffer->SetPSBuffer(0);
     _reverseBuffer->SetPSBuffer(1);
     Quad::Render();
 }
@@ -36,7 +56,7 @@ void Sprite::CreateMesh()
 {
     Vertex vertex;
 
-    Vector2 halfSize = _size * 0.5f;
+    Vector2 halfSize = _clipSize * 0.5f;
     halfSize.x = halfSize.x / _maxFrame.x;
     halfSize.y = halfSize.y / _maxFrame.y;
 
@@ -71,9 +91,9 @@ void Sprite::CreateMesh()
 void Sprite::CreateMaterial(wstring file)
 {
 	_vs = ADD_VS(L"Shader/TextureVertexShader.hlsl");
-	_ps = ADD_PS(L"Shader/SpritePixelShader.hlsl");
+	_ps = ADD_PS(L"Shader/ActionPixelShader.hlsl");
 	_srv = SRV_ADD(file);
-	_size = _srv->GetImageSize();
+    _size = _srv->GetImageSize();
 }
 
 void Sprite::SetReverse()
@@ -84,9 +104,14 @@ void Sprite::SetReverse()
         _reverseBuffer->_data.reverse = 0;
 }
 
+void Sprite::SetCurFrame(Vector2 curFrame)
+{
+    _actionBuffer->_data.startPos.x = _actionBuffer->_data.size.x / curFrame.x;
+    _actionBuffer->_data.startPos.y = _actionBuffer->_data.size.y / curFrame.y;
+}
+
 void Sprite::SetActionClip(Action::Clip clip)
 {
-    Vector2 imageSize = clip._srv->GetImageSize();
-
-    _spriteBuffer->_data.curFrame = { clip._startPos.x / clip._size.x, clip._startPos.y / clip._size.y };
+    _actionBuffer->_data.startPos = clip._startPos;
+    _actionBuffer->_data.size = clip._size;
 }
