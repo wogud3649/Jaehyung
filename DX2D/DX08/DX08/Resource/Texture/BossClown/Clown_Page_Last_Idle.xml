@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:c91f93cbc0918b0375d1e888d73481d7:cebb96e8225bfd8e8c95e1f272125d29:768500448398c68a51b08fd03ff9b97f$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="Clown_Page_Last_Idle.png" width="2008" height="3208">
+    <sprite n="clown_pillar_idle_0001(55).png" x="1" y="1" w="500" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_pillar_idle_0001(56).png" x="503" y="1" w="500" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_pillar_idle_0001(57).png" x="1005" y="1" w="500" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_pillar_idle_0001(58).png" x="1507" y="1" w="500" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_pillar_idle_0001(59).png" x="1" y="803" w="500" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_pillar_idle_0001(60).png" x="503" y="803" w="500" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_pillar_idle_0001(61).png" x="1005" y="803" w="500" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_pillar_idle_0001(62).png" x="1507" y="803" w="500" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_pillar_idle_0001(63).png" x="1" y="1605" w="500" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_pillar_idle_0001(64).png" x="503" y="1605" w="500" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_pillar_idle_0001(65).png" x="1005" y="1605" w="500" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_pillar_idle_0001(66).png" x="1507" y="1605" w="500" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_pillar_idle_0001(67).png" x="1" y="2407" w="500" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_pillar_idle_0001(68).png" x="503" y="2407" w="500" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_pillar_idle_0001(69).png" x="1005" y="2407" w="500" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_pillar_idle_0001(70).png" x="1507" y="2407" w="500" h="800" pX="0.5" pY="0.5"/>
+</TextureAtlas>

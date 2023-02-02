@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:993e648173190df083e5e6485e9a1fdf:04b324114abb32773022945a09f120ca:409c12dcbd242c8ba970ff251ffad6a4$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="Clown_Die_Middle.png" width="3606" height="2403">
+    <sprite n="clown_Wall_Crash__0001(30).png" x="1" y="1" w="1200" h="799" pX="0.5" pY="0.5"/>
+    <sprite n="clown_Wall_Crash__0001(31).png" x="1203" y="1" w="1200" h="799" pX="0.5" pY="0.5"/>
+    <sprite n="clown_Wall_Crash__0001(32).png" x="2405" y="1" w="1200" h="799" pX="0.5" pY="0.5"/>
+    <sprite n="clown_Wall_Crash__0001(33).png" x="1" y="802" w="1200" h="799" pX="0.5" pY="0.5"/>
+    <sprite n="clown_Wall_Crash__0001(34).png" x="1203" y="802" w="1200" h="799" pX="0.5" pY="0.5"/>
+    <sprite n="clown_Wall_Crash__0001(35).png" x="2405" y="802" w="1200" h="799" pX="0.5" pY="0.5"/>
+    <sprite n="clown_Wall_Crash__0001(36).png" x="1" y="1603" w="1200" h="799" pX="0.5" pY="0.5"/>
+    <sprite n="clown_Wall_Crash__0001(37).png" x="1203" y="1603" w="1200" h="799" pX="0.5" pY="0.5"/>
+</TextureAtlas>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:76d72b6625ba82556d1991d5e36e5cf3:4eb14da1e9c1891ec3e523d5b628841e:a70e0896e745cc58ce5c69dcc5e17fe6$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="Left_Helium_Tank_Loop.png" width="413" height="1683">
+    <sprite n="clown_helium_tank_l_0001.png" x="207" y="1213" w="204" h="233" pX="0.5" pY="0.5"/>
+    <sprite n="clown_helium_tank_l_0002.png" x="1" y="1" w="207" h="235" pX="0.5" pY="0.5"/>
+    <sprite n="clown_helium_tank_l_0003.png" x="209" y="488" w="203" h="235" pX="0.5" pY="0.5"/>
+    <sprite n="clown_helium_tank_l_0004.png" x="1" y="969" w="204" h="239" pX="0.5" pY="0.5"/>
+    <sprite n="clown_helium_tank_l_0005.png" x="208" y="725" w="204" h="246" pX="0.5" pY="0.5"/>
+    <sprite n="clown_helium_tank_l_0006.png" x="210" y="1" w="201" h="248" pX="0.5" pY="0.5"/>
+    <sprite n="clown_helium_tank_l_0007.png" x="1" y="717" w="205" h="250" pX="0.5" pY="0.5"/>
+    <sprite n="clown_helium_tank_l_0008.png" x="1" y="474" w="206" h="241" pX="0.5" pY="0.5"/>
+    <sprite n="clown_helium_tank_l_0009.png" x="1" y="1210" w="204" h="235" pX="0.5" pY="0.5"/>
+    <sprite n="clown_helium_tank_l_0010.png" x="210" y="251" w="198" h="235" pX="0.5" pY="0.5"/>
+    <sprite n="clown_helium_tank_l_0011.png" x="1" y="1447" w="203" h="235" pX="0.5" pY="0.5"/>
+    <sprite n="clown_helium_tank_l_0012.png" x="207" y="973" w="204" h="238" pX="0.5" pY="0.5"/>
+    <sprite n="clown_helium_tank_l_0013.png" x="1" y="238" w="207" h="234" pX="0.5" pY="0.5"/>
+    <sprite n="clown_helium_tank_l_0014.png" x="206" y="1448" w="198" h="234" pX="0.5" pY="0.5"/>
+</TextureAtlas>

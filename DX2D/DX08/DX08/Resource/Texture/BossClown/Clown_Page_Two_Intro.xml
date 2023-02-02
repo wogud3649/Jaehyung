@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:3b68d731f4edfaeb0b8e81e010bd601c:813664eb5c4b889d256e0c2cc2e265cf:048d83cd49e611e2add5822740fe6368$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="Clown_Page_Two_Intro.png" width="3510" height="902">
+    <sprite n="clown_helium_tank_l_0001(101).png" x="1" y="1" w="700" h="900" pX="0.5" pY="0.5"/>
+    <sprite n="clown_helium_tank_l_0001(102).png" x="703" y="1" w="700" h="900" pX="0.5" pY="0.5"/>
+    <sprite n="clown_helium_tank_l_0001(103).png" x="1405" y="1" w="700" h="900" pX="0.5" pY="0.5"/>
+    <sprite n="clown_helium_tank_l_0001(104).png" x="2107" y="1" w="700" h="900" pX="0.5" pY="0.5"/>
+    <sprite n="clown_helium_tank_l_0001(105).png" x="2809" y="1" w="700" h="900" pX="0.5" pY="0.5"/>
+</TextureAtlas>

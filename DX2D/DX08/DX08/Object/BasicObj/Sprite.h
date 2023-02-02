@@ -13,6 +13,7 @@ public:
 	virtual void CreateMaterial(wstring file) override;
 
 	void SetReverse();
+	int& GetLeftRight() { return _reverseBuffer->_data.reverse; }
 
 	void SetCurFrame(Vector2 curFrame);
 	void SetActionClip(Action::Clip clip);

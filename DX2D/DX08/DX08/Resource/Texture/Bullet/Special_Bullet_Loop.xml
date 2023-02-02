@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:9dbc40317fbf869f13ada71588683c30:8865ba0c0f78fe10d4500e69eb8f07f1:09dc0f66b79ca834c74a65920d639a91$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="Special_Bullet_Loop.png" width="199" height="3768">
+    <sprite n="weapon_peashot_EX_loop_0001(3).png" x="1" y="1" w="197" h="469" pX="0.5" pY="0.5"/>
+    <sprite n="weapon_peashot_EX_loop_0001(4).png" x="1" y="472" w="197" h="469" pX="0.5" pY="0.5"/>
+    <sprite n="weapon_peashot_EX_loop_0001(5).png" x="1" y="943" w="197" h="469" pX="0.5" pY="0.5"/>
+    <sprite n="weapon_peashot_EX_loop_0001(6).png" x="1" y="1414" w="197" h="469" pX="0.5" pY="0.5"/>
+    <sprite n="weapon_peashot_EX_loop_0001(7).png" x="1" y="1885" w="197" h="469" pX="0.5" pY="0.5"/>
+    <sprite n="weapon_peashot_EX_loop_0001(8).png" x="1" y="2356" w="197" h="469" pX="0.5" pY="0.5"/>
+    <sprite n="weapon_peashot_EX_loop_0001(9).png" x="1" y="2827" w="197" h="469" pX="0.5" pY="0.5"/>
+    <sprite n="weapon_peashot_EX_loop_0001(10).png" x="1" y="3298" w="197" h="469" pX="0.5" pY="0.5"/>
+</TextureAtlas>

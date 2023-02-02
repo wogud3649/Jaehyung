@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:2188f029024af400e82cc08c679bd477:4fd41c65d7f6db73d1d5626fc1202a3b:1c701495731b03aba2a554572dd431af$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="Clown_Ready_Dash.png" width="6010" height="1604">
+    <sprite n="clown_Rush_Ready_0001.png" x="1" y="1" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_Rush_Ready_0002.png" x="1203" y="1" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_Rush_Ready_0003.png" x="1203" y="803" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_Rush_Ready_0004.png" x="2405" y="1" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_Rush_Ready_0005.png" x="2405" y="803" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_Rush_Ready_0006.png" x="3607" y="1" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_Rush_Ready_0007.png" x="3607" y="803" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_Rush_Ready_0008.png" x="4809" y="1" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_Rush_Ready_0009.png" x="4809" y="803" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_Rush_Ready_00010.png" x="1" y="803" w="1200" h="800" pX="0.5" pY="0.5"/>
+</TextureAtlas>

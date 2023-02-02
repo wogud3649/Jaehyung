@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:7eccbccd57c4d8afc3fc19472d6f1f84:56e890f79d8af4381ed2fecdb80d9ab1:b85c127526d7f8ca06a0ff4f992ce8a8$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="Clown_Intro_1.png" width="3606" height="7218">
+    <sprite n="clown_intro_0004.png" x="1" y="1" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_intro_0005.png" x="1203" y="1" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_intro_0006.png" x="2405" y="1" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_intro_0007.png" x="1" y="803" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_intro_0008.png" x="1203" y="803" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_intro_0009.png" x="2405" y="803" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_intro_0010.png" x="1" y="1605" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_intro_0011.png" x="1203" y="1605" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_intro_0012.png" x="2405" y="1605" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_intro_0013.png" x="1" y="2407" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_intro_0014.png" x="1203" y="2407" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_intro_0015.png" x="2405" y="2407" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_intro_0016.png" x="1" y="3209" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_intro_0017.png" x="1203" y="3209" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_intro_0018.png" x="2405" y="3209" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_intro_0019.png" x="1" y="4011" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_intro_0020.png" x="1203" y="4011" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_intro_0021.png" x="2405" y="4011" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_intro_0022.png" x="1" y="4813" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_intro_0023.png" x="1203" y="4813" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_intro_0024.png" x="2405" y="4813" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_intro_0025.png" x="1" y="5615" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_intro_0026.png" x="1203" y="5615" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_intro_0027.png" x="2405" y="5615" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_intro_0028.png" x="1" y="6417" w="1200" h="800" pX="0.5" pY="0.5"/>
+</TextureAtlas>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:5ae0a4469a56679ca5a5c22c261d7c82:ec52c3b659ae20490f1faebfbe735b43:003e60693dd36aeaac8fa5b90ca27f6e$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="Clown_Intro_2.png" width="3606" height="802">
+    <sprite n="clown_intro_0029.png" x="1" y="1" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_intro_0030.png" x="1203" y="1" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_intro_0031.png" x="2405" y="1" w="1200" h="800" pX="0.5" pY="0.5"/>
+</TextureAtlas>

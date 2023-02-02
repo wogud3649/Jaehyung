@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:6d8b202ad5f54b9e0eefe468071f1770:0e18d4f4c6ed88e4fc293f986b1ff844:b1fbd64942363661e50021803cdbc04e$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="Hyper_Shot_End.png" width="1302" height="2412">
+    <sprite n="cuphead_super_beam_0018 #34371(14).png" x="1" y="1" w="1300" h="400" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_super_beam_0018 #34371(15).png" x="1" y="403" w="1300" h="400" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_super_beam_0018 #34371(16).png" x="1" y="805" w="1300" h="400" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_super_beam_0018 #34371(17).png" x="1" y="1207" w="1300" h="400" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_super_beam_0018 #34371(18).png" x="1" y="1609" w="1300" h="400" pX="0.5" pY="0.5"/>
+    <sprite n="cuphead_super_beam_0018 #34371(19).png" x="1" y="2011" w="1300" h="400" pX="0.5" pY="0.5"/>
+</TextureAtlas>

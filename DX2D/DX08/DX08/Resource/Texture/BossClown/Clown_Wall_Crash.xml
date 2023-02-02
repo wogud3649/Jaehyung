@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:3a4eb049965931f5ae0374525951373c:7e41c707faa5d13b6a7a1284cb17cb90:246f063295b754f3f118f23acc3a6ea1$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="Clown_Wall_Crash.png" width="7212" height="2403">
+    <sprite n="clown_Wall_Crash__0001.png" x="1" y="1" w="1200" h="799" pX="0.5" pY="0.5"/>
+    <sprite n="clown_Wall_Crash__0002.png" x="1203" y="1" w="1200" h="799" pX="0.5" pY="0.5"/>
+    <sprite n="clown_Wall_Crash__0003.png" x="2405" y="1" w="1200" h="799" pX="0.5" pY="0.5"/>
+    <sprite n="clown_Wall_Crash__0004.png" x="3607" y="1" w="1200" h="799" pX="0.5" pY="0.5"/>
+    <sprite n="clown_Wall_Crash__0005.png" x="4809" y="1" w="1200" h="799" pX="0.5" pY="0.5"/>
+    <sprite n="clown_Wall_Crash__0006.png" x="6011" y="1" w="1200" h="799" pX="0.5" pY="0.5"/>
+    <sprite n="clown_Wall_Crash__0007.png" x="1" y="802" w="1200" h="799" pX="0.5" pY="0.5"/>
+    <sprite n="clown_Wall_Crash__0008.png" x="1203" y="802" w="1200" h="799" pX="0.5" pY="0.5"/>
+    <sprite n="clown_Wall_Crash__0009.png" x="2405" y="802" w="1200" h="799" pX="0.5" pY="0.5"/>
+    <sprite n="clown_Wall_Crash__0010.png" x="3607" y="802" w="1200" h="799" pX="0.5" pY="0.5"/>
+    <sprite n="clown_Wall_Crash__0011.png" x="4809" y="802" w="1200" h="799" pX="0.5" pY="0.5"/>
+    <sprite n="clown_Wall_Crash__0012.png" x="6011" y="802" w="1200" h="799" pX="0.5" pY="0.5"/>
+    <sprite n="clown_Wall_Crash__0013.png" x="1" y="1603" w="1200" h="799" pX="0.5" pY="0.5"/>
+    <sprite n="clown_Wall_Crash__0014.png" x="1203" y="1603" w="1200" h="799" pX="0.5" pY="0.5"/>
+    <sprite n="clown_Wall_Crash__0015.png" x="2405" y="1603" w="1200" h="799" pX="0.5" pY="0.5"/>
+    <sprite n="clown_Wall_Crash__0016.png" x="3607" y="1603" w="1200" h="799" pX="0.5" pY="0.5"/>
+    <sprite n="clown_Wall_Crash__0017.png" x="4809" y="1603" w="1200" h="799" pX="0.5" pY="0.5"/>
+    <sprite n="clown_Wall_Crash__0018.png" x="6011" y="1603" w="1200" h="799" pX="0.5" pY="0.5"/>
+</TextureAtlas>

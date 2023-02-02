@@ -5,9 +5,14 @@ using namespace tinyxml2;
 
 Cup_Player::Cup_Player()
 {
-	CreatePath();
 	CreateAction();
 	_actions[_state]->Play();
+	_actions[State::CUP_AIM_STRAIGHT_SHOT]->SetCallBack(std::bind(&Cup_Player::SetIDLE,this));
+
+	//_transform = make_shared<Transform>();
+	//for (auto sprite : _sprites)
+	//	sprite->GetTransform()->SetParent(_transform);
+	// _transform->GetScale() *= 0.7f;
 }
 
 Cup_Player::~Cup_Player()
@@ -18,16 +23,30 @@ void Cup_Player::Update()
 {
 	Movement();
 
-	_sprites[State::IDLE]->Update();
-	if (_state != State::IDLE)
+	_sprites[State::CUP_IDLE]->Update();
+	if (_state != State::CUP_IDLE)
 		_sprites[_state]->Update();
 	_actions[_state]->Update();
+
+	//_transform->UpdateSRT();
 }
 
 void Cup_Player::Render()
 {
 	_sprites[_state]->SetActionClip(_actions[_state]->GetCurClip());
 	_sprites[_state]->Render();
+}
+
+void Cup_Player::SetRight()
+{
+	for (auto sprite : _sprites)
+		sprite->GetLeftRight() = 0;
+}
+
+void Cup_Player::SetLeft()
+{
+	for (auto sprite : _sprites)
+		sprite->GetLeftRight() = 1;
 }
 
 void Cup_Player::SetAction(State state)
@@ -40,14 +59,22 @@ void Cup_Player::SetAction(State state)
 	_actions[_state]->Play();
 }
 
+void Cup_Player::SetIDLE()
+{
+	SetAction(State::CUP_IDLE);
+}
+
 shared_ptr<Transform> Cup_Player::GetTransform()
 {
-	return _sprites[State::IDLE]->GetTransform();
+	//return _transform;
+	return _sprites[State::CUP_IDLE]->GetTransform();
 }
 
 void Cup_Player::CreatePath()
 {
 	// PNG
+	// wstring wName = wstring(name.begin(), name.end());
+	// TODO
 	wstring pngStd = L"Resource/Texture/CupHead/";
 	wstring path = pngStd + L"Idle.png";
 	_spritePaths.push_back(path);
@@ -62,6 +89,9 @@ void Cup_Player::CreatePath()
 	_spritePaths.push_back(path);
 
 	path = pngStd + L"DuckIdle.png";
+	_spritePaths.push_back(path);
+
+	path = pngStd + L"AimStraightShot.png";
 	_spritePaths.push_back(path);
 	
 	// XML
@@ -80,6 +110,9 @@ void Cup_Player::CreatePath()
 
 	xmlPath = xmlStd + "DuckIdle.xml";
 	_xmlPaths.push_back(xmlPath);
+
+	xmlPath = xmlStd + "AimStraightShot.xml";
+	_xmlPaths.push_back(xmlPath);
 }
 
 void Cup_Player::CreateSprite(int w, int h, int index)
@@ -90,11 +123,13 @@ void Cup_Player::CreateSprite(int w, int h, int index)
 
 void Cup_Player::CreateAction()
 {
+	CreatePath();
 	shared_ptr<tinyxml2::XMLDocument> document = make_shared<tinyxml2::XMLDocument>();
 	vector<Action::Clip> clips;
+	Action::Type type;
 	string name;
 
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 6; i++)
 	{
 		float totalW = 0;
 		float totalH = 0;
@@ -127,25 +162,33 @@ void Cup_Player::CreateAction()
 
 		switch (i)
 		{
-		case State::IDLE:
+		case State::CUP_IDLE:
 			name = "CUP_IDLE";
+			type = Action::LOOP;
 			break;
-		case State::RUN:
+		case State::CUP_RUN:
 			name = "CUP_RUN";
+			type = Action::LOOP;
 			break;
-		case State::JUMP:
+		case State::CUP_JUMP:
 			name = "CUP_JUMP";
+			type = Action::LOOP;
 			break;
-		case State::DUCK:
+		case State::CUP_DUCK:
 			name = "CUP_DUCK";
+			type = Action::END;
 			break;
-		case State::DUCK_IDLE:
+		case State::CUP_DUCK_IDLE:
 			name = "CUP_DUCK_IDLE";
+			type = Action::LOOP;
 			break;
+		case State::CUP_AIM_STRAIGHT_SHOT:
+			name = "CUP_AIM_STRAIGHT_SHOT";
+			type = Action::END;
 		default:
 			break;
 		}
-		_actions.push_back(make_shared<Action>(clips, name));
+		_actions.emplace_back(make_shared<Action>(clips, name, type, 0.1f));
 		clips.clear();
 	}
 
@@ -156,9 +199,9 @@ void Cup_Player::SetActionPos()
 {
 	for (auto sprite : _sprites)
 	{
-		if (sprite == _sprites[State::IDLE])
+		if (sprite == _sprites[State::CUP_IDLE])
 			continue;
-		sprite->GetTransform()->SetParent(_sprites[State::IDLE]->GetTransform());
+		sprite->GetTransform()->SetParent(_sprites[State::CUP_IDLE]->GetTransform());
 	}
 }
 
@@ -177,16 +220,16 @@ void Cup_Player::Movement()
 	if (KEY_PRESS('A') && KEY_PRESS('D'))
 	{
 		if (!_isJump && !_isDuck)
-			SetAction(State::IDLE);
+			SetAction(State::CUP_IDLE);
 	}
 	else if (KEY_PRESS('A'))
 	{
 		SetReverse(Direction::LEFT);
 		if (!_isDuck)
 		{
-			_sprites[State::IDLE]->GetTransform()->GetPos().x -= _speed * DELTA_TIME;
+			_sprites[State::CUP_IDLE]->GetTransform()->GetPos().x -= _speed * DELTA_TIME;
 			if (!_isJump)
-				SetAction(State::RUN);
+				SetAction(State::CUP_RUN);
 		}
 	}
 	else if (KEY_PRESS('D'))
@@ -194,9 +237,9 @@ void Cup_Player::Movement()
 		SetReverse(Direction::RIGHT);
 		if (!_isDuck)
 		{
-			_sprites[State::IDLE]->GetTransform()->GetPos().x += _speed * DELTA_TIME;
+			_sprites[State::CUP_IDLE]->GetTransform()->GetPos().x += _speed * DELTA_TIME;
 			if (!_isJump)
-				SetAction(State::RUN);
+				SetAction(State::CUP_RUN);
 		}
 	}
 
@@ -208,42 +251,58 @@ void Cup_Player::Movement()
 
 	if (KEY_UP('A') || KEY_UP('D'))
 	{
-		SetAction(State::IDLE);
+		SetAction(State::CUP_IDLE);
 	}
 
 	if (KEY_DOWN('S'))
 	{
-		SetAction(State::DUCK);
+		SetAction(State::CUP_DUCK);
+		//TODO
 	}
 	if (KEY_PRESS('S'))
 	{
-		SetAction(State::DUCK_IDLE);
+		SetAction(State::CUP_DUCK_IDLE);
 		_isDuck = true;
 	}
 	if (KEY_UP('S'))
 	{
-		SetAction(State::IDLE);
+		SetAction(State::CUP_IDLE);
 		_isDuck = false;
 	}
 
 	if (KEY_DOWN(VK_SPACE))
 	{
-		SetAction(State::JUMP);
+		SetAction(State::CUP_JUMP);
 		_isDuck = false;
 		_isJump = true;
 	}
+
+	Shot();
+}
+
+void Cup_Player::Input()
+{
+	// TODO
 }
 
 void Cup_Player::Jump()
 {
 	_jumpSpeed -= 2000.0f * DELTA_TIME;
-	_sprites[State::IDLE]->GetTransform()->GetPos().y += _jumpSpeed * DELTA_TIME;
+	_sprites[State::CUP_IDLE]->GetTransform()->GetPos().y += _jumpSpeed * DELTA_TIME;
 
-	if (_sprites[State::IDLE]->GetTransform()->GetPos().y <= CENTER.y)
+	if (_sprites[State::CUP_IDLE]->GetTransform()->GetPos().y <= CENTER.y)
 	{
-		_sprites[State::IDLE]->GetTransform()->GetPos().y = CENTER.y;
+		_sprites[State::CUP_IDLE]->GetTransform()->GetPos().y = CENTER.y;
 		_isJump = false;
 		_jumpSpeed = 1000.0f;
-		SetAction(State::IDLE);
+		SetAction(State::CUP_IDLE);
+	}
+}
+
+void Cup_Player::Shot()
+{
+	if (KEY_DOWN(VK_LBUTTON))
+	{
+		SetAction(State::CUP_AIM_STRAIGHT_SHOT);
 	}
 }

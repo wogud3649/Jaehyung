@@ -93,6 +93,7 @@ using namespace DirectX;
 #include "Object/GameObj/Zelda/Zelda.h"
 
 // CupHead
+#include "Object/GameObj/CupHead/Cup_Bg.h"
 #include "Object/GameObj/CupHead/Cup_Player.h"
 
 // SolarSystem

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:6388a5f7639c8ac57513aa5665ccb3d4:3fbce0b5466ef3448dae591f9278586c:7de922d018b852e44df1b804ad73f159$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="Helium_Pipe_Idle.png" width="1167" height="447">
+    <sprite n="clown_helium_pipes_boil_0003(24).png" x="1" y="1" w="387" h="445" pX="0.5" pY="0.5"/>
+    <sprite n="clown_helium_pipes_boil_0003(25).png" x="390" y="1" w="387" h="445" pX="0.5" pY="0.5"/>
+    <sprite n="clown_helium_pipes_boil_0003(26).png" x="779" y="1" w="387" h="445" pX="0.5" pY="0.5"/>
+</TextureAtlas>

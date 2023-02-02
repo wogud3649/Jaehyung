@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:ed81516a711f7de5429671f4e2447605:4448dbdf6be54ec22cc565128ae02ebd:752e54b9dd233b92a41e1bcdc818cafd$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="Clown_Page_Last_Parts_C_Intro_End.png" width="6008" height="1604">
+    <sprite n="umbrella_fr_open_0001(9).png" x="4507" y="1" w="1500" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="umbrella_fr_open_0001(10).png" x="1" y="1" w="1500" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="umbrella_fr_open_0001(11).png" x="1" y="803" w="1500" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="umbrella_fr_open_0001(12).png" x="1503" y="1" w="1500" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="umbrella_fr_open_0001(13).png" x="1503" y="803" w="1500" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="umbrella_fr_open_0001(14).png" x="3005" y="1" w="1500" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="umbrella_fr_open_0001(15).png" x="3005" y="803" w="1500" h="800" pX="0.5" pY="0.5"/>
+</TextureAtlas>

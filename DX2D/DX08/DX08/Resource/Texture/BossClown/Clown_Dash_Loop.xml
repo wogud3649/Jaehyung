@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:fc9b81e74c31cdeb6ad7a9477311b6b9:5dc91faada6f93e55349522c6d47921d:f43055c2937470935ad322cfd25c69b0$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="Clown_Dash_Loop.png" width="3606" height="802">
+    <sprite n="clown_Rush_Ready_00015.png" x="1" y="1" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_Rush_Ready_00016.png" x="1203" y="1" w="1200" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_Rush_Ready_00017.png" x="2405" y="1" w="1200" h="800" pX="0.5" pY="0.5"/>
+</TextureAtlas>
