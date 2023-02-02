@@ -16,11 +16,11 @@ Cup_Player::~Cup_Player()
 
 void Cup_Player::Update()
 {
-	if (KEY_PRESS('D'))
-	{
-		SetAction(State::RUN);
-	}
-	_sprites[_state]->Update();
+	Movement();
+
+	_sprites[State::IDLE]->Update();
+	if (_state != State::IDLE)
+		_sprites[_state]->Update();
 	_actions[_state]->Update();
 }
 
@@ -32,14 +32,12 @@ void Cup_Player::Render()
 
 void Cup_Player::SetAction(State state)
 {
+	if (_state == state)
+		return;
+
+	_actions[_state]->Reset();
 	_state = state;
-	_curAction = _actions[_state];
-	if (_oldAction != nullptr && _curAction->GetName() != _oldAction->GetName())
-	{
-		_oldAction->Reset();
-		_actions[_state]->Play();
-	}
-	_oldAction = _actions[_state];
+	_actions[_state]->Play();
 }
 
 shared_ptr<Transform> Cup_Player::GetTransform()
@@ -132,5 +130,39 @@ void Cup_Player::SetActionPos()
 		if (sprite == _sprites[State::IDLE])
 			continue;
 		sprite->GetTransform()->SetParent(_sprites[State::IDLE]->GetTransform());
+	}
+}
+
+void Cup_Player::SetReverse(Direction dir)
+{
+	if (_dir == dir)
+		return;
+
+	for (auto sprite : _sprites)
+		sprite->SetReverse();
+	_dir = dir;
+}
+
+void Cup_Player::Movement()
+{
+	if (KEY_PRESS('A') && KEY_PRESS('D'))
+	{
+		SetAction(State::IDLE);
+	}
+	else if (KEY_PRESS('A'))
+	{
+		_sprites[State::IDLE]->GetTransform()->GetPos().x -= _speed * DELTA_TIME;
+		SetReverse(Direction::LEFT);
+		SetAction(State::RUN);
+	}
+	else if (KEY_PRESS('D'))
+	{
+		_sprites[State::IDLE]->GetTransform()->GetPos().x += _speed * DELTA_TIME;
+		SetReverse(Direction::RIGHT);
+		SetAction(State::RUN);
+	}
+	if (KEY_UP('A') || KEY_UP('D'))
+	{
+		SetAction(State::IDLE);
 	}
 }
