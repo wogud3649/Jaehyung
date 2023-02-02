@@ -5,7 +5,10 @@ public:
 	enum State
 	{
 		IDLE,
-		RUN
+		RUN,
+		JUMP,
+		DUCK,
+		DUCK_IDLE
 	};
 	enum Direction
 	{
@@ -31,6 +34,7 @@ private:
 	void SetReverse(Direction direction);
 
 	void Movement();
+	void Jump();
 
 	vector<wstring> _spritePaths;
 	vector<string> _xmlPaths;
@@ -43,5 +47,9 @@ private:
 	Direction _dir = Direction::RIGHT;
 
 	float _speed = 300.0f;
+	float _jumpSpeed = 1000.0f;
+
+	bool _isJump = false;
+	bool _isDuck = false;
 };
 
