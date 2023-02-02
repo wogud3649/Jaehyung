@@ -49,7 +49,7 @@ public:
 private:
 	static InputManager* _instance;
 
-	byte _curState[KEY_MAX];
+	byte _state[KEY_MAX];
 	byte _oldState[KEY_MAX];
 	byte _stateMap[KEY_MAX];
 

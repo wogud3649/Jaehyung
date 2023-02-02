@@ -2,18 +2,37 @@
 class Cup_Player
 {
 public:
+	enum State
+	{
+		IDLE,
+		RUN
+	};
+
 	Cup_Player();
 	~Cup_Player();
 
 	void Update();
 	void Render();
 
-	shared_ptr<Transform> GetTransform() { return _sprite->GetTransform(); }
+	void SetAction(State state);
+
+	shared_ptr<Transform> GetTransform();
 
 private:
+	void CreatePath();
+	void CreateSprite(int w, int h, int index);
 	void CreateAction();
+	void SetActionPos();
 
-	shared_ptr<Sprite> _sprite;
-	shared_ptr<Action> _action;
+	vector<wstring> _spritePaths;
+	vector<string> _xmlPaths;
+
+	vector<shared_ptr<Sprite>> _sprites;
+	vector<shared_ptr<Action>> _actions;
+
+	shared_ptr<Action> _oldAction;
+	shared_ptr<Action> _curAction;
+
+	State _state = State::IDLE;
 };
 
