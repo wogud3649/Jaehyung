@@ -5,22 +5,7 @@ using namespace tinyxml2;
 
 Cup_Player::Cup_Player()
 {
-	CreateAction("Idle",Action::Type::LOOP);
-	CreateAction("Run",Action::Type::LOOP);
-	CreateAction("Jump",Action::Type::LOOP);
-	CreateAction("Duck",Action::Type::END);
-	CreateAction("DuckIdle",Action::Type::LOOP);
-	CreateAction("AimStraightShot",Action::Type::END);
-	_actions[State::CUP_AIM_STRAIGHT_SHOT]->SetCallBack(std::bind(&Cup_Player::SetIDLE,this));
-
-	_transform = make_shared<Transform>();
-	
-	for (auto sprite : _sprites)
-		sprite->GetTransform()->SetParent(_transform);
-
-	 _transform->GetScale() *= 0.7f;
-
-	_actions[_curState]->Play();
+	Init();
 }
 
 Cup_Player::~Cup_Player()
@@ -35,35 +20,46 @@ void Cup_Player::Update()
 	_actions[_curState]->Update();
 
 	_transform->UpdateSRT();
+
+	for (auto bullet : _bullets)
+		bullet->Update();
 }
 
 void Cup_Player::Render()
 {
+	for (auto bullet : _bullets)
+		bullet->Render();
+
 	_sprites[_curState]->SetActionClip(_actions[_curState]->GetCurClip());
 	_sprites[_curState]->Render();
 }
 
 void Cup_Player::SetRight()
 {
-	if (_sprites[0]->GetLeftRight() == 0)
+	if (_dir == 0)
 		return;
+	_dir = 0;
 	for (auto sprite : _sprites)
-		sprite->GetLeftRight() = 0;
+		sprite->GetLeftRight() = _dir;
 }
 
 void Cup_Player::SetLeft()
 {
-	if (_sprites[0]->GetLeftRight() == 1)
+	if (_dir == 1)
 		return;
+	_dir = 1;
 	for (auto sprite : _sprites)
-		sprite->GetLeftRight() = 1;
+		sprite->GetLeftRight() = _dir;
 }
 
 void Cup_Player::Input()
 {
+	if (_isShooting)
+		return;
+
 	if (KEY_PRESS('A') && KEY_PRESS('D'))
 	{
-		if (!_isJump)
+		if (!_isJump && !_isDuck)
 			SetAction(State::CUP_IDLE);
 	}
 	else if (KEY_PRESS('A'))
@@ -95,12 +91,15 @@ void Cup_Player::Input()
 	if (KEY_DOWN('S'))
 	{
 		if (!_isJump)
+		{
+			_isDucking = true;
 			SetAction(State::CUP_DUCK);
-		//TODO
+			_actions[State::CUP_DUCK]->SetCallBack(std::bind(&Cup_Player::SetDuckIDLE, this));
+		}
 	}
 	if (KEY_PRESS('S'))
 	{
-		if (!_isJump)
+		if (!_isJump && !_isDucking)
 			SetAction(State::CUP_DUCK_IDLE);
 	}
 	if (KEY_UP('S'))
@@ -109,7 +108,7 @@ void Cup_Player::Input()
 			SetAction(State::CUP_IDLE);
 	}
 
-	if (_curState == State::CUP_DUCK_IDLE)
+	if (_curState == State::CUP_DUCK || _curState == State::CUP_DUCK_IDLE)
 		_isDuck = true;
 	else
 		_isDuck = false;
@@ -135,7 +134,9 @@ void Cup_Player::Input()
 	if (KEY_DOWN(VK_LBUTTON))
 	{
 		if (!_isDuck && !_isJump)
+		{
 			Shot();
+		}
 	}
 }
 
@@ -155,7 +156,19 @@ void Cup_Player::Jump()
 
 void Cup_Player::Shot()
 {
-	SetAction(State::CUP_AIM_STRAIGHT_SHOT);
+	auto iter = find_if(_bullets.begin(), _bullets.end(), [](const shared_ptr<Cup_Bullet>& a)->bool
+		{
+			return a->GetActive() == false;
+		});
+	if (iter != _bullets.end())
+	{
+		(*iter)->GetTransform()->GetPos() = _transform->GetPos();
+		(*iter)->SetDirection(_dir);
+		(*iter)->SetActive(true);
+		_actions[State::CUP_AIM_STRAIGHT_SHOT]->SetCallBack(std::bind(&Cup_Player::SetIDLE, this));
+		SetAction(State::CUP_AIM_STRAIGHT_SHOT);
+		_isShooting = true;
+	}
 }
 
 void Cup_Player::SetAction(State state)
@@ -173,6 +186,34 @@ void Cup_Player::SetAction(State state)
 void Cup_Player::SetIDLE()
 {
 	SetAction(State::CUP_IDLE);
+	_isShooting = false;
+}
+
+void Cup_Player::SetDuckIDLE()
+{
+	_isDucking = false;
+}
+
+void Cup_Player::Init()
+{
+	CreateAction("Idle", Action::Type::LOOP);
+	CreateAction("Run", Action::Type::LOOP);
+	CreateAction("Jump", Action::Type::LOOP);
+	CreateAction("Duck", Action::Type::END);
+	CreateAction("DuckIdle", Action::Type::LOOP);
+	CreateAction("AimStraightShot", Action::Type::END);
+	
+	_transform = make_shared<Transform>();
+
+	for (int i = 0; i < bulletSize; i++)
+		_bullets.emplace_back(make_shared<Cup_Bullet>());
+
+	for (auto sprite : _sprites)
+		sprite->GetTransform()->SetParent(_transform);
+
+	_transform->GetScale() *= 0.7f;
+
+	_actions[_curState]->Play();
 }
 
 void Cup_Player::CreateAction(string name, Action::Type type)

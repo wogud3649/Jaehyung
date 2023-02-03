@@ -18,7 +18,11 @@ void Cup_Bullet::Update()
 	_sprite->Update();
 	_action->Update();
 
-	
+	if (_duration <= 0)
+		Reset();
+
+	_duration -= DELTA_TIME;
+	_sprite->GetTransform()->GetPos().x += _dir.x * _speed * DELTA_TIME;
 }
 
 void Cup_Bullet::Render()
@@ -30,11 +34,23 @@ void Cup_Bullet::Render()
 	_sprite->Render();
 }
 
-void Cup_Bullet::Fire()
+void Cup_Bullet::SetDirection(int dir)
 {
+	if (dir == 0)
+		_dir = { 1.0f,0.0f };
+	else
+		_dir = { -1.0f,0.0f };
+	_sprite->GetTransform()->GetAngle() = _dir.Angle() - (PI / 2);
 }
 
 void Cup_Bullet::Init()
+{
+	CreateAction();
+
+	_sprite->GetTransform()->GetScale() *= 0.25f;
+}
+
+void Cup_Bullet::CreateAction()
 {
 	wstring srvPath = L"Resource/Texture/Bullet/Special_Bullet_Loop.png";
 	shared_ptr<SRV> srv = SRV_ADD(srvPath);
@@ -78,4 +94,11 @@ void Cup_Bullet::Init()
 	string actionName = "CUP_Bullet";
 	_action = make_shared<Action>(clips, actionName);
 	_sprite = make_shared<Sprite>(srvPath, Vector2(wAverage, hAverage));
+}
+
+void Cup_Bullet::Reset()
+{
+	_isActive = false;
+	_duration = 2.0f;
+	_action->Reset();
 }
