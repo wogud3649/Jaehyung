@@ -36,6 +36,8 @@ void Cup_Player::Render()
 
 void Cup_Player::SetRight()
 {
+	_isRight = true;
+
 	if (_dir == 0)
 		return;
 	_dir = 0;
@@ -45,6 +47,8 @@ void Cup_Player::SetRight()
 
 void Cup_Player::SetLeft()
 {
+	_isRight = false;
+
 	if (_dir == 1)
 		return;
 	_dir = 1;
@@ -164,7 +168,7 @@ void Cup_Player::Shot()
 	{
 		(*iter)->GetTransform()->GetPos() = _transform->GetPos();
 		(*iter)->SetDirection(_dir);
-		(*iter)->SetActive(true);
+		(*iter)->Enable();
 		_actions[State::CUP_AIM_STRAIGHT_SHOT]->SetCallBack(std::bind(&Cup_Player::SetIDLE, this));
 		SetAction(State::CUP_AIM_STRAIGHT_SHOT);
 		_isShooting = true;
@@ -218,47 +222,13 @@ void Cup_Player::Init()
 
 void Cup_Player::CreateAction(string name, Action::Type type)
 {
-	wstring wName = wstring(name.begin(), name.end());
-	wstring srvPath = L"Resource/Texture/CupHead/" + wName + L".png";
-	shared_ptr<SRV> srv = SRV_ADD(srvPath);
+	string xmlPath = "Resource/XML/" + name + ".xml";
+	wstring srvPath(name.begin(), name.end());
+	srvPath = L"Resource/Texture/CupHead/" + srvPath + L".png";
 
-	shared_ptr<tinyxml2::XMLDocument> document = make_shared<tinyxml2::XMLDocument>();
-	string path = "Resource/XML/" + name + ".xml";
-	document->LoadFile(path.c_str());
+	MyXML xml = MyXML(xmlPath, srvPath);
 
-	XMLElement* textureAtlas = document->FirstChildElement();
-	XMLElement* row = textureAtlas->FirstChildElement();
-
-	vector<Action::Clip> clips;
-
-	float wAverage = 0;
-	float hAverage = 0;
-
-	int count = 0;
-
-	while (true)
-	{
-		if (row == nullptr)
-			break;
-
-		int x = row->FindAttribute("x")->IntValue();
-		int y = row->FindAttribute("y")->IntValue();
-		int w = row->FindAttribute("w")->IntValue();
-		int h = row->FindAttribute("h")->IntValue();
-
-		clips.emplace_back(x, y, w, h, srv);
-
-		wAverage += w;
-		hAverage += h;
-		count++;
-
-		row = row->NextSiblingElement();
-	}
-
-	wAverage /= count;
-	hAverage /= count;
-	
 	string actionName = "CUP_" + name;
-	_actions.emplace_back(make_shared<Action>(clips, name, type, 0.1f));
-	_sprites.emplace_back(make_shared<Sprite>(srvPath, Vector2(wAverage, hAverage)));
+	_actions.emplace_back(make_shared<Action>(xml.GetClips(), actionName, type, 0.1f));
+	_sprites.emplace_back(make_shared<Sprite>(srvPath, xml.AverageSize()));
 }

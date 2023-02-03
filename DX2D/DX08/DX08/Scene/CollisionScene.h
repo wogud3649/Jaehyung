@@ -10,8 +10,7 @@ public:
 	virtual void PostRender() override;
 
 private:
-	shared_ptr<Collider> _rect;
 	shared_ptr<Collider> _circle1;
-	shared_ptr<Collider> _rect2;
+	shared_ptr<Collider> _circle2;
 };
 

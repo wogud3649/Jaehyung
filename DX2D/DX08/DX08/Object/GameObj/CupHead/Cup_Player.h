@@ -15,8 +15,8 @@ public:
 	Cup_Player();
 	~Cup_Player();
 
-	void Update();
-	void Render();
+	virtual void Update();
+	virtual void Render();
 
 	void SetRight();
 	void SetLeft();
@@ -31,7 +31,7 @@ public:
 
 	shared_ptr<Transform> GetTransform() { return _transform; }
 
-private:
+protected:
 	void Init();
 	void CreateAction(string name, Action::Type type);
 
@@ -54,5 +54,7 @@ private:
 	bool _isDuck = false;
 	bool _isShooting = false;
 	bool _isDucking = false;
+
+	bool _isRight = true;
 };
 

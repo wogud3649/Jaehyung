@@ -8,11 +8,14 @@ public:
 	void Update();
 	void Render();
 
+	void SetPosition(Vector2 pos) { _sprite->GetTransform()->GetPos() = pos; }
 	void SetDirection(int dir);
-	void SetActive(bool active) { _isActive = active; }
+	void Enable();
 
 	shared_ptr<Transform> GetTransform() { return _sprite->GetTransform(); }
 	bool GetActive() { return _isActive; }
+
+	bool isActive;
 
 private:
 	void Init();
@@ -23,9 +26,9 @@ private:
 	shared_ptr<Action> _action;
 
 	Vector2 _dir = { 0.0f,0.0f };
-
 	float _speed = 500.0f;
-	float _duration = 2.0f;
+	float _lifeTime = 2.0f;
+	float _delay = 0.0f;
 
 	bool _isActive = false;
 };

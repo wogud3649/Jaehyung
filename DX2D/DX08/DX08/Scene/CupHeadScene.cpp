@@ -3,7 +3,7 @@
 
 CupHeadScene::CupHeadScene()
 {
-	_player = make_shared<Cup_Player>();
+	_player = make_shared<Cup_Advanced_Player>();
 	_player->GetTransform()->GetPos() = CENTER;
 
 	_bg = make_shared<Cup_Bg>();

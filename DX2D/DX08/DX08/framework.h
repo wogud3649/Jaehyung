@@ -79,6 +79,7 @@ using namespace DirectX;
 
 // Animation
 #include "Framework/Animation/Action.h"
+#include "Framework/Animation/MyXML.h"
 
 // Object
 #include "Object/BasicObj/Quad.h"
@@ -96,6 +97,7 @@ using namespace DirectX;
 #include "Object/GameObj/CupHead/Cup_Bg.h"
 #include "Object/GameObj/CupHead/Cup_Bullet.h"
 #include "Object/GameObj/CupHead/Cup_Player.h"
+#include "Object/GameObj/CupHead/Cup_Advanced_Player.h"
 
 // SolarSystem
 #include "Object/GameObj/SolarSystem/Planet.h"

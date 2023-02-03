@@ -18,10 +18,10 @@ void Cup_Bullet::Update()
 	_sprite->Update();
 	_action->Update();
 
-	if (_duration <= 0)
+	if (_lifeTime <= _delay)
 		Reset();
 
-	_duration -= DELTA_TIME;
+	_delay += DELTA_TIME;
 	_sprite->GetTransform()->GetPos().x += _dir.x * _speed * DELTA_TIME;
 }
 
@@ -43,62 +43,33 @@ void Cup_Bullet::SetDirection(int dir)
 	_sprite->GetTransform()->GetAngle() = _dir.Angle() - (PI / 2);
 }
 
+void Cup_Bullet::Enable()
+{
+	_isActive = true;
+	_action->Play();
+}
+
 void Cup_Bullet::Init()
 {
 	CreateAction();
-
-	_sprite->GetTransform()->GetScale() *= 0.25f;
 }
 
 void Cup_Bullet::CreateAction()
 {
+	string xmlPath = "Resource/XML/Special_Bullet_Loop.xml";
 	wstring srvPath = L"Resource/Texture/Bullet/Special_Bullet_Loop.png";
-	shared_ptr<SRV> srv = SRV_ADD(srvPath);
 
-	shared_ptr<tinyxml2::XMLDocument> document = make_shared<tinyxml2::XMLDocument>();
-	string path = "Resource/XML/Special_Bullet_Loop.xml";
-	document->LoadFile(path.c_str());
-
-	tinyxml2::XMLElement* textureAtlas = document->FirstChildElement();
-	tinyxml2::XMLElement* row = textureAtlas->FirstChildElement();
-
-	vector<Action::Clip> clips;
-
-	float wAverage = 0;
-	float hAverage = 0;
-
-	int count = 0;
-
-	while (true)
-	{
-		if (row == nullptr)
-			break;
-
-		int x = row->FindAttribute("x")->IntValue();
-		int y = row->FindAttribute("y")->IntValue();
-		int w = row->FindAttribute("w")->IntValue();
-		int h = row->FindAttribute("h")->IntValue();
-
-		clips.emplace_back(x, y, w, h, srv);
-
-		wAverage += w;
-		hAverage += h;
-		count++;
-
-		row = row->NextSiblingElement();
-	}
-
-	wAverage /= count;
-	hAverage /= count;
+	MyXML xml = MyXML(xmlPath, srvPath);
 
 	string actionName = "CUP_Bullet";
-	_action = make_shared<Action>(clips, actionName);
-	_sprite = make_shared<Sprite>(srvPath, Vector2(wAverage, hAverage));
+	_action = make_shared<Action>(xml.GetClips(), actionName, Action::Type::LOOP, 0.1f);
+	Vector2 averageSize = xml.AverageSize() * 0.3f;
+	_sprite = make_shared<Sprite>(srvPath, averageSize);
 }
 
 void Cup_Bullet::Reset()
 {
 	_isActive = false;
-	_duration = 2.0f;
+	_delay = 0.0f;
 	_action->Reset();
 }
