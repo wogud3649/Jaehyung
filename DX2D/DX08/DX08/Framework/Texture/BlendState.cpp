@@ -27,7 +27,7 @@ BlendState::~BlendState()
 void BlendState::SetState()
 {
 	float blendFactor[] = { 0,0,0,0 };
-	DC->OMSetBlendState(_state.Get(), blendFactor, 0xffffffff);
+	DC->OMSetBlendState(_curState.Get(), blendFactor, 0xffffffff);
 }
 
 void BlendState::Alpha()
@@ -52,8 +52,8 @@ void BlendState::Additive()
 
 void BlendState::Change()
 {
-	if (_state != nullptr)
-		_state->Release();
+	if (_curState != nullptr)
+		_curState->Release();
 
-	DEVICE->CreateBlendState(&_desc, _state.GetAddressOf());
+	DEVICE->CreateBlendState(&_desc, _curState.GetAddressOf());
 }

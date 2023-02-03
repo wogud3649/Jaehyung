@@ -29,7 +29,7 @@ private:
 	shared_ptr<Sprite> _sprite;
 	vector<shared_ptr<Action>> _actions;
 
-	State _state = State::FRONT_IDLE;
+	State _curState = State::FRONT_IDLE;
 
 	shared_ptr<Action> _oldAction;
 	shared_ptr<Action> _curAction;

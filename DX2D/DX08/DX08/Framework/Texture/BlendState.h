@@ -13,6 +13,6 @@ public:
 	void Change();
 
 private:
-	Microsoft::WRL::ComPtr<ID3D11BlendState> _state;
+	Microsoft::WRL::ComPtr<ID3D11BlendState> _curState;
 	D3D11_BLEND_DESC _desc = {};
 };

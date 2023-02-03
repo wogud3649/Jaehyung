@@ -6,7 +6,7 @@ Zelda::Zelda()
 	_sprite = make_shared<Sprite>(L"Resource/Texture/zelda.png", Vector2(10.0f, 8.0f), Vector2(700, 700));
 
 	CreateAction();
-	SetAction(_state);
+	SetAction(_curState);
 	_curAction->Play();
 }
 
@@ -64,20 +64,20 @@ void Zelda::Update()
 
 void Zelda::Render()
 {
-	_sprite->SetActionClip(_actions[_state]->GetCurClip());
+	_sprite->SetActionClip(_actions[_curState]->GetCurClip());
 	_sprite->Render();
 }
 
 void Zelda::SetAction(State state)
 {
-	_state = state;
-	_curAction = _actions[_state];
+	_curState = state;
+	_curAction = _actions[_curState];
 	if (_oldAction != nullptr && _curAction->GetName() != _oldAction->GetName())
 	{
 		_oldAction->Reset();
 		_curAction->Play();
 	}
-	_oldAction = _actions[_state];
+	_oldAction = _actions[_curState];
 }
 
 void Zelda::SetPos(Vector2 pos)

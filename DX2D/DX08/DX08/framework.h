@@ -95,6 +95,7 @@ using namespace DirectX;
 // CupHead
 #include "Object/GameObj/CupHead/Cup_Bg.h"
 #include "Object/GameObj/CupHead/Cup_Player.h"
+#include "Object/GameObj/CupHead/Cup_Bullet.h"
 
 // SolarSystem
 #include "Object/GameObj/SolarSystem/Planet.h"

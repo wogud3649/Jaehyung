@@ -4,7 +4,7 @@
 InputManager* InputManager::_instance = nullptr;
 
 InputManager::InputManager()
-: _state{}
+: _curState{}
 , _oldState{}
 , _stateMap{}
 {
@@ -16,17 +16,17 @@ InputManager::~InputManager()
 
 void InputManager::Update()
 {
-	memcpy(_oldState, _state, sizeof(_oldState));
+	memcpy(_oldState, _curState, sizeof(_oldState));
 
-	GetKeyboardState(_state);
+	GetKeyboardState(_curState);
 	
 	for (int i = 0; i < KEY_MAX; i++)
 	{
-		byte key = _state[i] & 0x80;
-		_state[i] = key ? 1 : 0; // 삼항 연산자, key 가 true이면 1, false 이면 0
+		byte key = _curState[i] & 0x80;
+		_curState[i] = key ? 1 : 0; // 삼항 연산자, key 가 true이면 1, false 이면 0
 
 		int old = _oldState[i];
-		int cur = _state[i];
+		int cur = _curState[i];
 
 		if (old == 0 && cur == 1)
 		{
