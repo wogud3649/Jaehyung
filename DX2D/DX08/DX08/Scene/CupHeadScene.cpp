@@ -8,7 +8,6 @@ CupHeadScene::CupHeadScene()
 
 	_bg = make_shared<Cup_Bg>();
 	_bg->SetPos(CENTER);
-	_bg->Update();
 
 	_player->GetTransform()->GetPos().y -= 170.0f;
 }
@@ -20,6 +19,9 @@ CupHeadScene::~CupHeadScene()
 void CupHeadScene::Update()
 {
 	_player->Update();
+	_bg->Update();
+
+	//_bg->GetCollider()->Block(_player->GetCollider());
 }
 
 void CupHeadScene::Render()

@@ -14,7 +14,8 @@ public:
 	virtual bool IsCollision(shared_ptr<CircleCollider> other, bool isObb = false) override;
 	virtual bool IsCollision(shared_ptr<RectCollider> other, bool isObb = false) override;
 
-	bool Block(shared_ptr<CircleCollider> other);
+	virtual bool Block(shared_ptr<CircleCollider> other);
+	virtual bool Block(shared_ptr<RectCollider> other);
 
 	float WorldRadius();
 

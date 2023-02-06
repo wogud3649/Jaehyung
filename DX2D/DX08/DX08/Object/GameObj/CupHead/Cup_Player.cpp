@@ -18,6 +18,7 @@ void Cup_Player::Update()
 
 	_sprites[_curState]->Update();
 	_actions[_curState]->Update();
+	_col->Update();
 
 	_transform->UpdateSRT();
 
@@ -32,6 +33,7 @@ void Cup_Player::Render()
 
 	_sprites[_curState]->SetActionClip(_actions[_curState]->GetCurClip());
 	_sprites[_curState]->Render();
+	_col->Render();
 }
 
 void Cup_Player::SetRight()
@@ -216,6 +218,8 @@ void Cup_Player::Init()
 		sprite->GetTransform()->SetParent(_transform);
 
 	_transform->GetScale() *= 0.7f;
+	_col = make_shared<CircleCollider>(_characterSize.y / 5);
+	_col->GetTransform()->SetParent(_transform);
 
 	_actions[_curState]->Play();
 }
@@ -231,4 +235,7 @@ void Cup_Player::CreateAction(string name, Action::Type type)
 	string actionName = "CUP_" + name;
 	_actions.emplace_back(make_shared<Action>(xml.GetClips(), actionName, type, 0.1f));
 	_sprites.emplace_back(make_shared<Sprite>(srvPath, xml.AverageSize()));
+
+	if (_characterSize == Vector2(0, 0))
+		_characterSize = xml.AverageSize();
 }

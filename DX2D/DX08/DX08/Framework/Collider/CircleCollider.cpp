@@ -72,6 +72,50 @@ bool CircleCollider::Block(shared_ptr<CircleCollider> other)
     return false;
 }
 
+bool CircleCollider::Block(shared_ptr<RectCollider> other)
+{
+    if (this->IsCollision(other))
+    {
+        Vector2 dir = other->GetTransform()->GetWorldPos() - _transform->GetWorldPos();
+        Vector2 sum = Vector2(other->GetWorldSize().x / 2 + WorldRadius(), other->GetWorldSize().y / 2 + WorldRadius());
+        Vector2 overlap = Vector2(sum.x - abs(dir.x),sum.y - abs(dir.y));
+
+        if (other->Right() >= _transform->GetWorldPos().x && other->Left() <= _transform->GetWorldPos().x)
+        {
+            if (_transform->GetWorldPos().y < other->GetTransform()->GetWorldPos().y)
+            {
+                other->GetTransform()->GetPos().y += overlap.y;
+            }
+            else
+            {
+                other->GetTransform()->GetPos().y -= overlap.y;
+            }
+        }
+        else if (other->Top() >= _transform->GetWorldPos().y && other->Bottom() <= _transform->GetWorldPos().y)
+        {
+            if (_transform->GetWorldPos().x < other->GetTransform()->GetWorldPos().x)
+            {
+                other->GetTransform()->GetPos().x += overlap.x;
+            }
+            else
+            {
+                other->GetTransform()->GetPos().x -= overlap.x;
+            }
+        }
+        else
+        {
+            Vector2 diagonal = Vector2(other->GetWorldSize().x / 2, other->GetWorldSize().y / 2);
+            float diagonalSum = diagonal.Length() + WorldRadius();
+            float diagonalOverlap = diagonalSum - dir.Length();
+            other->GetTransform()->GetPos() += Vector2(dir.NormalVector2().x * diagonalOverlap, dir.NormalVector2().y * diagonalOverlap);
+        }
+
+        return true;
+    }
+
+    return false;
+}
+
 float CircleCollider::WorldRadius()
 {
     return _radius * _transform->GetScale().x;

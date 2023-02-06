@@ -51,6 +51,11 @@ float RectCollider::SeparateAxis(Vector2 separate, Vector2 e1, Vector2 e2)
     return r1 + r2;
 }
 
+Vector2 RectCollider::GetWorldSize()
+{
+    return Vector2(_size.x * _transform->GetScale().x, _size.y * _transform->GetScale().y);
+}
+
 void RectCollider::CreateData()
 {
     CreateVertices();
@@ -95,6 +100,72 @@ bool RectCollider::IsCollision(shared_ptr<RectCollider> other, bool isObb)
         return IsOBB(other);
     else
         return IsAABB(other);
+}
+
+bool RectCollider::Block(shared_ptr<CircleCollider> other)
+{
+    if (this->IsCollision(other))
+    {
+        Vector2 dir = other->GetTransform()->GetWorldPos() - _transform->GetWorldPos();
+        Vector2 sum = Vector2(GetWorldSize().x / 2 + other->WorldRadius(), GetWorldSize().y / 2 + other->WorldRadius());
+        Vector2 overlap = Vector2(sum.x - abs(dir.x), sum.y - abs(dir.y));
+
+        if (Right() >= other->GetTransform()->GetWorldPos().x && Left() <= other->GetTransform()->GetWorldPos().x)
+        {
+            if (other->GetTransform()->GetWorldPos().y > _transform->GetWorldPos().y)
+            {
+                other->GetTransform()->GetPos().y += overlap.y;
+            }
+            else
+            {
+                other->GetTransform()->GetPos().y -= overlap.y;
+            }
+        }
+        else if (Top() >= other->GetTransform()->GetWorldPos().y && Bottom() <= other->GetTransform()->GetWorldPos().y)
+        {
+            if (other->GetTransform()->GetWorldPos().x > _transform->GetWorldPos().x)
+            {
+                other->GetTransform()->GetPos().x += overlap.x;
+            }
+            else
+            {
+                other->GetTransform()->GetPos().x -= overlap.x;
+            }
+        }
+        else
+        {
+            Vector2 diagonal = Vector2(GetWorldSize().x / 2, GetWorldSize().y / 2);
+            float diagonalSum = diagonal.Length() + other->WorldRadius();
+            float diagonalOverlap = diagonalSum - dir.Length();
+            other->GetTransform()->GetPos() += Vector2(dir.NormalVector2().x * diagonalOverlap, dir.NormalVector2().y * diagonalOverlap);
+        }
+
+        return true;
+    }
+
+    return false;
+}
+
+bool RectCollider::Block(shared_ptr<RectCollider> other)
+{
+    if (this->IsCollision(other))
+    {
+        Vector2 dir = other->GetTransform()->GetWorldPos() - GetTransform()->GetWorldPos();
+        Vector2 sum = Vector2(GetWorldSize().x / 2 + other->GetWorldSize().x / 2, GetWorldSize().y / 2 + other->GetWorldSize().y / 2);
+        Vector2 overlap = Vector2(sum.x - abs(dir.x), sum.y - abs(dir.y));
+
+        if (overlap.x >= overlap.y)
+        {
+            other->GetTransform()->GetPos().y += dir.NormalVector2().y * overlap.y;
+        }
+        else
+        {
+            other->GetTransform()->GetPos().x += dir.NormalVector2().x * overlap.x;
+        }
+        
+    }
+
+    return false;
 }
 
 bool RectCollider::IsAABB(shared_ptr<RectCollider> other)
