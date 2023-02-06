@@ -20,6 +20,8 @@ public:
 	float WorldRadius();
 
 private:
+	Vector2 GetCloserVertex(shared_ptr<RectCollider> rect);
+
 	void CreateVertices();
 
 	float _radius = 0.0f;

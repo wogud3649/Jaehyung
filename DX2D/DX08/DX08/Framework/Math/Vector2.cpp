@@ -76,6 +76,14 @@ Vector2& Vector2::operator+=(const Vector2& other)
 	return (*this);
 }
 
+Vector2& Vector2::operator-=(const Vector2& other)
+{
+	this->x = this->x - other.x;
+	this->y = this->y - other.y;
+
+	return (*this);
+}
+
 Vector2& Vector2::operator=(const Vector2& other)
 {
 	this->x = other.x;

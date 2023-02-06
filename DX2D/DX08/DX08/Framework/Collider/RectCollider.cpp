@@ -51,9 +51,15 @@ float RectCollider::SeparateAxis(Vector2 separate, Vector2 e1, Vector2 e2)
     return r1 + r2;
 }
 
-Vector2 RectCollider::GetWorldSize()
+Vector2 RectCollider::GetWorldHalfSize()
 {
-    return Vector2(_size.x * _transform->GetScale().x, _size.y * _transform->GetScale().y);
+    OBB_DESC info = GetOBB();
+
+    Vector2 result;
+    result.x = (info.direction[0]* info.length[0]).Length();
+    result.y = (info.direction[1]* info.length[1]).Length();
+
+    return result;
 }
 
 void RectCollider::CreateData()
@@ -104,40 +110,44 @@ bool RectCollider::IsCollision(shared_ptr<RectCollider> other, bool isObb)
 
 bool RectCollider::Block(shared_ptr<CircleCollider> other)
 {
-    if (this->IsCollision(other))
+    if (IsAABB(other))
     {
-        Vector2 dir = other->GetTransform()->GetWorldPos() - _transform->GetWorldPos();
-        Vector2 sum = Vector2(GetWorldSize().x / 2 + other->WorldRadius(), GetWorldSize().y / 2 + other->WorldRadius());
-        Vector2 overlap = Vector2(sum.x - abs(dir.x), sum.y - abs(dir.y));
+        Vector2 circlePos = other->GetTransform()->GetWorldPos();
+        Vector2 rectPos = _transform->GetWorldPos();
+        Vector2 leftTop = Vector2(Left(), Top());
+        Vector2 rightTop = Vector2(Right(), Top());
+        Vector2 leftBottom = Vector2(Left(), Bottom());
+        Vector2 rightBottom = Vector2(Right(), Bottom());
 
-        if (Right() >= other->GetTransform()->GetWorldPos().x && Left() <= other->GetTransform()->GetWorldPos().x)
+        Vector2 halfSize = GetWorldHalfSize();
+
+        if (circlePos.x > leftTop.x && circlePos.x < rightTop.x)
         {
-            if (other->GetTransform()->GetWorldPos().y > _transform->GetWorldPos().y)
-            {
-                other->GetTransform()->GetPos().y += overlap.y;
-            }
-            else
-            {
-                other->GetTransform()->GetPos().y -= overlap.y;
-            }
+            Vector2 dir = Vector2(0.0f, circlePos.y - rectPos.y);
+            dir.Normalize();
+
+            float sum = other->WorldRadius() + halfSize.y;
+            float distance = abs(rectPos.y - circlePos.y);
+
+            other->GetTransform()->GetPos() += dir * (sum - distance);
+
+            //result.isHit = true;
         }
-        else if (Top() >= other->GetTransform()->GetWorldPos().y && Bottom() <= other->GetTransform()->GetWorldPos().y)
+        else if (circlePos.y > leftBottom.y && circlePos.y < rightTop.y)
         {
-            if (other->GetTransform()->GetWorldPos().x > _transform->GetWorldPos().x)
-            {
-                other->GetTransform()->GetPos().x += overlap.x;
-            }
-            else
-            {
-                other->GetTransform()->GetPos().x -= overlap.x;
-            }
+            Vector2 dir = Vector2(circlePos.x - rectPos.x, 0.0f);
+            dir.Normalize();
+
+            float sum = other->WorldRadius() + halfSize.x;
+            float distance = abs(rectPos.x - circlePos.x);
+
+            other->GetTransform()->GetPos() += dir * (sum - distance);
+
+            //result.isHit = true;
         }
         else
         {
-            Vector2 diagonal = Vector2(GetWorldSize().x / 2, GetWorldSize().y / 2);
-            float diagonalSum = diagonal.Length() + other->WorldRadius();
-            float diagonalOverlap = diagonalSum - dir.Length();
-            other->GetTransform()->GetPos() += Vector2(dir.NormalVector2().x * diagonalOverlap, dir.NormalVector2().y * diagonalOverlap);
+
         }
 
         return true;
@@ -151,7 +161,7 @@ bool RectCollider::Block(shared_ptr<RectCollider> other)
     if (this->IsCollision(other))
     {
         Vector2 dir = other->GetTransform()->GetWorldPos() - GetTransform()->GetWorldPos();
-        Vector2 sum = Vector2(GetWorldSize().x / 2 + other->GetWorldSize().x / 2, GetWorldSize().y / 2 + other->GetWorldSize().y / 2);
+        Vector2 sum = Vector2(GetWorldHalfSize().x / 2 + other->GetWorldHalfSize().x / 2, GetWorldHalfSize().y / 2 + other->GetWorldHalfSize().y / 2);
         Vector2 overlap = Vector2(sum.x - abs(dir.x), sum.y - abs(dir.y));
 
         if (overlap.x >= overlap.y)

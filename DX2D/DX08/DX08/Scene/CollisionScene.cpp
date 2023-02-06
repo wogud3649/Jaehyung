@@ -19,9 +19,9 @@ CollisionScene::~CollisionScene()
 
 void CollisionScene::Update()
 {
-	_rect1->GetTransform()->GetPos() = MOUSE_POS;
-	dynamic_pointer_cast<RectCollider>(_rect1)->Block(dynamic_pointer_cast<CircleCollider>(_circle1));
-	dynamic_pointer_cast<RectCollider>(_rect1)->Block(dynamic_pointer_cast<RectCollider>(_rect2));
+	_circle1->GetTransform()->GetPos() = MOUSE_POS;
+	dynamic_pointer_cast<CircleCollider>(_circle1)->Block(dynamic_pointer_cast<RectCollider>(_rect1));
+	dynamic_pointer_cast<CircleCollider>(_circle1)->Block(dynamic_pointer_cast<RectCollider>(_rect2));
 
 	_circle1->Update();
 	_rect1->Update();
