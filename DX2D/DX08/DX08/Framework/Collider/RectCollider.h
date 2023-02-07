@@ -30,8 +30,8 @@ public:
 	virtual bool IsCollision(shared_ptr<CircleCollider> other, bool isObb = false) override;
 	virtual bool IsCollision(shared_ptr<RectCollider> other, bool isObb = false) override;
 
-	virtual bool Block(shared_ptr<CircleCollider> other);
-	virtual bool Block(shared_ptr<RectCollider> other);
+	virtual HIT_RESULT Block(shared_ptr<CircleCollider> other);
+	virtual HIT_RESULT Block(shared_ptr<RectCollider> other);
 
 	bool IsAABB(shared_ptr<RectCollider> other);
 	bool IsAABB(shared_ptr<CircleCollider> other);
@@ -44,6 +44,9 @@ public:
 	float SeparateAxis(Vector2 separate, Vector2 e1, Vector2 e2);
 
 private:
+	virtual Vector2 GetCloserVertex(shared_ptr<CircleCollider> circle);
+	virtual Vector2 GetCloserVertex(shared_ptr<RectCollider> rect);
+
 	void CreateVertices();
 
 	Vector2 _size = { 0,0 };

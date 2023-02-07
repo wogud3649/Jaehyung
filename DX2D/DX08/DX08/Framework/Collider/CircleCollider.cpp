@@ -57,8 +57,9 @@ bool CircleCollider::IsCollision(shared_ptr<RectCollider> other, bool isObb)
     return other->IsCollision(shared_from_this(), isObb);
 }
 
-bool CircleCollider::Block(shared_ptr<CircleCollider> other)
+HIT_RESULT CircleCollider::Block(shared_ptr<CircleCollider> other)
 {
+    HIT_RESULT result;
     if (this->IsCollision(other))
     {
         Vector2 dir = other->GetTransform()->GetWorldPos() - _transform->GetWorldPos();
@@ -66,15 +67,16 @@ bool CircleCollider::Block(shared_ptr<CircleCollider> other)
         float overlap = radiusSum - dir.Length();;
         other->GetTransform()->GetPos() += dir.NormalVector2() * overlap;
 
-        return true;
+        result.isHit = true;
+        return result;
     }
-
-    return false;
+    result.isHit = false;
+    return result;
 }
 
-bool CircleCollider::Block(shared_ptr<RectCollider> other)
+HIT_RESULT CircleCollider::Block(shared_ptr<RectCollider> other)
 {
-    //HIT_RESULT result;
+    HIT_RESULT result;
 
     if (other->IsAABB(shared_from_this()))
     {
@@ -96,8 +98,6 @@ bool CircleCollider::Block(shared_ptr<RectCollider> other)
             float distance = abs(rectPos.y - circlePos.y);
 
             other->GetTransform()->GetPos() += dir * (sum - distance);
-            
-            //result.isHit = true;
         }
         else if (circlePos.y > leftBottom.y && circlePos.y < rightTop.y)
         {
@@ -108,8 +108,6 @@ bool CircleCollider::Block(shared_ptr<RectCollider> other)
             float distance = abs(rectPos.x - circlePos.x);
 
             other->GetTransform()->GetPos() += dir * (sum - distance);
-
-            //result.isHit = true;
         }
         else
         {
@@ -121,14 +119,13 @@ bool CircleCollider::Block(shared_ptr<RectCollider> other)
             float magnitude = WorldRadius() - dir.Length();
             dir.Normalize();
             other->GetTransform()->GetPos() += dir * magnitude;
-
-            //result.isHit = true;
         }
+        result.isHit = true;
 
-        return true;
+        return result;
     }
 
-    return false;
+    return result;
 }
 
 float CircleCollider::WorldRadius()

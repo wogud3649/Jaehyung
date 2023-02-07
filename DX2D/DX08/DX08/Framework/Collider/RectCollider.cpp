@@ -108,8 +108,10 @@ bool RectCollider::IsCollision(shared_ptr<RectCollider> other, bool isObb)
         return IsAABB(other);
 }
 
-bool RectCollider::Block(shared_ptr<CircleCollider> other)
+HIT_RESULT RectCollider::Block(shared_ptr<CircleCollider> other)
 {
+    HIT_RESULT result;
+
     if (IsAABB(other))
     {
         Vector2 circlePos = other->GetTransform()->GetWorldPos();
@@ -130,8 +132,6 @@ bool RectCollider::Block(shared_ptr<CircleCollider> other)
             float distance = abs(rectPos.y - circlePos.y);
 
             other->GetTransform()->GetPos() += dir * (sum - distance);
-
-            //result.isHit = true;
         }
         else if (circlePos.y > leftBottom.y && circlePos.y < rightTop.y)
         {
@@ -142,40 +142,55 @@ bool RectCollider::Block(shared_ptr<CircleCollider> other)
             float distance = abs(rectPos.x - circlePos.x);
 
             other->GetTransform()->GetPos() += dir * (sum - distance);
-
-            //result.isHit = true;
         }
         else
         {
+            Vector2 closerVertex = GetCloserVertex(other);
 
+            Vector2 vToCircle = circlePos - closerVertex;
+
+            Vector2 dir = circlePos - closerVertex;
+            float magnitude = other->WorldRadius() - dir.Length();
+            dir.Normalize();
+            other->GetTransform()->GetPos() += dir * magnitude;
         }
 
-        return true;
-    }
+        result.isHit = true;
 
-    return false;
+        return result;
+    }
+    result.isHit = false;
+    return result;
 }
 
-bool RectCollider::Block(shared_ptr<RectCollider> other)
+HIT_RESULT RectCollider::Block(shared_ptr<RectCollider> other)
 {
-    if (this->IsCollision(other))
+    HIT_RESULT result;
+    if (IsAABB(other))
     {
-        Vector2 dir = other->GetTransform()->GetWorldPos() - GetTransform()->GetWorldPos();
-        Vector2 sum = Vector2(GetWorldHalfSize().x / 2 + other->GetWorldHalfSize().x / 2, GetWorldHalfSize().y / 2 + other->GetWorldHalfSize().y / 2);
+        Vector2 dir = other->GetTransform()->GetWorldPos() - _transform->GetWorldPos();
+        Vector2 sum = Vector2(GetWorldHalfSize().x + other->GetWorldHalfSize().x, GetWorldHalfSize().y + other->GetWorldHalfSize().y);
         Vector2 overlap = Vector2(sum.x - abs(dir.x), sum.y - abs(dir.y));
 
-        if (overlap.x >= overlap.y)
+        if (dir.x > 0)
         {
-            other->GetTransform()->GetPos().y += dir.NormalVector2().y * overlap.y;
+
         }
-        else
-        {
-            other->GetTransform()->GetPos().x += dir.NormalVector2().x * overlap.x;
-        }
-        
+
+        //if (overlap.x >= overlap.y)
+        //{
+        //    other->GetTransform()->GetPos().y += dir.NormalVector2().y * overlap.y;
+        //}
+        //else
+        //{
+        //    other->GetTransform()->GetPos().x += dir.NormalVector2().x * overlap.x;
+        //}
+
+        result.isHit = true;
     }
 
-    return false;
+    result.isHit = false;
+    return result;
 }
 
 bool RectCollider::IsAABB(shared_ptr<RectCollider> other)
@@ -316,6 +331,37 @@ bool RectCollider::IsOBB(shared_ptr<CircleCollider> other)
         return false;
 
     return true;
+}
+
+Vector2 RectCollider::GetCloserVertex(shared_ptr<CircleCollider> circle)
+{
+    Vector2 circlePos = circle->GetTransform()->GetWorldPos();
+    Vector2 leftTop = Vector2(Left(), Top());
+    Vector2 rightTop = Vector2(Right(), Top());
+    Vector2 leftBottom = Vector2(Left(), Bottom());
+    Vector2 rightBottom = Vector2(Right(), Bottom());
+
+    int leftTopL = (int)(leftTop - circlePos).Length();
+    int rightTopL = (int)(rightTop - circlePos).Length();
+    int leftBottomL = (int)(leftBottom - circlePos).Length();
+    int rightBottomL = (int)(rightBottom - circlePos).Length();
+
+    int min;
+    min = min(leftTopL, min(rightTopL, min(leftBottomL, rightBottomL)));
+
+    if (leftTopL == min)
+        return leftTop;
+    else if (rightTopL == min)
+        return rightTop;
+    else if (leftBottomL == min)
+        return leftBottom;
+    else
+        return rightBottom;
+}
+
+Vector2 RectCollider::GetCloserVertex(shared_ptr<RectCollider> rect)
+{
+    return Vector2();
 }
 
 void RectCollider::CreateVertices()

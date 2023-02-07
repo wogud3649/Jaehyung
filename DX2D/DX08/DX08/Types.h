@@ -32,5 +32,5 @@
 
 struct HIT_RESULT
 {
-
+	bool isHit;
 };
