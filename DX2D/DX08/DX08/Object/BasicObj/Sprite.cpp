@@ -9,7 +9,6 @@ Sprite::Sprite(wstring file, Vector2 size)
     Sprite::CreateMaterial(file);
     Sprite::CreateMesh();
 
-
     _transform = make_shared<Transform>();
     _actionBuffer = make_shared<ActionBuffer>();
     _actionBuffer->_data.imageSize = _srv->GetImageSize();

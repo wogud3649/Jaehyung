@@ -5,10 +5,10 @@ Cup_Bg::Cup_Bg()
 {
 	_bg = make_shared<Quad>(L"Resource/Texture/CupHead/clown_bg_main.png");
 	_ground = make_shared<Quad>(L"Resource/Texture/CupHead/clown_bg_track.png");
-	_ground->GetTransform()->SetParent(_bg->GetTransform());
-	_ground->GetTransform()->GetPos().y -= 300.0f;
 	_col = make_shared<RectCollider>(Vector2(_ground->GetSize().x, _ground->GetSize().y / 2));
-	_col->GetTransform()->SetParent(_ground->GetTransform());
+	_col->GetTransform()->SetParent(_bg->GetTransform());
+	_col->GetTransform()->GetPos().y -= 300.0f;
+	_ground->GetTransform()->SetParent(_col->GetTransform());
 }
 
 Cup_Bg::~Cup_Bg()

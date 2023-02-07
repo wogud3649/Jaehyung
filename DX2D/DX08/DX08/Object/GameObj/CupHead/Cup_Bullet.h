@@ -8,27 +8,20 @@ public:
 	void Update();
 	void Render();
 
-	void SetPosition(Vector2 pos) { _sprite->GetTransform()->GetPos() = pos; }
-	void SetDirection(int dir);
-	void Enable();
-
-	shared_ptr<Transform> GetTransform() { return _sprite->GetTransform(); }
-	bool GetActive() { return _isActive; }
+	void SetPostion(Vector2 pos) { _sprite->GetTransform()->GetPos() = pos; }
+	void Fire(Vector2 dir);
 
 	bool isActive;
-
 private:
-	void Init();
 	void CreateAction();
-	void Reset();
 
 	shared_ptr<Sprite> _sprite;
 	shared_ptr<Action> _action;
 
-	Vector2 _dir = { 0.0f,0.0f };
-	float _speed = 500.0f;
-	float _lifeTime = 2.0f;
-	float _delay = 0.0f;
+	float _speed = 200.0f;
+	Vector2 _direction;
 
-	bool _isActive = false;
+	float _delay = 0.0f;
+	float _lifeTime = 2.0f;
 };
+

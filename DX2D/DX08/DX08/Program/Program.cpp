@@ -12,7 +12,7 @@
 
 Program::Program()
 {
-	_scene = make_shared<CollisionScene>();
+	_scene = make_shared<CupHeadScene>();
 
 	_view = make_shared<MatrixBuffer>();
 	_proj = make_shared<MatrixBuffer>();

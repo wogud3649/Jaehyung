@@ -172,19 +172,14 @@ HIT_RESULT RectCollider::Block(shared_ptr<RectCollider> other)
         Vector2 sum = Vector2(GetWorldHalfSize().x + other->GetWorldHalfSize().x, GetWorldHalfSize().y + other->GetWorldHalfSize().y);
         Vector2 overlap = Vector2(sum.x - abs(dir.x), sum.y - abs(dir.y));
 
-        if (dir.x > 0)
+        if (overlap.x >= overlap.y)
         {
-
+            other->GetTransform()->GetPos().y += dir.NormalVector2().y * overlap.y;
         }
-
-        //if (overlap.x >= overlap.y)
-        //{
-        //    other->GetTransform()->GetPos().y += dir.NormalVector2().y * overlap.y;
-        //}
-        //else
-        //{
-        //    other->GetTransform()->GetPos().x += dir.NormalVector2().x * overlap.x;
-        //}
+        else
+        {
+            other->GetTransform()->GetPos().x += dir.NormalVector2().x * overlap.x;
+        }
 
         result.isHit = true;
     }

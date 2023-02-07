@@ -17,16 +17,17 @@ void Transform::UpdateSRT()
 	_tranlateM = XMMatrixTranslation(_pos.x, _pos.y, 0);
 
 	_srtMatrix = _scaleM * _rotationM * _tranlateM;
+
+	if (_parent.expired() == false)
+	{
+		_parent.lock()->UpdateSRT();
+		_srtMatrix *= _parent.lock()->GetMatrix();
+	}
 }
 
 void Transform::Update()
 {
 	UpdateSRT();
-
-	if (_parent.expired() == false)
-	{
-		_srtMatrix *= _parent.lock()->GetMatrix();
-	}
 
 	_world->SetData(_srtMatrix);
 	_world->Update();

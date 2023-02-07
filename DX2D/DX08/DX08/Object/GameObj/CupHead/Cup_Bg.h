@@ -9,12 +9,13 @@ public:
 	void Render();
 
 	void SetPos(Vector2 pos) { _bg->GetTransform()->GetPos() = pos; }
+
 	shared_ptr<RectCollider> GetCollider() { return _col; }
 
 private:
 	shared_ptr<Quad> _bg;
 	
-	shared_ptr<Quad> _ground;
 	shared_ptr<RectCollider> _col;
+	shared_ptr<Quad> _ground;
 };
 

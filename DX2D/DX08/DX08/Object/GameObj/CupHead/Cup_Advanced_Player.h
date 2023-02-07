@@ -5,11 +5,11 @@ public:
 	Cup_Advanced_Player();
 	virtual ~Cup_Advanced_Player();
 
-	virtual void Update();
-	virtual void Render();
+	virtual void Update() override;
+	virtual void Render() override;
 
 	void Shot();
-	shared_ptr<Cup_Bullet> SelectBullet();
+	shared_ptr<Cup_Bullet> SeletBullet();
 
 private:
 	shared_ptr<Transform> _muzzle;
