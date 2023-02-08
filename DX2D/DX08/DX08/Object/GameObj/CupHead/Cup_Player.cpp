@@ -9,10 +9,10 @@ Cup_Player::Cup_Player()
 	CreateAction("Run", Action::Type::LOOP);
 	CreateAction("AimStraightShot", Action::Type::END);
 	CreateAction("Jump", Action::Type::LOOP);
+	
+	_col = make_shared<CircleCollider>(73);
 
-	_transform = make_shared<Transform>();
-	_col = make_shared<CircleCollider>(_sprites[0]->GetClipSize().y / 4.5);
-	_transform->SetParent(_col->GetTransform());
+	_transform = _col->GetTransform();
 
 	for (auto sprite : _sprites)
 		sprite->GetTransform()->SetParent(_transform);
@@ -25,12 +25,12 @@ Cup_Player::Cup_Player()
 
 Cup_Player::~Cup_Player()
 {
+	_transform = nullptr;
 }
 
 void Cup_Player::Update()
 {
 	Input();
-	Jump();
 
 	for (auto sprite : _sprites)
 		sprite->Update();
@@ -73,7 +73,8 @@ void Cup_Player::Input()
 	if (KEY_PRESS('A'))
 	{
 		_col->GetTransform()->GetPos().x -= _speed * DELTA_TIME;
-		SetAction(State::CUP_RUN);
+		if (_curState != State::CUP_JUMP)
+			SetAction(State::CUP_RUN);
 
 		SetLeft();
 	}
@@ -81,31 +82,16 @@ void Cup_Player::Input()
 	if (KEY_PRESS('D'))
 	{
 		_col->GetTransform()->GetPos().x += _speed * DELTA_TIME;
-		SetAction(State::CUP_RUN);
+		if (_curState != State::CUP_JUMP)
+			SetAction(State::CUP_RUN);
 
 		SetRight();
 	}
 
 	if (KEY_UP('A') || KEY_UP('D'))
 	{
-		SetAction(State::CUP_IDLE);
-	}
-}
-
-void Cup_Player::Jump()
-{
-	if (_isJump)
-	{
-		_col->GetTransform()->GetPos().y += _jumpPower * DELTA_TIME;
-
-	}
-	else
-	{
-		if (KEY_DOWN(VK_SPACE))
-		{
-			SetAction(State::CUP_JUMP);
-			_isJump = true;
-		}
+		if (_curState != State::CUP_JUMP)
+			SetAction(State::CUP_IDLE);
 	}
 }
 

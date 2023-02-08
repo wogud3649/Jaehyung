@@ -4,11 +4,14 @@
 Cup_Bg::Cup_Bg()
 {
 	_bg = make_shared<Quad>(L"Resource/Texture/CupHead/clown_bg_main.png");
-	_ground = make_shared<Quad>(L"Resource/Texture/CupHead/clown_bg_track.png");
-	_col = make_shared<RectCollider>(Vector2(_ground->GetSize().x, _ground->GetSize().y / 2));
-	_col->GetTransform()->SetParent(_bg->GetTransform());
-	_col->GetTransform()->GetPos().y -= 300.0f;
-	_ground->GetTransform()->SetParent(_col->GetTransform());
+	
+	for (int i = 0; i < 2; i++)
+	{
+		_tracks.emplace_back(make_shared<Cup_Track>());
+		_tracks[i]->GetTransform()->SetParent(_bg->GetTransform());
+	}
+	_tracks[0]->GetTransform()->GetPos().y -= 300.0f;
+	_tracks[1]->GetTransform()->GetPos() += Vector2(1000.0f, -50.0f);
 }
 
 Cup_Bg::~Cup_Bg()
@@ -18,13 +21,19 @@ Cup_Bg::~Cup_Bg()
 void Cup_Bg::Update()
 {
 	_bg->Update();
-	_ground->Update();
-	_col->Update();
+	for (auto track : _tracks)
+		track->Update();
 }
 
 void Cup_Bg::Render()
 {
 	_bg->Render();
-	_ground->Render();
-	_col->Render();
+	for (auto track : _tracks)
+		track->Render();
+}
+
+void Cup_Bg::SetPlayer(shared_ptr<Cup_Advanced_Player> player)
+{
+	for (auto track : _tracks)
+		track->SetPlayer(player);
 }

@@ -9,6 +9,10 @@ public:
 	virtual void Render() override;
 
 	void Shot();
+	void EndShot();
+	void Jump();
+	void Ground();
+
 	shared_ptr<Cup_Bullet> SeletBullet();
 
 private:

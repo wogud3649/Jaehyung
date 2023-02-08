@@ -145,7 +145,7 @@ HIT_RESULT RectCollider::Block(shared_ptr<CircleCollider> other)
         }
         else
         {
-            Vector2 closerVertex = GetCloserVertex(other);
+            Vector2 closerVertex = other->GetCloserVertex(shared_from_this());
 
             Vector2 vToCircle = circlePos - closerVertex;
 
@@ -154,12 +154,12 @@ HIT_RESULT RectCollider::Block(shared_ptr<CircleCollider> other)
             dir.Normalize();
             other->GetTransform()->GetPos() += dir * magnitude;
         }
-
         result.isHit = true;
-
-        return result;
     }
-    result.isHit = false;
+    else
+    {
+        result.isHit = false;
+    }
     return result;
 }
 
@@ -180,11 +180,45 @@ HIT_RESULT RectCollider::Block(shared_ptr<RectCollider> other)
         {
             other->GetTransform()->GetPos().x += dir.NormalVector2().x * overlap.x;
         }
-
         result.isHit = true;
     }
+    else
+    {
+        result.isHit = false;
+    }
+    return result;
+}
 
-    result.isHit = false;
+HIT_RESULT RectCollider::TopBlock(shared_ptr<CircleCollider> other)
+{
+    HIT_RESULT result;
+    if (IsAABB(other))
+    {
+        float dir = other->GetTransform()->GetWorldPos().y - Top();
+        if (dir >= other->WorldRadius()-1)
+        {
+            float sum = other->WorldRadius();
+            float overlap = sum - dir;
+
+            other->GetTransform()->GetPos().y += overlap;
+
+            result.isHit = true;
+        }
+        else
+        {
+            result.isHit = false;
+        }
+    }
+    else
+    {
+        result.isHit = false;
+    }
+    return result;
+}
+
+HIT_RESULT RectCollider::TopBlock(shared_ptr<RectCollider> other)
+{
+    HIT_RESULT result;
     return result;
 }
 
@@ -326,37 +360,6 @@ bool RectCollider::IsOBB(shared_ptr<CircleCollider> other)
         return false;
 
     return true;
-}
-
-Vector2 RectCollider::GetCloserVertex(shared_ptr<CircleCollider> circle)
-{
-    Vector2 circlePos = circle->GetTransform()->GetWorldPos();
-    Vector2 leftTop = Vector2(Left(), Top());
-    Vector2 rightTop = Vector2(Right(), Top());
-    Vector2 leftBottom = Vector2(Left(), Bottom());
-    Vector2 rightBottom = Vector2(Right(), Bottom());
-
-    int leftTopL = (int)(leftTop - circlePos).Length();
-    int rightTopL = (int)(rightTop - circlePos).Length();
-    int leftBottomL = (int)(leftBottom - circlePos).Length();
-    int rightBottomL = (int)(rightBottom - circlePos).Length();
-
-    int min;
-    min = min(leftTopL, min(rightTopL, min(leftBottomL, rightBottomL)));
-
-    if (leftTopL == min)
-        return leftTop;
-    else if (rightTopL == min)
-        return rightTop;
-    else if (leftBottomL == min)
-        return leftBottom;
-    else
-        return rightBottom;
-}
-
-Vector2 RectCollider::GetCloserVertex(shared_ptr<RectCollider> rect)
-{
-    return Vector2();
 }
 
 void RectCollider::CreateVertices()

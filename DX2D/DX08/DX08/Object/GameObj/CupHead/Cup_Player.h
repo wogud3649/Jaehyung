@@ -20,12 +20,12 @@ public:
 	void SetLeft();
 
 	void Input();
-	void Jump();
 
 	void SetAction(State state);
 	void SetIDLE();
 
-	shared_ptr<Collider> GetCollider() { return _col; }
+	shared_ptr<Transform> GetTransform() { return _transform; }
+	shared_ptr<CircleCollider> GetBodyCollider() { return _col; }
 
 protected:
 	void CreateAction(string name, Action::Type type);
@@ -34,15 +34,17 @@ protected:
 	State _oldState = CUP_IDLE;
 
 	shared_ptr<Transform> _transform;
-	shared_ptr<Collider> _col;
+	shared_ptr<CircleCollider> _col;
 
 	vector<shared_ptr<Sprite>> _sprites;
 	vector<shared_ptr<Action>> _actions;
 
 	float _speed = 300.0f;
-	float _jumpPower = 400.0f;
+	float _maxJumpPower = 700.0f;
+	float _jumpPower = 0.0f;
 
 	bool _isRight = true;
 	bool _isJump = false;
+	bool _isShooting = false;
 };
 

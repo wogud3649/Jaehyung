@@ -10,12 +10,10 @@ public:
 
 	void SetPos(Vector2 pos) { _bg->GetTransform()->GetPos() = pos; }
 
-	shared_ptr<RectCollider> GetCollider() { return _col; }
+	void SetPlayer(shared_ptr<Cup_Advanced_Player> player);
 
 private:
 	shared_ptr<Quad> _bg;
-	
-	shared_ptr<RectCollider> _col;
-	shared_ptr<Quad> _ground;
+	vector<shared_ptr<Cup_Track>> _tracks;
 };
 

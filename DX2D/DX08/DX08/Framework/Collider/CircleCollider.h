@@ -2,6 +2,8 @@
 class CircleCollider : public Collider, public enable_shared_from_this<CircleCollider>
 {
 public:
+	friend RectCollider;
+
 	CircleCollider(float radius);
 	~CircleCollider();
 

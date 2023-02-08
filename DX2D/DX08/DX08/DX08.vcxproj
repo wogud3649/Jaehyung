@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Object\GameObj\CupHead\Cup_Track.h" />
     <ClInclude Include="Object\GameObj\CupHead\Cup_Advanced_Player.h" />
     <ClInclude Include="Framework\Animation\MyXML.h" />
     <ClInclude Include="Object\GameObj\CupHead\Cup_Bullet.h" />
@@ -204,6 +205,7 @@
     <ClInclude Include="Object\GameObj\Zelda\Zelda.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Object\GameObj\CupHead\Cup_Track.cpp" />
     <ClCompile Include="Object\GameObj\CupHead\Cup_Advanced_Player.cpp" />
     <ClCompile Include="Framework\Animation\MyXML.cpp" />
     <ClCompile Include="Object\GameObj\CupHead\Cup_Bullet.cpp" />

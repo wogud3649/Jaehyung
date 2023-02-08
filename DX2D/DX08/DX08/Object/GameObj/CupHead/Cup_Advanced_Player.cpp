@@ -10,6 +10,9 @@ Cup_Advanced_Player::Cup_Advanced_Player()
 		_bullets.push_back(bullet);
 	}
 
+	_actions[State::CUP_SHOT]->SetCallBack(std::bind(&Cup_Advanced_Player::EndShot, this));
+	_actions[State::CUP_JUMP]->SetCallBack(std::bind(&Cup_Advanced_Player::Ground, this));
+
 	_muzzle = make_shared<Transform>();
 	_muzzle->SetParent(_col->GetTransform());
 	_muzzle->GetPos().x = 50;
@@ -23,8 +26,9 @@ void Cup_Advanced_Player::Update()
 {
 	for (auto bullet : _bullets)
 		bullet->Update();
-
+	
 	Shot();
+	Jump();
 
 	Cup_Player::Update();
 }
@@ -41,7 +45,7 @@ void Cup_Advanced_Player::Shot()
 {
 	if (KEY_DOWN(VK_LBUTTON))
 	{
-		_actions[State::CUP_SHOT]->SetCallBack(std::bind(&Cup_Player::SetIDLE, this));
+		_isShooting = true;
 		SetAction(State::CUP_SHOT);
 		shared_ptr<Cup_Bullet> bullet = SeletBullet();
 		Vector2 dir;
@@ -61,6 +65,34 @@ void Cup_Advanced_Player::Shot()
 		bullet->isActive = true;
 		bullet->Fire(dir);
 	}
+}
+
+void Cup_Advanced_Player::EndShot()
+{
+	SetAction(CUP_IDLE);
+	_isShooting = false;
+}
+
+void Cup_Advanced_Player::Jump()
+{
+	if (_curState == State::CUP_JUMP)
+	{
+		_col->GetTransform()->GetPos().y += _jumpPower * DELTA_TIME;
+		_jumpPower -= GRAVITY * GRAVITY * DELTA_TIME;
+		return;
+	}
+
+	if (KEY_DOWN(VK_SPACE))
+	{
+		SetAction(State::CUP_JUMP);
+		_jumpPower = _maxJumpPower;
+	}
+}
+
+void Cup_Advanced_Player::Ground()
+{
+	SetAction(State::CUP_IDLE);
+	_jumpPower = 700.0f;
 }
 
 shared_ptr<Cup_Bullet> Cup_Advanced_Player::SeletBullet()

@@ -68,9 +68,11 @@ HIT_RESULT CircleCollider::Block(shared_ptr<CircleCollider> other)
         other->GetTransform()->GetPos() += dir.NormalVector2() * overlap;
 
         result.isHit = true;
-        return result;
     }
-    result.isHit = false;
+    else
+    {
+        result.isHit = false;
+    }
     return result;
 }
 
@@ -121,8 +123,10 @@ HIT_RESULT CircleCollider::Block(shared_ptr<RectCollider> other)
             other->GetTransform()->GetPos() += dir * magnitude;
         }
         result.isHit = true;
-
-        return result;
+    }
+    else
+    {
+        result.isHit = false;
     }
 
     return result;

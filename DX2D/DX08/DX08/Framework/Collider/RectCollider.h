@@ -1,9 +1,11 @@
 #pragma once
 class CircleCollider;
 
-class RectCollider : public Collider
+class RectCollider : public Collider, public enable_shared_from_this<RectCollider>
 {
 public:
+	friend CircleCollider;
+
 	struct OBB_DESC
 	{
 		Vector2 position;
@@ -32,6 +34,8 @@ public:
 
 	virtual HIT_RESULT Block(shared_ptr<CircleCollider> other);
 	virtual HIT_RESULT Block(shared_ptr<RectCollider> other);
+	virtual HIT_RESULT TopBlock(shared_ptr<CircleCollider> other);
+	virtual HIT_RESULT TopBlock(shared_ptr<RectCollider> other);
 
 	bool IsAABB(shared_ptr<RectCollider> other);
 	bool IsAABB(shared_ptr<CircleCollider> other);
@@ -44,9 +48,6 @@ public:
 	float SeparateAxis(Vector2 separate, Vector2 e1, Vector2 e2);
 
 private:
-	virtual Vector2 GetCloserVertex(shared_ptr<CircleCollider> circle);
-	virtual Vector2 GetCloserVertex(shared_ptr<RectCollider> rect);
-
 	void CreateVertices();
 
 	Vector2 _size = { 0,0 };
