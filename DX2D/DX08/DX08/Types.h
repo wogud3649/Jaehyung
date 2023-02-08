@@ -30,20 +30,17 @@
 #define ADD_VS(k) ShaderManager::GetInstance()->AddVS(k)
 #define ADD_PS(k) ShaderManager::GetInstance()->AddPS(k)
 
+enum Direction
+{
+	LEFT,
+	UP,
+	RIGHT,
+	DOWN,
+	NONE
+};
+
 struct HIT_RESULT
 {
-	enum Direction
-	{
-		LEFT,
-		LEFTTOP,
-		TOP,
-		RIGHTTOP,
-		RIGHT,
-		RIHGTBOTTOM,
-		BOTTOM,
-		LEFTBOTTOM,
-		NONE
-	};
 	bool isHit;
 	Direction dir = NONE;
 };

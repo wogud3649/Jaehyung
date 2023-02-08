@@ -129,9 +129,9 @@ HIT_RESULT RectCollider::Block(shared_ptr<CircleCollider> other)
             dir.Normalize();
 
             if (dir.y > 0)
-                result.dir = HIT_RESULT::Direction::TOP;
+                result.dir = Direction::UP;
             else
-                result.dir = HIT_RESULT::Direction::BOTTOM;
+                result.dir = Direction::DOWN;
 
             float sum = other->WorldRadius() + halfSize.y;
             float distance = abs(rectPos.y - circlePos.y);
@@ -144,9 +144,9 @@ HIT_RESULT RectCollider::Block(shared_ptr<CircleCollider> other)
             dir.Normalize();
 
             if (dir.x > 0)
-                result.dir = HIT_RESULT::Direction::RIGHT;
+                result.dir = Direction::RIGHT;
             else
-                result.dir = HIT_RESULT::Direction::LEFT;
+                result.dir = Direction::LEFT;
 
             float sum = other->WorldRadius() + halfSize.x;
             float distance = abs(rectPos.x - circlePos.x);
@@ -160,15 +160,6 @@ HIT_RESULT RectCollider::Block(shared_ptr<CircleCollider> other)
             Vector2 vToCircle = circlePos - closerVertex;
 
             Vector2 dir = circlePos - closerVertex;
-
-            if (dir.x < 0 && dir.y > 0)
-                result.dir = HIT_RESULT::Direction::LEFTTOP;
-            else if (dir.x > 0 && dir.y > 0)
-                result.dir = HIT_RESULT::Direction::RIGHTTOP;
-            else if (dir.x > 0 && dir.y < 0)
-                result.dir = HIT_RESULT::Direction::RIHGTBOTTOM;
-            else
-                result.dir = HIT_RESULT::Direction::LEFTBOTTOM;
 
             float magnitude = other->WorldRadius() - dir.Length();
             dir.Normalize();
@@ -222,7 +213,7 @@ HIT_RESULT RectCollider::TopBlock(shared_ptr<CircleCollider> other)
 
             other->GetTransform()->GetPos().y += overlap;
 
-            result.dir = HIT_RESULT::Direction::TOP;
+            result.dir = Direction::UP;
             result.isHit = true;
         }
         else

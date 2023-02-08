@@ -12,9 +12,10 @@ public:
 	void EndShot();
 	void Jump();
 	void Ground();
+	void Falling();
 	void Beat();
 
-	shared_ptr<Cup_Bullet> SeletBullet();
+	shared_ptr<Cup_Bullet> SelectBullet();
 
 private:
 	shared_ptr<Transform> _muzzle;

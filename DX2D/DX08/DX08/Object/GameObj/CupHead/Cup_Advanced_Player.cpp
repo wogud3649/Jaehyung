@@ -30,6 +30,9 @@ void Cup_Advanced_Player::Update()
 	Shot();
 	Jump();
 
+	if (_curState != State::CUP_SHOT)
+		_col->GetTransform()->GetPos().y += _jumpPower * DELTA_TIME;
+
 	Cup_Player::Update();
 }
 
@@ -50,7 +53,7 @@ void Cup_Advanced_Player::Shot()
 	{
 		_isShooting = true;
 		SetAction(State::CUP_SHOT);
-		shared_ptr<Cup_Bullet> bullet = SeletBullet();
+		shared_ptr<Cup_Bullet> bullet = SelectBullet();
 		Vector2 dir;
 
 		if (_isRight)
@@ -78,14 +81,7 @@ void Cup_Advanced_Player::EndShot()
 
 void Cup_Advanced_Player::Jump()
 {
-	if (_curState == State::CUP_JUMP)
-	{
-		_col->GetTransform()->GetPos().y += _jumpPower * DELTA_TIME;
-		_jumpPower -= GRAVITY * GRAVITY * DELTA_TIME;
-		return;
-	}
-
-	if (_curState == State::CUP_SHOT)
+	if (_curState == State::CUP_SHOT || _curState == State::CUP_JUMP)
 		return;
 	if (KEY_DOWN(VK_SPACE))
 	{
@@ -98,9 +94,15 @@ void Cup_Advanced_Player::Ground()
 {
 	if (_jumpPower < 0)
 	{
-		SetAction(State::CUP_IDLE);
-		_jumpPower = 700.0f;
+		if (_curState == State::CUP_JUMP)
+			SetAction(State::CUP_IDLE);
+		_jumpPower = 0.0f;
 	}
+}
+
+void Cup_Advanced_Player::Falling()
+{
+	_jumpPower -= GRAVITY * GRAVITY * DELTA_TIME;
 }
 
 void Cup_Advanced_Player::Beat()
@@ -108,7 +110,7 @@ void Cup_Advanced_Player::Beat()
 	_jumpPower *= -1;
 }
 
-shared_ptr<Cup_Bullet> Cup_Advanced_Player::SeletBullet()
+shared_ptr<Cup_Bullet> Cup_Advanced_Player::SelectBullet()
 {
 	for (auto bullet : _bullets)
 	{

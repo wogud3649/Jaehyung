@@ -15,5 +15,7 @@ public:
 private:
 	shared_ptr<Quad> _bg;
 	vector<shared_ptr<Cup_Track>> _tracks;
+	
+	weak_ptr<Cup_Advanced_Player> _player;
 };
 

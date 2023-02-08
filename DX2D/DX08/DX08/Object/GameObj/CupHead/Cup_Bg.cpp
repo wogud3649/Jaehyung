@@ -11,7 +11,8 @@ Cup_Bg::Cup_Bg()
 		_tracks[i]->GetTransform()->SetParent(_bg->GetTransform());
 	}
 	_tracks[0]->GetTransform()->GetPos().y -= 300.0f;
-	_tracks[1]->GetTransform()->GetPos() += Vector2(1000.0f, -50.0f);
+
+	_tracks[1]->GetTransform()->GetPos() += Vector2(-1000.0f, -50.0f);
 	_tracks[1]->GetCollider()->GetTransform()->GetScale().y *= 0.5f;
 	_tracks[1]->GetCollider()->GetTransform()->GetPos().y += 25.0f;
 }
@@ -25,6 +26,18 @@ void Cup_Bg::Update()
 	_bg->Update();
 	for (auto track : _tracks)
 		track->Update();
+
+	auto iter = find_if(_tracks.begin(), _tracks.end(), [](const shared_ptr<Cup_Track>& a)->bool
+		{
+			if (a->GetHIT_RESULT().isHit && a->GetHIT_RESULT().dir == Direction::UP)
+				return true;
+			return false;
+		});
+
+	if (iter == _tracks.end())
+	{
+		_player.lock()->Falling();
+	}
 }
 
 void Cup_Bg::Render()
@@ -36,6 +49,8 @@ void Cup_Bg::Render()
 
 void Cup_Bg::SetPlayer(shared_ptr<Cup_Advanced_Player> player)
 {
+	_player = player;
+
 	for (auto track : _tracks)
 		track->SetPlayer(player);
 }

@@ -30,6 +30,8 @@ Cup_Player::~Cup_Player()
 
 void Cup_Player::Update()
 {
+	_col->Update();
+
 	Input();
 
 	for (auto sprite : _sprites)
@@ -37,8 +39,6 @@ void Cup_Player::Update()
 
 	for (auto action : _actions)
 		action->Update();
-
-	_col->Update();
 }
 
 void Cup_Player::Render()

@@ -171,6 +171,9 @@
     <ClInclude Include="Object\GameObj\CupHead\Cup_Track.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Object\GameObj\CupHead\Cup_Monster.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DX08.cpp">
@@ -312,6 +315,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Object\GameObj\CupHead\Cup_Track.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\GameObj\CupHead\Cup_Monster.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
