@@ -10,6 +10,7 @@ public:
 
 	void SetPlayer(shared_ptr<Cup_Advanced_Player> player) { _player = player; }
 	shared_ptr<Transform> GetTransform() { return _track->GetTransform(); }
+	shared_ptr<RectCollider> GetCollider() { return _col; }
 
 private:
 	shared_ptr<Quad> _track;

@@ -70,6 +70,8 @@ void Cup_Player::SetLeft()
 
 void Cup_Player::Input()
 {
+	if (_curState == State::CUP_SHOT)
+		return;
 	if (KEY_PRESS('A'))
 	{
 		_col->GetTransform()->GetPos().x -= _speed * DELTA_TIME;
@@ -90,7 +92,7 @@ void Cup_Player::Input()
 
 	if (KEY_UP('A') || KEY_UP('D'))
 	{
-		if (_curState != State::CUP_JUMP)
+		if (_curState != State::CUP_JUMP && _curState != State::CUP_SHOT)
 			SetAction(State::CUP_IDLE);
 	}
 }

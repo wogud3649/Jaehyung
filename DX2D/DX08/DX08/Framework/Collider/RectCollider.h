@@ -35,7 +35,6 @@ public:
 	virtual HIT_RESULT Block(shared_ptr<CircleCollider> other);
 	virtual HIT_RESULT Block(shared_ptr<RectCollider> other);
 	virtual HIT_RESULT TopBlock(shared_ptr<CircleCollider> other);
-	virtual HIT_RESULT TopBlock(shared_ptr<RectCollider> other);
 
 	bool IsAABB(shared_ptr<RectCollider> other);
 	bool IsAABB(shared_ptr<CircleCollider> other);

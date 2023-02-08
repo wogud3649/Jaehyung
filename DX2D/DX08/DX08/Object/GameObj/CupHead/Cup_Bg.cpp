@@ -12,6 +12,8 @@ Cup_Bg::Cup_Bg()
 	}
 	_tracks[0]->GetTransform()->GetPos().y -= 300.0f;
 	_tracks[1]->GetTransform()->GetPos() += Vector2(1000.0f, -50.0f);
+	_tracks[1]->GetCollider()->GetTransform()->GetScale().y *= 0.5f;
+	_tracks[1]->GetCollider()->GetTransform()->GetPos().y += 25.0f;
 }
 
 Cup_Bg::~Cup_Bg()

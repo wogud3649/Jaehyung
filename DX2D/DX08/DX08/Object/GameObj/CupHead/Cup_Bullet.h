@@ -18,10 +18,9 @@ private:
 	shared_ptr<Sprite> _sprite;
 	shared_ptr<Action> _action;
 
-	float _speed = 200.0f;
+	float _speed = 600.0f;
 	Vector2 _direction;
 
 	float _delay = 0.0f;
 	float _lifeTime = 2.0f;
 };
-

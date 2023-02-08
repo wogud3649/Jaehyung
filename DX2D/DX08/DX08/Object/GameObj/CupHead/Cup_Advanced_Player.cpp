@@ -43,6 +43,9 @@ void Cup_Advanced_Player::Render()
 
 void Cup_Advanced_Player::Shot()
 {
+	if (_curState == State::CUP_JUMP || _curState == State::CUP_SHOT)
+		return;
+
 	if (KEY_DOWN(VK_LBUTTON))
 	{
 		_isShooting = true;
@@ -82,6 +85,8 @@ void Cup_Advanced_Player::Jump()
 		return;
 	}
 
+	if (_curState == State::CUP_SHOT)
+		return;
 	if (KEY_DOWN(VK_SPACE))
 	{
 		SetAction(State::CUP_JUMP);
@@ -91,8 +96,16 @@ void Cup_Advanced_Player::Jump()
 
 void Cup_Advanced_Player::Ground()
 {
-	SetAction(State::CUP_IDLE);
-	_jumpPower = 700.0f;
+	if (_jumpPower < 0)
+	{
+		SetAction(State::CUP_IDLE);
+		_jumpPower = 700.0f;
+	}
+}
+
+void Cup_Advanced_Player::Beat()
+{
+	_jumpPower *= -1;
 }
 
 shared_ptr<Cup_Bullet> Cup_Advanced_Player::SeletBullet()

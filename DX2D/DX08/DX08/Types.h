@@ -32,5 +32,18 @@
 
 struct HIT_RESULT
 {
+	enum Direction
+	{
+		LEFT,
+		LEFTTOP,
+		TOP,
+		RIGHTTOP,
+		RIGHT,
+		RIHGTBOTTOM,
+		BOTTOM,
+		LEFTBOTTOM,
+		NONE
+	};
 	bool isHit;
+	Direction dir = NONE;
 };

@@ -12,6 +12,7 @@ public:
 	void EndShot();
 	void Jump();
 	void Ground();
+	void Beat();
 
 	shared_ptr<Cup_Bullet> SeletBullet();
 
@@ -19,7 +20,6 @@ private:
 	shared_ptr<Transform> _muzzle;
 
 	vector<shared_ptr<Cup_Bullet>> _bullets;
-
 	const int _poolCount = 30;
 };
 

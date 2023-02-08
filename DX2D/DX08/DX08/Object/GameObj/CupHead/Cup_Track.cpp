@@ -20,10 +20,14 @@ void Cup_Track::Update()
 	if (_player.expired() == false)
 	{
 		shared_ptr<CircleCollider> circle = _player.lock()->GetBodyCollider();
-		HIT_RESULT result = _col->TopBlock(circle);
-		if (result.isHit)
+		HIT_RESULT result = _col->Block(circle);
+		if (result.dir == HIT_RESULT::Direction::TOP)
 		{
 			_player.lock()->Ground();
+		}
+		else if (result.dir == HIT_RESULT::Direction::BOTTOM)
+		{
+			_player.lock()->Beat();
 		}
 	}
 }
