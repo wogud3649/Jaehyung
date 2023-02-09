@@ -41,7 +41,7 @@ protected:
 
 	float _speed = 300.0f;
 	float _maxJumpPower = 700.0f;
-	float _jumpPower = 0.0f;
+	float _jumpPower = 200.0f;
 
 	bool _isRight = true;
 	bool _isJump = false;

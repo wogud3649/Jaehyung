@@ -1,7 +1,7 @@
 #include "framework.h"
-#include "Cup_Bullet.h"
+#include "Cup_Monster_Bullet.h"
 
-Cup_Bullet::Cup_Bullet()
+Cup_Monster_Bullet::Cup_Monster_Bullet()
 {
 	CreateAction();
 
@@ -10,11 +10,11 @@ Cup_Bullet::Cup_Bullet()
 	_col->GetTransform()->GetPos().y += 40.0f;
 }
 
-Cup_Bullet::~Cup_Bullet()
+Cup_Monster_Bullet::~Cup_Monster_Bullet()
 {
 }
 
-void Cup_Bullet::Update()
+void Cup_Monster_Bullet::Update()
 {
 	if (!isActive) return;
 
@@ -35,7 +35,7 @@ void Cup_Bullet::Update()
 	_sprite->Update();
 }
 
-void Cup_Bullet::Render()
+void Cup_Monster_Bullet::Render()
 {
 	if (!isActive) return;
 
@@ -45,14 +45,14 @@ void Cup_Bullet::Render()
 	_sprite->Render();
 }
 
-void Cup_Bullet::Fire(Vector2 dir)
+void Cup_Monster_Bullet::Fire(Vector2 dir)
 {
 	_action->Play();
 	_sprite->GetTransform()->GetAngle() = dir.Angle() - PI * 0.5f;
 	_direction = dir.NormalVector2();
 }
 
-void Cup_Bullet::CreateAction()
+void Cup_Monster_Bullet::CreateAction()
 {
 	string xmlPath = "Resource/XML/Special_Bullet_Loop.xml";
 	wstring srvPath = L"Resource/Texture/CupHead/Special_Bullet_Loop.png";

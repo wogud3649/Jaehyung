@@ -1,14 +1,15 @@
 #pragma once
-class Cup_Bullet
+class Cup_Monster_Bullet
 {
 public:
-	Cup_Bullet();
-	~Cup_Bullet();
+	Cup_Monster_Bullet();
+	~Cup_Monster_Bullet();
 
 	void Update();
 	void Render();
 
 	void SetPostion(Vector2 pos) { _sprite->GetTransform()->GetPos() = pos; }
+	void SetTarget(shared_ptr<Cup_Advanced_Player> player) { _player = player; }
 	void Fire(Vector2 dir);
 
 	bool isActive = false;
@@ -25,4 +26,7 @@ private:
 
 	float _delay = 0.0f;
 	float _lifeTime = 2.0f;
+
+	weak_ptr<Cup_Advanced_Player> _player;
 };
+

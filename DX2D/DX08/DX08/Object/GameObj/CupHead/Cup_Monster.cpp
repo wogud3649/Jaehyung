@@ -16,11 +16,10 @@ Cup_Monster::Cup_Monster()
 
 	_muzzle = make_shared<Transform>();
 	_muzzle->SetParent(_col->GetTransform());
-	_muzzle->GetPos().y = 200.0f;
-	_muzzle->GetPos().x = -50.0f;
+	_muzzle->GetPos().y = 80.0f;
 
 	for (int i = 0; i < _poolCount; i++)
-		_bullets.emplace_back(make_shared<Cup_Bullet>());
+		_bullets.emplace_back(make_shared<Cup_Monster_Bullet>());
 }
 
 Cup_Monster::~Cup_Monster()
@@ -38,10 +37,10 @@ void Cup_Monster::Update()
 	for (auto bullet : _bullets)
 		bullet->Update();
 
-	_time += DELTA_TIME;
-	if (_time >= _shootDelay)
+	_shootTime += DELTA_TIME;
+	if (_shootTime >= _shootDelay)
 	{
-		_time = 0.0f;
+		_shootTime = 0.0f;
 		Fire();
 	}
 }
@@ -57,12 +56,19 @@ void Cup_Monster::Render()
 
 void Cup_Monster::Fire()
 {
-	shared_ptr<Cup_Bullet> bullet = SelectBullet();
-	Vector2 dir = _player.lock()->GetTransform()->GetPos() - _transform->GetPos();
+	shared_ptr<Cup_Monster_Bullet> bullet = SelectBullet();
+	Vector2 dir = _player.lock()->GetTransform()->GetPos() - _muzzle->GetWorldPos();
 
 	bullet->SetPostion(_muzzle->GetWorldPos());
 	bullet->isActive = true;
 	bullet->Fire(dir);
+}
+
+void Cup_Monster::SetPlayer(shared_ptr<Cup_Advanced_Player> player)
+{
+	_player = player;
+	for (auto bullet : _bullets)
+		bullet->SetTarget(player);
 }
 
 void Cup_Monster::CreatAction()
@@ -76,7 +82,7 @@ void Cup_Monster::CreatAction()
 	_sprite = make_shared<Sprite>(srvPath, size);
 }
 
-shared_ptr<Cup_Bullet> Cup_Monster::SelectBullet()
+shared_ptr<Cup_Monster_Bullet> Cup_Monster::SelectBullet()
 {
 	for (auto bullet : _bullets)
 	{
