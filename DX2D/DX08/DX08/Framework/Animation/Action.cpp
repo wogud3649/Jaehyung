@@ -51,7 +51,11 @@ void Action::Update()
 			{
 				_curClipIndex++;
 				if (_curClipIndex >= _clips.size() - 1)
+				{
 					_isReverse = true;
+					if (_endEvent != nullptr)
+						_endEvent();
+				}
 			}
 			break;
 		}

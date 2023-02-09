@@ -24,15 +24,24 @@ void Cup_Bullet::Update()
 
 	if (_delay >= _lifeTime)
 	{
-		_action->Reset();
-		isActive = false;
-		_delay = 0.0f;
+		DisAble();
 	}
 
 	_sprite->GetTransform()->GetPos() += _direction * _speed * DELTA_TIME;
 
 	_action->Update();
 	_sprite->Update();
+
+	if (_target.expired() == false)
+	{
+		if (_target.lock()->GetCollider()->isActive == false)
+			return;
+		if (_col->IsCollision(_target.lock()->GetCollider()))
+		{
+			_target.lock()->Damaged();
+			DisAble();
+		}
+	}
 }
 
 void Cup_Bullet::Render()
@@ -45,9 +54,24 @@ void Cup_Bullet::Render()
 	_sprite->Render();
 }
 
-void Cup_Bullet::Fire(Vector2 dir)
+void Cup_Bullet::EnAble()
 {
 	_action->Play();
+	isActive = true;
+	_col->isActive = true;
+}
+
+void Cup_Bullet::DisAble()
+{
+	_action->Reset();
+	isActive = false;
+	_col->isActive = false;
+	_delay = 0.0f;
+}
+
+void Cup_Bullet::Fire(Vector2 dir)
+{
+	EnAble();
 	_sprite->GetTransform()->GetAngle() = dir.Angle() - PI * 0.5f;
 	_direction = dir.NormalVector2();
 }

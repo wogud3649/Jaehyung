@@ -33,6 +33,19 @@ void Cup_Monster_Bullet::Update()
 
 	_action->Update();
 	_sprite->Update();
+
+	if (_player.expired() == false)
+	{
+		if (_player.lock()->GetBodyCollider()->isActive == false)
+			return;
+		if (_col->IsCollision(_player.lock()->GetBodyCollider()))
+		{
+			_player.lock()->Damaged();
+			_action->Reset();
+			isActive = false;
+			_delay = 0.0f;
+		}
+	}
 }
 
 void Cup_Monster_Bullet::Render()

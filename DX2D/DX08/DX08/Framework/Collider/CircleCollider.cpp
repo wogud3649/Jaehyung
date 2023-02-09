@@ -118,6 +118,16 @@ HIT_RESULT CircleCollider::Block(shared_ptr<RectCollider> other)
             Vector2 vToCircle = circlePos - closerVertex;
 
             Vector2 dir = closerVertex - circlePos;
+
+            if (dir.x < 0 && dir.y > 0)
+                result.dir == Direction::LEFTUP;
+            else if (dir.x > 0 && dir.y > 0)
+                result.dir == Direction::RIGHTUP;
+            else if (dir.x < 0 && dir.y < 0)
+                result.dir == Direction::LEFTDOWN;
+            else
+                result.dir == Direction::RIGHTDOWN;
+
             float magnitude = WorldRadius() - dir.Length();
             dir.Normalize();
             other->GetTransform()->GetPos() += dir * magnitude;

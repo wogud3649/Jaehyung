@@ -161,6 +161,15 @@ HIT_RESULT RectCollider::Block(shared_ptr<CircleCollider> other)
 
             Vector2 dir = circlePos - closerVertex;
 
+            if (dir.x < 0 && dir.y > 0)
+                result.dir == Direction::LEFTUP;
+            else if (dir.x > 0 && dir.y > 0)
+                result.dir == Direction::RIGHTUP;
+            else if (dir.x < 0 && dir.y < 0)
+                result.dir == Direction::LEFTDOWN;
+            else
+                result.dir == Direction::RIGHTDOWN;
+
             float magnitude = other->WorldRadius() - dir.Length();
             dir.Normalize();
             other->GetTransform()->GetPos() += dir * magnitude;

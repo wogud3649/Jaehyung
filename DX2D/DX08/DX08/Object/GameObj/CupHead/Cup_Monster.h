@@ -8,11 +8,18 @@ public:
 	void Update();
 	void Render();
 
+	void EnAble();
+	void DisAble();
+
 	void Fire();
+	void Damaged();
+	void Revive();
 
 	void SetPlayer(shared_ptr<Cup_Advanced_Player> player);
 
+	int& GetHp() { return _curHp; }
 	shared_ptr<Transform> GetTransform() { return _transform; }
+	shared_ptr<RectCollider> GetCollider() { return _col; }
 
 private:
 	void CreatAction();
@@ -29,12 +36,11 @@ private:
 	int _maxHp = 10;
 	int _curHp = _maxHp;
 
+	bool _isAlive = true;
+
 	vector<shared_ptr<Cup_Monster_Bullet>> _bullets;
 	int _poolCount = 10;
 
 	weak_ptr<Cup_Advanced_Player> _player;
-
-	float _shootDelay = 1.0f;
-	float _shootTime = 0.0f;
 };
 

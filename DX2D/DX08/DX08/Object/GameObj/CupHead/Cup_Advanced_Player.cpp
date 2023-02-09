@@ -11,7 +11,6 @@ Cup_Advanced_Player::Cup_Advanced_Player()
 	}
 
 	_actions[State::CUP_SHOT]->SetCallBack(std::bind(&Cup_Advanced_Player::EndShot, this));
-	_actions[State::CUP_JUMP]->SetCallBack(std::bind(&Cup_Advanced_Player::Ground, this));
 
 	_muzzle = make_shared<Transform>();
 	_muzzle->SetParent(_col->GetTransform());
@@ -24,24 +23,49 @@ Cup_Advanced_Player::~Cup_Advanced_Player()
 
 void Cup_Advanced_Player::Update()
 {
+	if (isAlive)
+	{
+		Shot();
+		Jump();
+
+		if (_curState != State::CUP_SHOT)
+			_col->GetTransform()->GetPos().y += _jumpPower * DELTA_TIME;
+
+		Cup_Player::Update();
+	}
+	else
+	{
+		Revive();
+	}
+
 	for (auto bullet : _bullets)
 		bullet->Update();
-	
-	Shot();
-	Jump();
-
-	if (_curState != State::CUP_SHOT)
-		_col->GetTransform()->GetPos().y += _jumpPower * DELTA_TIME;
-
-	Cup_Player::Update();
 }
 
 void Cup_Advanced_Player::Render()
 {
-	Cup_Player::Render();
+	if (isAlive)
+	{
+		Cup_Player::Render();
+	}
 
 	for (auto bullet : _bullets)
 		bullet->Render();
+}
+
+void Cup_Advanced_Player::EnAble()
+{
+	_actions[_curState]->Play();
+	_curHp = _maxHp;
+	isAlive = true;
+	_col->isActive = true;
+}
+
+void Cup_Advanced_Player::DisAble()
+{
+	_actions[_curState]->Reset();
+	_col->isActive = false;
+	isAlive = false;
 }
 
 void Cup_Advanced_Player::Shot()
@@ -68,7 +92,6 @@ void Cup_Advanced_Player::Shot()
 		}
 
 		bullet->SetPostion(_muzzle->GetWorldPos());
-		bullet->isActive = true;
 		bullet->Fire(dir);
 	}
 }
@@ -100,14 +123,49 @@ void Cup_Advanced_Player::Ground()
 	}
 }
 
+void Cup_Advanced_Player::Edge()
+{
+	SetAction(State::CUP_JUMP);
+}
+
 void Cup_Advanced_Player::Falling()
 {
-	_jumpPower -= GRAVITY * GRAVITY * DELTA_TIME;
+	if (_jumpPower <= -200.0f)
+		SetAction(State::CUP_JUMP);
+	if (_jumpPower >= -500.0f && isAlive && !_isShooting)
+		_jumpPower -= GRAVITY * GRAVITY * DELTA_TIME;
 }
 
 void Cup_Advanced_Player::Beat()
 {
 	_jumpPower *= -1;
+}
+
+void Cup_Advanced_Player::Damaged()
+{
+	_curHp -= 1;
+	if (_curHp < 0)
+	{
+		_curHp = 0;
+	}
+	if (_curHp == 0)
+	{
+		DisAble();
+	}
+}
+
+void Cup_Advanced_Player::Revive()
+{
+	if (KEY_DOWN(VK_F2))
+	{
+		EnAble();
+	}
+}
+
+void Cup_Advanced_Player::SetTarget(shared_ptr<Cup_Monster> target)
+{
+	for (auto bullet : _bullets)
+		bullet->SetTarget(target);
 }
 
 shared_ptr<Cup_Bullet> Cup_Advanced_Player::SelectBullet()

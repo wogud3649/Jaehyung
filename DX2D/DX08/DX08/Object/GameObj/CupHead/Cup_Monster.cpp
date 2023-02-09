@@ -29,29 +29,49 @@ Cup_Monster::~Cup_Monster()
 
 void Cup_Monster::Update()
 {
-	_col->Update();
+	if (_isAlive)
+	{
+		_col->Update();
 	
-	_action->Update();
-	_sprite->Update();
-	_muzzle->Update();
+		_action->Update();
+		_sprite->Update();
+		_muzzle->Update();
+	}
+	else
+	{
+		Revive();
+	}
+
 	for (auto bullet : _bullets)
 		bullet->Update();
-
-	_shootTime += DELTA_TIME;
-	if (_shootTime >= _shootDelay)
-	{
-		_shootTime = 0.0f;
-		Fire();
-	}
 }
 
 void Cup_Monster::Render()
 {
-	_col->Render();
-	_sprite->SetActionClip(_action->GetCurClip());
-	_sprite->Render();
+	if (_isAlive)
+	{
+		_col->Render();
+		_sprite->SetActionClip(_action->GetCurClip());
+		_sprite->Render();
+	}
+
 	for (auto bullet : _bullets)
 		bullet->Render();
+}
+
+void Cup_Monster::EnAble()
+{
+	_action->Play();
+	_curHp = _maxHp;
+	_isAlive = true;
+	_col->isActive = true;
+}
+
+void Cup_Monster::DisAble()
+{
+	_action->Reset();
+	_col->isActive = false;
+	_isAlive = false;
 }
 
 void Cup_Monster::Fire()
@@ -62,6 +82,23 @@ void Cup_Monster::Fire()
 	bullet->SetPostion(_muzzle->GetWorldPos());
 	bullet->isActive = true;
 	bullet->Fire(dir);
+}
+
+void Cup_Monster::Damaged()
+{
+	_curHp -= 1;
+	if (_curHp <= 0)
+	{
+		DisAble();
+	}
+}
+
+void Cup_Monster::Revive()
+{
+	if (KEY_DOWN(VK_F2))
+	{
+		EnAble();
+	}
 }
 
 void Cup_Monster::SetPlayer(shared_ptr<Cup_Advanced_Player> player)
@@ -77,9 +114,11 @@ void Cup_Monster::CreatAction()
 	string xmlPath = "Resource/XML/Clown_Page_Last_Spawn_Penguin_Start.xml";
 	MyXML xml = MyXML(xmlPath, srvPath);
 
-	_action = make_shared<Action>(xml.GetClips(), "Boss_IDLE", Action::Type::PINGPONG);
+	_action = make_shared<Action>(xml.GetClips(), "Boss_IDLE", Action::Type::PINGPONG, 0.05f);
 	Vector2 size = xml.AverageSize() * 0.7f;
 	_sprite = make_shared<Sprite>(srvPath, size);
+
+	_action->SetCallBack(std::bind(&Cup_Monster::Fire, this));
 }
 
 shared_ptr<Cup_Monster_Bullet> Cup_Monster::SelectBullet()

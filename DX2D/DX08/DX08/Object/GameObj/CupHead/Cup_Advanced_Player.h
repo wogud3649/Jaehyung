@@ -8,13 +8,22 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 
+	void EnAble();
+	void DisAble();
+
 	void Shot();
 	void EndShot();
 	void Jump();
 	void Ground();
+	void Edge();
 	void Falling();
 	void Beat();
+	
+	void Damaged();
+	void Revive();
 
+	void SetTarget(shared_ptr<Cup_Monster> target);
+	
 	shared_ptr<Cup_Bullet> SelectBullet();
 
 private:

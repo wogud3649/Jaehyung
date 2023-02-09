@@ -21,8 +21,11 @@ void Cup_Track::Update()
 	{
 		shared_ptr<CircleCollider> circle = _player.lock()->GetBodyCollider();
 		result = _col->Block(circle);
-
-		if (result.dir == Direction::UP)
+		if (result.dir == Direction::LEFTUP || result.dir == Direction::RIGHTUP)
+		{
+			_player.lock()->Edge();
+		}
+		else if (result.dir == Direction::UP)
 		{
 			_player.lock()->Ground();
 		}

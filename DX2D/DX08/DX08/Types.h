@@ -36,6 +36,10 @@ enum Direction
 	UP,
 	RIGHT,
 	DOWN,
+	LEFTUP,
+	RIGHTUP,
+	LEFTDOWN,
+	RIGHTDOWN,
 	NONE
 };
 

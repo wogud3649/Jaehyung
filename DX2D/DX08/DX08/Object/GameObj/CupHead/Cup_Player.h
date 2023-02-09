@@ -24,6 +24,7 @@ public:
 	void SetAction(State state);
 	void SetIDLE();
 
+	int& GetHp() { return _curHp; }
 	shared_ptr<Transform> GetTransform() { return _transform; }
 	shared_ptr<CircleCollider> GetBodyCollider() { return _col; }
 
@@ -41,8 +42,12 @@ protected:
 
 	float _speed = 300.0f;
 	float _maxJumpPower = 700.0f;
-	float _jumpPower = 200.0f;
+	float _jumpPower = 0.0f;
 
+	int _maxHp = 3;
+	int _curHp = _maxHp;
+	
+	bool isAlive = true;
 	bool _isRight = true;
 	bool _isJump = false;
 	bool _isShooting = false;
