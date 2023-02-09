@@ -110,3 +110,27 @@ public:
 	Data _data;
 };
 
+class FilterBuffer : public ConstantBuffer
+{
+public:
+	struct Data
+	{
+		int selected = 0;
+		int value1 = 0;
+		int value2 = 0;
+		int value3 = 0;
+		Vector2 imageSize;
+		XMFLOAT2 padding;
+	};
+
+	// 상수버퍼 규칙
+	// 16바이트의 배수로 올려야한다.
+	FilterBuffer()
+		: ConstantBuffer(&_data, sizeof(_data))
+	{
+	}
+
+	virtual ~FilterBuffer() {}
+
+	Data _data;
+};

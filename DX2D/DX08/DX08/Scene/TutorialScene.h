@@ -12,4 +12,6 @@ public:
 private:
 	shared_ptr<Quad> _quad;
 	shared_ptr<ReverseBuffer> _reverseBuffer;
+
+	shared_ptr<FilterBuffer> _filterBuffer;
 };

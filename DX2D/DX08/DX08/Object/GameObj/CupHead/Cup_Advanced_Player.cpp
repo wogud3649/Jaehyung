@@ -99,7 +99,7 @@ void Cup_Advanced_Player::Shot()
 void Cup_Advanced_Player::EndShot()
 {
 	SetAction(CUP_IDLE);
-	_isShooting = false;
+ 	_isShooting = false;
 }
 
 void Cup_Advanced_Player::Jump()
@@ -132,7 +132,7 @@ void Cup_Advanced_Player::Falling()
 {
 	if (_jumpPower <= -200.0f)
 		SetAction(State::CUP_JUMP);
-	if (_jumpPower >= -500.0f && isAlive && !_isShooting)
+	if (!_isShooting)
 		_jumpPower -= GRAVITY * GRAVITY * DELTA_TIME;
 }
 

@@ -11,6 +11,8 @@ public:
 	void Update();
 	void SetBuffer(UINT slot);
 
+	void SetPosition(Vector2 pos) { _pos = pos; UpdateSRT(); }
+
 	Vector2& GetScale() { return _scale; }
 	float& GetAngle() { return _angle; }
 	Vector2& GetPos() { return _pos; }

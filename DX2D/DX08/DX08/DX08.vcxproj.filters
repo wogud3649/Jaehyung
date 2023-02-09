@@ -351,6 +351,7 @@
     <FxCompile Include="Shader\SpritePixelShader.hlsl" />
     <FxCompile Include="Shader\LRTexturePixelShader.hlsl" />
     <FxCompile Include="Shader\ActionPixelShader.hlsl" />
+    <FxCompile Include="Shader\FilterPixelShader.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Resource\XML\Idle.xml" />

@@ -21,6 +21,8 @@ public:
 	shared_ptr<Transform> GetTransform() { return _transform; }
 	shared_ptr<RectCollider> GetCollider() { return _col; }
 
+	vector<shared_ptr<Cup_Monster_Bullet>>& GetBullets() { return _bullets; }
+
 private:
 	void CreatAction();
 
@@ -41,6 +43,6 @@ private:
 	vector<shared_ptr<Cup_Monster_Bullet>> _bullets;
 	int _poolCount = 10;
 
-	weak_ptr<Cup_Advanced_Player> _player;
+	weak_ptr<Cup_Advanced_Player> _player; // TODO : weak_ptr 말고 다른 방법으로 처리하기
 };
 

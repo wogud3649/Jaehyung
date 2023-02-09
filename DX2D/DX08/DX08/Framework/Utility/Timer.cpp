@@ -25,6 +25,7 @@ Timer::~Timer()
 void Timer::Update()
 {
 	QueryPerformanceCounter((LARGE_INTEGER*)&_curTime);
+	
 	_deltaTime = (double)(_curTime - _lastTime) * _timeScale;
 
 	if (_lockFPS != 0)
@@ -35,6 +36,9 @@ void Timer::Update()
 			_deltaTime = (double)(_curTime - _lastTime) * _timeScale;
 		}
 	}
+
+	if (_deltaTime >= 0.2)
+		_deltaTime = 0.2;
 
 	_lastTime = _curTime;
 
