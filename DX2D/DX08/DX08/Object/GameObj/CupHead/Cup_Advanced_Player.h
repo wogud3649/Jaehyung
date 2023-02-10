@@ -23,10 +23,10 @@ public:
 	void Revive();
 
 	void SetTarget(shared_ptr<Cup_Monster> target);
-	
-	shared_ptr<Cup_Bullet> SelectBullet();
 
 private:
+	shared_ptr<Cup_Bullet> SelectBullet();
+	
 	shared_ptr<Transform> _muzzle;
 
 	vector<shared_ptr<Cup_Bullet>> _bullets;

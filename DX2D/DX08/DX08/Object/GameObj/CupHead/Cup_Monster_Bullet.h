@@ -9,7 +9,7 @@ public:
 	void Render();
 
 	void SetPostion(Vector2 pos) { _sprite->GetTransform()->GetPos() = pos; }
-	void SetTarget(shared_ptr<Cup_Advanced_Player> player) { _player = player; }
+	void SetTarget(shared_ptr<Cup_Advanced_Player> target) { _target = target; }
 	void Fire(Vector2 dir);
 
 	bool isActive = false;
@@ -27,6 +27,6 @@ private:
 	float _delay = 0.0f;
 	float _lifeTime = 2.0f;
 
-	weak_ptr<Cup_Advanced_Player> _player;
+	weak_ptr<Cup_Advanced_Player> _target;
 };
 

@@ -34,13 +34,13 @@ void Cup_Monster_Bullet::Update()
 	_action->Update();
 	_sprite->Update();
 
-	if (_player.expired() == false)
+	if (_target.expired() == false)
 	{
-		if (_player.lock()->GetBodyCollider()->isActive == false)
+		if (_target.lock()->GetBodyCollider()->isActive == false)
 			return;
-		if (_col->IsCollision(_player.lock()->GetBodyCollider()))
+		if (_col->IsCollision(_target.lock()->GetBodyCollider()))
 		{
-			_player.lock()->Damaged();
+			_target.lock()->Damaged();
 			_action->Reset();
 			isActive = false;
 			_delay = 0.0f;
