@@ -16,8 +16,7 @@ public:
 	void Revive();
 	void Death();
 
-	void SetAim(Vector2 pos) { _aim = pos; }
-	void SetPlayer(shared_ptr<Cup_Advanced_Player> player);
+	void SetTarget(shared_ptr<Cup_Advanced_Player> target);
 
 	int& GetHp() { return _curHp; }
 	shared_ptr<Transform> GetTransform() { return _transform; }
@@ -44,9 +43,8 @@ private:
 	bool isAlive = true;
 
 	vector<shared_ptr<Cup_Monster_Bullet>> _bullets;
-	Vector2 _aim;
 	int _poolCount = 10;
 
-	weak_ptr<Cup_Advanced_Player> _player; // TODO : weak_ptr 말고 다른 방법으로 처리하기
+	weak_ptr<Cup_Advanced_Player> _target;
 };
 

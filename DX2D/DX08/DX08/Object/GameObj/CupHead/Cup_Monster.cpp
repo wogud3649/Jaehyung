@@ -85,11 +85,9 @@ void Cup_Monster::DisAble()
 void Cup_Monster::Fire()
 {
 	shared_ptr<Cup_Monster_Bullet> bullet = SelectBullet();
-	Vector2 dir = _player.lock()->GetTransform()->GetPos() - _muzzle->GetWorldPos();
 
 	bullet->SetPostion(_muzzle->GetWorldPos());
-	bullet->isActive = true;
-	bullet->Fire(dir);
+	bullet->Fire();
 }
 
 void Cup_Monster::Damaged()
@@ -117,11 +115,11 @@ void Cup_Monster::Death()
 		_sprite->GetFilter()->_data.value1 -= 500 * DELTA_TIME;
 }
 
-void Cup_Monster::SetPlayer(shared_ptr<Cup_Advanced_Player> player)
+void Cup_Monster::SetTarget(shared_ptr<Cup_Advanced_Player> target)
 {
-	_player = player;
+	_target = target;
 	for (auto bullet : _bullets)
-		bullet->SetTarget(player);
+		bullet->SetTarget(target);
 }
 
 void Cup_Monster::CreatAction()

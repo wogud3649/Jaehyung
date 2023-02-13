@@ -7,7 +7,7 @@ CupHeadScene::CupHeadScene()
 	_player->GetBodyCollider()->GetTransform()->GetPos() = CENTER;
 	_monster = make_shared<Cup_Monster>();
 	_monster->GetTransform()->GetPos() = Vector2(WIN_WIDTH - 300.0f, CENTER.y);
-	_monster->SetPlayer(_player);
+	_monster->SetTarget(_player);
 	_player->SetTarget(_monster);
 
 	_bg = make_shared<Cup_Bg>();

@@ -41,9 +41,7 @@ void Cup_Monster_Bullet::Update()
 		if (_col->IsCollision(_target.lock()->GetBodyCollider()))
 		{
 			_target.lock()->Damaged();
-			_action->Reset();
-			isActive = false;
-			_delay = 0.0f;
+			DisAble();
 		}
 	}
 }
@@ -58,11 +56,26 @@ void Cup_Monster_Bullet::Render()
 	_sprite->Render();
 }
 
-void Cup_Monster_Bullet::Fire(Vector2 dir)
+void Cup_Monster_Bullet::EnAble()
 {
 	_action->Play();
-	_sprite->GetTransform()->GetAngle() = dir.Angle() - PI * 0.5f;
-	_direction = dir.NormalVector2();
+	isActive = true;
+	_col->isActive = true;
+}
+
+void Cup_Monster_Bullet::DisAble()
+{
+	_action->Reset();
+	isActive = false;
+	_col->isActive = false;
+	_delay = 0.0f;
+}
+
+void Cup_Monster_Bullet::Fire()
+{
+	EnAble();
+	_direction = (_target.lock()->GetBodyCollider()->GetTransform()->GetWorldPos() - _col->GetTransform()->GetWorldPos()).NormalVector2();
+	_sprite->GetTransform()->GetAngle() = _direction.Angle() - PI * 0.5f;
 }
 
 void Cup_Monster_Bullet::CreateAction()
