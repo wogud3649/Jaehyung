@@ -20,6 +20,7 @@ public:
 	void Beat();
 	
 	void Damaged();
+	void Death();
 	void Revive();
 
 	void SetTarget(shared_ptr<Cup_Monster> target);

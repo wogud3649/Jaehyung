@@ -6,8 +6,8 @@ Sprite::Sprite(wstring file, Vector2 size)
 {
     _maxFrame = { 1,1 };
 
-    Sprite::CreateMaterial(file);
-    Sprite::CreateMesh();
+    CreateMaterial(file);
+    CreateMesh();
 
     _transform = make_shared<Transform>();
     _actionBuffer = make_shared<ActionBuffer>();
@@ -20,8 +20,8 @@ Sprite::Sprite(wstring file, Vector2 maxFrame, Vector2 size)
 : _maxFrame(maxFrame)
 , _clipSize(size)
 {
-    Sprite::CreateMaterial(file);
-    Sprite::CreateMesh();
+    CreateMaterial(file);
+    CreateMesh();
 
     _transform = make_shared<Transform>();
     _actionBuffer = make_shared<ActionBuffer>();

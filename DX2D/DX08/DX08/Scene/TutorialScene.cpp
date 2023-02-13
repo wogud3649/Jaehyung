@@ -15,6 +15,7 @@ TutorialScene::TutorialScene()
 	_filterBuffer->_data.value1 = 300;
 	_filterBuffer->_data.selected = 0;
 	_filterBuffer->_data.imageSize = _quad->GetImageSize();
+	_filterBuffer->_data.radialCenter = Vector2(0.1f, 0.1f);
 }
 
 TutorialScene::~TutorialScene()
@@ -40,4 +41,5 @@ void TutorialScene::PostRender()
 	ImGui::SliderInt("Selected", &_filterBuffer->_data.selected, 0, 5);
 	ImGui::SliderInt("Value1", &_filterBuffer->_data.value1, 0, 100);
 	ImGui::SliderInt("Value2", &_filterBuffer->_data.value2, 0, 100);
+	ImGui::SliderInt("Value3", &_filterBuffer->_data.value3, 0, 100);
 }

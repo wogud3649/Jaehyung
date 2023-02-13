@@ -37,14 +37,14 @@ protected:
 	shared_ptr<Transform> _transform;
 	shared_ptr<CircleCollider> _col;
 
-	vector<shared_ptr<Sprite>> _sprites;
+	vector<shared_ptr<FilterSprite>> _sprites;
 	vector<shared_ptr<Action>> _actions;
 
 	float _speed = 300.0f;
 	float _maxJumpPower = 700.0f;
 	float _jumpPower = 0.0f;
 
-	int _maxHp = 3;
+	int _maxHp = 1;
 	int _curHp = _maxHp;
 	
 	bool isAlive = true;

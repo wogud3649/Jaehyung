@@ -23,6 +23,8 @@ private:
 	// 부품 붙이기
 
 	shared_ptr<Transform> _virtualTrans;
+	shared_ptr<ReverseBuffer> _reverseBuffer;
+	shared_ptr<FilterBuffer> _filterBuffer;
 
 	float _speed = 0.0001f;
 };

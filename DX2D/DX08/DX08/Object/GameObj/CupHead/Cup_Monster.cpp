@@ -29,17 +29,21 @@ Cup_Monster::~Cup_Monster()
 
 void Cup_Monster::Update()
 {
-	if (_isAlive)
+	if (isAlive)
 	{
 		_col->Update();
 	
-		_action->Update();
-		_sprite->Update();
 		_muzzle->Update();
 	}
 	else
 	{
+		Death();
 		Revive();
+	}
+	if (_sprite->GetFilter()->_data.value1 > 0)
+	{
+		_sprite->Update();
+		_action->Update();
 	}
 
 	for (auto bullet : _bullets)
@@ -48,12 +52,14 @@ void Cup_Monster::Update()
 
 void Cup_Monster::Render()
 {
-	if (_isAlive)
+	if (isAlive)
 	{
 		_col->Render();
 		_sprite->SetActionClip(_action->GetCurClip());
-		_sprite->Render();
 	}
+	if (_sprite->GetFilter()->_data.value1 > 0)
+		_sprite->Render();
+
 
 	for (auto bullet : _bullets)
 		bullet->Render();
@@ -61,9 +67,11 @@ void Cup_Monster::Render()
 
 void Cup_Monster::EnAble()
 {
+	_sprite->GetFilter()->_data.selected = 0;
+	_sprite->GetFilter()->_data.value1 = 500;
 	_action->Play();
 	_curHp = _maxHp;
-	_isAlive = true;
+	isAlive = true;
 	_col->isActive = true;
 }
 
@@ -71,7 +79,7 @@ void Cup_Monster::DisAble()
 {
 	_action->Reset();
 	_col->isActive = false;
-	_isAlive = false;
+	isAlive = false;
 }
 
 void Cup_Monster::Fire()
@@ -101,6 +109,14 @@ void Cup_Monster::Revive()
 	}
 }
 
+void Cup_Monster::Death()
+{
+	if (_sprite->GetFilter()->_data.selected != 1)
+		_sprite->GetFilter()->_data.selected = 1;
+	if (_sprite->GetFilter()->_data.value1 >= 0)
+		_sprite->GetFilter()->_data.value1 -= 500 * DELTA_TIME;
+}
+
 void Cup_Monster::SetPlayer(shared_ptr<Cup_Advanced_Player> player)
 {
 	_player = player;
@@ -116,7 +132,7 @@ void Cup_Monster::CreatAction()
 
 	_action = make_shared<Action>(xml.GetClips(), "Boss_IDLE", Action::Type::PINGPONG, 0.05f);
 	Vector2 size = xml.AverageSize() * 0.7f;
-	_sprite = make_shared<Sprite>(srvPath, size);
+	_sprite = make_shared<FilterSprite>(srvPath, size);
 
 	_action->SetCallBack(std::bind(&Cup_Monster::Fire, this));
 }

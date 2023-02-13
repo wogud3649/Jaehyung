@@ -43,9 +43,13 @@ void Cup_Player::Update()
 
 void Cup_Player::Render()
 {
-	_sprites[_curState]->SetActionClip(_actions[_curState]->GetCurClip());
-	_sprites[_curState]->Render();
-	_col->Render();
+	if (isAlive)
+	{
+		_sprites[_curState]->SetActionClip(_actions[_curState]->GetCurClip());
+		_col->Render();
+	}
+	if (_sprites[_curState]->GetFilter()->_data.value1 > 0)
+		_sprites[_curState]->Render();
 }
 
 void Cup_Player::SetRight()
@@ -125,5 +129,5 @@ void Cup_Player::CreateAction(string name, Action::Type type)
 
 	string actionName = "CUP_" + name;
 	_actions.emplace_back(make_shared<Action>(xml.GetClips(), actionName, type));
-	_sprites.emplace_back(make_shared<Sprite>(srvPath, xml.AverageSize()));
+	_sprites.emplace_back(make_shared<FilterSprite>(srvPath, xml.AverageSize()));
 }

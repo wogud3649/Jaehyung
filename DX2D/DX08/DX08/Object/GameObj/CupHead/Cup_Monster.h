@@ -14,6 +14,7 @@ public:
 	void Fire();
 	void Damaged();
 	void Revive();
+	void Death();
 
 	void SetAim(Vector2 pos) { _aim = pos; }
 	void SetPlayer(shared_ptr<Cup_Advanced_Player> player);
@@ -21,6 +22,7 @@ public:
 	int& GetHp() { return _curHp; }
 	shared_ptr<Transform> GetTransform() { return _transform; }
 	shared_ptr<RectCollider> GetCollider() { return _col; }
+	shared_ptr<FilterSprite> GetSprite() { return _sprite; }
 
 	vector<shared_ptr<Cup_Monster_Bullet>>& GetBullets() { return _bullets; }
 
@@ -32,14 +34,14 @@ private:
 	shared_ptr<Transform> _transform;
 	shared_ptr<RectCollider> _col;
 
-	shared_ptr<Sprite> _sprite;
+	shared_ptr<FilterSprite> _sprite;
 	shared_ptr<Action> _action;
 
 	shared_ptr<Transform> _muzzle;
-	int _maxHp = 10;
+	int _maxHp = 1;
 	int _curHp = _maxHp;
 
-	bool _isAlive = true;
+	bool isAlive = true;
 
 	vector<shared_ptr<Cup_Monster_Bullet>> _bullets;
 	Vector2 _aim;

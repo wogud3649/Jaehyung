@@ -119,8 +119,8 @@ public:
 		int value1 = 0;
 		int value2 = 0;
 		int value3 = 0;
-		Vector2 imageSize;
-		XMFLOAT2 padding;
+		Vector2 imageSize = { 0.0f,0.0f };
+		Vector2 radialCenter = { 0.0f,0.0f };
 	};
 
 	// 상수버퍼 규칙

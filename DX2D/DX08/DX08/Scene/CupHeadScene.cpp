@@ -41,4 +41,6 @@ void CupHeadScene::PostRender()
 {
 	ImGui::SliderInt("Player HP", &_player->GetHp(), 0, 3);
 	ImGui::SliderInt("Monster HP", &_monster->GetHp(), 0, 10);
+	ImGui::SliderInt("Selected", &_monster->GetSprite()->GetFilter()->_data.selected, 0, 1);
+	ImGui::SliderInt("Mosaic", &_monster->GetSprite()->GetFilter()->_data.value1, 0, 3000);
 }

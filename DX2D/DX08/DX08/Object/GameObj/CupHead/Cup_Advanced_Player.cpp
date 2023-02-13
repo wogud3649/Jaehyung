@@ -15,6 +15,7 @@ Cup_Advanced_Player::Cup_Advanced_Player()
 	_muzzle = make_shared<Transform>();
 	_muzzle->SetParent(_col->GetTransform());
 	_muzzle->GetPos().x = 50;
+
 }
 
 Cup_Advanced_Player::~Cup_Advanced_Player()
@@ -35,7 +36,12 @@ void Cup_Advanced_Player::Update()
 	}
 	else
 	{
+		Death();
 		Revive();
+	}
+	if (_sprites[State::CUP_IDLE]->GetFilter()->_data.value1 > 0)
+	{
+		_sprites[State::CUP_IDLE]->Update();
 	}
 
 	for (auto bullet : _bullets)
@@ -44,10 +50,7 @@ void Cup_Advanced_Player::Update()
 
 void Cup_Advanced_Player::Render()
 {
-	if (isAlive)
-	{
-		Cup_Player::Render();
-	}
+	Cup_Player::Render();
 
 	for (auto bullet : _bullets)
 		bullet->Render();
@@ -55,6 +58,8 @@ void Cup_Advanced_Player::Render()
 
 void Cup_Advanced_Player::EnAble()
 {
+	_sprites[_curState]->GetFilter()->_data.selected = 0;
+	_sprites[_curState]->GetFilter()->_data.value1 = 500;
 	_actions[_curState]->Play();
 	_curHp = _maxHp;
 	isAlive = true;
@@ -66,6 +71,7 @@ void Cup_Advanced_Player::DisAble()
 	_actions[_curState]->Reset();
 	_col->isActive = false;
 	isAlive = false;
+	_jumpPower = 0.0f;
 }
 
 void Cup_Advanced_Player::Shot()
@@ -152,6 +158,15 @@ void Cup_Advanced_Player::Damaged()
 	{
 		DisAble();
 	}
+}
+
+void Cup_Advanced_Player::Death()
+{
+	SetAction(State::CUP_IDLE);
+	if (_sprites[State::CUP_IDLE]->GetFilter()->_data.selected != 1)
+		_sprites[State::CUP_IDLE]->GetFilter()->_data.selected = 1;
+	if (_sprites[State::CUP_IDLE]->GetFilter()->_data.value1 >= 0)
+		_sprites[State::CUP_IDLE]->GetFilter()->_data.value1 -= 500 * DELTA_TIME;
 }
 
 void Cup_Advanced_Player::Revive()
