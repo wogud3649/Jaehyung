@@ -18,7 +18,7 @@ public:
 	void SetCurFrame(Vector2 curFrame);
 	void SetActionClip(Action::Clip clip);
 
-	Vector2 GetClipSize() { return _clipSize; }
+	Vector2 GetClipVertexSize() { return _clipSize; }
 
 private:
 	shared_ptr<ActionBuffer> _actionBuffer;

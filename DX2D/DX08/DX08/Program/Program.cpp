@@ -9,6 +9,7 @@
 #include "../Scene/SpriteScene.h"
 #include "../Scene/ActionScene.h"
 #include "../Scene/CupHeadScene.h"
+#include "../Scene/EffectScene.h"
 
 Program::Program()
 {
@@ -38,6 +39,7 @@ void Program::Update()
 	Timer::GetInstance()->Update();
 
 	_scene->Update();
+	EFFECT->Update();
 }
 
 void Program::Render()
@@ -55,6 +57,7 @@ void Program::Render()
 	ALPHA->SetState();
 
 	_scene->Render();
+	EFFECT->Render();
 
 	ImGui::Text("FPS : %d", Timer::GetInstance()->GetFPS());
 	_scene->PostRender();

@@ -4,7 +4,7 @@
 Cup_Monster::Cup_Monster()
 {
 	CreatAction();
-	Vector2 colliderSize = _sprite->GetClipSize();
+	Vector2 colliderSize = _sprite->GetClipVertexSize();
 	colliderSize.x *= 0.55f;
 	colliderSize.y *= 0.85f;
 	_col = make_shared<RectCollider>(colliderSize);

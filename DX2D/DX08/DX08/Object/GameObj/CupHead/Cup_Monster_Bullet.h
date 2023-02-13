@@ -21,6 +21,7 @@ private:
 
 	shared_ptr<Sprite> _sprite;
 	shared_ptr<Action> _action;
+	shared_ptr<Effect> _effect;
 
 	shared_ptr<CircleCollider> _col;
 

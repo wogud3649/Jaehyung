@@ -56,8 +56,8 @@ void Sprite::CreateMesh()
     Vertex vertex;
 
     Vector2 halfSize = _clipSize * 0.5f;
-    halfSize.x = halfSize.x / _maxFrame.x;
-    halfSize.y = halfSize.y / _maxFrame.y;
+    halfSize.x = halfSize.x;
+    halfSize.y = halfSize.y;
 
     vertex.pos = { -halfSize.x, halfSize.y, 0.0f }; // ¿ÞÂÊ À§
     vertex.uv = { 0.0f, 0.0f };

@@ -85,6 +85,8 @@ using namespace DirectX;
 #include "Object/BasicObj/Quad.h"
 #include "Object/BasicObj/Sprite.h"
 #include "Object/BasicObj/FilterSprite.h"
+#include "Object/BasicObj/Effect.h"
+#include "Object/BasicObj/EffectManager.h"
 
 // Bow
 #include "Object/GameObj/Bow/Bow_Monster.h"
