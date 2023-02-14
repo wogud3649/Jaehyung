@@ -1,12 +1,13 @@
 #pragma once
-class TutorialScene : public Scene
+class TestScene : public Scene
 {
 public:
-	TutorialScene();
-	~TutorialScene();
-	// Scene을(를) 통해 상속됨
+	TestScene();
+	~TestScene();
+
 	virtual void Update() override;
 	virtual void Render() override;
 private:
+	shared_ptr<CircleCollider> circle;
 };
 

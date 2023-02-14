@@ -40,32 +40,14 @@ Vector2 Vector2::operator*(const float& value) const
 	return Vector2(x * value, y * value);
 }
 
-bool Vector2::operator<(const Vector2& other) const
-{
-	if (y != other.y)
-		return y < other.y;
-	return x < other.x;
-}
-
-bool Vector2::operator>(const Vector2& other) const
-{
-	if (y != other.y)
-		return y > other.y;
-	return x > other.x;
-}
-
 bool Vector2::operator==(const Vector2& other) const
 {
-	if (x == other.x && y == other.y)
-		return true;
-	return false;
+	return x == other.x && y == other.y;
 }
 
 bool Vector2::operator!=(const Vector2& other) const
 {
-	if (!(operator==(other)))
-		return true;
-	return false;
+	return !operator==(other);
 }
 
 Vector2& Vector2::operator+=(const Vector2& other)
@@ -168,8 +150,10 @@ float Vector2::Angle(const Vector2& other) const
 Vector2 Vector2::NormalVector2()
 {
 	Vector2 temp;
-	temp.x = this->x / Length();
-	temp.y = this->y / Length();
+	float length = Length();
+
+	temp.x = this->x / length;
+	temp.y = this->y / length;
 
 	return temp;
 }

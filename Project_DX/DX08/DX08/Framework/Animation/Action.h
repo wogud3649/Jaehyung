@@ -13,7 +13,6 @@ public:
 		, _size(w, h)
 		, _srv(srv)
 		{
-
 		}
 	};
 
@@ -52,10 +51,8 @@ private:
 	float _time = 0.0f;
 	float _speed = 0.0f;
 
-	bool _isReverse = false; //
+	bool _isReverse = false;
 
-	// 콜백함수 : 정의는 미리 해둔 상태에서 나중에 내가 필요에 따라 호출할 수 있는 함수
-	// 리스너 패턴 , 옵저버 패턴
 	function<void(void)> _endEvent = nullptr;
 };
 

@@ -32,12 +32,17 @@ public:
 	void SetRed() { _colorBuffer->_data.color = { 1,0,0,1 }; }
 	void SetGreen() { _colorBuffer->_data.color = { 0,1,0,1 }; }
 
-	static bool isDebug;
+	void Activate() { _isActive = true; }
+	void DeActivate() { _isActive = false; }
 
-	bool isActive = true;
+	bool GetActive() { return _isActive; }
+
+	static bool _isDebug;
 
 protected:
 	Type _type = NONE;
+
+	bool _isActive = true;
 
 	vector<Vertex_Basic> _vertices;
 

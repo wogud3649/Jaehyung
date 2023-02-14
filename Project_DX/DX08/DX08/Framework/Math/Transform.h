@@ -11,13 +11,12 @@ public:
 	void Update();
 	void SetBuffer(UINT slot);
 
+	void SetParent(shared_ptr<Transform> parent) { _parent = parent; }
+
 	void SetPosition(Vector2 pos) { _pos = pos; UpdateSRT(); }
 
-	Vector2& GetScale() { return _scale; }
-	float& GetAngle() { return _angle; }
-	Vector2& GetPos() { return _pos; }
-
 	void SetScale(Vector2 scale) { _scale = scale; }
+	void AddScale(Vector2 scale) { _scale += scale; }
 	void AddScaleX(float xScale) { _scale.x += xScale; }
 	void AddScaleY(float yScale) { _scale.y += yScale; }
 
@@ -29,10 +28,13 @@ public:
 	void MoveX(float distance) { _pos.x += distance; }
 	void MoveY(float distance) { _pos.y += distance; }
 
-	Vector2 GetWorldPos();
-	Vector2 GetWorldScale();
+	Vector2 GetScale() { return _scale; }
+	float GetAngle() { return _angle; }
+	Vector2 GetPos() { return _pos; }
 
-	void SetParent(shared_ptr<Transform> parent) { _parent = parent; }
+	Vector2 GetWorldScale();
+	float GetWorldAngle();
+	Vector2 GetWorldPos();
 
 	const XMMATRIX& GetMatrix() { return _srtMatrix; }
 

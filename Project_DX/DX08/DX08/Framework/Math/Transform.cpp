@@ -38,20 +38,8 @@ void Transform::SetBuffer(UINT slot)
 	_world->SetVSBuffer(slot);
 }
 
-Vector2 Transform::GetWorldPos()
-{
-	UpdateSRT();
-
-	XMFLOAT4X4 temp;
-	XMStoreFloat4x4(&temp, _srtMatrix);
-
-	return Vector2(temp._41, temp._42);
-}
-
 Vector2 Transform::GetWorldScale()
 {
-	UpdateSRT();
-
 	XMFLOAT4X4 temp;
 	XMStoreFloat4x4(&temp, _scaleM);
 
@@ -62,4 +50,25 @@ Vector2 Transform::GetWorldScale()
 	}
 
 	return Vector2(temp._11, temp._22);
+}
+
+float Transform::GetWorldAngle()
+{
+	float angle = _angle;
+
+	if (_parent.expired() == false)
+	{
+		_parent.lock()->UpdateSRT();
+		angle += _parent.lock()->GetWorldAngle();
+	}
+
+	return angle;
+}
+
+Vector2 Transform::GetWorldPos()
+{
+	XMFLOAT4X4 temp;
+	XMStoreFloat4x4(&temp, _srtMatrix);
+
+	return Vector2(temp._41, temp._42);
 }

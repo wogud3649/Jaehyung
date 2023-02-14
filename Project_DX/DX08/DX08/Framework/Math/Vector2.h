@@ -11,8 +11,6 @@ public:
 	Vector2 operator-(const Vector2& other) const;
 	Vector2 operator*(const float& value) const;
 
-	bool operator<(const Vector2& other) const;
-	bool operator>(const Vector2& other) const;
 	bool operator==(const Vector2& other) const;
 	bool operator!=(const Vector2& other) const;
 

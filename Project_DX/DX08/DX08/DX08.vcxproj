@@ -184,7 +184,7 @@
     <ClInclude Include="Framework\Render\VertexShader.h" />
     <ClInclude Include="Framework\Math\Transform.h" />
     <ClInclude Include="Framework\Utility\Timer.h" />
-    <ClInclude Include="Scene\TutorialScene.h" />
+    <ClInclude Include="Scene\TestScene.h" />
     <ClInclude Include="Types.h" />
   </ItemGroup>
   <ItemGroup>
@@ -226,7 +226,7 @@
     <ClCompile Include="Object\BasicObj\Sprite.cpp" />
     <ClCompile Include="Framework\Render\Shader.cpp" />
     <ClCompile Include="Framework\Render\ShaderManager.cpp" />
-    <ClCompile Include="Scene\TutorialScene.cpp" />
+    <ClCompile Include="Scene\TestScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX08.rc" />

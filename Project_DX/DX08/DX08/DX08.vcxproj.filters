@@ -117,7 +117,7 @@
     <ClInclude Include="Framework\Animation\MyXML.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\TutorialScene.h">
+    <ClInclude Include="Scene\TestScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -209,7 +209,7 @@
     <ClCompile Include="Framework\Animation\MyXML.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\TutorialScene.cpp">
+    <ClCompile Include="Scene\TestScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

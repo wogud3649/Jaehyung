@@ -97,10 +97,7 @@ void Sprite::CreateMaterial(wstring file)
 
 void Sprite::SetReverse()
 {
-    if (_reverseBuffer->_data.reverse == 0)
-        _reverseBuffer->_data.reverse = 1;
-    else
-        _reverseBuffer->_data.reverse = 0;
+    _reverseBuffer->_data.reverse = !_reverseBuffer->_data.reverse;
 }
 
 void Sprite::SetCurFrame(Vector2 curFrame)

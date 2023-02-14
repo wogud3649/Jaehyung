@@ -1,7 +1,7 @@
 #include "framework.h"
 #include "Collider.h"
 
-bool Collider::isDebug = false;
+bool Collider::_isDebug = false;
 
 Collider::Collider()
 {
@@ -13,7 +13,7 @@ Collider::~Collider()
 
 void Collider::Update()
 {
-    if (!isActive)
+    if (!_isActive)
         return;
 
     _transform->Update();
@@ -22,7 +22,7 @@ void Collider::Update()
 
 void Collider::Render()
 {
-    if (!isDebug || !isActive)
+    if (!_isDebug || !_isActive)
         return;
 
     _transform->SetBuffer(0);

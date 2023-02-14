@@ -1,11 +1,11 @@
 #include "framework.h"
 #include "Program.h"
 
-#include "../Scene/TutorialScene.h"
+#include "../Scene/TestScene.h"
 
 Program::Program()
 {
-	_scene = make_shared<TutorialScene>();
+	_scene = make_shared<TestScene>();
 
 	_view = make_shared<MatrixBuffer>();
 	_proj = make_shared<MatrixBuffer>();
@@ -25,7 +25,7 @@ Program::~Program()
 void Program::Update()
 {
 	if (KEY_DOWN(VK_F1))
-		Collider::isDebug = !Collider::isDebug;
+		Collider::_isDebug = !Collider::_isDebug;
 
 	InputManager::GetInstance()->Update();
 	Timer::GetInstance()->Update();

@@ -65,7 +65,7 @@ HIT_RESULT CircleCollider::Block(shared_ptr<CircleCollider> other)
         Vector2 dir = other->GetTransform()->GetWorldPos() - _transform->GetWorldPos();
         float radiusSum = other->WorldRadius() + WorldRadius();
         float overlap = radiusSum - dir.Length();;
-        other->GetTransform()->GetPos() += dir.NormalVector2() * overlap;
+        other->GetTransform()->Move(dir.NormalVector2() * overlap);
 
         result.isHit = true;
     }
@@ -99,7 +99,7 @@ HIT_RESULT CircleCollider::Block(shared_ptr<RectCollider> other)
             float sum = WorldRadius() + halfSize.y;
             float distance = abs(rectPos.y - circlePos.y);
 
-            other->GetTransform()->GetPos() += dir * (sum - distance);
+            other->GetTransform()->Move(dir * (sum - distance));
         }
         else if (circlePos.y > leftBottom.y && circlePos.y < rightTop.y)
         {
@@ -109,7 +109,7 @@ HIT_RESULT CircleCollider::Block(shared_ptr<RectCollider> other)
             float sum = WorldRadius() + halfSize.x;
             float distance = abs(rectPos.x - circlePos.x);
 
-            other->GetTransform()->GetPos() += dir * (sum - distance);
+            other->GetTransform()->Move(dir * (sum - distance));
         }
         else
         {
@@ -130,7 +130,7 @@ HIT_RESULT CircleCollider::Block(shared_ptr<RectCollider> other)
 
             float magnitude = WorldRadius() - dir.Length();
             dir.Normalize();
-            other->GetTransform()->GetPos() += dir * magnitude;
+            other->GetTransform()->Move(dir * magnitude);
         }
         result.isHit = true;
     }
@@ -144,7 +144,7 @@ HIT_RESULT CircleCollider::Block(shared_ptr<RectCollider> other)
 
 float CircleCollider::WorldRadius()
 {
-    return _radius * _transform->GetScale().x;
+    return _radius * _transform->GetWorldScale().x;
 }
 
 Vector2 CircleCollider::GetCloserVertex(shared_ptr<RectCollider> rect)
@@ -175,9 +175,9 @@ Vector2 CircleCollider::GetCloserVertex(shared_ptr<RectCollider> rect)
 
 void CircleCollider::CreateVertices()
 {
-    float angle = PI / 18.0f;
+    float angle = PI / 6.0f;
 
-    for (int i = 0; i < 37; i++)
+    for (int i = 0; i < 13; i++)
     {
         Vertex_Basic vertex;
         vertex.pos = XMFLOAT3(cos(angle * i) * _radius, sin(angle * i) * _radius, 0);

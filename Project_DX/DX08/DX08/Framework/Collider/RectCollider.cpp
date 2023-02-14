@@ -136,7 +136,7 @@ HIT_RESULT RectCollider::Block(shared_ptr<CircleCollider> other)
             float sum = other->WorldRadius() + halfSize.y;
             float distance = abs(rectPos.y - circlePos.y);
 
-            other->GetTransform()->GetPos() += dir * (sum - distance);
+            other->GetTransform()->Move(dir * (sum - distance));
         }
         else if (circlePos.y > leftBottom.y && circlePos.y < rightTop.y)
         {
@@ -151,7 +151,7 @@ HIT_RESULT RectCollider::Block(shared_ptr<CircleCollider> other)
             float sum = other->WorldRadius() + halfSize.x;
             float distance = abs(rectPos.x - circlePos.x);
 
-            other->GetTransform()->GetPos() += dir * (sum - distance);
+            other->GetTransform()->Move(dir * (sum - distance));
         }
         else
         {
@@ -172,7 +172,7 @@ HIT_RESULT RectCollider::Block(shared_ptr<CircleCollider> other)
 
             float magnitude = other->WorldRadius() - dir.Length();
             dir.Normalize();
-            other->GetTransform()->GetPos() += dir * magnitude;
+            other->GetTransform()->Move(dir * magnitude);
         }
         result.isHit = true;
     }
@@ -194,11 +194,11 @@ HIT_RESULT RectCollider::Block(shared_ptr<RectCollider> other)
 
         if (overlap.x >= overlap.y)
         {
-            other->GetTransform()->GetPos().y += dir.NormalVector2().y * overlap.y;
+            other->GetTransform()->MoveY(dir.NormalVector2().y * overlap.y);
         }
         else
         {
-            other->GetTransform()->GetPos().x += dir.NormalVector2().x * overlap.x;
+            other->GetTransform()->MoveX(dir.NormalVector2().x * overlap.x);
         }
         result.isHit = true;
     }
@@ -220,7 +220,7 @@ HIT_RESULT RectCollider::TopBlock(shared_ptr<CircleCollider> other)
             float sum = other->WorldRadius();
             float overlap = sum - dir;
 
-            other->GetTransform()->GetPos().y += overlap;
+            other->GetTransform()->MoveY(overlap);
 
             result.dir = Direction::UP;
             result.isHit = true;
