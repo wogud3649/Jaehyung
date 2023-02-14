@@ -37,6 +37,7 @@ void Program::Update()
 
 	InputManager::GetInstance()->Update();
 	Timer::GetInstance()->Update();
+	Audio::GetInstance()->Update();
 
 	_scene->Update();
 	EFFECT->Update();

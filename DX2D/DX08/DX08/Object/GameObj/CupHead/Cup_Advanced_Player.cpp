@@ -116,6 +116,7 @@ void Cup_Advanced_Player::Jump()
 	{
 		SetAction(State::CUP_JUMP);
 		_jumpPower = _maxJumpPower;
+		Audio::GetInstance()->Play("jump");
 	}
 }
 

@@ -13,6 +13,10 @@ CupHeadScene::CupHeadScene()
 	_bg = make_shared<Cup_Bg>();
 	_bg->SetPos(CENTER);
 	_bg->SetPlayer(_player);
+
+	Audio::GetInstance()->Add("bgm", "Resource/Sound/BGM.mp3", true);
+	Audio::GetInstance()->Add("jump", "Resource/Sound/jump.wav");
+	Audio::GetInstance()->Play("bgm");
 }
 
 CupHeadScene::~CupHeadScene()
