@@ -8,6 +8,14 @@ Cup_Monster_Bullet::Cup_Monster_Bullet()
 	_col = make_shared<CircleCollider>(23.0f);
 	_col->GetTransform()->SetParent(_sprite->GetTransform());
 	_col->GetTransform()->GetPos().y += 40.0f;
+
+	wstring file = L"Resource/Texture/Effects/hit_4x2.png";
+	_effect = make_shared<Effect>(file, Vector2(4, 2), Vector2(200, 200), 0.05f);
+	EFFECT->AddEffect(file, Vector2(4, 2), Vector2(200, 200), 0.05f);
+
+	file = L"Resource/Texture/Effects/smoke_4x4.png";
+	_effect = make_shared<Effect>(file, Vector2(4, 4), Vector2(200, 200), 0.02f);
+	EFFECT->AddEffect(file, Vector2(4, 4), Vector2(200, 200), 0.05f);
 }
 
 Cup_Monster_Bullet::~Cup_Monster_Bullet()
@@ -40,6 +48,7 @@ void Cup_Monster_Bullet::Update()
 			return;
 		if (_col->IsCollision(_target.lock()->GetBodyCollider()))
 		{
+			EFFECT->Play("hit_4x2", _col->GetTransform()->GetWorldPos());
 			_target.lock()->Damaged();
 			DisAble();
 		}
@@ -76,6 +85,7 @@ void Cup_Monster_Bullet::Fire()
 	EnAble();
 	_direction = (_target.lock()->GetBodyCollider()->GetTransform()->GetWorldPos() - _col->GetTransform()->GetWorldPos()).NormalVector2();
 	_sprite->GetTransform()->GetAngle() = _direction.Angle() - PI * 0.5f;
+	EFFECT->Play("smoke_4x4", _col->GetTransform()->GetWorldPos());
 }
 
 void Cup_Monster_Bullet::CreateAction()

@@ -15,7 +15,6 @@ Cup_Bullet::Cup_Bullet()
 
 	file = L"Resource/Texture/Effects/smoke_4x4.png";
 	_effect = make_shared<Effect>(file, Vector2(4, 4), Vector2(200, 200), 0.02f);
-	_effect->Play(CENTER);
 	EFFECT->AddEffect(file, Vector2(4, 4), Vector2(200, 200), 0.05f);
 }
 
