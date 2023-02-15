@@ -54,3 +54,17 @@ void Cup_Bg::SetPlayer(shared_ptr<Cup_Advanced_Player> player)
 	for (auto track : _tracks)
 		track->SetPlayer(player);
 }
+
+Vector2 Cup_Bg::LeftBottom()
+{
+	Vector2 curPos = _bg->GetTransform()->GetWorldPos();
+	Vector2 size = _bg->GetImageSize() * 0.5f;
+	return curPos - size;
+}
+
+Vector2 Cup_Bg::RightTop()
+{
+	Vector2 curPos = _bg->GetTransform()->GetWorldPos();
+	Vector2 size = _bg->GetImageSize() * 0.5f;
+	return curPos + size;
+}

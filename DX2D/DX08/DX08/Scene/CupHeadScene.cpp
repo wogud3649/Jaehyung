@@ -14,6 +14,11 @@ CupHeadScene::CupHeadScene()
 	_bg->SetPos(CENTER);
 	_bg->SetPlayer(_player);
 
+	CAMERA->SetTarget(_player->GetTransform());
+	CAMERA->SetLeftBottom(_bg->LeftBottom());
+	CAMERA->SetRightTop(_bg->RightTop());
+	CAMERA->SetOffset(CENTER);
+
 	Audio::GetInstance()->Add("bgm", "Resource/Sound/BGM.mp3", true);
 	Audio::GetInstance()->Add("jump", "Resource/Sound/jump.wav");
 	Audio::GetInstance()->Play("bgm");

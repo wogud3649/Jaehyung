@@ -32,6 +32,8 @@
 
 #define EFFECT EffectManager::GetInstance()
 
+#define CAMERA Camera::GetInstance()
+
 enum Direction
 {
 	LEFT,

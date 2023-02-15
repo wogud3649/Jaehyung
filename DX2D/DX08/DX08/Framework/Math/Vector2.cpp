@@ -20,6 +20,11 @@ Vector2::~Vector2()
 {
 }
 
+Vector2 Vector2::operator-() const
+{
+	return Vector2(-x,-y);
+}
+
 Vector2 Vector2::operator+(const Vector2& other) const
 {
 	Vector2 result;

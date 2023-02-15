@@ -14,16 +14,6 @@
 Program::Program()
 {
 	_scene = make_shared<CupHeadScene>();
-
-	_view = make_shared<MatrixBuffer>();
-	_proj = make_shared<MatrixBuffer>();
-
-	XMMATRIX projMatrix = XMMatrixOrthographicOffCenterLH(0, WIN_WIDTH, 0, WIN_HEIGHT, 0.0f, 1.0f);
-
-	_proj->SetData(projMatrix);
-
-	_view->Update();
-	_proj->Update();
 }
 
 Program::~Program()
@@ -38,6 +28,7 @@ void Program::Update()
 	InputManager::GetInstance()->Update();
 	Timer::GetInstance()->Update();
 	Audio::GetInstance()->Update();
+	Camera::GetInstance()->Update();
 
 	_scene->Update();
 	EFFECT->Update();
@@ -47,8 +38,8 @@ void Program::Render()
 {
 	Device::GetInstance()->Clear();
 
-	_view->SetVSBuffer(1);
-	_proj->SetVSBuffer(2);
+	Camera::GetInstance()->SetCameraWorldBuffer();
+	Camera::GetInstance()->SetProjectionBuffer();
 	_scene->PreRender();
 
 	ImGui_ImplDX11_NewFrame();
@@ -61,6 +52,7 @@ void Program::Render()
 	EFFECT->Render();
 
 	ImGui::Text("FPS : %d", Timer::GetInstance()->GetFPS());
+	Camera::GetInstance()->PostRender();
 	_scene->PostRender();
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());

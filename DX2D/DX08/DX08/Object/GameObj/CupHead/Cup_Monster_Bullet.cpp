@@ -48,6 +48,7 @@ void Cup_Monster_Bullet::Update()
 			return;
 		if (_col->IsCollision(_target.lock()->GetBodyCollider()))
 		{
+			Camera::GetInstance()->ShakeStart(10.0f, 0.3f);
 			EFFECT->Play("hit_4x2", _col->GetTransform()->GetWorldPos());
 			_target.lock()->Damaged();
 			DisAble();
