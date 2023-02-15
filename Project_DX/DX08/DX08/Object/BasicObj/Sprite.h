@@ -13,7 +13,7 @@ public:
 	virtual void CreateMaterial(wstring file) override;
 
 	void SetReverse();
-	void SetDirection(int direction) { _reverseBuffer->_data.reverse = direction; }
+	void SetDirection(Direction direction);
 	int GetDirection() { return _reverseBuffer->_data.reverse; }
 
 	void SetCurFrame(Vector2 curFrame);

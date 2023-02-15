@@ -100,6 +100,35 @@ void Sprite::SetReverse()
     _reverseBuffer->_data.reverse = !_reverseBuffer->_data.reverse;
 }
 
+void Sprite::SetDirection(Direction direction)
+{
+    switch (direction)
+    {
+    case LEFT:
+        _reverseBuffer->_data.reverse = 1;
+        break;
+    case UP:
+        break;
+    case RIGHT:
+        _reverseBuffer->_data.reverse = 0;
+        break;
+    case DOWN:
+        break;
+    case LEFTUP:
+        break;
+    case RIGHTUP:
+        break;
+    case LEFTDOWN:
+        break;
+    case RIGHTDOWN:
+        break;
+    case NONE:
+        break;
+    default:
+        break;
+    }
+}
+
 void Sprite::SetCurFrame(Vector2 curFrame)
 {
     _actionBuffer->_data.startPos.x = _actionBuffer->_data.size.x / curFrame.x;

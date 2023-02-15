@@ -168,6 +168,7 @@
     <ClInclude Include="Framework\Render\VertexLayout.h" />
     <ClInclude Include="Framework\Render\IndexBuffer.h" />
     <ClInclude Include="Framework\Render\GlobalBuffer.h" />
+    <ClInclude Include="Object\GameObj\Player.h" />
     <ClInclude Include="Program\Program.h" />
     <ClInclude Include="Object\BasicObj\Quad.h" />
     <ClInclude Include="Resource.h" />
@@ -212,6 +213,7 @@
     <ClCompile Include="Framework\Math\Vector2.cpp" />
     <ClCompile Include="Framework\Render\PixelShader.cpp" />
     <ClCompile Include="Framework\Render\IndexBuffer.cpp" />
+    <ClCompile Include="Object\GameObj\Player.cpp" />
     <ClCompile Include="Program\Program.cpp" />
     <ClCompile Include="Framework\Texture\SamplerState.cpp" />
     <ClCompile Include="Object\BasicObj\Quad.cpp" />

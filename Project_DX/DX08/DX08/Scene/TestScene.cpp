@@ -3,8 +3,8 @@
 
 TestScene::TestScene()
 {
-	circle = make_shared<CircleCollider>(50);
-	circle->GetTransform()->SetPos(CENTER);
+	_player = make_shared<Player>();
+	_player->GetTransform()->SetPos(CENTER);
 }
 
 TestScene::~TestScene()
@@ -13,10 +13,10 @@ TestScene::~TestScene()
 
 void TestScene::Update()
 {
-	circle->Update();
+	_player->Update();
 }
 
 void TestScene::Render()
 {
-	circle->Render();
+	_player->Render();
 }
