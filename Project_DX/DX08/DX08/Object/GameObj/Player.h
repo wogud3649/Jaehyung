@@ -11,7 +11,9 @@ public:
 	enum State
 	{
 		IDLE,
-		WALK
+		WALK,
+		ATTACKA,
+		SKILL
 	};
 
 	Player();
@@ -23,9 +25,11 @@ public:
 	shared_ptr<Transform> GetTransform() { return _col->GetTransform(); }
 
 private:
-	void CreateAction(SkulType skulType, State state, Action::Type type);
+	void CreateAction(SkulType skulType, State state, Action::Type type, MyXML::Sort sortx = MyXML::Sort::RIGHT, MyXML::Sort sorty = MyXML::Sort::BOTTOM);
 	void SetAction(State state);
 	void Input();
+
+	void SetIdle();
 
 	State _curState = State::IDLE;
 	State _oldState = State::IDLE;

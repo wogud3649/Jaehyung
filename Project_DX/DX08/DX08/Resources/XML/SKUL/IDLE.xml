@@ -14,9 +14,9 @@ oY => y-corner offset
 oW => original width
 oH => original height
 r => 'y' if sprite is rotated-->
-<TextureAtlas imagePath="Skul_Idle.png" width="114" height="62" scale="1" format="RGBA8888">
-  <sprite n="Skul_Idle_1.png" x="78" y="0" w="36" h="32" pX="0.5" pY="0.5"/>
-  <sprite n="Skul_Idle_2.png" x="40" y="0" w="38" h="33" pX="0.5" pY="0.5"/>
-  <sprite n="Skul_Idle_3.png" x="0" y="0" w="40" h="32" pX="0.5" pY="0.5"/>
-  <sprite n="Skul_Idle_4.png" x="0" y="32" w="38" h="30" pX="0.5" pY="0.5"/>
+<TextureAtlas imagePath="IDLE.png" width="232" height="53" scale="1" format="RGBA8888">
+  <sprite n="Skul_Idle_1.png" x="68" y="10" w="36" h="32" pX="0.5" pY="0.5" oX="4" oY="1" oW="40" oH="33"/>
+  <sprite n="Skul_Idle_2.png" x="184" y="10" w="38" h="33" pX="0.5" pY="0.5" oX="2" oY="0" oW="40" oH="33"/>
+  <sprite n="Skul_Idle_3.png" x="124" y="10" w="40" h="32" pX="0.5" pY="0.5" oX="0" oY="1" oW="40" oH="33"/>
+  <sprite n="Skul_Idle_4.png" x="10" y="10" w="38" h="30" pX="0.5" pY="0.5" oX="2" oY="3" oW="40" oH="33"/>
 </TextureAtlas>

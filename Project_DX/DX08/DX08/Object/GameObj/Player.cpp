@@ -4,7 +4,9 @@
 Player::Player()
 {
 	CreateAction(SkulType::SKUL, State::IDLE, Action::Type::LOOP);
-	CreateAction(SkulType::SKUL, State::WALK, Action::Type::LOOP);
+	CreateAction(SkulType::SKUL, State::WALK, Action::Type::LOOP, MyXML::Sort::MIDDLE);
+	CreateAction(SkulType::SKUL, State::ATTACKA, Action::Type::END, MyXML::Sort::LEFT, MyXML::Sort::MIDDLE);
+	CreateAction(SkulType::SKUL, State::SKILL, Action::Type::END, MyXML::Sort::LEFT, MyXML::Sort::BOTTOM);
 
 	_col = make_shared<CircleCollider>(30);
 
@@ -38,7 +40,7 @@ void Player::Render()
 	_col->Render();
 }
 
-void Player::CreateAction(SkulType skulType, State state, Action::Type type)
+void Player::CreateAction(SkulType skulType, State state, Action::Type type, MyXML::Sort sortx, MyXML::Sort sorty)
 {
 	string _skulType;
 	string _state;
@@ -63,6 +65,12 @@ void Player::CreateAction(SkulType skulType, State state, Action::Type type)
 	case Player::WALK:
 		_state = "WALK";
 		break;
+	case Player::ATTACKA:
+		_state = "ATTACKA";
+		break;
+	case Player::SKILL:
+		_state = "SKILL";
+		break;
 	default:
 		break;
 	}
@@ -76,10 +84,10 @@ void Player::CreateAction(SkulType skulType, State state, Action::Type type)
 	MyXML xml = MyXML(xmlPath, srvPath);
 
 	string actionName = _skulType + "_" + _state;
-	_actions.emplace_back(make_shared<Action>(xml.GetClips(), actionName, type));
+	_actions.emplace_back(make_shared<Action>(xml.GetClips(sortx, sorty), actionName, type));
 
-	Vector2 AverageSize = xml.AverageSize() * 2.0f;
-	_sprites.emplace_back(make_shared<Sprite>(srvPath, AverageSize));
+	Vector2 maxSize = xml.MaxSize() * 2.0f;
+	_sprites.emplace_back(make_shared<Sprite>(srvPath, maxSize));
 }
 
 void Player::SetAction(State state)
@@ -115,4 +123,19 @@ void Player::Input()
 	{
 		SetAction(State::IDLE);
 	}
+	if (KEY_DOWN(VK_LBUTTON))
+	{
+		SetAction(State::ATTACKA);
+		_actions[_curState]->SetCallBack(std::bind(&Player::SetIdle, this));
+	}
+	if (KEY_DOWN(VK_RBUTTON))
+	{
+		SetAction(State::SKILL);
+		_actions[_curState]->SetCallBack(std::bind(&Player::SetIdle, this));
+	}
+}
+
+void Player::SetIdle()
+{
+	SetAction(State::IDLE);
 }

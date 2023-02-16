@@ -43,8 +43,6 @@ void Audio::Play(string key, float volume)
 {
 	if (_soundMap.count(key) == 0)
 		return;
-	if (_soundMap[key]->_channel == nullptr)
-		return;
 
 	_soundSystem->playSound(_soundMap[key]->_sound, nullptr, false, &_soundMap[key]->_channel);
 	_soundMap[key]->_channel->setVolume(volume);

@@ -14,13 +14,13 @@ oY => y-corner offset
 oW => original width
 oH => original height
 r => 'y' if sprite is rotated-->
-<TextureAtlas imagePath="Skul_Walk.png" width="226" height="59" scale="1" format="RGBA8888">
-  <sprite n="Skul_Walk_2.png" x="0" y="0" w="40" h="29" pX="0.5" pY="0.5"/>
-  <sprite n="Skul_Walk_6.png" x="40" y="0" w="39" h="32" pX="0.5" pY="0.5"/>
-  <sprite n="Skul_Walk_3.png" x="0" y="29" w="38" h="30" pX="0.5" pY="0.5"/>
-  <sprite n="Skul_Walk_7.png" x="79" y="0" w="38" h="30" pX="0.5" pY="0.5"/>
-  <sprite n="Skul_Walk_8.png" x="117" y="0" w="38" h="30" pX="0.5" pY="0.5"/>
-  <sprite n="Skul_Walk_1.png" x="155" y="0" w="38" h="27" pX="0.5" pY="0.5"/>
-  <sprite n="Skul_Walk_4.png" x="193" y="0" w="33" h="30" pX="0.5" pY="0.5"/>
-  <sprite n="Skul_Walk_5.png" x="155" y="27" w="33" h="29" pX="0.5" pY="0.5"/>
+<TextureAtlas imagePath="WALK.png" width="457" height="52" scale="1" format="RGBA8888">
+  <sprite n="Skul_Walk_1.png" x="10" y="10" w="38" h="27" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Walk_2.png" x="68" y="10" w="40" h="29" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Walk_3.png" x="181" y="10" w="38" h="30" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Walk_4.png" x="239" y="10" w="33" h="30" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Walk_5.png" x="128" y="10" w="33" h="29" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Walk_6.png" x="408" y="10" w="39" h="32" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Walk_7.png" x="292" y="10" w="38" h="30" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Walk_8.png" x="350" y="10" w="38" h="30" pX="0.5" pY="0.5"/>
 </TextureAtlas>

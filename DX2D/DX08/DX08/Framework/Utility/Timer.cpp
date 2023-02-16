@@ -37,8 +37,8 @@ void Timer::Update()
 		}
 	}
 
-	if (_deltaTime >= 0.2)
-		_deltaTime = 0.2;
+	if (_deltaTime >= 0.1)
+		_deltaTime = 0.1;
 
 	_lastTime = _curTime;
 
