@@ -151,7 +151,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Scene\CupMapToolScene.h" />
+    <ClInclude Include="Scene\SceneManager.h" />
+    <ClInclude Include="Scene\BasicScene\CupMapToolScene.h" />
     <ClInclude Include="Framework\Utility\BinaryReader.h" />
     <ClInclude Include="Framework\Utility\BinaryWriter.h" />
     <ClInclude Include="Framework\Camera\Camera.h" />
@@ -159,7 +160,7 @@
     <ClInclude Include="Framework\Utility\MathUtility.h" />
     <ClInclude Include="Object\BasicObj\EffectManager.h" />
     <ClInclude Include="Object\BasicObj\Effect.h" />
-    <ClInclude Include="Scene\EffectScene.h" />
+    <ClInclude Include="Scene\BasicScene\EffectScene.h" />
     <ClInclude Include="Object\BasicObj\FilterSprite.h" />
     <ClInclude Include="Object\GameObj\CupHead\Cup_Monster_Bullet.h" />
     <ClInclude Include="Object\GameObj\CupHead\Cup_Monster.h" />
@@ -169,20 +170,19 @@
     <ClInclude Include="Object\GameObj\CupHead\Cup_Bullet.h" />
     <ClInclude Include="Object\GameObj\CupHead\Cup_Bg.h" />
     <ClInclude Include="Object\GameObj\CupHead\Cup_Player.h" />
-    <ClInclude Include="Scene\CupHeadScene.h" />
+    <ClInclude Include="Scene\BasicScene\CupHeadScene.h" />
     <ClInclude Include="Framework\Utility\tinyxml2.h" />
-    <ClInclude Include="Scene\ActionScene.h" />
+    <ClInclude Include="Scene\BasicScene\ActionScene.h" />
     <ClInclude Include="Framework\Animation\Action.h" />
     <ClInclude Include="Framework\Collider\Collider.h" />
     <ClInclude Include="Framework\Collider\CircleCollider.h" />
     <ClInclude Include="Framework\Collider\RectCollider.h" />
-    <ClInclude Include="Scene\MyGameScene.h" />
     <ClInclude Include="Object\GameObj\Bow\Bow_Monster.h" />
-    <ClInclude Include="Scene\CollisionScene.h" />
+    <ClInclude Include="Scene\BasicScene\CollisionScene.h" />
     <ClInclude Include="Framework\Utility\InputManager.h" />
     <ClInclude Include="Object\GameObj\Bow\Bow_Arrow.h" />
     <ClInclude Include="Object\GameObj\Bow\Bow.h" />
-    <ClInclude Include="Scene\BowScene.h" />
+    <ClInclude Include="Scene\BasicScene\BowScene.h" />
     <ClInclude Include="Framework\Texture\BlendState.h" />
     <ClInclude Include="Framework\Render\ConstantBuffer.h" />
     <ClInclude Include="Framework\Device\Device.h" />
@@ -200,15 +200,15 @@
     <ClInclude Include="Framework\Texture\SamplerState.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Framework\Texture\SRV.h" />
-    <ClInclude Include="Scene\SolarSystemScene.h" />
+    <ClInclude Include="Scene\BasicScene\SolarSystemScene.h" />
     <ClInclude Include="Framework\Texture\StateManager.h" />
     <ClInclude Include="Framework\Texture\SRVManager.h" />
-    <ClInclude Include="Scene\SpriteScene.h" />
+    <ClInclude Include="Scene\BasicScene\SpriteScene.h" />
     <ClInclude Include="Object\BasicObj\Sprite.h" />
     <ClInclude Include="Framework\Render\Shader.h" />
     <ClInclude Include="Framework\Render\ShaderManager.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="Scene\TutorialScene.h" />
+    <ClInclude Include="Scene\BasicScene\TutorialScene.h" />
     <ClInclude Include="Framework\Render\VertexBuffer.h" />
     <ClInclude Include="Framework\Render\VertexShader.h" />
     <ClInclude Include="Framework\Math\Transform.h" />
@@ -217,7 +217,8 @@
     <ClInclude Include="Object\GameObj\Zelda\Zelda.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Scene\CupMapToolScene.cpp" />
+    <ClCompile Include="Scene\SceneManager.cpp" />
+    <ClCompile Include="Scene\BasicScene\CupMapToolScene.cpp" />
     <ClCompile Include="Framework\Utility\BinaryReader.cpp" />
     <ClCompile Include="Framework\Utility\BinaryWriter.cpp" />
     <ClCompile Include="Framework\Camera\Camera.cpp" />
@@ -225,7 +226,7 @@
     <ClCompile Include="Framework\Utility\MathUtility.cpp" />
     <ClCompile Include="Object\BasicObj\EffectManager.cpp" />
     <ClCompile Include="Object\BasicObj\Effect.cpp" />
-    <ClCompile Include="Scene\EffectScene.cpp" />
+    <ClCompile Include="Scene\BasicScene\EffectScene.cpp" />
     <ClCompile Include="Object\BasicObj\FilterSprite.cpp" />
     <ClCompile Include="Object\GameObj\CupHead\Cup_Monster_Bullet.cpp" />
     <ClCompile Include="Object\GameObj\CupHead\Cup_Monster.cpp" />
@@ -235,20 +236,19 @@
     <ClCompile Include="Object\GameObj\CupHead\Cup_Bullet.cpp" />
     <ClCompile Include="Object\GameObj\CupHead\Cup_Bg.cpp" />
     <ClCompile Include="Object\GameObj\CupHead\Cup_Player.cpp" />
-    <ClCompile Include="Scene\CupHeadScene.cpp" />
+    <ClCompile Include="Scene\BasicScene\CupHeadScene.cpp" />
     <ClCompile Include="Framework\Utility\tinyxml2.cpp" />
-    <ClCompile Include="Scene\ActionScene.cpp" />
+    <ClCompile Include="Scene\BasicScene\ActionScene.cpp" />
     <ClCompile Include="Framework\Animation\Action.cpp" />
     <ClCompile Include="Framework\Collider\Collider.cpp" />
     <ClCompile Include="Framework\Collider\CircleCollider.cpp" />
     <ClCompile Include="Framework\Collider\RectCollider.cpp" />
-    <ClCompile Include="Scene\MyGameScene.cpp" />
     <ClCompile Include="Object\GameObj\Bow\Bow_Monster.cpp" />
-    <ClCompile Include="Scene\CollisionScene.cpp" />
+    <ClCompile Include="Scene\BasicScene\CollisionScene.cpp" />
     <ClCompile Include="Framework\Utility\InputManager.cpp" />
     <ClCompile Include="Object\GameObj\Bow\Bow_Arrow.cpp" />
     <ClCompile Include="Object\GameObj\Bow\Bow.cpp" />
-    <ClCompile Include="Scene\BowScene.cpp" />
+    <ClCompile Include="Scene\BasicScene\BowScene.cpp" />
     <ClCompile Include="Framework\Texture\BlendState.cpp" />
     <ClCompile Include="Framework\Render\ConstantBuffer.cpp" />
     <ClCompile Include="Framework\Device\Device.cpp" />
@@ -271,16 +271,16 @@
     <ClCompile Include="Framework\Texture\SamplerState.cpp" />
     <ClCompile Include="Object\BasicObj\Quad.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
-    <ClCompile Include="Scene\TutorialScene.cpp" />
+    <ClCompile Include="Scene\BasicScene\TutorialScene.cpp" />
     <ClCompile Include="Framework\Render\VertexBuffer.cpp" />
     <ClCompile Include="Framework\Render\VertexShader.cpp" />
     <ClCompile Include="Framework\Texture\SRV.cpp" />
     <ClCompile Include="Framework\Math\Transform.cpp" />
-    <ClCompile Include="Scene\SolarSystemScene.cpp" />
+    <ClCompile Include="Scene\BasicScene\SolarSystemScene.cpp" />
     <ClCompile Include="Framework\Texture\StateManager.cpp" />
     <ClCompile Include="Framework\Utility\Timer.cpp" />
     <ClCompile Include="Framework\Texture\SRVManager.cpp" />
-    <ClCompile Include="Scene\SpriteScene.cpp" />
+    <ClCompile Include="Scene\BasicScene\SpriteScene.cpp" />
     <ClCompile Include="Object\BasicObj\Sprite.cpp" />
     <ClCompile Include="Framework\Render\Shader.cpp" />
     <ClCompile Include="Framework\Render\ShaderManager.cpp" />

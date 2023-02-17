@@ -2,7 +2,7 @@
 #include "BinaryWriter.h"
 
 BinaryWriter::BinaryWriter(wstring path)
-	: _size(0)
+: _size(0)
 {
 	_file = CreateFile(path.c_str(), GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
 }
@@ -32,7 +32,7 @@ void BinaryWriter::String(string data)
 	UINT(data.size());
 	
 	const char* str = data.c_str();
-	WriteFile(_file, &data, data.size(), IN & _size, nullptr);
+	WriteFile(_file, str, data.size(), IN & _size, nullptr);
 }
 
 void BinaryWriter::Byte(void* data, UINT dataSize)

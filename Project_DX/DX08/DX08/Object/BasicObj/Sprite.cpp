@@ -16,6 +16,24 @@ Sprite::Sprite(wstring file, Vector2 size)
     _reverseBuffer = make_shared<ReverseBuffer>();
 }
 
+Sprite::Sprite(wstring file, float maxFrame, Vector2 size)
+: _clipSize(size)
+{
+    _maxFrame = Vector2(maxFrame, 1.0f);
+
+    Sprite::CreateMaterial(file);
+    Sprite::CreateMesh();
+
+    _transform = make_shared<Transform>();
+    _actionBuffer = make_shared<ActionBuffer>();
+
+    _actionBuffer->_data.imageSize = _srv->GetImageSize();
+    _actionBuffer->_data.size.x = _actionBuffer->_data.imageSize.x / _maxFrame.x;
+    _actionBuffer->_data.size.y = _actionBuffer->_data.imageSize.y;
+
+    _reverseBuffer = make_shared<ReverseBuffer>();
+}
+
 Sprite::Sprite(wstring file, Vector2 maxFrame, Vector2 size)
 : _maxFrame(maxFrame)
 , _clipSize(size)

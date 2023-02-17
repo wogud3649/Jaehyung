@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Object\GameObj\Advanced_Player.h" />
     <ClInclude Include="Framework\Animation\MyXML.h" />
     <ClInclude Include="Framework\Utility\tinyxml2.h" />
     <ClInclude Include="Framework\Animation\Action.h" />
@@ -189,6 +190,7 @@
     <ClInclude Include="Types.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Object\GameObj\Advanced_Player.cpp" />
     <ClCompile Include="Framework\Animation\MyXML.cpp" />
     <ClCompile Include="Framework\Utility\tinyxml2.cpp" />
     <ClCompile Include="Framework\Animation\Action.cpp" />

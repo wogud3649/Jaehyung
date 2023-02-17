@@ -13,8 +13,6 @@ public:
 
 	void SetParent(shared_ptr<Transform> parent) { _parent = parent; }
 
-	void SetPosition(Vector2 pos) { _pos = pos; UpdateSRT(); }
-
 	void SetScale(Vector2 scale) { _scale = scale; }
 	void AddScale(Vector2 scale) { _scale += scale; }
 	void AddScaleX(float xScale) { _scale.x += xScale; }

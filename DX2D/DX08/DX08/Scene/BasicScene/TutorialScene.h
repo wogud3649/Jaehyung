@@ -5,6 +5,7 @@ public:
 	TutorialScene();
 	virtual ~TutorialScene();
 
+	virtual void Init() override;
 	virtual void Update() override;
 	virtual void Render() override;
 	virtual void PostRender() override;

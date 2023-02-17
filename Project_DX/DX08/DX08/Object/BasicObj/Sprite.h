@@ -3,6 +3,7 @@ class Sprite : public Quad
 {
 public:
 	Sprite(wstring file, Vector2 size);
+	Sprite(wstring file, float maxFrame, Vector2 size);
 	Sprite(wstring file, Vector2 maxFrame, Vector2 size);
 	virtual ~Sprite();
 

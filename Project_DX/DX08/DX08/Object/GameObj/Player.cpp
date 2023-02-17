@@ -3,10 +3,7 @@
 
 Player::Player()
 {
-	CreateAction(SkulType::SKUL, State::IDLE, Action::Type::LOOP);
-	CreateAction(SkulType::SKUL, State::WALK, Action::Type::LOOP, MyXML::Sort::MIDDLE);
-	CreateAction(SkulType::SKUL, State::ATTACKA, Action::Type::END, MyXML::Sort::LEFT, MyXML::Sort::MIDDLE);
-	CreateAction(SkulType::SKUL, State::SKILL, Action::Type::END, MyXML::Sort::LEFT, MyXML::Sort::BOTTOM);
+	CreateAction("SKUL");
 
 	_col = make_shared<CircleCollider>(30);
 
@@ -22,8 +19,6 @@ Player::~Player()
 
 void Player::Update()
 {
-	Input();
-
 	_col->Update();
 
 	for (auto sprite : _sprites)
@@ -40,54 +35,66 @@ void Player::Render()
 	_col->Render();
 }
 
-void Player::CreateAction(SkulType skulType, State state, Action::Type type, MyXML::Sort sortx, MyXML::Sort sorty)
+void Player::CreateAction(string skulType)
 {
-	string _skulType;
-	string _state;
+	wstring skulTypeW(skulType.begin(), skulType.end());
+	string state;
+	int frame;
+	Action::Type type;
 
-	switch (skulType)
+	for (int i = 0; i < State::StateSize; i++)
 	{
-	case Player::SKUL:
-		_skulType = "SKUL";
-		break;
-	case Player::HEADLESS:
-		_skulType = "HEADLESS";
-		break;
-	default:
-		break;
+		switch (i)
+		{
+		case 0:
+			state = "IDLE";
+			frame = 4;
+			type = Action::Type::LOOP;
+			break;
+		case 1:
+			state = "WALK";
+			frame = 8;
+			type = Action::Type::LOOP;
+			break;
+		case 2:
+			state = "JUMP";
+			frame = 2;
+			type = Action::Type::END;
+			break;
+		case 3:
+			state = "DASH";
+			frame = 1;
+			type = Action::Type::END;
+			break;
+		default:
+			break;
+		}
+		wstring stateW(state.begin(), state.end());
+
+		wstring srvPath = L"Resources/Texture/" + skulTypeW + L"/" + stateW + L".png";
+		shared_ptr<SRV> srv = SRV_ADD(srvPath);
+
+		Vector2 imageSize = srv->GetImageSize();
+		Vector2 clipSize = Vector2(imageSize.x / frame, imageSize.y);
+
+		shared_ptr<Sprite> sprite = make_shared<Sprite>(srvPath, frame, imageSize * 3);
+		_sprites.emplace_back(sprite);
+
+		vector<Action::Clip> clips;
+
+		float y = 0;
+		float w = clipSize.x;
+		float h = clipSize.y;
+
+		for (int i = 0; i < frame; i++)
+		{
+			clips.emplace_back(w * i, y, w, h, SRV_ADD(srvPath));
+		}
+
+		string name = skulType + "_" + state;
+
+		_actions.emplace_back(make_shared<Action>(clips, name, type));
 	}
-
-	switch (state)
-	{
-	case Player::IDLE:
-		_state = "IDLE";
-		break;
-	case Player::WALK:
-		_state = "WALK";
-		break;
-	case Player::ATTACKA:
-		_state = "ATTACKA";
-		break;
-	case Player::SKILL:
-		_state = "SKILL";
-		break;
-	default:
-		break;
-	}
-
-	wstring _skulTypeW(_skulType.begin(), _skulType.end());
-	wstring _stateW(_state.begin(), _state.end());
-
-	string xmlPath = "Resources/XML/" + _skulType + "/" + _state + ".xml";
-	wstring srvPath = L"Resources/Texture/" + _skulTypeW + L"/" + _stateW + L".png";
-
-	MyXML xml = MyXML(xmlPath, srvPath);
-
-	string actionName = _skulType + "_" + _state;
-	_actions.emplace_back(make_shared<Action>(xml.GetClips(sortx, sorty), actionName, type));
-
-	Vector2 maxSize = xml.MaxSize() * 2.0f;
-	_sprites.emplace_back(make_shared<Sprite>(srvPath, maxSize));
 }
 
 void Player::SetAction(State state)
@@ -99,43 +106,4 @@ void Player::SetAction(State state)
 	_actions[_curState]->Play();
 	_actions[_oldState]->Reset();
 	_oldState = _curState;
-}
-
-void Player::Input()
-{
-	if (KEY_PRESS('D'))
-	{
-		_sprites[_curState]->SetDirection(Direction::RIGHT);
-		SetAction(State::WALK);
-		GetTransform()->MoveX(_speed * DELTA_TIME);
-	}
-	if (KEY_PRESS('A'))
-	{
-		_sprites[_curState]->SetDirection(Direction::LEFT);
-		SetAction(State::WALK);
-		GetTransform()->MoveX(-_speed * DELTA_TIME);
-	}
-	if (KEY_UP('D'))
-	{
-		SetAction(State::IDLE);
-	}
-	if (KEY_UP('A'))
-	{
-		SetAction(State::IDLE);
-	}
-	if (KEY_DOWN(VK_LBUTTON))
-	{
-		SetAction(State::ATTACKA);
-		_actions[_curState]->SetCallBack(std::bind(&Player::SetIdle, this));
-	}
-	if (KEY_DOWN(VK_RBUTTON))
-	{
-		SetAction(State::SKILL);
-		_actions[_curState]->SetCallBack(std::bind(&Player::SetIdle, this));
-	}
-}
-
-void Player::SetIdle()
-{
-	SetAction(State::IDLE);
 }

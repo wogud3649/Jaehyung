@@ -23,6 +23,11 @@ SolarSystemScene::~SolarSystemScene()
 {
 }
 
+void SolarSystemScene::Init()
+{
+	_sun->SetPos(Vector2(CENTER_X, CENTER_Y));
+}
+
 void SolarSystemScene::Update()
 {
 	_sun->SetPos(MOUSE_POS);
@@ -36,4 +41,12 @@ void SolarSystemScene::Render()
 	_sun->Render();
 	_earth->Render();
 	_moon->Render();
+}
+
+void SolarSystemScene::PostRender()
+{
+	if (ImGui::Button("NextScene", { 100,100 }))
+	{
+		SCENE->SetScene("TutorialScene");
+	}
 }

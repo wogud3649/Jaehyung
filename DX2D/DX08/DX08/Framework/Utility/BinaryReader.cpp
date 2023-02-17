@@ -2,7 +2,7 @@
 #include "BinaryReader.h"
 
 BinaryReader::BinaryReader(wstring path)
-    : _size(0)
+: _size(0)
 {
     _file = CreateFile(path.c_str(), GENERIC_READ, FILE_SHARE_READ, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 }

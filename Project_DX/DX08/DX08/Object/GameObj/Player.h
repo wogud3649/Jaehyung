@@ -12,24 +12,25 @@ public:
 	{
 		IDLE,
 		WALK,
+		JUMP,
+		DASH,
 		ATTACKA,
-		SKILL
+		SKILL,
+
+		StateSize
 	};
 
 	Player();
 	~Player();
 
-	void Update();
-	void Render();
+	virtual void Update();
+	virtual void Render();
 
 	shared_ptr<Transform> GetTransform() { return _col->GetTransform(); }
 
-private:
-	void CreateAction(SkulType skulType, State state, Action::Type type, MyXML::Sort sortx = MyXML::Sort::RIGHT, MyXML::Sort sorty = MyXML::Sort::BOTTOM);
+protected:
+	void CreateAction(string skulType);
 	void SetAction(State state);
-	void Input();
-
-	void SetIdle();
 
 	State _curState = State::IDLE;
 	State _oldState = State::IDLE;
@@ -43,5 +44,12 @@ private:
 	vector<shared_ptr<Action>> _actions;
 
 	float _speed = 500.0f;
+	float _maxJumpPower = 700.0f;
+	float _curjumpPower = 0.0f;
+
+	int _maxHp = 100;
+	int _curHp = _maxHp;
+
+	bool _isAlive = true;
 };
 

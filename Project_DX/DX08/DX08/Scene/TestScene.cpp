@@ -3,7 +3,7 @@
 
 TestScene::TestScene()
 {
-	_player = make_shared<Player>();
+	_player = make_shared<Advanced_Player>();
 	_player->GetTransform()->SetPos(CENTER);
 }
 

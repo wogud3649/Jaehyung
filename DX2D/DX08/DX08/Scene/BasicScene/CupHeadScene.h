@@ -5,6 +5,8 @@ public:
 	CupHeadScene();
 	virtual ~CupHeadScene();
 
+	virtual void Init() override;
+	virtual void Finalize() override;
 	virtual void Update() override;
 	virtual void PreRender() override;
 	virtual void Render() override;

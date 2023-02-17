@@ -87,6 +87,7 @@ using namespace DirectX;
 
 // GameObject
 #include "Object/GameObj/Player.h"
+#include "Object/GameObj/Advanced_Player.h"
 
 // Scene
 #include "Scene/Scene.h"

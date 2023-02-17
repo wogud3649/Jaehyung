@@ -13,9 +13,8 @@ MyXML::~MyXML()
 {
 }
 
-vector<Action::Clip> MyXML::GetClips(MyXML::Sort sortx, MyXML::Sort sorty)
+vector<Action::Clip> MyXML::GetClips()
 {
-	SetMaxSize();
 	shared_ptr<SRV> srv = SRV_ADD(_srvPath);
 
 	vector<Action::Clip> result;
@@ -31,41 +30,12 @@ vector<Action::Clip> MyXML::GetClips(MyXML::Sort sortx, MyXML::Sort sorty)
 		if (row == nullptr)
 			break;
 
+		int x = row->FindAttribute("x")->IntValue();
+		int y = row->FindAttribute("y")->IntValue();
 		int w = row->FindAttribute("w")->IntValue();
 		int h = row->FindAttribute("h")->IntValue();
-		int x;
-		switch (sortx)
-		{
-		case MyXML::LEFT:
-			x = row->FindAttribute("x")->IntValue();
-			break;
-		case MyXML::MIDDLE:
-			x = row->FindAttribute("x")->IntValue() + (w - _maxSize.x)/2;
-			break;
-		case MyXML::RIGHT:
-			x = row->FindAttribute("x")->IntValue() + (w - _maxSize.x);
-			break;
-		default:
-			break;
-		}
 
-		int y;
-		switch (sorty)
-		{
-		case MyXML::TOP:
-			y = row->FindAttribute("y")->IntValue();
-			break;
-		case MyXML::MIDDLE:
-			y = row->FindAttribute("y")->IntValue() + (h - _maxSize.y)/2;
-			break;
-		case MyXML::BOTTOM:
-			y = row->FindAttribute("y")->IntValue() + (h - _maxSize.y);
-			break;
-		default:
-			break;
-		}
-
-		result.emplace_back(x, y, _maxSize.x, _maxSize.y, srv);
+		result.emplace_back(x, y, w, h, srv);
 
 		_averageSize.x += w;
 		_averageSize.y += h;
@@ -78,27 +48,4 @@ vector<Action::Clip> MyXML::GetClips(MyXML::Sort sortx, MyXML::Sort sorty)
 	_averageSize.y /= count;
 
 	return result;
-}
-
-void MyXML::SetMaxSize()
-{
-	tinyxml2::XMLElement* textureAtlas = _document->FirstChildElement();
-	tinyxml2::XMLElement* row = textureAtlas->FirstChildElement();
-
-	_maxSize = Vector2(0, 0);
-
-	while (true)
-	{
-		if (row == nullptr)
-			break;
-		int w = row->FindAttribute("w")->IntValue();
-		int h = row->FindAttribute("h")->IntValue();
-
-		if (_maxSize.x < w)
-			_maxSize.x = w;
-		if (_maxSize.y < h)
-			_maxSize.y = h;
-
-		row = row->NextSiblingElement();
-	}
 }
