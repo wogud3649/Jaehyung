@@ -170,6 +170,18 @@ float Vector2::Angle(const Vector2& other) const
 	return acosf(cos);
 }
 
+Vector2 Vector2::TransformCoord(XMMATRIX matrix)
+{
+	XMVECTOR temp = XMLoadFloat2(this);
+
+	temp = XMVector2TransformCoord(temp, matrix);
+
+	Vector2 result;
+	XMStoreFloat2(&result, temp);
+
+	return result;
+}
+
 Vector2 Vector2::NormalVector2()
 {
 	Vector2 temp;

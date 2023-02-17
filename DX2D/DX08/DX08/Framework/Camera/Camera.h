@@ -21,6 +21,8 @@ public:
 	void SetRightTop(Vector2 value) { _rightTop = value; }
 	void SetOffset(Vector2 value) { _offset = value; }
 
+	Vector2 GetWorldMousePos();
+
 	static void Create()
 	{
 		if (_instance == nullptr)

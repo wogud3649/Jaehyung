@@ -37,6 +37,9 @@ void Camera::Update()
 void Camera::PostRender()
 {
 	ImGui::SliderFloat2("CameraPos", (float*)&_moveVector, -2000.0f, 2000.0f);
+
+	Vector2 mousePos = MOUSE_POS;
+	ImGui::SliderFloat2("CameraPos", (float*)&mousePos.x, -1300, 1300);
 }
 
 void Camera::ShakeStart(float magnitude, float duration, float reduceDamping)
@@ -65,6 +68,14 @@ void Camera::SetViewPort(UINT width, UINT height)
 void Camera::SetProjectionBuffer(UINT width, UINT height)
 {
 	_projection->SetVSBuffer(2);
+}
+
+Vector2 Camera::GetWorldMousePos()
+{
+	XMMATRIX inverseMatrix = DirectX::XMMatrixInverse(nullptr, _transform->GetMatrix());
+
+	Vector2 mousePos = MOUSE_POS;
+	return mousePos.TransformCoord(inverseMatrix);
 }
 
 void Camera::Shake()

@@ -10,10 +10,11 @@
 #include "../Scene/ActionScene.h"
 #include "../Scene/CupHeadScene.h"
 #include "../Scene/EffectScene.h"
+#include "../Scene/CupMapToolScene.h"
 
 Program::Program()
 {
-	_scene = make_shared<CupHeadScene>();
+	_scene = make_shared<CupMapToolScene>();
 }
 
 Program::~Program()

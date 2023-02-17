@@ -10,6 +10,8 @@ CupHeadScene::CupHeadScene()
 	_monster->SetTarget(_player);
 	_player->SetTarget(_monster);
 
+	Load();
+
 	_bg = make_shared<Cup_Bg>();
 	_bg->SetPos(CENTER);
 	_bg->SetPlayer(_player);
@@ -48,8 +50,27 @@ void CupHeadScene::Render()
 
 void CupHeadScene::PostRender()
 {
-	ImGui::SliderInt("Player HP", &_player->GetHp(), 0, 3);
-	ImGui::SliderInt("Monster HP", &_monster->GetHp(), 0, 10);
-	ImGui::SliderInt("Selected", &_monster->GetSprite()->GetFilter()->_data.selected, 0, 1);
-	ImGui::SliderInt("Mosaic", &_monster->GetSprite()->GetFilter()->_data.value1, 0, 3000);
+	if (ImGui::Button("Save", { 100, 100 }));
+	{
+		Save();
+	}
+}
+
+void CupHeadScene::Save()
+{
+	BinaryWriter writer = BinaryWriter(L"Save/CupHeadInfo.cup");
+
+	Vector2 pos = _player->GetTransform()->GetWorldPos();
+	writer.Byte((void*)&pos, sizeof(Vector2));
+}
+
+void CupHeadScene::Load()
+{
+	BinaryReader reader = BinaryReader(L"Save/CupHeadInfo.cup");
+
+	Vector2 pos;
+	Vector2* posPtr = &pos;
+	reader.Byte((void**)&posPtr, sizeof(Vector2));
+
+	_player->GetTransform()->GetPos() = pos;
 }

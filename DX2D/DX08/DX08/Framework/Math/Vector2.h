@@ -36,6 +36,8 @@ public:
 	float Angle() const;
 	float Angle(const Vector2& other) const;
 
+	Vector2 TransformCoord(XMMATRIX matrix);
+
 	Vector2 NormalVector2();
 	void Normalize();
 };
