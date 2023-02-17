@@ -89,6 +89,10 @@ using namespace DirectX;
 #include "Object/GameObj/Player.h"
 #include "Object/GameObj/Advanced_Player.h"
 
+// BackGroundObject
+#include "Object/BackgroundObj/Floor.h"
+#include "Object/BackgroundObj/Background.h"
+
 // Scene
 #include "Scene/Scene.h"
 

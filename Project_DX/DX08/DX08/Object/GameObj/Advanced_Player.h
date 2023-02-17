@@ -21,6 +21,7 @@ public:
 	void Beat();
 
 	void Attack();
+	void Skill();
 	void Damaged();
 
 	void Dead();

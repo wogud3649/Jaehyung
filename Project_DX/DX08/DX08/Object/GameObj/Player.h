@@ -5,7 +5,9 @@ public:
 	enum SkulType
 	{
 		SKUL,
-		HEADLESS
+		HEADLESS,
+
+		SkulTypeSize
 	};
 
 	enum State
@@ -26,22 +28,24 @@ public:
 	virtual void Update();
 	virtual void Render();
 
-	shared_ptr<Transform> GetTransform() { return _col->GetTransform(); }
+	shared_ptr<CircleCollider> GetBodyCollider() { return _bodyCol; }
 
 protected:
-	void CreateAction(string skulType);
+	void CreateAction(SkulType _skulType);
 	void SetAction(State state);
+	void SetSkul(SkulType skulType);
 
 	State _curState = State::IDLE;
 	State _oldState = State::IDLE;
 
-	SkulType _skulType = SkulType::SKUL;
+	SkulType _curSkul = SkulType::SKUL;
+	SkulType _oldSkul = SkulType::SKUL;
 
 	shared_ptr<Transform> _transform;
-	shared_ptr<CircleCollider> _col;
+	shared_ptr<CircleCollider> _bodyCol;
 
-	vector<shared_ptr<Sprite>> _sprites;
-	vector<shared_ptr<Action>> _actions;
+	vector<vector<shared_ptr<Sprite>>> _sprites;
+	vector<vector<shared_ptr<Action>>> _actions;
 
 	float _speed = 500.0f;
 	float _maxJumpPower = 700.0f;
