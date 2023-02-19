@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created with Free texture packer v0.6.7 http://free-tex-packer.com
+Format:
+n  => name
+x  => x pos
+y  => y pos
+w  => width
+h  => height
+pX => x pos of the pivot point
+pY => y pos of the pivot point
+oX => x-corner offset
+oY => y-corner offset
+oW => original width
+oH => original height
+r => 'y' if sprite is rotated-->
+<TextureAtlas imagePath="SWITCH.png" width="642" height="90" scale="1" format="RGBA8888">
+  <sprite n="Skul_Switch_1.png" x="306" y="20" w="42" h="47" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Switch_2.png" x="20" y="20" w="57" h="41" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Switch_3.png" x="472" y="20" w="54" h="50" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Switch_4.png" x="388" y="20" w="44" h="49" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Switch_5.png" x="117" y="20" w="47" h="43" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Switch_6.png" x="204" y="20" w="62" h="43" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Switch_7.png" x="566" y="20" w="56" h="50" pX="0.5" pY="0.5"/>
+</TextureAtlas>

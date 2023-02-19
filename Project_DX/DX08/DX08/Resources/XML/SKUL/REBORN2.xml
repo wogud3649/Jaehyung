@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created with Free texture packer v0.6.7 http://free-tex-packer.com
+Format:
+n  => name
+x  => x pos
+y  => y pos
+w  => width
+h  => height
+pX => x pos of the pivot point
+pY => y pos of the pivot point
+oX => x-corner offset
+oY => y-corner offset
+oW => original width
+oH => original height
+r => 'y' if sprite is rotated-->
+<TextureAtlas imagePath="REBORN2.png" width="2838" height="416" scale="1" format="RGBA8888">
+  <sprite n="Skul_Reborn1_1.png" x="80" y="80" w="31" h="14" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Reborn1_2.png" x="271" y="80" w="29" h="14" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Reborn1_3.png" x="460" y="80" w="27" h="14" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Reborn1_4.png" x="647" y="80" w="26" h="14" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Reborn1_5.png" x="833" y="80" w="25" h="15" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Reborn1_6.png" x="1018" y="80" w="29" h="16" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Reborn1_7.png" x="1207" y="80" w="26" h="17" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Reborn1_8.png" x="1393" y="80" w="26" h="20" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Reborn1_9.png" x="1579" y="80" w="25" h="23" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Reborn1_10.png" x="1764" y="80" w="28" h="25" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Reborn1_11.png" x="1952" y="80" w="29" h="28" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Reborn1_12.png" x="2141" y="80" w="32" h="30" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Reborn1_13.png" x="2333" y="80" w="35" h="32" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Reborn1_14.png" x="2528" y="80" w="35" h="32" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Reborn1_15.png" x="2414" y="272" w="119" h="64" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Reborn1_16.png" x="2159" y="272" w="95" h="56" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Reborn1_17.png" x="1922" y="270" w="77" h="49" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Reborn1_18.png" x="1693" y="265" w="69" h="47" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Reborn1_19.png" x="1477" y="263" w="56" h="38" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Reborn1_20.png" x="1072" y="257" w="47" h="37" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Reborn1_21.png" x="1279" y="260" w="38" h="37" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Reborn1_22.png" x="874" y="256" w="38" h="35" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Reborn1_23.png" x="2723" y="80" w="35" h="32" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Reborn1_24.png" x="80" y="254" w="39" h="32" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Reborn1_25.png" x="279" y="254" w="40" h="32" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Reborn1_26.png" x="479" y="254" w="39" h="32" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Reborn1_27.png" x="678" y="255" w="36" h="32" pX="0.5" pY="0.5"/>
+</TextureAtlas>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created with Free texture packer v0.6.7 http://free-tex-packer.com
+Format:
+n  => name
+x  => x pos
+y  => y pos
+w  => width
+h  => height
+pX => x pos of the pivot point
+pY => y pos of the pivot point
+oX => x-corner offset
+oY => y-corner offset
+oW => original width
+oH => original height
+r => 'y' if sprite is rotated-->
+<TextureAtlas imagePath="REBORN.png" width="698" height="69" scale="1" format="RGBA8888">
+  <sprite n="Skul_Reborn_1.png" x="20" y="20" w="37" h="17" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Reborn_2.png" x="97" y="20" w="37" h="17" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Reborn_3.png" x="174" y="20" w="37" h="17" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Reborn_4.png" x="251" y="20" w="37" h="17" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Reborn_5.png" x="328" y="20" w="37" h="20" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Reborn_6.png" x="405" y="20" w="37" h="24" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Reborn_7.png" x="482" y="20" w="39" h="26" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Reborn_8.png" x="561" y="20" w="39" h="28" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Reborn_9.png" x="640" y="20" w="38" h="29" pX="0.5" pY="0.5"/>
+</TextureAtlas>

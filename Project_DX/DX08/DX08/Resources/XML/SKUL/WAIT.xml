@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created with Free texture packer v0.6.7 http://free-tex-packer.com
+Format:
+n  => name
+x  => x pos
+y  => y pos
+w  => width
+h  => height
+pX => x pos of the pivot point
+pY => y pos of the pivot point
+oX => x-corner offset
+oY => y-corner offset
+oW => original width
+oH => original height
+r => 'y' if sprite is rotated-->
+<TextureAtlas imagePath="WAIT.png" width="2192" height="150" scale="1" format="RGBA8888">
+  <sprite n="Skul_Wait_1.png" x="782" y="20" w="36" h="32" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_2.png" x="364" y="20" w="38" h="31" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_3.png" x="20" y="20" w="46" h="29" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_4.png" x="106" y="20" w="46" h="29" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_5.png" x="696" y="20" w="46" h="31" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_6.png" x="1636" y="20" w="47" h="33" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_7.png" x="1017" y="92" w="48" h="34" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_8.png" x="1383" y="93" w="55" h="34" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_9.png" x="1583" y="93" w="57" h="35" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_10.png" x="1680" y="94" w="59" h="36" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_11.png" x="1779" y="94" w="59" h="36" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_12.png" x="1878" y="94" w="61" h="36" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_13.png" x="1979" y="94" w="60" h="36" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_14.png" x="2079" y="94" w="58" h="36" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_15.png" x="858" y="20" w="42" h="32" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_16.png" x="1106" y="20" w="40" h="33" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_17.png" x="1723" y="20" w="39" h="34" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_18.png" x="1802" y="20" w="39" h="34" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_19.png" x="1881" y="20" w="39" h="34" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_20.png" x="1960" y="20" w="38" h="34" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_21.png" x="2038" y="20" w="38" h="34" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_22.png" x="442" y="20" w="50" h="31" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_23.png" x="940" y="20" w="50" h="32" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_24.png" x="1186" y="20" w="50" h="33" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_25.png" x="1276" y="20" w="50" h="33" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_26.png" x="1366" y="20" w="50" h="33" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_27.png" x="1456" y="20" w="50" h="33" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_28.png" x="1546" y="20" w="50" h="33" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_29.png" x="2116" y="20" w="56" h="34" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_30.png" x="20" y="89" w="62" h="34" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_31.png" x="1478" y="93" w="65" h="35" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_32.png" x="122" y="89" w="65" h="34" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_33.png" x="227" y="89" w="64" h="34" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_34.png" x="331" y="91" w="62" h="34" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_35.png" x="433" y="91" w="62" h="34" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_36.png" x="535" y="91" w="62" h="34" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_37.png" x="637" y="91" w="58" h="34" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_38.png" x="735" y="92" w="57" h="34" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_39.png" x="832" y="92" w="54" h="34" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_40.png" x="926" y="92" w="51" h="34" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_41.png" x="1105" y="93" w="53" h="34" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_42.png" x="1198" y="93" w="54" h="34" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_43.png" x="1292" y="93" w="51" h="34" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_44.png" x="532" y="20" w="46" h="31" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_45.png" x="192" y="20" w="46" h="29" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_46.png" x="278" y="20" w="46" h="29" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_47.png" x="618" y="20" w="38" h="31" pX="0.5" pY="0.5"/>
+  <sprite n="Skul_Wait_48.png" x="1030" y="20" w="36" h="32" pX="0.5" pY="0.5"/>
+</TextureAtlas>
