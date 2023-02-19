@@ -61,7 +61,7 @@ void Player::CreateAction(SkulType _skulType)
 	int frame;
 	Action::Type type;
 
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < State::StateSize; i++)
 	{
 		switch (i)
 		{
@@ -79,27 +79,41 @@ void Player::CreateAction(SkulType _skulType)
 			sortX = MyXML::Sort::RIGHT;
 			sortY = MyXML::Sort::BOTTOM;
 			break;
-		//case 2:
-		//	state = "JUMP";
-		//	frame = 2;
-		//	type = Action::Type::END;
-		//	break;
-		//case 3:
-		//	state = "DASH";
-		//	frame = 1;
-		//	type = Action::Type::END;
-		//	break;
+		case 2:
+			state = "JUMP";
+			frame = 2;
+			type = Action::Type::END;
+			sortX = MyXML::Sort::RIGHT;
+			sortY = MyXML::Sort::BOTTOM;
+			break;
+		case 3:
+			state = "DASH";
+			frame = 1;
+			type = Action::Type::END;
+			sortX = MyXML::Sort::RIGHT;
+			sortY = MyXML::Sort::BOTTOM;
+			break;
+		case 4:
+			state = "ATTACKA";
+			frame = 5;
+			type = Action::Type::END;
+			sortX = MyXML::Sort::LEFT;
+			sortY = MyXML::Sort::MIDDLE;
+		case 5:
+			state = "ATTACKB";
+			frame = 4;
+			type = Action::Type::END;
+			sortX = MyXML::Sort::LEFT;
+			sortY = MyXML::Sort::MIDDLE;
 		default:
 			break;
 		}
 		wstring stateW(state.begin(), state.end());
 
 		wstring srvPath = L"Resources/Texture/" + skulTypeW + L"/" + stateW + L".png";
-		string xmlPath = "Resource/Texture/" + skulType + "/" + state + ".png";
+		string xmlPath = "Resources/XML/" + skulType + "/" + state + ".xml";
 
 		MyXML xml = MyXML(xmlPath, srvPath);
-
-		shared_ptr<SRV> srv = SRV_ADD(srvPath);
 
 		_actions[_skulType].emplace_back(make_shared<Action>(xml.GetClips(sortX, sortY)));
 
@@ -115,6 +129,7 @@ void Player::SetAction(State state)
 	if (_curState == _oldState)
 		return;
 
+	_sprites[_curSkul][_curState]->SetDirection(_direction);
 	_actions[_curSkul][_curState]->Play();
 	_actions[_curSkul][_oldState]->Reset();
 	_oldState = _curState;
@@ -123,9 +138,12 @@ void Player::SetAction(State state)
 void Player::SetSkul(SkulType skulType)
 {
 	_curSkul = skulType;
+	if (_curSkul == _oldSkul)
+		return;
 	if (_curState != State::IDLE)
-		_curState == State::IDLE;
+		_curState = State::IDLE;
 
+	_sprites[_curSkul][_curState]->SetDirection(_direction);
 	_actions[_curSkul][_curState]->Play();
 	_actions[_oldSkul][_oldState]->Reset();
 	_oldState = _curState;

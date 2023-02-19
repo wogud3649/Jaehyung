@@ -38,7 +38,8 @@ vector<Action::Clip> MyXML::GetClips(MyXML::Sort sortx, MyXML::Sort sorty)
 		row = row->NextSiblingElement();
 	}
 
-	tinyxml2::XMLElement* row = textureAtlas->FirstChildElement();
+	textureAtlas = _document->FirstChildElement();
+	row = textureAtlas->FirstChildElement();
 
 	_averageSize = Vector2(0, 0);
 

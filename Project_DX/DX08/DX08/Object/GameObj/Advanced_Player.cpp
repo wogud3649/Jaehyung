@@ -18,6 +18,20 @@ void Advanced_Player::Update()
 	Fall();
 	Attack();
 	Skill();
+	SetIdle();
+	if (!_headOn)
+	{
+		if (_headDelay > 0.0f)
+		{
+			_headDelay -= DELTA_TIME;
+		}
+		if (_headDelay <= 0.0f)
+		{
+			_headDelay = 5.0f;
+			_headOn = true;
+			SetSkul(SkulType::SKUL);
+		}
+	}
 	Player::Update();
 }
 
@@ -38,13 +52,17 @@ void Advanced_Player::Flip()
 {
 	if (KEY_PRESS(VK_RIGHT))
 	{
-		for (auto sprite : _sprites[_curSkul])
-			sprite->SetDirection(Direction::RIGHT);
+		if (_direction == Direction::RIGHT)
+			return;
+		_direction = Direction::RIGHT;
+		_sprites[_curSkul][_curState]->SetDirection(_direction);
 	}
 	if (KEY_PRESS(VK_LEFT))
 	{
-		for (auto sprite : _sprites[_curSkul])
-			sprite->SetDirection(Direction::LEFT);
+		if (_direction == Direction::LEFT)
+			return;
+		_direction = Direction::LEFT;
+		_sprites[_curSkul][_curState]->SetDirection(_direction);
 	}
 }
 
@@ -76,7 +94,10 @@ void Advanced_Player::Dash()
 	{
 		SetAction(State::DASH);
 
-		_bodyCol->GetTransform()->MoveX(100);
+		if (_direction == Direction::RIGHT)
+			_bodyCol->GetTransform()->MoveX(100);
+		if (_direction == Direction::LEFT)
+			_bodyCol->GetTransform()->MoveX(-100);
 	}
 }
 
@@ -94,18 +115,25 @@ void Advanced_Player::Beat()
 
 void Advanced_Player::Attack()
 {
+	if (KEY_DOWN('X'))
+	{
+		if (_curState == State::ATTACKA)
+			SetAction(State::ATTACKB);
+		else
+			SetAction(State::ATTACKA);
+	}
 }
 
 void Advanced_Player::Skill()
 {
-	if (KEY_DOWN(VK_F1))
+	if (KEY_DOWN('A'))
 	{
-		if (_curSkul == SkulType::SKUL)
+		SetAction(State::SKILL);
+		if (_headOn)
+		{
+			_headOn = false;
 			SetSkul(SkulType::HEADLESS);
-	}
-	if (KEY_DOWN(VK_F2))
-	{
-		SetSkul(SkulType::SKUL);
+		}
 	}
 }
 
@@ -123,5 +151,6 @@ void Advanced_Player::Revive()
 
 void Advanced_Player::SetIdle()
 {
-	SetAction(State::IDLE);
+	if (KEY_UP(VK_RIGHT) || KEY_UP(VK_LEFT) || KEY_UP('X') || KEY_UP('Z'))
+		SetAction(State::IDLE);
 }

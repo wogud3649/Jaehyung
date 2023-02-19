@@ -17,6 +17,7 @@ public:
 		JUMP,
 		DASH,
 		ATTACKA,
+		ATTACKB,
 		SKILL,
 
 		StateSize
@@ -55,5 +56,6 @@ protected:
 	int _curHp = _maxHp;
 
 	bool _isAlive = true;
+	Direction _direction = Direction::RIGHT;
 };
 

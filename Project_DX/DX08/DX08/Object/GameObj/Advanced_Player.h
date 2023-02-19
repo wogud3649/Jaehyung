@@ -30,6 +30,9 @@ public:
 private:
 	void SetIdle();
 
+	float _headDelay = 5.0f;
+	bool _headOn = true;
+
 	float _dashTime = 5.0f;
 	float _dashDelay;
 };
