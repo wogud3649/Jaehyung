@@ -8,6 +8,7 @@ TestScene::TestScene()
 
 	_background = make_shared<Background>();
 	_background->GetTransform()->SetPos(CENTER);
+	_background->SetPlayer(_player);
 }
 
 TestScene::~TestScene()

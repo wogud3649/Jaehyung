@@ -8,10 +8,14 @@ public:
 	void Update();
 	void Render();
 
+	void SetPlayer(shared_ptr<Advanced_Player> player) { _player = player; }
 	shared_ptr<Transform> GetTransform() { return _background->GetTransform(); }
+
 private:
 	shared_ptr<Quad> _background;
 	vector<shared_ptr<Floor>> _floors;
-	int _poolCountFloor = 1;
+	int _poolCountFloor = 2;
+	
+	weak_ptr<Advanced_Player> _player;
 };
 

@@ -20,7 +20,7 @@ public:
 	void Ground();
 	void Beat();
 
-	void Attack();
+	void AttackA();
 	void Skill();
 	void Damaged();
 
@@ -29,13 +29,29 @@ public:
 
 private:
 	void SetIdle();
+	void DashEnd();
+	void AttackEnd();
+	void SkillEnd();
+	void SetCallback();
 
 	float _headDelay = 5.0f;
 	bool _headOn = true;
 
-	float _dashTime = 0.25f;
-	float _dashDistance = 1000.0f;
-	float _dashDelay;
+	float _speed = 500.0f;
+
+	float _maxJumpPower = 700.0f;
+	float _curJumpPower = 0.0f;
+	bool _isJump = false;
+	bool _isGround = false;
+
+	float _maxDashDistance = 1000.0f;
+	float _curDashDistance = _maxDashDistance;
+	float _maxDashCD = 2.0f;
+	float _curDashCD = _maxDashCD;
 	bool _isDash = false;
+	bool _dashAble = true;
+
+	bool _isAttacking = false;
+	bool _isAttackA = true;
 };
 

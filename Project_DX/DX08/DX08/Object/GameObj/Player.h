@@ -17,7 +17,6 @@ public:
 		JUMP,
 		DASH,
 		ATTACKA,
-		ATTACKB,
 		SKILL,
 
 		StateSize
@@ -47,10 +46,6 @@ protected:
 
 	vector<vector<shared_ptr<Sprite>>> _sprites;
 	vector<vector<shared_ptr<Action>>> _actions;
-
-	float _speed = 500.0f;
-	float _maxJumpPower = 700.0f;
-	float _curjumpPower = 0.0f;
 
 	int _maxHp = 100;
 	int _curHp = _maxHp;

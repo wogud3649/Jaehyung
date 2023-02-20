@@ -11,7 +11,7 @@ public:
 	virtual void PostRender() override;
 
 private:
-	shared_ptr<Player> _player;
+	shared_ptr<Advanced_Player> _player;
 	shared_ptr<Background> _background;
 };
 

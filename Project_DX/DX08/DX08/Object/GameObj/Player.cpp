@@ -58,8 +58,9 @@ void Player::CreateAction(SkulType _skulType)
 
 	wstring skulTypeW(skulType.begin(), skulType.end());
 	string state;
-	int frame;
+	string name;
 	Action::Type type;
+	float speed;
 
 	for (int i = 0; i < State::StateSize; i++)
 	{
@@ -67,42 +68,36 @@ void Player::CreateAction(SkulType _skulType)
 		{
 		case 0:
 			state = "IDLE";
-			frame = 4;
 			type = Action::Type::LOOP;
+			speed = 0.1f;
 			sortX = MyXML::Sort::RIGHT;
 			sortY = MyXML::Sort::BOTTOM;
 			break;
 		case 1:
 			state = "WALK";
-			frame = 8;
 			type = Action::Type::LOOP;
+			speed = 0.1f;
 			sortX = MyXML::Sort::RIGHT;
 			sortY = MyXML::Sort::BOTTOM;
 			break;
 		case 2:
 			state = "JUMP";
-			frame = 2;
 			type = Action::Type::END;
+			speed = 0.1f;
 			sortX = MyXML::Sort::RIGHT;
 			sortY = MyXML::Sort::BOTTOM;
 			break;
 		case 3:
 			state = "DASH";
-			frame = 1;
 			type = Action::Type::END;
+			speed = 0.2f;
 			sortX = MyXML::Sort::RIGHT;
 			sortY = MyXML::Sort::BOTTOM;
 			break;
 		case 4:
 			state = "ATTACKA";
-			frame = 5;
 			type = Action::Type::END;
-			sortX = MyXML::Sort::LEFT;
-			sortY = MyXML::Sort::MIDDLE;
-		case 5:
-			state = "ATTACKB";
-			frame = 4;
-			type = Action::Type::END;
+			speed = 0.1f;
 			sortX = MyXML::Sort::LEFT;
 			sortY = MyXML::Sort::MIDDLE;
 		default:
@@ -115,7 +110,9 @@ void Player::CreateAction(SkulType _skulType)
 
 		MyXML xml = MyXML(xmlPath, srvPath);
 
-		_actions[_skulType].emplace_back(make_shared<Action>(xml.GetClips(sortX, sortY)));
+		name = skulType + "_" + state;
+
+		_actions[_skulType].emplace_back(make_shared<Action>(xml.GetClips(sortX, sortY), name, type, speed));
 
 		Vector2 maxSize = xml.MaxSize() * 2.0f;
 		shared_ptr<Sprite> sprite = make_shared<Sprite>(srvPath, maxSize);
