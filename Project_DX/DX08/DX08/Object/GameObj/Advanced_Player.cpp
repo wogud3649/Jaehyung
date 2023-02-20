@@ -32,6 +32,25 @@ void Advanced_Player::Update()
 			SetSkul(SkulType::SKUL);
 		}
 	}
+	if (_curState == State::DASH)
+	{
+		_dashTime -= DELTA_TIME;
+		if (_dashTime > 0.0f)
+		{
+			float distance = LERP(0, _dashDistance, DELTA_TIME);
+			_dashDistance -= distance;
+			if (_direction == Direction::RIGHT)
+				_bodyCol->GetTransform()->MoveX(distance);
+			if (_direction == Direction::LEFT)
+				_bodyCol->GetTransform()->MoveX(-distance);
+		}
+		if (_dashTime <= 0.0f)
+		{
+			_dashTime = 0.25f;
+			_dashDistance = 1000.0f;
+			SetAction(State::IDLE);
+		}
+	}
 	Player::Update();
 }
 
@@ -93,11 +112,6 @@ void Advanced_Player::Dash()
 	if (KEY_DOWN('Z'))
 	{
 		SetAction(State::DASH);
-
-		if (_direction == Direction::RIGHT)
-			_bodyCol->GetTransform()->MoveX(100);
-		if (_direction == Direction::LEFT)
-			_bodyCol->GetTransform()->MoveX(-100);
 	}
 }
 
@@ -151,6 +165,6 @@ void Advanced_Player::Revive()
 
 void Advanced_Player::SetIdle()
 {
-	if (KEY_UP(VK_RIGHT) || KEY_UP(VK_LEFT) || KEY_UP('X') || KEY_UP('Z'))
+	if (KEY_UP(VK_RIGHT) || KEY_UP(VK_LEFT) || KEY_UP('X'))
 		SetAction(State::IDLE);
 }

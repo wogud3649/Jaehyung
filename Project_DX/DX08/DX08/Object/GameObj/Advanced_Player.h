@@ -33,7 +33,9 @@ private:
 	float _headDelay = 5.0f;
 	bool _headOn = true;
 
-	float _dashTime = 5.0f;
+	float _dashTime = 0.25f;
+	float _dashDistance = 1000.0f;
 	float _dashDelay;
+	bool _isDash = false;
 };
 
