@@ -12,8 +12,7 @@ Advanced_Player::~Advanced_Player()
 
 void Advanced_Player::Update()
 {
-	if (KEY_UP(VK_RIGHT) || KEY_UP(VK_LEFT))
-		SetIdle();
+	SetIdle();
 	Flip();
 	Move();
 	Jump();
@@ -43,13 +42,16 @@ void Advanced_Player::Update()
 		if (_direction == Direction::LEFT)
 			_bodyCol->GetTransform()->MoveX(-distance);
 	}
-	if (_dashAble == false)
+	for (int i = 0; i < _isDash.size(); i++)
 	{
-		_curDashCD -= DELTA_TIME;
-		if (_curDashCD <= 0)
+		if (_isDash[i])
 		{
-			_curDashCD = _maxDashCD;
-			_dashAble = true;
+			_curDashCD[i] -= DELTA_TIME;
+			if (_curDashCD[i] <= 0)
+			{
+				_curDashCD[i] = _maxDashCD;
+				_isDash[i] = false;
+			}
 		}
 	}
 	Player::Update();
@@ -72,7 +74,7 @@ void Advanced_Player::Flip()
 {
 	if (KEY_PRESS(VK_RIGHT))
 	{
-		if (_isAttacking)
+		if (_curState == State::ATTACKA || _curState == State::DASH)
 			return;
 		if (_direction == Direction::RIGHT)
 			return;
@@ -81,7 +83,7 @@ void Advanced_Player::Flip()
 	}
 	if (KEY_PRESS(VK_LEFT))
 	{
-		if (_isAttacking)
+		if (_curState == State::ATTACKA || _curState == State::DASH)
 			return;
 		if (_direction == Direction::LEFT)
 			return;
@@ -94,20 +96,20 @@ void Advanced_Player::Move()
 {
 	if (KEY_PRESS(VK_RIGHT))
 	{
-		if (_isAttacking)
+		if (_curState == State::ATTACKA || _curState == State::DASH)
 			return;
 		_bodyCol->GetTransform()->MoveX(_speed * DELTA_TIME);
-		if (_isJump)
+		if (_curState == State::JUMP)
 			return;
 		_isGround = false;
 		SetAction(State::WALK);
 	}
 	if (KEY_PRESS(VK_LEFT))
 	{
-		if (_isAttacking)
+		if (_curState == State::ATTACKA || _curState == State::DASH)
 			return;
 		_bodyCol->GetTransform()->MoveX(-_speed * DELTA_TIME);
-		if (_isJump)
+		if (_curState == State::JUMP)
 			return;
 		_isGround = false;
 		SetAction(State::WALK);
@@ -118,10 +120,17 @@ void Advanced_Player::Jump()
 {
 	if (KEY_DOWN('C'))
 	{
-		if (_isAttacking)
+		if (_curState == State::ATTACKA)
+			return;
+		if (_doubleJump)
 			return;
 		if (_isJump)
+		{
+			_doubleJump = true;
+			SetAction(State::JUMP);
+			_curJumpPower = _maxJumpPower;
 			return;
+		}
 		_isGround = false;
 		_isJump = true;
 		SetAction(State::JUMP);
@@ -131,19 +140,26 @@ void Advanced_Player::Jump()
 
 void Advanced_Player::Dash()
 {
-	if (KEY_DOWN('Z') && _dashAble)
+	if (KEY_DOWN('Z'))
 	{
+		if (_curState == State::DASH)
+			return;
+		auto iter = find_if(_isDash.begin(), _isDash.end(), [](const bool& a)->bool
+			{
+				return a == false;
+			});
+		if (iter == _isDash.end())
+			return;
+		(*iter) = true;
+		_isGround = false;
 		_curJumpPower = 0.0f;
 		SetAction(State::DASH);
-		_isDash = true;
-		_isGround = false;
-		_dashAble = false;
 	}
 }
 
 void Advanced_Player::Fall()
 {
-	if (_isGround || _isDash)
+	if (_isGround || _curState == State::DASH)
 		return;
 
 	_bodyCol->GetTransform()->MoveY(_curJumpPower * DELTA_TIME);
@@ -152,9 +168,10 @@ void Advanced_Player::Fall()
 
 void Advanced_Player::Ground()
 {
-	_isJump = false;
-	_curJumpPower = 0.0f;
 	_isGround = true;
+	_isJump = false;
+	_doubleJump = false;
+	_curJumpPower = 0.0f;
 }
 
 void Advanced_Player::Beat()
@@ -165,9 +182,8 @@ void Advanced_Player::AttackA()
 {
 	if (KEY_DOWN('X'))
 	{
-		if (_isJump)
+		if (_curState == State::JUMP || _curState == State::ATTACKA)
 			return;
-		_isAttacking = true;
 		SetAction(State::ATTACKA);
 	}
 }
@@ -194,21 +210,20 @@ void Advanced_Player::Revive()
 
 void Advanced_Player::SetIdle()
 {
-	if (_isJump || _isAttacking)
+	if (_curState == State::JUMP || _curState == State::ATTACKA || _curState == State::DASH)
 		return;
-	SetAction(State::IDLE);
+	if (KEY_UP(VK_RIGHT) || KEY_UP(VK_LEFT))
+		SetAction(State::IDLE);
 }
 
 void Advanced_Player::DashEnd()
 {
-	_isDash = false;
 	_curDashDistance = _maxDashDistance;
 	SetAction(State::IDLE);
 }
 
 void Advanced_Player::AttackEnd()
 {
-	_isAttacking = false;
 	SetAction(State::IDLE);
 }
 
@@ -223,4 +238,7 @@ void Advanced_Player::SetCallback()
 	_actions[SkulType::SKUL][State::DASH]->SetCallBack(std::bind(&Advanced_Player::DashEnd, this));
 	_actions[SkulType::SKUL][State::SKILL]->SetCallBack(std::bind(&Advanced_Player::SkillEnd, this));
 	_actions[SkulType::SKUL][State::ATTACKA]->SetCallBack(std::bind(&Advanced_Player::AttackEnd, this));
+
+	_actions[SkulType::HEADLESS][State::DASH]->SetCallBack(std::bind(&Advanced_Player::DashEnd, this));
+	_actions[SkulType::HEADLESS][State::ATTACKA]->SetCallBack(std::bind(&Advanced_Player::AttackEnd, this));
 }

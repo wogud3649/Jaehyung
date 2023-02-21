@@ -39,19 +39,16 @@ private:
 
 	float _speed = 500.0f;
 
-	float _maxJumpPower = 700.0f;
+	float _maxJumpPower = 1800.0f;
 	float _curJumpPower = 0.0f;
 	bool _isJump = false;
+	bool _doubleJump = false;
 	bool _isGround = false;
 
-	float _maxDashDistance = 1000.0f;
+	float _maxDashDistance = 1500.0f;
 	float _curDashDistance = _maxDashDistance;
 	float _maxDashCD = 2.0f;
-	float _curDashCD = _maxDashCD;
-	bool _isDash = false;
-	bool _dashAble = true;
-
-	bool _isAttacking = false;
-	bool _isAttackA = true;
+	vector<float> _curDashCD = vector<float>(2, _maxDashCD);
+	vector<bool> _isDash = vector<bool>(2, false);
 };
 
