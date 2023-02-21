@@ -38,18 +38,18 @@ void VertexShader::CreateInputLayOut()
 
     UINT layoutSize = ARRAYSIZE(layOut);
 
-	DEVICE->CreateInputLayout(layOut, layoutSize, _blob->GetBufferPointer(), _blob->GetBufferSize(), inputLayOut.GetAddressOf());
+	DEVICE->CreateInputLayout(layOut, layoutSize, _blob->GetBufferPointer(), _blob->GetBufferSize(), _inputLayOut.GetAddressOf());
 
 }
 
 void VertexShader::CreateVertexShader()
 {
     DEVICE->CreateVertexShader(_blob->GetBufferPointer(), _blob->GetBufferSize(),
-        nullptr, vertexShader.GetAddressOf());
+        nullptr, _vertexShader.GetAddressOf());
 }
 
 void VertexShader::Set()
 {
-    DC->IASetInputLayout(inputLayOut.Get());
-    DC->VSSetShader(vertexShader.Get(), nullptr, 0);
+    DC->IASetInputLayout(_inputLayOut.Get());
+    DC->VSSetShader(_vertexShader.Get(), nullptr, 0);
 }
