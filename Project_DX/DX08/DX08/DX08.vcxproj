@@ -151,6 +151,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Framework\Camera\Camera.h" />
+    <ClInclude Include="Framework\Utility\MathUtility.h" />
     <ClInclude Include="Object\BackgroundObj\Floor.h" />
     <ClInclude Include="Object\BackgroundObj\Background.h" />
     <ClInclude Include="Object\GameObj\Advanced_Player.h" />
@@ -192,6 +194,8 @@
     <ClInclude Include="Types.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Framework\Camera\Camera.cpp" />
+    <ClCompile Include="Framework\Utility\MathUtility.cpp" />
     <ClCompile Include="Object\BackgroundObj\Floor.cpp" />
     <ClCompile Include="Object\BackgroundObj\Background.cpp" />
     <ClCompile Include="Object\GameObj\Advanced_Player.cpp" />

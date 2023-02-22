@@ -10,6 +10,11 @@ TestScene::TestScene()
 	_background = make_shared<Background>();
 	_background->GetTransform()->SetPos(CENTER);
 	_background->SetPlayer(_player);
+
+	CAMERA->SetTarget(_player->GetBodyCollider()->GetTransform());
+	CAMERA->SetLeftBottom(_background->LeftBottom());
+	CAMERA->SetRightTop(_background->RightTop());
+	CAMERA->SetOffset(CENTER);
 }
 
 TestScene::~TestScene()

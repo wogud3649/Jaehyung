@@ -7,6 +7,8 @@ public:
 	Vector2(int x, int y);
 	~Vector2();
 
+	Vector2 operator-() const;
+
 	Vector2 operator+(const Vector2& other) const;
 	Vector2 operator-(const Vector2& other) const;
 	Vector2 operator*(const float& value) const;
@@ -31,6 +33,8 @@ public:
 
 	float Angle() const;
 	float Angle(const Vector2& other) const;
+
+	Vector2 TransformCoord(XMMATRIX matrix);
 
 	Vector2 NormalVector2();
 	void Normalize();

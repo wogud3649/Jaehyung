@@ -37,6 +37,9 @@ void Program::Render()
 {
 	Device::GetInstance()->Clear();
 
+	Camera::GetInstance()->SetCameraWorldBuffer();
+	Camera::GetInstance()->SetProjectBuffer();
+
 	_view->SetVSBuffer(1);
 	_proj->SetVSBuffer(2);
 	_scene->PreRender();
@@ -50,6 +53,7 @@ void Program::Render()
 	_scene->Render();
 
 	ImGui::Text("FPS : %d", Timer::GetInstance()->GetFPS());
+	Camera::GetInstance()->PostRender();
 	_scene->PostRender();
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());

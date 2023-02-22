@@ -54,3 +54,17 @@ void Background::Render()
 	for (auto floor : _floors)
 		floor->Render();
 }
+
+Vector2 Background::LeftBottom()
+{
+	Vector2 curPos = _background->GetTransform()->GetWorldPos();
+	Vector2 size = _background->GetSize() * 0.5f;
+	return (curPos - size);
+}
+
+Vector2 Background::RightTop()
+{
+	Vector2 curPos = _background->GetTransform()->GetWorldPos();
+	Vector2 size = _background->GetSize() * 0.5f;
+	return (curPos + size);
+}

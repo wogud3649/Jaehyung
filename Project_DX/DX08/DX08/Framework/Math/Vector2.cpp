@@ -20,6 +20,11 @@ Vector2::~Vector2()
 {
 }
 
+Vector2 Vector2::operator-() const
+{
+	return Vector2(-x, -y);
+}
+
 Vector2 Vector2::operator+(const Vector2& other) const
 {
 	Vector2 result;
@@ -145,6 +150,18 @@ float Vector2::Angle(const Vector2& other) const
 	float cos = dot / (aLength * bLength);
 
 	return acosf(cos);
+}
+
+Vector2 Vector2::TransformCoord(XMMATRIX matrix)
+{
+	XMVECTOR temp = XMLoadFloat2(this);
+
+	temp = XMVector2TransformCoord(temp, matrix);
+
+	Vector2 result;
+	XMStoreFloat2(&result, temp);
+
+	return result;
 }
 
 Vector2 Vector2::NormalVector2()
