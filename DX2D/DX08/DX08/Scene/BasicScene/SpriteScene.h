@@ -2,6 +2,13 @@
 class SpriteScene : public Scene
 {
 public:
+	struct InstanceData
+	{
+		XMMATRIX matrix;
+		Vector2 maxFrame;
+		Vector2 curFrame;
+	};
+
 	SpriteScene();
 	~SpriteScene();
 	
@@ -9,9 +16,9 @@ public:
 	virtual void Render() override;
 	virtual void PostRender() override;
 private:
-	shared_ptr<Sprite> _sprite;
-	int curFrameX = 0;
-	int curFrameY = 0;
+	shared_ptr<Quad> _quad;
+	vector<InstanceData> _instanceDatas;
+	shared_ptr<VertexBuffer> _instanceBuffer;
 
 	// 최적화
 	// - 프레임 드랍이 일어나는 이유

@@ -8,6 +8,7 @@ public:
 
 	virtual void Update();
 	virtual void Render();
+	void SetRender();
 
 	virtual void CreateMaterial(wstring file);
 	virtual void CreateMesh();

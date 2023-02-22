@@ -413,6 +413,8 @@
     <FxCompile Include="Shader\ActionPixelShader.hlsl" />
     <FxCompile Include="Shader\FilterPixelShader.hlsl" />
     <FxCompile Include="Shader\ActionFilterPixelShader.hlsl" />
+    <FxCompile Include="Shader\InstancingVertexShader.hlsl" />
+    <FxCompile Include="Shader\InstancingPixelShader.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Resource\XML\Idle.xml" />
