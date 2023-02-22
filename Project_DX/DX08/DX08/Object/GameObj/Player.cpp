@@ -8,7 +8,11 @@ Player::Player()
 	CreateAction(SkulType::SKUL);
 	CreateAction(SkulType::HEADLESS);
 
-	_bodyCol = make_shared<CircleCollider>(30);
+	_footCol = make_shared<CircleCollider>(15);
+
+	_bodyCol = make_shared<CircleCollider>(15);
+	_bodyCol->GetTransform()->SetParent(_footCol->GetTransform());
+	_bodyCol->GetTransform()->MoveY(20.0f);
 
 	for (auto row : _sprites)
 		for (auto sprite : row)
@@ -24,6 +28,7 @@ Player::~Player()
 void Player::Update()
 {
 	_bodyCol->Update();
+	_footCol->Update();
 
 	for (auto sprite : _sprites[_curSkul])
 		sprite->Update();
@@ -37,6 +42,7 @@ void Player::Render()
 	_sprites[_curSkul][_curState]->SetActionClip(_actions[_curSkul][_curState]->GetCurClip());
 	_sprites[_curSkul][_curState]->Render();
 	_bodyCol->Render();
+	_footCol->Render();
 }
 
 void Player::CreateAction(SkulType _skulType)
@@ -90,16 +96,45 @@ void Player::CreateAction(SkulType _skulType)
 		case 3:
 			state = "DASH";
 			type = Action::Type::END;
-			speed = 0.2f;
+			speed = 0.15f;
 			sortX = MyXML::Sort::RIGHT;
 			sortY = MyXML::Sort::BOTTOM;
 			break;
 		case 4:
-			state = "ATTACKA";
+			state = "FALL";
 			type = Action::Type::END;
 			speed = 0.1f;
-			sortX = MyXML::Sort::LEFT;
+			sortX = MyXML::Sort::MIDDLE;
 			sortY = MyXML::Sort::MIDDLE;
+			break;
+		case 5:
+			state = "FALLREPEAT";
+			type = Action::Type::LOOP;
+			speed = 0.1f;
+			sortX = MyXML::Sort::MIDDLE;
+			sortY = MyXML::Sort::MIDDLE;
+			break;
+		case 6:
+			state = "ATTACKA";
+			type = Action::Type::END;
+			speed = _attackSpeed;
+			sortX = MyXML::Sort::MIDDLE;
+			sortY = MyXML::Sort::MIDDLE;
+			break;
+		case 7:
+			state = "ATTACKB";
+			type = Action::Type::END;
+			speed = _attackSpeed;
+			sortX = MyXML::Sort::MIDDLE;
+			sortY = MyXML::Sort::MIDDLE;
+			break;
+		case 8:
+			state = "JUMPATTACK";
+			type = Action::Type::END;
+			speed = _attackSpeed;
+			sortX = MyXML::Sort::MIDDLE;
+			sortY = MyXML::Sort::MIDDLE;
+			break;
 		default:
 			break;
 		}
@@ -118,31 +153,4 @@ void Player::CreateAction(SkulType _skulType)
 		shared_ptr<Sprite> sprite = make_shared<Sprite>(srvPath, maxSize);
 		_sprites[_skulType].emplace_back(sprite);
 	}
-}
-
-void Player::SetAction(State state)
-{
-	_curState = state;
-	if (_curState == _oldState)
-		return;
-
-	_sprites[_curSkul][_curState]->SetDirection(_direction);
-	_actions[_curSkul][_curState]->Play();
-	_actions[_curSkul][_oldState]->Reset();
-	_oldState = _curState;
-}
-
-void Player::SetSkul(SkulType skulType)
-{
-	_curSkul = skulType;
-	if (_curSkul == _oldSkul)
-		return;
-	if (_curState != State::IDLE)
-		_curState = State::IDLE;
-
-	_sprites[_curSkul][_curState]->SetDirection(_direction);
-	_actions[_curSkul][_curState]->Play();
-	_actions[_oldSkul][_oldState]->Reset();
-	_oldState = _curState;
-	_oldSkul = _curSkul;
 }

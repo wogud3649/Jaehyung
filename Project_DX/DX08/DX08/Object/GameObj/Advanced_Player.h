@@ -20,7 +20,7 @@ public:
 	void Ground();
 	void Beat();
 
-	void AttackA();
+	void Attack();
 	void Skill();
 	void Damaged();
 
@@ -31,8 +31,12 @@ private:
 	void SetIdle();
 	void DashEnd();
 	void AttackEnd();
+	void FallEnd();
 	void SkillEnd();
 	void SetCallback();
+
+	void SetAction(State state);
+	void SetSkul(SkulType skulType);
 
 	float _headDelay = 5.0f;
 	bool _headOn = true;
@@ -50,5 +54,9 @@ private:
 	float _maxDashCD = 2.0f;
 	vector<float> _curDashCD = vector<float>(2, _maxDashCD);
 	vector<bool> _isDash = vector<bool>(2, false);
+
+	float _maxComboDuration = 0.9f;
+	float _curComboDuration = _maxComboDuration;
+	bool _attackB = false;
 };
 

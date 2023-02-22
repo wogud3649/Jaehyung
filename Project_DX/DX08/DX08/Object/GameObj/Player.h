@@ -16,7 +16,11 @@ public:
 		WALK,
 		JUMP,
 		DASH,
+		FALL,
+		FALLREPEAT,
 		ATTACKA,
+		ATTACKB,
+		JUMPATTACK,
 		SKILL,
 
 		StateSize
@@ -29,11 +33,10 @@ public:
 	virtual void Render();
 
 	shared_ptr<CircleCollider> GetBodyCollider() { return _bodyCol; }
+	shared_ptr<CircleCollider> GetFootCollider() { return _footCol; }
 
 protected:
 	void CreateAction(SkulType _skulType);
-	void SetAction(State state);
-	void SetSkul(SkulType skulType);
 
 	State _curState = State::IDLE;
 	State _oldState = State::IDLE;
@@ -43,6 +46,7 @@ protected:
 
 	shared_ptr<Transform> _transform;
 	shared_ptr<CircleCollider> _bodyCol;
+	shared_ptr<CircleCollider> _footCol;
 
 	vector<vector<shared_ptr<Sprite>>> _sprites;
 	vector<vector<shared_ptr<Action>>> _actions;
@@ -52,5 +56,7 @@ protected:
 
 	bool _isAlive = true;
 	Direction _direction = Direction::RIGHT;
+
+	float _attackSpeed = 0.09f;
 };
 

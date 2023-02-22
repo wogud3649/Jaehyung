@@ -4,7 +4,8 @@
 TestScene::TestScene()
 {
 	_player = make_shared<Advanced_Player>();
-	_player->GetBodyCollider()->GetTransform()->SetPos(CENTER);
+	_player->GetFootCollider()->GetTransform()->SetPos(CENTER);
+	_player->GetFootCollider()->GetTransform()->UpdateSRT();
 
 	_background = make_shared<Background>();
 	_background->GetTransform()->SetPos(CENTER);

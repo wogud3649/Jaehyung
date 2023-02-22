@@ -14,7 +14,7 @@ public:
 private:
 	shared_ptr<Quad> _background;
 	vector<shared_ptr<Floor>> _floors;
-	int _poolCountFloor = 2;
+	int _poolCountFloor = 4;
 	
 	weak_ptr<Advanced_Player> _player;
 };
