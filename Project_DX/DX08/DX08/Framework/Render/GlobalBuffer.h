@@ -7,8 +7,6 @@ public:
 		XMMATRIX matrix = XMMatrixIdentity();
 	};
 
-	// 상수버퍼 규칙
-	// 16바이트의 배수로 올려야한다.
 	MatrixBuffer()
 	: ConstantBuffer(&_data, sizeof(_data))
 	{
@@ -34,8 +32,6 @@ public:
 		Vector2 curFrame = { 0.0f,0.0f };
 	};
 
-	// 상수버퍼 규칙
-	// 16바이트의 배수로 올려야한다.
 	SpriteBuffer()
 		: ConstantBuffer(&_data, sizeof(_data))
 	{
@@ -57,8 +53,6 @@ public:
 		int padding[2];
 	};
 
-	// 상수버퍼 규칙
-	// 16바이트의 배수로 올려야한다.
 	ActionBuffer()
 		: ConstantBuffer(&_data, sizeof(_data))
 	{
@@ -78,8 +72,6 @@ public:
 		int padding[3];
 	};
 
-	// 상수버퍼 규칙
-	// 16바이트의 배수로 올려야한다.
 	ReverseBuffer()
 		: ConstantBuffer(&_data, sizeof(_data))
 	{
@@ -98,8 +90,6 @@ public:
 		XMFLOAT4 color = { 0,1,0,1 };
 	};
 
-	// 상수버퍼 규칙
-	// 16바이트의 배수로 올려야한다.
 	ColorBuffer()
 		: ConstantBuffer(&_data, sizeof(_data))
 	{
@@ -123,8 +113,6 @@ public:
 		XMFLOAT2 padding;
 	};
 
-	// 상수버퍼 규칙
-	// 16바이트의 배수로 올려야한다.
 	FilterBuffer()
 		: ConstantBuffer(&_data, sizeof(_data))
 	{
