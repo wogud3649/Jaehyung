@@ -9,6 +9,7 @@ TestScene::TestScene()
 
 	_background = make_shared<Background>();
 	_background->GetTransform()->SetPos(CENTER);
+	_background->GetTransform()->UpdateSRT();
 	_background->SetPlayer(_player);
 
 	CAMERA->SetTarget(_player->GetBodyCollider()->GetTransform());

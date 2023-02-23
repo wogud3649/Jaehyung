@@ -174,8 +174,13 @@ void Advanced_Player::Fall()
 	_footCol->GetTransform()->MoveY(_curJumpPower * DELTA_TIME);
 	_curJumpPower -= GRAVITY * GRAVITY * DELTA_TIME;
 	
-	if (_curJumpPower <= 0 && _curState != State::FALLREPEAT && _curState != State::WALK && _curState != State::JUMPATTACK)
+	if (_curJumpPower <= 0 && _curState != State::FALLREPEAT && _curState != State::JUMPATTACK)
+	{
+		if (_curState == State::WALK && _curJumpPower >= -50.0f)
+			return;
+		
 		SetAction(State::FALL);
+	}
 }
 
 void Advanced_Player::Ground()
@@ -191,6 +196,7 @@ void Advanced_Player::Ground()
 void Advanced_Player::Beat()
 {
 	_curJumpPower = 0.0f;
+	_footCol->GetTransform()->MoveY(-0.00001f);
 }
 
 void Advanced_Player::Attack()
