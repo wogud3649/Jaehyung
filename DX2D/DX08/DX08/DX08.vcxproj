@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Object\UI\Button.h" />
     <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="Scene\BasicScene\CupMapToolScene.h" />
     <ClInclude Include="Framework\Utility\BinaryReader.h" />
@@ -217,6 +218,7 @@
     <ClInclude Include="Object\GameObj\Zelda\Zelda.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Object\UI\Button.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="Scene\BasicScene\CupMapToolScene.cpp" />
     <ClCompile Include="Framework\Utility\BinaryReader.cpp" />

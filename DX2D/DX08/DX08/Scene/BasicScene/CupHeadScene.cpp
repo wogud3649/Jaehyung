@@ -14,9 +14,14 @@ CupHeadScene::CupHeadScene()
 	_bg->SetPos(CENTER);
 	_bg->SetPlayer(_player);
 
-	Audio::GetInstance()->Add("bgm", "Resource/Sound/BGM.mp3", true);
-	Audio::GetInstance()->Add("jump", "Resource/Sound/jump.wav");
-	Audio::GetInstance()->Stop("bgm");
+	AUDIO->Add("bgm", "Resource/Sound/BGM.mp3", true);
+	AUDIO->Add("jump", "Resource/Sound/jump.wav");
+	AUDIO->Stop("bgm");
+
+	_button = make_shared<Button>(L"Resource/Texture/UI/Button.png");
+	_button->SetScale({ 0.1f, 0.1f });
+	_button->SetPosition(_button->GetSize() * 0.5f * 0.1f);
+	_button->SetString(std::bind(&SceneManager::SetScene, SCENE, "SolarSystemScene"));
 }
 
 CupHeadScene::~CupHeadScene()
@@ -32,13 +37,13 @@ void CupHeadScene::Init()
 	CAMERA->SetRightTop(_bg->RightTop());
 	CAMERA->SetOffset(CENTER);
 
-	Audio::GetInstance()->Play("bgm");
-	Audio::GetInstance()->SetVolume("bgm", 0.5f);
+	AUDIO->Play("bgm");
+	AUDIO->SetVolume("bgm", 0.5f);
 }
 
 void CupHeadScene::Finalize()
 {
-	Audio::GetInstance()->Stop("bgm");
+	AUDIO->Stop("bgm");
 }
 
 void CupHeadScene::Update()
@@ -46,6 +51,7 @@ void CupHeadScene::Update()
 	_bg->Update();
 	_player->Update();
 	_monster->Update();
+	_button->Update();
 }
 
 void CupHeadScene::PreRender()
@@ -70,6 +76,8 @@ void CupHeadScene::PostRender()
 	{
 		SCENE->SetScene("SolarSystemScene");
 	}
+
+	_button->PostRender();
 }
 
 void CupHeadScene::Save()

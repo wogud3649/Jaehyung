@@ -100,6 +100,9 @@ using namespace DirectX;
 #include "Object/BasicObj/Effect.h"
 #include "Object/BasicObj/EffectManager.h"
 
+// UI
+#include "Object/UI/Button.h"
+
 // Bow
 #include "Object/GameObj/Bow/Bow_Monster.h"
 #include "Object/GameObj/Bow/Bow_Arrow.h"

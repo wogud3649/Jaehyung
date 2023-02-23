@@ -32,9 +32,16 @@
 
 #define EFFECT EffectManager::GetInstance()
 
+#define TIMER Timer::GetInstance()
+
+#define AUDIO Audio::GetInstance()
+
 #define CAMERA Camera::GetInstance()
 
 #define SCENE SceneManager::GetInstance()
+
+using CallBack = std::function<void(void)>;
+using CallBack_String = std::function<void(string)>;
 
 enum Direction
 {

@@ -12,12 +12,12 @@ public:
 	void SetBuffer(UINT slot);
 
 	void SetPosition(Vector2 pos) { _pos = pos; UpdateSRT(); }
+	void SetScale(Vector2 scale) { _scale = scale; UpdateSRT(); }
 
 	Vector2& GetScale() { return _scale; }
 	float& GetAngle() { return _angle; }
 	Vector2& GetPos() { return _pos; }
 
-	void SetScale(Vector2 scale) { _scale = scale; }
 	void AddScaleX(float xScale) { _scale.x += xScale; }
 	void AddScaleY(float yScale) { _scale.y += yScale; }
 

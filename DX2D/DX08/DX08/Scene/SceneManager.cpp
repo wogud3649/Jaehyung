@@ -16,7 +16,7 @@ SceneManager* SceneManager::_instance = nullptr;
 SceneManager::SceneManager()
 {
 	_sceneTable["TutorialScene"] = make_shared<TutorialScene>();
-	_sceneTable["SpriteScene"] = make_shared<SpriteScene>();
+	_sceneTable["SolarSystemScene"] = make_shared<SolarSystemScene>();
 	_sceneTable["CupHeadScene"] = make_shared<CupHeadScene>();
 	
 	_curScene = _sceneTable["CupHeadScene"];
@@ -49,6 +49,11 @@ void SceneManager::PostRender()
 {
 	if (_curScene == nullptr) return;
 	_curScene->PostRender();
+}
+
+void SceneManager::Init()
+{
+	_curScene->Init();
 }
 
 void SceneManager::SetScene(string name)

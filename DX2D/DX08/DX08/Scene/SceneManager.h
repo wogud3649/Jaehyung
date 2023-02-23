@@ -30,6 +30,8 @@ public:
 	void PreRender();
 	void PostRender();
 
+	void Init();
+
 	void SetScene(string name);
 
 private:
