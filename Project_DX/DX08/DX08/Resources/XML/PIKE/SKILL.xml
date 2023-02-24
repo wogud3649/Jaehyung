@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created with Free texture packer v0.6.7 http://free-tex-packer.com
+Format:
+n  => name
+x  => x pos
+y  => y pos
+w  => width
+h  => height
+pX => x pos of the pivot point
+pY => y pos of the pivot point
+oX => x-corner offset
+oY => y-corner offset
+oW => original width
+oH => original height
+r => 'y' if sprite is rotated-->
+<TextureAtlas imagePath="SKILL.png" width="434" height="74" scale="1" format="RGBA8888">
+  <sprite n="Skill1.png" x="20" y="20" w="78" h="31" pX="0.5" pY="0.5"/>
+  <sprite n="Skill2.png" x="138" y="20" w="71" h="31" pX="0.5" pY="0.5"/>
+  <sprite n="Skill3.png" x="249" y="20" w="68" h="31" pX="0.5" pY="0.5"/>
+  <sprite n="Skill4.png" x="357" y="20" w="57" h="34" pX="0.5" pY="0.5"/>
+</TextureAtlas>
