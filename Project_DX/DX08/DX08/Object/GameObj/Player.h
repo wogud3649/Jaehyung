@@ -6,6 +6,7 @@ public:
 	{
 		SKUL,
 		HEADLESS,
+		PIKE,
 
 		SkulTypeSize
 	};

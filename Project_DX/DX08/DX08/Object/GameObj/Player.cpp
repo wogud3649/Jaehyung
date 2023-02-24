@@ -7,6 +7,7 @@ Player::Player()
 	_actions.resize(SkulType::SkulTypeSize);
 	CreateAction(SkulType::SKUL);
 	CreateAction(SkulType::HEADLESS);
+	CreateAction(SkulType::PIKE);
 
 	_footCol = make_shared<CircleCollider>(15);
 
@@ -57,6 +58,9 @@ void Player::CreateAction(SkulType _skulType)
 		break;
 	case Player::HEADLESS:
 		skulType = "HEADLESS";
+		break;
+	case Player::PIKE:
+		skulType = "PIKE";
 		break;
 	default:
 		break;
@@ -135,9 +139,18 @@ void Player::CreateAction(SkulType _skulType)
 			sortX = MyXML::Sort::MIDDLE;
 			sortY = MyXML::Sort::MIDDLE;
 			break;
+		case 9:
+			state = "SKILL";
+			type = Action::Type::END;
+			speed = 0.1f;
+			sortX = MyXML::Sort::MIDDLE;
+			sortY = MyXML::Sort::MIDDLE;
+			break;
 		default:
 			break;
 		}
+		if (_skulType == SkulType::HEADLESS)
+			state = "IDLE";
 		wstring stateW(state.begin(), state.end());
 
 		wstring srvPath = L"Resources/Texture/" + skulTypeW + L"/" + stateW + L".png";
