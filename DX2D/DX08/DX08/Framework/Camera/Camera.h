@@ -14,7 +14,7 @@ public:
 	void SetViewPort(UINT width = WIN_WIDTH, UINT height = WIN_HEIGHT);
 	void SetProjectionBuffer(UINT width = WIN_WIDTH, UINT height = WIN_HEIGHT);
 	void SetCameraWorldBuffer() { _transform->SetBuffer(1); }
-	void UICameraBuffer() { _uiCameraBuffer->SetVSBuffer(1); _uiCameraBuffer->Update(); }
+	void UICameraBuffer() { _uiCameraBuffer->SetVSBuffer(1); }
 
 	void SetTarget(shared_ptr<Transform> target) { _target = target; }
 	void SetLeftBottom(Vector2 value) { _leftBottom = value; }
