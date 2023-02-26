@@ -20,7 +20,6 @@ private:
 	UINT _count;
 	UINT _stride;
 	UINT _offset;
-
 	bool _instance = false;
 };
 

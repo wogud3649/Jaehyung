@@ -19,8 +19,8 @@ MapEditorTestScene::MapEditorTestScene()
 		transform.SetScale({ scaleX, scaleX });
 		transform.UpdateSRT();
 
-		data.maxFrame = Vector2(1.0f, 1.0f);
-		data.curFrame = Vector2(MathUtility::RandomInt(0, 1), MathUtility::RandomInt(0, 1));
+		data.maxFrame = Vector2(3.0f, 3.0f);
+		data.curFrame = Vector2(MathUtility::RandomInt(0, 3), MathUtility::RandomInt(0, 3));
 
 		data.matrix = XMMatrixTranspose(transform.GetMatrix());
 	}
@@ -49,7 +49,9 @@ void MapEditorTestScene::Fin()
 
 void MapEditorTestScene::Update()
 {
-	_quad->Update();
+	_transform->UpdateSRT();
+
+	_instanceBuffer->Update();
 }
 
 void MapEditorTestScene::Render()

@@ -29,6 +29,10 @@
 // DirectXTex
 #include "../DirectXTex/DirectXTex.h"
 
+// FMOD
+#include "Library/FMOD/inc/fmod.hpp"
+#pragma comment(lib,"Library/FMOD/fmod_vc.lib")
+
 // ImGui
 #include "../ImGUI/imgui.h"
 #include "../ImGUI/imgui_impl_dx11.h"
@@ -36,6 +40,7 @@
 
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
+#pragma comment(lib,"dxguid.lib")
 
 using namespace std;
 using namespace DirectX;
