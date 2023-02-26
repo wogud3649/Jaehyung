@@ -8,6 +8,7 @@ Player::Player()
 	CreateAction(SkulType::SKUL);
 	CreateAction(SkulType::HEADLESS);
 	CreateAction(SkulType::PIKE);
+	CreateAction(SkulType::SWORD);
 
 	_footCol = make_shared<CircleCollider>(15);
 
@@ -61,6 +62,9 @@ void Player::CreateAction(SkulType _skulType)
 		break;
 	case Player::PIKE:
 		skulType = "PIKE";
+		break;
+	case Player::SWORD:
+		skulType = "SWORD";
 		break;
 	default:
 		break;
@@ -140,6 +144,8 @@ void Player::CreateAction(SkulType _skulType)
 			sortY = MyXML::Sort::MIDDLE;
 			break;
 		case 9:
+			if (_skulType == SkulType::HEADLESS)
+				break;
 			state = "SKILL";
 			type = Action::Type::END;
 			speed = 0.1f;
@@ -149,8 +155,6 @@ void Player::CreateAction(SkulType _skulType)
 		default:
 			break;
 		}
-		if (_skulType == SkulType::HEADLESS)
-			state = "IDLE";
 		wstring stateW(state.begin(), state.end());
 
 		wstring srvPath = L"Resources/Texture/" + skulTypeW + L"/" + stateW + L".png";

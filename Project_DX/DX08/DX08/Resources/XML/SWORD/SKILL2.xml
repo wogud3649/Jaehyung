@@ -15,16 +15,16 @@ oW => original width
 oH => original height
 r => 'y' if sprite is rotated-->
 <TextureAtlas imagePath="SKILL2.png" width="968" height="75" scale="1" format="RGBA8888">
+  <sprite n="2Skill1.png" x="781" y="20" w="29" h="35" pX="0.5" pY="0.5"/>
+  <sprite n="2Skill2.png" x="577" y="20" w="28" h="34" pX="0.5" pY="0.5"/>
+  <sprite n="2Skill3.png" x="209" y="20" w="57" h="29" pX="0.5" pY="0.5"/>
+  <sprite n="2Skill4.png" x="850" y="20" w="29" h="35" pX="0.5" pY="0.5"/>
+  <sprite n="2Skill5.png" x="645" y="20" w="28" h="34" pX="0.5" pY="0.5"/>
+  <sprite n="2Skill6.png" x="306" y="20" w="57" h="29" pX="0.5" pY="0.5"/>
+  <sprite n="2Skill7.png" x="919" y="20" w="29" h="35" pX="0.5" pY="0.5"/>
+  <sprite n="2Skill8.png" x="713" y="20" w="28" h="34" pX="0.5" pY="0.5"/>
+  <sprite n="2Skill9.png" x="403" y="20" w="57" h="29" pX="0.5" pY="0.5"/>
   <sprite n="2Skill10.png" x="20" y="20" w="57" h="29" pX="0.5" pY="0.5"/>
   <sprite n="2Skill11.png" x="117" y="20" w="52" h="29" pX="0.5" pY="0.5"/>
-  <sprite n="2Skill3.png" x="209" y="20" w="57" h="29" pX="0.5" pY="0.5"/>
-  <sprite n="2Skill6.png" x="306" y="20" w="57" h="29" pX="0.5" pY="0.5"/>
-  <sprite n="2Skill9.png" x="403" y="20" w="57" h="29" pX="0.5" pY="0.5"/>
   <sprite n="2Skill12.png" x="500" y="20" w="37" h="31" pX="0.5" pY="0.5"/>
-  <sprite n="2Skill2.png" x="577" y="20" w="28" h="34" pX="0.5" pY="0.5"/>
-  <sprite n="2Skill5.png" x="645" y="20" w="28" h="34" pX="0.5" pY="0.5"/>
-  <sprite n="2Skill8.png" x="713" y="20" w="28" h="34" pX="0.5" pY="0.5"/>
-  <sprite n="2Skill1.png" x="781" y="20" w="29" h="35" pX="0.5" pY="0.5"/>
-  <sprite n="2Skill4.png" x="850" y="20" w="29" h="35" pX="0.5" pY="0.5"/>
-  <sprite n="2Skill7.png" x="919" y="20" w="29" h="35" pX="0.5" pY="0.5"/>
 </TextureAtlas>

@@ -7,6 +7,7 @@ public:
 		SKUL,
 		HEADLESS,
 		PIKE,
+		SWORD,
 
 		SkulTypeSize
 	};

@@ -32,6 +32,8 @@
 
 #define CAMERA Camera::GetInstance()
 
+#define SCENE SceneManager::GetInstance()
+
 enum Direction
 {
 	LEFT,

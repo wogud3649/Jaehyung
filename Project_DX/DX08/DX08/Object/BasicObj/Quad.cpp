@@ -41,6 +41,20 @@ void Quad::Render()
     DC->DrawIndexed(6, 0, 0);
 }
 
+void Quad::SetRender()
+{
+    DC->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+    ALPHA->SetState();
+    _srv->Set(0);
+    SAMPLER->Set(0);
+
+    _transform->SetBuffer(0);
+
+    _vs->Set();
+    _ps->Set();
+}
+
 void Quad::CreateMaterial(wstring file)
 {
     _vs = ADD_VS(L"Shader/TextureVertexShader.hlsl");

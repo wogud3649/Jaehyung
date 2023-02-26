@@ -12,9 +12,17 @@ Advanced_Player::~Advanced_Player()
 
 void Advanced_Player::Update()
 {
+	if (KEY_DOWN(VK_F2))
+	{
+		SetSkul(SkulType::SKUL);
+	}
 	if (KEY_DOWN(VK_F3))
 	{
 		SetSkul(SkulType::PIKE);
+	}
+	if (KEY_DOWN(VK_F4))
+	{
+		SetSkul(SkulType::SWORD);
 	}
 
 	SetIdle();
@@ -179,7 +187,7 @@ void Advanced_Player::Fall()
 	_footCol->GetTransform()->MoveY(_curJumpPower * DELTA_TIME);
 	_curJumpPower -= GRAVITY * GRAVITY * DELTA_TIME;
 	
-	if (_curJumpPower <= 0 && _curState != State::FALLREPEAT && _curState != State::JUMPATTACK || _curState != State::SKILL)
+	if (_curJumpPower <= 0 && _curState != State::FALLREPEAT && _curState != State::JUMPATTACK && _curState != State::SKILL)
 	{
 		if (_curState == State::WALK && _curJumpPower >= -50.0f)
 			return;
@@ -233,6 +241,8 @@ void Advanced_Player::Skill()
 {
 	if (KEY_DOWN('A'))
 	{
+		if (_curSkul == SkulType::HEADLESS)
+			return;
 		SetAction(State::SKILL);
 	}
 }
@@ -278,8 +288,15 @@ void Advanced_Player::FallEnd()
 
 void Advanced_Player::SkillEnd()
 {
-	_headOn = false;
-	SetSkul(SkulType::HEADLESS);
+	if (_curSkul == SkulType::SKUL)
+	{
+		_headOn = false;
+		SetSkul(SkulType::HEADLESS);
+	}
+	else
+	{
+		SetAction(State::IDLE);
+	}
 }
 
 void Advanced_Player::SetCallback()
@@ -293,6 +310,8 @@ void Advanced_Player::SetCallback()
 		_actions[i][State::JUMPATTACK]->SetCallBack(std::bind(&Advanced_Player::AttackEnd, this));
 	}
 	_actions[SkulType::SKUL][State::SKILL]->SetCallBack(std::bind(&Advanced_Player::SkillEnd, this));
+	_actions[SkulType::PIKE][State::SKILL]->SetCallBack(std::bind(&Advanced_Player::SkillEnd, this));
+	_actions[SkulType::SWORD][State::SKILL]->SetCallBack(std::bind(&Advanced_Player::SkillEnd, this));
 }
 
 void Advanced_Player::SetAction(State state)

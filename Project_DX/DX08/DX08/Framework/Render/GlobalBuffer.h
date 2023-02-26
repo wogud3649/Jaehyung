@@ -23,6 +23,24 @@ public:
 	Data _data;
 };
 
+class ColorBuffer : public ConstantBuffer
+{
+public:
+	struct Data
+	{
+		XMFLOAT4 color = { 0,1,0,1 };
+	};
+
+	ColorBuffer()
+		: ConstantBuffer(&_data, sizeof(_data))
+	{
+	}
+
+	virtual ~ColorBuffer() {}
+
+	Data _data;
+};
+
 class SpriteBuffer : public ConstantBuffer
 {
 public:
@@ -38,27 +56,6 @@ public:
 	}
 
 	virtual ~SpriteBuffer() {}
-
-	Data _data;
-};
-
-class ActionBuffer : public ConstantBuffer
-{
-public:
-	struct Data
-	{
-		Vector2 startPos;
-		Vector2 size;
-		Vector2 imageSize;
-		int padding[2];
-	};
-
-	ActionBuffer()
-		: ConstantBuffer(&_data, sizeof(_data))
-	{
-	}
-
-	virtual ~ActionBuffer() {}
 
 	Data _data;
 };
@@ -82,20 +79,23 @@ public:
 	Data _data;
 };
 
-class ColorBuffer : public ConstantBuffer
+class ActionBuffer : public ConstantBuffer
 {
 public:
 	struct Data
 	{
-		XMFLOAT4 color = { 0,1,0,1 };
+		Vector2 startPos;
+		Vector2 size;
+		Vector2 imageSize;
+		int padding[2];
 	};
 
-	ColorBuffer()
+	ActionBuffer()
 		: ConstantBuffer(&_data, sizeof(_data))
 	{
 	}
 
-	virtual ~ColorBuffer() {}
+	virtual ~ActionBuffer() {}
 
 	Data _data;
 };

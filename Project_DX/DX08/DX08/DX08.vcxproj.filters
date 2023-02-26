@@ -117,7 +117,7 @@
     <ClInclude Include="Framework\Animation\MyXML.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\TestScene.h">
+    <ClInclude Include="Scene\BasicScene\TestScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Object\GameObj\Player.h">
@@ -136,6 +136,15 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Framework\Utility\MathUtility.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SceneManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\BasicScene\MapEditorTestScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BackgroundObj\Brick.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -227,7 +236,7 @@
     <ClCompile Include="Framework\Animation\MyXML.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\TestScene.cpp">
+    <ClCompile Include="Scene\BasicScene\TestScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Object\GameObj\Player.cpp">
@@ -246,6 +255,15 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Framework\Utility\MathUtility.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\SceneManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\BasicScene\MapEditorTestScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\BackgroundObj\Brick.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -271,5 +289,7 @@
     <FxCompile Include="Shader\LRTexturePixelShader.hlsl" />
     <FxCompile Include="Shader\ActionPixelShader.hlsl" />
     <FxCompile Include="Shader\FilterPixelShader.hlsl" />
+    <FxCompile Include="Shader\InstancingVertexShader.hlsl" />
+    <FxCompile Include="Shader\InstancingPixelShader.hlsl" />
   </ItemGroup>
 </Project>

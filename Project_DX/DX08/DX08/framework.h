@@ -96,9 +96,11 @@ using namespace DirectX;
 // BackGroundObject
 #include "Object/BackgroundObj/Floor.h"
 #include "Object/BackgroundObj/Background.h"
+#include "Object/BackgroundObj/Brick.h"
 
 // Scene
 #include "Scene/Scene.h"
+#include "Scene/SceneManager.h"
 
 // Program
 #include "Program/Program.h"

@@ -8,6 +8,7 @@ public:
 
 	virtual void Update();
 	virtual void Render();
+	void SetRender();
 
 	virtual void CreateMaterial(wstring file);
 	virtual void CreateMesh();
@@ -15,7 +16,6 @@ public:
 	void SetVS(shared_ptr<VertexShader> shader) { _vs = shader; }
 	void SetPS(shared_ptr<PixelShader> shader) { _ps = shader; }
 	
-	void SetSize(Vector2 size) { _size = size; }
 	Vector2 GetSize() { return _size; }
 
 	shared_ptr<Transform> GetTransform() { return _transform; }

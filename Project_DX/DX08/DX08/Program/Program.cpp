@@ -1,11 +1,9 @@
 #include "framework.h"
 #include "Program.h"
 
-#include "../Scene/TestScene.h"
-
 Program::Program()
 {
-	_scene = make_shared<TestScene>();
+	SCENE->Init();
 }
 
 Program::~Program()
@@ -21,7 +19,7 @@ void Program::Update()
 	Timer::GetInstance()->Update();
 	CAMERA->Update();
 
-	_scene->Update();
+	SCENE->Update();
 }
 
 void Program::Render()
@@ -30,8 +28,7 @@ void Program::Render()
 
 	CAMERA->SetCameraWorldBuffer();
 	CAMERA->SetProjectBuffer();
-
-	_scene->PreRender();
+	SCENE->PreRender();
 
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplWin32_NewFrame();
@@ -39,11 +36,11 @@ void Program::Render()
 
 	ALPHA->SetState();
 
-	_scene->Render();
+	SCENE->Render();
 
 	ImGui::Text("FPS : %d", Timer::GetInstance()->GetFPS());
 	CAMERA->PostRender();
-	_scene->PostRender();
+	SCENE->PostRender();
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 

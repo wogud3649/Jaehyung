@@ -15,8 +15,8 @@ oW => original width
 oH => original height
 r => 'y' if sprite is rotated-->
 <TextureAtlas imagePath="IDLE.png" width="316" height="75" scale="1" format="RGBA8888">
-  <sprite n="Idle4.png" x="20" y="20" w="39" h="31" pX="0.5" pY="0.5"/>
   <sprite n="Idle1.png" x="99" y="20" w="39" h="34" pX="0.5" pY="0.5"/>
   <sprite n="Idle2.png" x="178" y="20" w="39" h="35" pX="0.5" pY="0.5"/>
   <sprite n="Idle3.png" x="257" y="20" w="39" h="35" pX="0.5" pY="0.5"/>
+  <sprite n="Idle4.png" x="20" y="20" w="39" h="31" pX="0.5" pY="0.5"/>
 </TextureAtlas>

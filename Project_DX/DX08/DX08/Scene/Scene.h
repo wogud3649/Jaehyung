@@ -5,6 +5,8 @@ public:
 	Scene();
 	virtual ~Scene();
 
+	virtual void Init() {};
+	virtual void Fin() {};
 	virtual void Update() abstract;
 	virtual void Render() abstract;
 	virtual void PreRender() {}
