@@ -20,6 +20,8 @@ private:
 	vector<InstanceData> _instanceDatas;
 	shared_ptr<VertexBuffer> _instanceBuffer;
 
+	vector<shared_ptr<Sprite>> _sprites;
+
 	// 최적화
 	// - 프레임 드랍이 일어나는 이유
 	// - GPU한테 DrawCall을 많이 날려서
