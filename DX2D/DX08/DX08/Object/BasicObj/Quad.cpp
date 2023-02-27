@@ -13,6 +13,15 @@ Quad::Quad(wstring file)
     _transform = make_shared<Transform>();
 }
 
+Quad::Quad(wstring file, Vector2 size)
+{
+    CreateMaterial(file);
+    _size = size;
+    CreateMesh();
+
+    _transform = make_shared<Transform>();
+}
+
 Quad::~Quad()
 {
 }

@@ -20,6 +20,7 @@ public:
 	void Beat();
 	
 	void Damaged();
+	void Damaged(float amount);
 	void Death();
 	void Revive();
 

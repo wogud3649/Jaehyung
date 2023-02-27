@@ -102,6 +102,7 @@ using namespace DirectX;
 
 // UI
 #include "Object/UI/Button.h"
+#include "Object/UI/Slider.h"
 
 // Bow
 #include "Object/GameObj/Bow/Bow_Monster.h"

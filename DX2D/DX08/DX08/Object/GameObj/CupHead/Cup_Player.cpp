@@ -52,6 +52,11 @@ void Cup_Player::Render()
 		_sprites[_curState]->Render();
 }
 
+void Cup_Player::PostRender()
+{
+	ImGui::SliderFloat("HP", &_curHp, 0.0f, 100.0f);
+}
+
 void Cup_Player::SetRight()
 {
 	_isRight = true;

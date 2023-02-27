@@ -50,7 +50,7 @@ void Cup_Monster_Bullet::Update()
 		{
 			Camera::GetInstance()->ShakeStart(10.0f, 0.3f);
 			EFFECT->Play("hit_4x2", _col->GetTransform()->GetWorldPos());
-			_target.lock()->Damaged();
+			_target.lock()->Damaged(10.0f);
 			DisAble();
 		}
 	}

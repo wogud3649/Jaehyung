@@ -161,6 +161,14 @@ void Cup_Advanced_Player::Damaged()
 	}
 }
 
+void Cup_Advanced_Player::Damaged(float amount)
+{
+	if (amount <= 0.0f)
+		return;
+
+	_curHp -= amount;
+}
+
 void Cup_Advanced_Player::Death()
 {
 	SetAction(State::CUP_IDLE);

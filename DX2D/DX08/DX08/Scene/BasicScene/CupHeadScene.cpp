@@ -22,6 +22,9 @@ CupHeadScene::CupHeadScene()
 	_button->SetScale({ 0.1f, 0.1f });
 	_button->SetPosition(_button->GetSize() * 0.5f * 0.1f);
 	_button->SetString(std::bind(&SceneManager::SetScene, SCENE, "SolarSystemScene"));
+
+	_slider = make_shared<Slider>(Vector2(150, 50));
+	_slider->SetPosition({ CENTER.x, CENTER.y - 100.0f });
 }
 
 CupHeadScene::~CupHeadScene()
@@ -52,6 +55,8 @@ void CupHeadScene::Update()
 	_player->Update();
 	_monster->Update();
 	_button->Update();
+	_slider->Update();
+	_slider->SetRatio(_player->GetHp() / 100.0f);
 }
 
 void CupHeadScene::PreRender()
@@ -67,6 +72,8 @@ void CupHeadScene::Render()
 
 void CupHeadScene::PostRender()
 {
+	_player->PostRender();
+
 	if (ImGui::Button("Save", { 100, 100 }));
 	{
 		Save();
@@ -78,6 +85,7 @@ void CupHeadScene::PostRender()
 	}
 
 	_button->PostRender();
+	_slider->PostRender();
 }
 
 void CupHeadScene::Save()

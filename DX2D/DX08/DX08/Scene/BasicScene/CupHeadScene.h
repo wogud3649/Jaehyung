@@ -20,5 +20,6 @@ private:
 	shared_ptr<Cup_Bg> _bg;
 
 	shared_ptr<Button> _button;
+	shared_ptr<Slider> _slider;
 };
 
