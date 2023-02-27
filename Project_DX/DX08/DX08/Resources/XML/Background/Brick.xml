@@ -14,14 +14,14 @@ oY => y-corner offset
 oW => original width
 oH => original height
 r => 'y' if sprite is rotated-->
-<TextureAtlas imagePath="Brick.png" width="60" height="60" scale="1" format="RGBA8888">
-  <sprite n="Brick_LB.png" x="0" y="0" w="15" h="15" pX="0.5" pY="0.5"/>
-  <sprite n="Brick_LT.png" x="15" y="0" w="15" h="15" pX="0.5" pY="0.5"/>
-  <sprite n="Brick_MB.png" x="30" y="0" w="30" h="15" pX="0.5" pY="0.5"/>
-  <sprite n="Brick_MT.png" x="0" y="15" w="30" h="15" pX="0.5" pY="0.5"/>
-  <sprite n="Brick_RB.png" x="30" y="15" w="15" h="15" pX="0.5" pY="0.5"/>
-  <sprite n="Brick_RT.png" x="45" y="15" w="15" h="15" pX="0.5" pY="0.5"/>
-  <sprite n="Brick_LM.png" x="0" y="30" w="15" h="30" pX="0.5" pY="0.5"/>
-  <sprite n="Brick_MM.png" x="15" y="30" w="30" h="30" pX="0.5" pY="0.5"/>
-  <sprite n="Brick_RM.png" x="45" y="30" w="15" h="30" pX="0.5" pY="0.5"/>
+<TextureAtlas imagePath="Brick.png" width="450" height="60" scale="1" format="RGBA8888">
+  <sprite n="Brick_LB.png" x="15" y="15" w="15" h="15" pX="0.5" pY="0.5"/>
+  <sprite n="Brick_LT.png" x="60" y="15" w="15" h="15" pX="0.5" pY="0.5"/>
+  <sprite n="Brick_MB.png" x="105" y="15" w="30" h="15" pX="0.5" pY="0.5"/>
+  <sprite n="Brick_MT.png" x="165" y="15" w="30" h="15" pX="0.5" pY="0.5"/>
+  <sprite n="Brick_RB.png" x="225" y="15" w="15" h="15" pX="0.5" pY="0.5"/>
+  <sprite n="Brick_RT.png" x="270" y="15" w="15" h="15" pX="0.5" pY="0.5"/>
+  <sprite n="Brick_LM.png" x="315" y="15" w="15" h="30" pX="0.5" pY="0.5"/>
+  <sprite n="Brick_MM.png" x="360" y="15" w="30" h="30" pX="0.5" pY="0.5"/>
+  <sprite n="Brick_RM.png" x="420" y="15" w="15" h="30" pX="0.5" pY="0.5"/>
 </TextureAtlas>
