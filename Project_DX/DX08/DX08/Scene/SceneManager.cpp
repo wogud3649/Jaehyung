@@ -7,7 +7,7 @@
 SceneManager* SceneManager::_instance = nullptr;
 SceneManager::SceneManager()
 {
-	_sceneTable["TestScene"] = make_shared<TestScene>();
+	//_sceneTable["TestScene"] = make_shared<TestScene>();
 	_sceneTable["MapEditorTestScene"] = make_shared<MapEditorTestScene>();
 
 	_curScene = _sceneTable["MapEditorTestScene"];

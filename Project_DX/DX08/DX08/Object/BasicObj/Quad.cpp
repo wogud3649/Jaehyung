@@ -43,13 +43,14 @@ void Quad::Render()
 
 void Quad::SetRender()
 {
+    _vertexBuffer->IASet(0);
+    _indexBuffer->IASetIndexBuffer();
+
     DC->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
     ALPHA->SetState();
     _srv->Set(0);
     SAMPLER->Set(0);
-
-    _transform->SetBuffer(0);
 
     _vs->Set();
     _ps->Set();
