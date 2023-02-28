@@ -15,7 +15,6 @@ public:
 	MyXML(string path, wstring srvPath);
 	~MyXML();
 	
-	vector<Action::Clip> GetClips();
 	vector<Action::Clip> GetClips(MyXML::Sort sortX = MyXML::Sort::RIGHT, MyXML::Sort sortY = MyXML::Sort::BOTTOM);
 	Vector2 AverageSize() { return _averageSize; }
 	Vector2 MaxSize() { return _maxSize; }

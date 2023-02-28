@@ -15,12 +15,13 @@ public:
 	void Update();
 	void Render();
 
-	void Createblocks();
 private:
-	vector<shared_ptr<Quad>> _quads;
+	shared_ptr<Quad> _quad;
 	vector<InstanceData> _instanceDatas;
 	shared_ptr<VertexBuffer> _instanceBuffer;
 
 	shared_ptr<Transform> _transform;
+
+	shared_ptr<Action> _pieces;
 };
 

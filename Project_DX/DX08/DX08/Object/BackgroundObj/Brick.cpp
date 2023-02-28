@@ -7,23 +7,35 @@ Brick::Brick()
 	_quad->SetVS(ADD_VS(L"Shader/InstancingVertexShader.hlsl"));
 	_quad->SetPS(ADD_PS(L"Shader/InstancingPixelShader.hlsl"));
 
-	_instanceDatas.resize(9);
+	_instanceDatas.resize(18);
 
+	for (int i = 0; i < _instanceDatas.size(); i++)
+	{
+		Transform transform;
+		Vector2 pos;
 
+		if (i % 3 == 0)
+			pos.x = CENTER_X - 90;
+		else if (i % 3 == 1)
+			pos.x = CENTER_X;
+		else
+			pos.x = CENTER_X + 90;
 
-	//for (auto& data : _instanceDatas)
-	//{
-	//	Transform transform;
-	//	Vector2 pos = Vector2(0.0f, 0.0f);
+		if ((i % 9) / 3 == 0)
+			pos.y = CENTER_Y + 90;
+		else if ((i % 9) / 3 == 1)
+			pos.y = CENTER_Y;
+		else
+			pos.y = CENTER_Y - 90;
 
-	//	transform.SetPos(pos);
-	//	transform.UpdateSRT();
+		transform.SetPos(pos);
+		transform.UpdateSRT();
 
-	//	data.maxFrame = Vector2(4.0f, 4.0f);
-	//	data.curFrame = Vector2(MathUtility::RandomInt(0, 4), MathUtility::RandomInt(0, 4));
+		_instanceDatas[i].maxFrame = Vector2(3.0f, 3.0f);
+		_instanceDatas[i].curFrame = Vector2(i % 3, i / 3);
+		_instanceDatas[i].matrix = XMMatrixTranspose(transform.GetMatrix());
+	}
 
-	//	data.matrix = XMMatrixTranspose(transform.GetMatrix());
-	//}
 	_transform = make_shared<Transform>();
 
 	_instanceBuffer = make_shared<VertexBuffer>(_instanceDatas.data(), sizeof(InstanceData), _instanceDatas.size(), 0, true);
@@ -51,18 +63,4 @@ void Brick::Render()
 	_quad->SetRender();
 
 	DC->DrawIndexedInstanced(6, _instanceDatas.size(), 0, 0, 0);
-}
-
-void Brick::Createblocks()
-{
-	string name;
-	float speed;
-
-	wstring srvPath = L"Resources/Texture/Brick.png";
-	string xmlPath = "Resources/XML/Brick.xml";
-
-	MyXML xml = MyXML(xmlPath, srvPath);
-
-	name = "Brick";
-	// TODO
 }
