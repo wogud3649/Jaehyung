@@ -34,4 +34,5 @@ void MapEditorTestScene::PreRender()
 
 void MapEditorTestScene::PostRender()
 {
+	_brick->PostRender();
 }

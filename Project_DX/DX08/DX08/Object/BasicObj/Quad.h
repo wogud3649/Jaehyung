@@ -4,6 +4,7 @@ class Quad
 public:
 	Quad();
 	Quad(wstring file);
+	Quad(wstring file, Vector2 maxFrame);
 	~Quad();
 
 	virtual void Update();

@@ -2,6 +2,20 @@
 class Brick
 {
 public:
+	enum Direction
+	{
+		LEFT,
+		TOP,
+		MID,
+		RIGHT,
+		BOTTOM
+	};
+	struct BlockData
+	{
+		Vector2 pos;
+		Direction sortx;
+		Direction sorty;
+	};
 	struct InstanceData
 	{
 		XMMATRIX matrix;
@@ -14,14 +28,18 @@ public:
 
 	void Update();
 	void Render();
+	void PostRender();
 
 private:
 	shared_ptr<Quad> _quad;
+	vector<shared_ptr<RectCollider>> _cols;
+	
 	vector<InstanceData> _instanceDatas;
 	shared_ptr<VertexBuffer> _instanceBuffer;
 
-	shared_ptr<Transform> _transform;
+	vector<BlockData> _blockDatas;
+	int _blockIndex = 0;
 
-	shared_ptr<Action> _pieces;
+	shared_ptr<Transform> _transform;
 };
 
