@@ -36,6 +36,7 @@ public:
 
 	shared_ptr<CircleCollider> GetBodyCollider() { return _bodyCol; }
 	shared_ptr<CircleCollider> GetFootCollider() { return _footCol; }
+	shared_ptr<CircleCollider> GetHeadCollider() { return _headCol; }
 
 protected:
 	void CreateAction(SkulType _skulType);
@@ -47,8 +48,9 @@ protected:
 	SkulType _oldSkul = SkulType::SKUL;
 
 	shared_ptr<Transform> _transform;
-	shared_ptr<CircleCollider> _bodyCol;
 	shared_ptr<CircleCollider> _footCol;
+	shared_ptr<CircleCollider> _bodyCol;
+	shared_ptr<CircleCollider> _headCol;
 
 	vector<vector<shared_ptr<Sprite>>> _sprites;
 	vector<vector<shared_ptr<Action>>> _actions;

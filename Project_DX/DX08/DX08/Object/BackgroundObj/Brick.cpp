@@ -3,46 +3,7 @@
 
 Brick::Brick()
 {
-	_quad = make_shared<Quad>(L"Resources/Texture/Background/Brick.png", Vector2(3,3));
-	_quad->SetVS(ADD_VS(L"Shader/InstancingVertexShader.hlsl"));
-	_quad->SetPS(ADD_PS(L"Shader/InstancingPixelShader.hlsl"));
-
-	_instanceDatas.resize(180);
-	_blockDatas.resize(_instanceDatas.size());
-
-	for (int i = 0; i < _instanceDatas.size(); i++)
-	{
-		Vector2 colSize;
-		Transform transform;
-		Vector2 pos = Vector2(-30, -30);
-
-		transform.SetPos(pos);
-		transform.UpdateSRT();
-
-		_blockDatas[i].pos = pos;
-
-		if (i % 3 == 0)
-			_blockDatas[i].sortx = Direction::RIGHT;
-		else if (i % 3 == 1)
-			_blockDatas[i].sortx = Direction::MID;
-		else
-			_blockDatas[i].sortx = Direction::LEFT;
-
-		if ((i % 9) / 3 == 0)
-			_blockDatas[i].sorty = Direction::BOTTOM;
-		else if ((i % 9) / 3 == 1)
-			_blockDatas[i].sorty = Direction::MID;
-		else
-			_blockDatas[i].sorty = Direction::TOP;
-
-		_instanceDatas[i].maxFrame = Vector2(3.0f, 3.0f);
-		_instanceDatas[i].curFrame = Vector2(i % 3, i / 3);
-		_instanceDatas[i].matrix = XMMatrixTranspose(transform.GetMatrix());
-	}
-
-	_transform = make_shared<Transform>();
-
-	_instanceBuffer = make_shared<VertexBuffer>(_instanceDatas.data(), sizeof(InstanceData), _instanceDatas.size(), 0, true);
+	CreateBlocks();
 }
 
 Brick::~Brick()
@@ -51,39 +12,30 @@ Brick::~Brick()
 
 void Brick::Update()
 {
-	if (KEY_DOWN(VK_LBUTTON))
-	{
-		Vector2 tempPos = Vector2((int)(MOUSE_POS.x / 30) * 30, (int)(MOUSE_POS.y / 30) * 30);
-		
-		for (const auto& block : _blockDatas)
-		{
-			if (block.pos == tempPos)
-				return;
-		}
-		_blockDatas[_blockIndex].pos = tempPos;
-
-		_transform->SetPos(tempPos);
-		_transform->UpdateSRT();
-		_instanceDatas[_blockIndex].matrix = XMMatrixTranspose(_transform->GetMatrix());
-		_instanceBuffer->Update();
-	}
-	if (KEY_DOWN('1'))
-	{
-		_blockIndex--;
-		if (_blockIndex < 0)
-			_blockIndex = _blockDatas.size() - 1;
-	}
-	if (KEY_DOWN('3'))
-	{
-		_blockIndex++;
-		if (_blockIndex >= _blockDatas.size())
-			_blockIndex = 0;
-	}
-
 	for (const auto& col : _cols)
 	{
 		col->Update();
 	}
+
+	if (KEY_DOWN('3'))
+	{
+		_blockType++;
+		_blockType %= _blockBasicNumber;
+	}
+
+	if (_player.expired() == false)
+	{
+		for (auto col : _cols)
+		{
+			HIT_RESULT result = col->Block(_player.lock()->GetFootCollider());
+			if (result.dir == Direction::UP)
+				_player.lock()->Ground();
+			result = col->Block(_player.lock()->GetHeadCollider());
+			if (result.dir == Direction::DOWN)
+				_player.lock()->Beat();
+		}
+	}
+
 }
 
 void Brick::Render()
@@ -93,9 +45,122 @@ void Brick::Render()
 	_quad->SetRender();
 
 	DC->DrawIndexedInstanced(6, _instanceDatas.size(), 0, 0, 0);
+
+	for (const auto& col : _cols)
+	{
+		col->Render();
+	}
 }
 
 void Brick::PostRender()
 {
-	ImGui::SliderInt("Selected Block", &_blockIndex, 0, _blockDatas.size() - 1);
+	ImGui::SliderInt("BlockType", &_blockType, 0, 8);
+}
+
+void Brick::SetPos(Vector2 pos)
+{
+	for (const auto& transform : _transforms)
+	{
+		if (transform->GetPos() == pos)
+			return;
+	}
+
+	int minBlockIndex = _blockType * _blockPairNumber;
+
+	int tempIdx = -1;
+	for (int i = minBlockIndex; i < minBlockIndex + _blockPairNumber; i++)
+	{
+		if (_activeBlocks[i] == false)
+		{
+			tempIdx = i;
+			break;
+		}
+	}
+	if (tempIdx == -1)
+		return;
+
+	_transforms[tempIdx]->SetPos(pos);
+	_transforms[tempIdx]->UpdateSRT();
+	_instanceDatas[tempIdx].matrix = XMMatrixTranspose(_transforms[tempIdx]->GetMatrix());
+	_instanceBuffer->Update();
+
+	_activeBlocks[tempIdx] = true;
+}
+
+void Brick::CreateBlocks()
+{
+	_quad = make_shared<Quad>(L"Resources/Texture/Background/Brick.png", Vector2(3, 3));
+	_quad->SetVS(ADD_VS(L"Shader/InstancingVertexShader.hlsl"));
+	_quad->SetPS(ADD_PS(L"Shader/InstancingPixelShader.hlsl"));
+
+	for (int i = 0; i < _blockBasicNumber * _blockPairNumber; i++)
+	{
+		Brick::InstanceData instanceData;
+
+		Vector2 colSize;
+		Vector2 colPos;
+
+		shared_ptr<Transform> transform = make_shared<Transform>();
+
+		transform->SetPos(_outPos);
+		transform->UpdateSRT();
+
+		int block = i / (_blockPairNumber);
+		switch (block)
+		{
+		case 0:
+			colSize = Vector2(15, 15);
+			colPos = Vector2(8, -8);
+			break;
+		case 1:
+			colSize = Vector2(30, 15);
+			colPos = Vector2(0, -8);
+			break;
+		case 2:
+			colSize = Vector2(15, 15);
+			colPos = Vector2(-8, -8);
+			break;
+		case 3:
+			colSize = Vector2(15, 30);
+			colPos = Vector2(8, 0);
+			break;
+		case 4:
+			colSize = Vector2(30, 30);
+			colPos = Vector2(0, 0);
+			break;
+		case 5:
+			colSize = Vector2(15, 30);
+			colPos = Vector2(-8, 0);
+			break;
+		case 6:
+			colSize = Vector2(15, 15);
+			colPos = Vector2(8, 8);
+			break;
+		case 7:
+			colSize = Vector2(30, 15);
+			colPos = Vector2(0, 8);
+			break;
+		case 8:
+			colSize = Vector2(15, 15);
+			colPos = Vector2(-8, 8);
+			break;
+		default:
+			break;
+		}
+
+		instanceData.maxFrame = Vector2(3.0f, 3.0f);
+		instanceData.curFrame = Vector2(block % 3, block / 3);
+		instanceData.matrix = XMMatrixTranspose(transform->GetMatrix());
+
+		_instanceDatas.emplace_back(instanceData);
+
+		_transforms.emplace_back(transform);
+
+		shared_ptr<RectCollider> col = make_shared<RectCollider>(colSize);
+		_cols.emplace_back(col);
+		_cols[i]->GetTransform()->SetParent(_transforms[i]);
+		_cols[i]->GetTransform()->Move(colPos);
+	}
+
+	_instanceBuffer = make_shared<VertexBuffer>(_instanceDatas.data(), sizeof(InstanceData), _instanceDatas.size(), 0, true);
 }
