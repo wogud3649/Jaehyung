@@ -43,7 +43,7 @@ private:
 
 	float _speed = 500.0f;
 
-	float _maxJumpPower = 1800.0f;
+	float _maxJumpPower = 1200.0f;
 	float _curJumpPower = 0.0f;
 	bool _isJump = false;
 	bool _doubleJump = false;

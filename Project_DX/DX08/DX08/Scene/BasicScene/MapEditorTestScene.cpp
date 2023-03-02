@@ -30,12 +30,52 @@ void MapEditorTestScene::Update()
 {
 	_background->Update();
 	_brick->Update();
-	_player->Update();
-	
+	if (_playerActive)
+		_player->Update();
+
+	if (KEY_DOWN(VK_F2))
+		ActivatePlayer();
+	if (KEY_DOWN(VK_F3))
+		DeactivatePlayer();
+
+	if (KEY_DOWN('1'))
+	{
+		_type = EditorType::DRAW;
+	}
+	if (KEY_DOWN('2'))
+	{
+		_type = EditorType::ERASE;
+	}
+	if (KEY_DOWN('3'))
+	{
+		_type = EditorType::DRAG;
+	}
 	if (KEY_DOWN(VK_LBUTTON))
 	{
 		Vector2 tempPos = Vector2((int)(MOUSE_POS.x / 30) * 30, (int)(MOUSE_POS.y / 30) * 30);
-		_brick->SetPos(tempPos);
+		if (_type == EditorType::DRAG)
+		{
+			_selectedIndex = _brick->SelectBlock(tempPos);
+		}
+	}
+	if (KEY_PRESS(VK_LBUTTON))
+	{
+		Vector2 tempPos = Vector2((int)(MOUSE_POS.x / 30) * 30, (int)(MOUSE_POS.y / 30) * 30);
+		if (_type == EditorType::DRAW)
+		{
+			_brick->Draw(tempPos);
+		}
+		else if (_type == EditorType::ERASE)
+		{
+			_brick->Erase(tempPos);
+		}
+		else if (_type == EditorType::DRAG)
+		{
+			if (_selectedIndex == -1)
+				return;
+
+			_brick->Drag(_selectedIndex, tempPos);
+		}
 	}
 }
 
@@ -53,4 +93,16 @@ void MapEditorTestScene::PreRender()
 void MapEditorTestScene::PostRender()
 {
 	_brick->PostRender();
+	ImGui::SliderInt("Type", &(_type), EditorType::DRAW, EditorType::DRAG);
+}
+
+void MapEditorTestScene::ActivatePlayer()
+{
+	_player->GetFootCollider()->GetTransform()->SetPos(CENTER);
+	_playerActive = true;
+}
+
+void MapEditorTestScene::DeactivatePlayer()
+{
+	_playerActive = false;
 }

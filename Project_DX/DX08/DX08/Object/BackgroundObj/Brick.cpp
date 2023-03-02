@@ -17,7 +17,7 @@ void Brick::Update()
 		col->Update();
 	}
 
-	if (KEY_DOWN('3'))
+	if (KEY_DOWN('4'))
 	{
 		_blockType++;
 		_blockType %= _blockBasicNumber;
@@ -30,8 +30,7 @@ void Brick::Update()
 			HIT_RESULT result = col->Block(_player.lock()->GetFootCollider());
 			if (result.dir == Direction::UP)
 				_player.lock()->Ground();
-			result = col->Block(_player.lock()->GetHeadCollider());
-			if (result.dir == Direction::DOWN)
+			if (col->IsCollision(_player.lock()->GetHeadCollider()))
 				_player.lock()->Beat();
 		}
 	}
@@ -57,7 +56,7 @@ void Brick::PostRender()
 	ImGui::SliderInt("BlockType", &_blockType, 0, 8);
 }
 
-void Brick::SetPos(Vector2 pos)
+void Brick::Draw(Vector2 pos)
 {
 	for (const auto& transform : _transforms)
 	{
@@ -85,6 +84,50 @@ void Brick::SetPos(Vector2 pos)
 	_instanceBuffer->Update();
 
 	_activeBlocks[tempIdx] = true;
+}
+
+void Brick::Erase(Vector2 pos)
+{
+	for (int i = 0; i < _activeBlocks.size(); i++)
+	{
+		if (_transforms[i]->GetPos() == pos)
+		{
+			_transforms[i]->SetPos(_outPos);
+			_transforms[i]->UpdateSRT();
+			_instanceDatas[i].matrix = XMMatrixTranspose(_transforms[i]->GetMatrix());
+			_instanceBuffer->Update();
+
+			_activeBlocks[i] = false;
+		}
+	}
+}
+
+void Brick::Drag(int index, Vector2 pos)
+{
+	for (const auto& transform : _transforms)
+	{
+		if (transform->GetPos() == pos)
+			return;
+	}
+
+	_transforms[index]->SetPos(pos);
+	_transforms[index]->UpdateSRT();
+	_instanceDatas[index].matrix = XMMatrixTranspose(_transforms[index]->GetMatrix());
+	_instanceBuffer->Update();
+
+	_activeBlocks[index] = true;
+}
+
+int Brick::SelectBlock(Vector2 pos)
+{
+	for (int i = 0; i < _activeBlocks.size(); i++)
+	{
+		if (_transforms[i]->GetPos() == pos)
+		{
+			return i;
+		}
+	}
+	return -1;
 }
 
 void Brick::CreateBlocks()

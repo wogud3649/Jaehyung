@@ -2,6 +2,12 @@
 class MapEditorTestScene : public Scene
 {
 public:
+	enum EditorType
+	{
+		DRAW,
+		ERASE,
+		DRAG
+	};
 	MapEditorTestScene();
 	virtual ~MapEditorTestScene();
 
@@ -13,8 +19,18 @@ public:
 	virtual void PostRender() override;
 
 private:
+	void ActivatePlayer();
+	void DeactivatePlayer();
+
 	shared_ptr<Brick> _brick;
+	int _selectedIndex;
+	
 	shared_ptr<Advanced_Player> _player;
+	bool _playerActive = false;
+
 	shared_ptr<Background> _background;
+
+	int _type = EditorType::DRAW;
+
 };
 

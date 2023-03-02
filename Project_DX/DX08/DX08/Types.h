@@ -5,8 +5,10 @@
 #define CENTER_Y 360
 #define CENTER Vector2(CENTER_X, CENTER_Y)
 
+#define OUT Vector2(-30, -30)
+
 #define PI 3.141592
-#define GRAVITY 75
+#define GRAVITY 50
 
 #define LERP(s, e, t) s + (e - s) * t
 

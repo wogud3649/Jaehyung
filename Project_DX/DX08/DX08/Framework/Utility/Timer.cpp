@@ -30,9 +30,6 @@ void Timer::Update()
 		}
 	}
 
-	if (_deltaTime >= 0.2)
-		_deltaTime = 0.2;
-
 	_lastTime = _curTime;
 
 	_frameCount++;

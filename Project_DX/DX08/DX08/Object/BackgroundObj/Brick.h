@@ -22,8 +22,12 @@ public:
 	void Render();
 	void PostRender();
 
-	void SetPos(Vector2 pos);
+	void Draw(Vector2 pos);
+	void Erase(Vector2 pos);
+	void Drag(int index, Vector2 pos);
 	void SetTarget(shared_ptr<Advanced_Player> player) { _player = player; }
+
+	int SelectBlock(Vector2 pos);
 
 private:
 	void CreateBlocks();
@@ -32,7 +36,7 @@ private:
 	vector<shared_ptr<RectCollider>> _cols;
 	int _blockType = 0;
 	int _blockBasicNumber = 9;
-	int _blockPairNumber = 30;
+	int _blockPairNumber = 40;
 	int _blockIndex = 0;
 	vector<bool> _activeBlocks = vector<bool>(_blockBasicNumber * _blockPairNumber, false);
 	

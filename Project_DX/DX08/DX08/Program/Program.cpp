@@ -3,6 +3,7 @@
 
 Program::Program()
 {
+	Timer::GetInstance()->SetLockFPS(60);
 	SCENE->Init();
 }
 
