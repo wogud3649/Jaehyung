@@ -34,6 +34,8 @@ public:
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> GetRenderTarget() { return _renderTargetView; }
 	Microsoft::WRL::ComPtr<IDXGISwapChain> GetSwapChain() { return _swapChain; }
 
+	void SetMainRenderTarget();
+
 	void Clear();
 	void Present();
 

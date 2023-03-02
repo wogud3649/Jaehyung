@@ -1,10 +1,13 @@
 #pragma once
 class Quad
 {
-public:
+protected:
 	Quad();
+public:
 	Quad(wstring file);
 	Quad(wstring file, Vector2 size);
+	Quad(Vector2 size);
+
 	~Quad();
 
 	virtual void Update();
@@ -14,6 +17,7 @@ public:
 	virtual void CreateMaterial(wstring file);
 	virtual void CreateMesh();
 
+	void SetSRV(Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> srv);
 	void SetVS(shared_ptr<VertexShader> shader) { _vs = shader; }
 	void SetPS(shared_ptr<PixelShader> shader) { _ps = shader; }
 

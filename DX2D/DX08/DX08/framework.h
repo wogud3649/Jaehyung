@@ -64,6 +64,7 @@ using namespace DirectX;
 #include "Framework/Render/VertexShader.h"
 #include "Framework/Render/PixelShader.h"
 #include "Framework/Render/ShaderManager.h"
+#include "Framework/Render/RenderTarget.h"
 
 // Collider
 #include "Framework/Collider/Collider.h"

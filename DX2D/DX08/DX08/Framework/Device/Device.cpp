@@ -71,6 +71,11 @@ void Device::CreateDoubleBuffer()
     _deviceContext->OMSetRenderTargets(1, _renderTargetView.GetAddressOf(), nullptr);
 }
 
+void Device::SetMainRenderTarget()
+{
+    _deviceContext->OMSetRenderTargets(1, _renderTargetView.GetAddressOf(), nullptr);
+}
+
 void Device::Clear()
 {
     FLOAT myColorR = 0 / 255.0f;

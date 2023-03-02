@@ -38,6 +38,8 @@ void Program::Render()
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
 
+	Device::GetInstance()->SetMainRenderTarget();
+
 	ALPHA->SetState();
 
 	SCENE->Render();

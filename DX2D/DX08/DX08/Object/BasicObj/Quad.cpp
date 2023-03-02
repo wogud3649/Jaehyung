@@ -22,6 +22,18 @@ Quad::Quad(wstring file, Vector2 size)
     _transform = make_shared<Transform>();
 }
 
+Quad::Quad(Vector2 size)
+{
+    _size = size;
+
+    _vs = ADD_VS(L"Shader/TextureVertexShader.hlsl");
+    _ps = ADD_PS(L"Shader/TexturePixelShader.hlsl");
+
+    CreateMesh();
+
+    _transform = make_shared<Transform>();
+}
+
 Quad::~Quad()
 {
 }
@@ -104,4 +116,12 @@ void Quad::CreateMesh()
 
     _vertexBuffer = make_shared<VertexBuffer>(_vertices.data(), sizeof(Vertex), 4);
     _indexBuffer = make_shared<IndexBuffer>(_indices.data(), 6);
+}
+
+void Quad::SetSRV(Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> srv)
+{
+    if (_srv == nullptr)
+    {
+        _srv = make_shared<SRV>(srv);
+    }
 }
