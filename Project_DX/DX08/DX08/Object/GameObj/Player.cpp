@@ -16,10 +16,6 @@ Player::Player()
 	_bodyCol->GetTransform()->SetParent(_footCol->GetTransform());
 	_bodyCol->GetTransform()->MoveY(20.0f);
 
-	_headCol = make_shared<CircleCollider>(15);
-	_headCol->GetTransform()->SetParent(_footCol->GetTransform());
-	_headCol->GetTransform()->MoveY(40.0f);
-
 	for (auto row : _sprites)
 		for (auto sprite : row)
 			sprite->GetTransform()->SetParent(_bodyCol->GetTransform());
@@ -35,7 +31,6 @@ void Player::Update()
 {
 	_bodyCol->Update();
 	_footCol->Update();
-	_headCol->Update();
 
 	for (auto sprite : _sprites[_curSkul])
 		sprite->Update();
@@ -48,7 +43,6 @@ void Player::Render()
 {
 	_sprites[_curSkul][_curState]->SetActionClip(_actions[_curSkul][_curState]->GetCurClip());
 	_sprites[_curSkul][_curState]->Render();
-	_headCol->Render();
 	_footCol->Render();
 	_bodyCol->Render();
 }

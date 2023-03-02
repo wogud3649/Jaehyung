@@ -35,8 +35,8 @@ private:
 	vector<shared_ptr<Transform>> _transforms;
 	vector<shared_ptr<RectCollider>> _cols;
 	int _blockType = 0;
-	int _blockBasicNumber = 9;
-	int _blockPairNumber = 40;
+	int _blockBasicNumber = 2;
+	int _blockPairNumber = 100;
 	int _blockIndex = 0;
 	vector<bool> _activeBlocks = vector<bool>(_blockBasicNumber * _blockPairNumber, false);
 	

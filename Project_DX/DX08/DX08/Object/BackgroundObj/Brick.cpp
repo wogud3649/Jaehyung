@@ -30,7 +30,7 @@ void Brick::Update()
 			HIT_RESULT result = col->Block(_player.lock()->GetFootCollider());
 			if (result.dir == Direction::UP)
 				_player.lock()->Ground();
-			if (col->IsCollision(_player.lock()->GetHeadCollider()))
+			if (result.dir == Direction::DOWN)
 				_player.lock()->Beat();
 		}
 	}
@@ -53,7 +53,7 @@ void Brick::Render()
 
 void Brick::PostRender()
 {
-	ImGui::SliderInt("BlockType", &_blockType, 0, 8);
+	ImGui::SliderInt("BlockType", &_blockType, 0, _blockBasicNumber-1);
 }
 
 void Brick::Draw(Vector2 pos)
@@ -132,7 +132,7 @@ int Brick::SelectBlock(Vector2 pos)
 
 void Brick::CreateBlocks()
 {
-	_quad = make_shared<Quad>(L"Resources/Texture/Background/Brick.png", Vector2(3, 3));
+	_quad = make_shared<Quad>(L"Resources/Texture/Background/Brick.png", Vector2(2, 1));
 	_quad->SetVS(ADD_VS(L"Shader/InstancingVertexShader.hlsl"));
 	_quad->SetPS(ADD_PS(L"Shader/InstancingPixelShader.hlsl"));
 
@@ -152,47 +152,19 @@ void Brick::CreateBlocks()
 		switch (block)
 		{
 		case 0:
-			colSize = Vector2(15, 15);
-			colPos = Vector2(8, -8);
+			colSize = Vector2(30, 60);
+			colPos = Vector2(0, -15);
 			break;
 		case 1:
-			colSize = Vector2(30, 15);
-			colPos = Vector2(0, -8);
-			break;
-		case 2:
-			colSize = Vector2(15, 15);
-			colPos = Vector2(-8, -8);
-			break;
-		case 3:
-			colSize = Vector2(15, 30);
-			colPos = Vector2(8, 0);
-			break;
-		case 4:
-			colSize = Vector2(30, 30);
-			colPos = Vector2(0, 0);
-			break;
-		case 5:
-			colSize = Vector2(15, 30);
-			colPos = Vector2(-8, 0);
-			break;
-		case 6:
-			colSize = Vector2(15, 15);
-			colPos = Vector2(8, 8);
-			break;
-		case 7:
-			colSize = Vector2(30, 15);
-			colPos = Vector2(0, 8);
-			break;
-		case 8:
-			colSize = Vector2(15, 15);
-			colPos = Vector2(-8, 8);
+			colSize = Vector2(30, 40);
+			colPos = Vector2(0, -5);
 			break;
 		default:
 			break;
 		}
 
-		instanceData.maxFrame = Vector2(3.0f, 3.0f);
-		instanceData.curFrame = Vector2(block % 3, block / 3);
+		instanceData.maxFrame = Vector2(2.0f, 1.0f);
+		instanceData.curFrame = Vector2(block % 2, block / 1);
 		instanceData.matrix = XMMatrixTranspose(transform->GetMatrix());
 
 		_instanceDatas.emplace_back(instanceData);

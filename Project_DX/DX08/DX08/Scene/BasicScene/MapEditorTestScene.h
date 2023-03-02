@@ -28,8 +28,6 @@ private:
 	shared_ptr<Advanced_Player> _player;
 	bool _playerActive = false;
 
-	shared_ptr<Background> _background;
-
 	int _type = EditorType::DRAW;
 
 };

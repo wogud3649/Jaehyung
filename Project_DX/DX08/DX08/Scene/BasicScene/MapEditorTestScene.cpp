@@ -7,11 +7,6 @@ MapEditorTestScene::MapEditorTestScene()
 
 	_brick = make_shared<Brick>();
 	_brick->SetTarget(_player);
-
-	_background = make_shared<Background>();
-	_background->GetTransform()->SetPos(CENTER);
-	_background->GetTransform()->UpdateSRT();
-	_background->SetPlayer(_player);
 }
 
 MapEditorTestScene::~MapEditorTestScene()
@@ -28,7 +23,6 @@ void MapEditorTestScene::Fin()
 
 void MapEditorTestScene::Update()
 {
-	_background->Update();
 	_brick->Update();
 	if (_playerActive)
 		_player->Update();
@@ -86,7 +80,6 @@ void MapEditorTestScene::Render()
 
 void MapEditorTestScene::PreRender()
 {
-	_background->Render();
 	_brick->Render();
 }
 
