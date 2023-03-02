@@ -29,14 +29,16 @@ public:
 
 	int SelectBlock(Vector2 pos);
 
+
 private:
 	void CreateBlocks();
 	shared_ptr<Quad> _quad;
 	vector<shared_ptr<Transform>> _transforms;
 	vector<shared_ptr<RectCollider>> _cols;
+	Vector2 _size;
 	int _blockType = 0;
 	int _blockBasicNumber = 2;
-	int _blockPairNumber = 100;
+	int _blockPairNumber = 200;
 	int _blockIndex = 0;
 	vector<bool> _activeBlocks = vector<bool>(_blockBasicNumber * _blockPairNumber, false);
 	

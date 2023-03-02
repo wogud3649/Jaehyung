@@ -133,6 +133,7 @@ int Brick::SelectBlock(Vector2 pos)
 void Brick::CreateBlocks()
 {
 	_quad = make_shared<Quad>(L"Resources/Texture/Background/Brick.png", Vector2(2, 1));
+	_size = _quad->GetSize();
 	_quad->SetVS(ADD_VS(L"Shader/InstancingVertexShader.hlsl"));
 	_quad->SetPS(ADD_PS(L"Shader/InstancingPixelShader.hlsl"));
 

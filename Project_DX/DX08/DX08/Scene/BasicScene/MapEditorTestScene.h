@@ -30,5 +30,7 @@ private:
 
 	int _type = EditorType::DRAW;
 
+	bool _isClicked = false;
+
 };
 

@@ -46,7 +46,7 @@ void MapEditorTestScene::Update()
 	}
 	if (KEY_DOWN(VK_LBUTTON))
 	{
-		Vector2 tempPos = Vector2((int)(MOUSE_POS.x / 30) * 30, (int)(MOUSE_POS.y / 30) * 30);
+		Vector2 tempPos = Vector2((int)(MOUSE_POS.x / 30) * 30 + 15, (int)(MOUSE_POS.y / 30) * 30 + 15);
 		if (_type == EditorType::DRAG)
 		{
 			_selectedIndex = _brick->SelectBlock(tempPos);
@@ -54,7 +54,7 @@ void MapEditorTestScene::Update()
 	}
 	if (KEY_PRESS(VK_LBUTTON))
 	{
-		Vector2 tempPos = Vector2((int)(MOUSE_POS.x / 30) * 30, (int)(MOUSE_POS.y / 30) * 30);
+		Vector2 tempPos = Vector2((int)(MOUSE_POS.x / 30) * 30 + 15, (int)(MOUSE_POS.y / 30) * 30 + 15);
 		if (_type == EditorType::DRAW)
 		{
 			_brick->Draw(tempPos);
