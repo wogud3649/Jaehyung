@@ -27,6 +27,8 @@ public:
 	void Dead();
 	void Revive();
 
+	const float& GetJumpPower() { return _curJumpPower; }
+
 private:
 	void SetIdle();
 	void DashEnd();

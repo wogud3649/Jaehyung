@@ -18,6 +18,9 @@ public:
 	virtual void PreRender() override;
 	virtual void PostRender() override;
 
+	void Save();
+	void Load();
+
 private:
 	void ActivatePlayer();
 	void DeactivatePlayer();
@@ -31,6 +34,5 @@ private:
 	int _type = EditorType::DRAW;
 
 	bool _isClicked = false;
-
 };
 

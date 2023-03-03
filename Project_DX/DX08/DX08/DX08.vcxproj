@@ -151,6 +151,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Framework\Utility\BinaryWriter.h" />
+    <ClInclude Include="Framework\Utility\BinaryReader.h" />
     <ClInclude Include="Object\BackgroundObj\Brick.h" />
     <ClInclude Include="Framework\Camera\Camera.h" />
     <ClInclude Include="Framework\Utility\MathUtility.h" />
@@ -197,6 +199,8 @@
     <ClInclude Include="Types.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Framework\Utility\BinaryWriter.cpp" />
+    <ClCompile Include="Framework\Utility\BinaryReader.cpp" />
     <ClCompile Include="Object\BackgroundObj\Brick.cpp" />
     <ClCompile Include="Framework\Camera\Camera.cpp" />
     <ClCompile Include="Framework\Utility\MathUtility.cpp" />

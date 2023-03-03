@@ -214,10 +214,15 @@ HIT_RESULT RectCollider::TopBlock(shared_ptr<CircleCollider> other)
     HIT_RESULT result;
     if (IsAABB(other))
     {
-        float dir = other->GetTransform()->GetWorldPos().y - Top();
-        if (dir >= other->WorldRadius()-1)
+        float dir = other->GetTransform()->GetWorldPos().y - _transform->GetWorldPos().y;
+        float sum = other->WorldRadius() + _size.y * 0.5f;
+        if (dir < 0.0f)
         {
-            float sum = other->WorldRadius();
+            result.isHit = false;
+            return result;
+        }
+        if (sum >= dir)
+        {
             float overlap = sum - dir;
 
             other->GetTransform()->MoveY(overlap);

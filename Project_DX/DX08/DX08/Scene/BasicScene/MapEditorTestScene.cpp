@@ -46,7 +46,7 @@ void MapEditorTestScene::Update()
 	}
 	if (KEY_DOWN(VK_LBUTTON))
 	{
-		Vector2 tempPos = Vector2((int)(MOUSE_POS.x / 30) * 30 + 15, (int)(MOUSE_POS.y / 30) * 30 + 15);
+		Vector2 tempPos = Vector2((int)(MOUSE_POS.x / 60) * 60 + 30, (int)(MOUSE_POS.y / 60) * 60 + 30);
 		if (_type == EditorType::DRAG)
 		{
 			_selectedIndex = _brick->SelectBlock(tempPos);
@@ -54,7 +54,7 @@ void MapEditorTestScene::Update()
 	}
 	if (KEY_PRESS(VK_LBUTTON))
 	{
-		Vector2 tempPos = Vector2((int)(MOUSE_POS.x / 30) * 30 + 15, (int)(MOUSE_POS.y / 30) * 30 + 15);
+		Vector2 tempPos = Vector2((int)(MOUSE_POS.x / 60) * 60 + 30, (int)(MOUSE_POS.y / 60) * 60 + 30);
 		if (_type == EditorType::DRAW)
 		{
 			_brick->Draw(tempPos);
@@ -87,6 +87,25 @@ void MapEditorTestScene::PostRender()
 {
 	_brick->PostRender();
 	ImGui::SliderInt("Type", &(_type), EditorType::DRAW, EditorType::DRAG);
+	if (ImGui::Button("SAVE MAP", { 100, 30 }))
+	{
+		Save();
+	}
+	if (ImGui::Button("LOAD MAP", { 100, 30 }))
+	{
+		Load();
+	}
+
+}
+
+void MapEditorTestScene::Save()
+{
+	_brick->Save();
+}
+
+void MapEditorTestScene::Load()
+{
+	_brick->Load();
 }
 
 void MapEditorTestScene::ActivatePlayer()
