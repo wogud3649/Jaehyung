@@ -142,7 +142,7 @@ void Advanced_Player::Jump()
 {
 	if (KEY_DOWN('C'))
 	{
-		if (_curState == State::ATTACKA || _curState == State::ATTACKB || _curState == State::JUMPATTACK || _curState == State::SKILL)
+		if (_curState == State::ATTACKA || _curState == State::ATTACKB || _curState == State::JUMPATTACK || _curState == State::SKILL || _curState == State::DASH)
 			return;
 		if (_doubleJump)
 			return;

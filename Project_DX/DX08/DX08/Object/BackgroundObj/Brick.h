@@ -41,10 +41,9 @@ private:
 	vector<shared_ptr<RectCollider>> _cols;
 	Vector2 _size;
 	int _blockType = 0;
-	int _blockMatterType = 3;
 	int _blockShapeType = 2;
-	int _blockPairNumber = 100;
-	int _totalBlocks = _blockMatterType * _blockShapeType * _blockPairNumber;
+	int _blockPairNumber = 70;
+	int _totalBlocks = _blockShapeType * _blockPairNumber;
 	int _blockIndex = 0;
 	vector<bool> _activeBlocks = vector<bool>(_totalBlocks, false);
 	

@@ -12,6 +12,14 @@ BinaryReader::~BinaryReader()
 	CloseHandle(_file);
 }
 
+bool BinaryReader::Bool()
+{
+	int temp;
+	assert(ReadFile(_file, OUT & temp, sizeof(bool), OUT & _size, nullptr));
+
+	return temp;
+}
+
 int BinaryReader::Int()
 {
 	int temp;

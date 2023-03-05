@@ -20,7 +20,7 @@ void Brick::Update()
 	if (KEY_DOWN('4'))
 	{
 		_blockType++;
-		_blockType %= _blockMatterType * _blockShapeType;
+		_blockType %= _blockShapeType;
 	}
 
 	if (_player.expired() == false)
@@ -30,7 +30,7 @@ void Brick::Update()
 			if (_activeBlocks[i] == false)
 				continue;
 
-			int tempIdx = (i / _blockPairNumber) % _blockShapeType;
+			int tempIdx = i / _blockPairNumber;
 			if (tempIdx == 0)
 			{
 				HIT_RESULT result = _cols[i]->Block(_player.lock()->GetFootCollider());
@@ -68,7 +68,7 @@ void Brick::Render()
 
 void Brick::PostRender()
 {
-	ImGui::SliderInt("BlockType", &_blockType, 0, _blockMatterType * _blockShapeType - 1);
+	ImGui::SliderInt("BlockType", &_blockType, 0, _blockShapeType - 1);
 }
 
 void Brick::Draw(Vector2 pos)
@@ -149,36 +149,49 @@ void Brick::Save()
 {
 	BinaryWriter writer = BinaryWriter(L"Save/Blocks.block");
 
-	writer.Byte((void*)&_activeBlocks, sizeof(vector<bool>));
-	writer.Byte((void*)&_transforms, sizeof(vector<shared_ptr<Transform>>));
+	for (int i = 0; i < _activeBlocks.size(); i++)
+	{
+		bool tempBool = _activeBlocks[i];
+		writer.Bool(tempBool);
+		
+		if (tempBool)
+		{
+			Vector2 tempPos(_transforms[i]->GetPos());
+			writer.Int(tempPos.x);
+			writer.Int(tempPos.y);
+		}
+	}
 }
 
 void Brick::Load()
 {
-	//BinaryReader reader = BinaryReader(L"Save/Blocks.block");
+	BinaryReader reader = BinaryReader(L"Save/Blocks.block");
 
-	//reader.Byte((void**)&_activeBlocks, sizeof());
-	//reader.Byte((void**)&_transforms, sizeof(vector<shared_ptr<Transform>>));
+	for (int i = 0; i < _activeBlocks.size(); i++)
+	{
+		_activeBlocks[i] = reader.Bool();
 
-	//for (int i = 0; i < _activeBlocks.size(); i++)
-	//{
-	//	if (_activeBlocks[i] == false)
-	//		continue;
-
-	//	_transforms[i]->UpdateSRT();
-	//	_instanceDatas[i].matrix = XMMatrixTranspose(_transforms[i]->GetMatrix());
-	//	_instanceBuffer->Update();
-	//}
+		if (_activeBlocks[i])
+		{
+			Vector2 tempVector;
+			tempVector.x = reader.Int();
+			tempVector.y = reader.Int();
+			_transforms[i]->SetPos(tempVector);
+			_transforms[i]->UpdateSRT();
+			_instanceDatas[i].matrix = XMMatrixTranspose(_transforms[i]->GetMatrix());
+			_instanceBuffer->Update();
+		}
+	}
 }
 
 void Brick::CreateBlocks()
 {
-	_quad = make_shared<Quad>(L"Resources/Texture/Background/Blocks.png", Vector2(2, 3));
+	_quad = make_shared<Quad>(L"Resources/Texture/Background/Grass.png", Vector2(2, 1));
 	_size = _quad->GetSize();
 	_quad->SetVS(ADD_VS(L"Shader/InstancingVertexShader.hlsl"));
 	_quad->SetPS(ADD_PS(L"Shader/InstancingPixelShader.hlsl"));
 
-	for (int i = 0; i < _blockShapeType * _blockMatterType * _blockPairNumber; i++)
+	for (int i = 0; i < _blockShapeType * _blockPairNumber; i++)
 	{
 		Brick::InstanceData instanceData;
 
@@ -205,8 +218,8 @@ void Brick::CreateBlocks()
 			break;
 		}
 
-		instanceData.maxFrame = Vector2(_blockShapeType, _blockMatterType);
-		instanceData.curFrame = Vector2(block % _blockShapeType, block / _blockShapeType);
+		instanceData.maxFrame = Vector2(_blockShapeType, 1);
+		instanceData.curFrame = Vector2(block % _blockShapeType, 0);
 		instanceData.matrix = XMMatrixTranspose(transform->GetMatrix());
 
 		_instanceDatas.emplace_back(instanceData);

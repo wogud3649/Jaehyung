@@ -5,6 +5,7 @@ public:
 	BinaryReader(wstring path);
 	~BinaryReader();
 	
+	bool Bool();
 	int Int();
 	UINT UInt();
 	float Float();
