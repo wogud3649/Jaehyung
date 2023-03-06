@@ -79,6 +79,7 @@ using namespace DirectX;
 #include "Framework/Utility/Audio.h"
 #include "Framework/Utility/BinaryWriter.h"
 #include "Framework/Utility/BinaryReader.h"
+#include "Framework/Utility/DataManager.h"
 
 // Camera
 #include "Framework/Camera/Camera.h"

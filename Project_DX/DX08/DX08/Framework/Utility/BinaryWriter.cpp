@@ -12,6 +12,8 @@ BinaryWriter::~BinaryWriter()
 	CloseHandle(_file);
 }
 
+
+
 void BinaryWriter::Int(int data)
 {
 	WriteFile(_file, &data, sizeof(int), IN & _size, nullptr);

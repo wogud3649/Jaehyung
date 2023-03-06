@@ -61,6 +61,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     Audio::Create();
     Camera::Create();
     SceneManager::Create();
+    DataManager::Create();
 
     shared_ptr<Program> program = make_shared<Program>();
 
@@ -84,6 +85,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
     }
 
+    DataManager::Delete();
     SceneManager::Delete();
     Camera::Delete();
     Audio::Delete();

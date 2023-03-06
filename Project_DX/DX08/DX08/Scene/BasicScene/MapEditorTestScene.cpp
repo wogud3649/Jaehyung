@@ -48,7 +48,10 @@ void MapEditorTestScene::Update()
 	if (KEY_DOWN(VK_LBUTTON))
 	{
 		Vector2 mousePos = CAMERA->GetWorldMousePos();
-		Vector2 tempPos = Vector2((int)(mousePos.x / 60) * 60 + 30, (int)(mousePos.y / 60) * 60 + 30);
+		if (mousePos.y < 0)
+			mousePos.y -= 60;
+		Vector2 tempPos = Vector2((int)(mousePos.x / 60.0f) * 60 + 30, (int)(mousePos.y / 60.0f) * 60 + 30);
+
 		if (_type == EditorType::DRAG)
 		{
 			_selectedIndex = _brick->SelectBlock(tempPos);
@@ -57,7 +60,10 @@ void MapEditorTestScene::Update()
 	if (KEY_PRESS(VK_LBUTTON))
 	{
 		Vector2 mousePos = CAMERA->GetWorldMousePos();
-		Vector2 tempPos = Vector2((int)(mousePos.x / 60) * 60 + 30, (int)(mousePos.y / 60) * 60 + 30);
+		if (mousePos.y < 0)
+			mousePos.y -= 60;
+		Vector2 tempPos = Vector2((int)(mousePos.x / 60.0f) * 60 + 30, (int)(mousePos.y / 60.0f) * 60 + 30);
+
 		if (_type == EditorType::DRAW)
 		{
 			_brick->Draw(tempPos);

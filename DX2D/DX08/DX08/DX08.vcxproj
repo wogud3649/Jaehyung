@@ -151,6 +151,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Framework\Utility\DataManager.h" />
+    <ClInclude Include="Scene\BasicScene\InventoryScene.h" />
     <ClInclude Include="Object\UI\Button.h" />
     <ClInclude Include="Framework\Render\RenderTarget.h" />
     <ClInclude Include="Scene\SceneManager.h" />
@@ -220,6 +222,8 @@
     <ClInclude Include="Object\GameObj\Zelda\Zelda.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Framework\Utility\DataManager.cpp" />
+    <ClCompile Include="Scene\BasicScene\InventoryScene.cpp" />
     <ClCompile Include="Object\UI\Button.cpp" />
     <ClCompile Include="Framework\Render\RenderTarget.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />

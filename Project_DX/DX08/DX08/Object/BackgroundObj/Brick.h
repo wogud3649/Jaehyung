@@ -4,9 +4,8 @@ class Brick
 public:
 	struct BlockData
 	{
+		int index;
 		Vector2 pos;
-		Direction sortx;
-		Direction sorty;
 	};
 	struct InstanceData
 	{

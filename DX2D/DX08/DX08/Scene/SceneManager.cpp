@@ -10,14 +10,15 @@
 #include "../Scene/BasicScene/CupHeadScene.h"
 #include "../Scene/BasicScene/EffectScene.h"
 #include "../Scene/BasicScene/CupMapToolScene.h"
+#include "../Scene/BasicScene/InventoryScene.h"
 
 SceneManager* SceneManager::_instance = nullptr;
 
 SceneManager::SceneManager()
 {
-	_sceneTable["CupHeadScene"] = make_shared<CupHeadScene>();
+	_sceneTable["InventoryScene"] = make_shared<InventoryScene>();
 	
-	_curScene = _sceneTable["CupHeadScene"];
+	_curScene = _sceneTable["InventoryScene"];
 }
 
 SceneManager::~SceneManager()

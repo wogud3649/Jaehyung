@@ -159,47 +159,45 @@ int Brick::SelectBlock(Vector2 pos)
 
 void Brick::Save()
 {
-	BinaryWriter writer = BinaryWriter(L"Maps/GrassField2.map");
-	Vector2 tempPos;
+	BinaryWriter writer = BinaryWriter(L"Maps/Field4.map");
+
+	vector<BlockData> datas;
+	BlockData temp;
+	UINT size = 0;
 
 	for (int i = 0; i < _activeBlocks.size(); i++)
 	{
 		if (_activeBlocks[i])
 		{
-			writer.Int(i);
-
-			tempPos = _transforms[i]->GetPos();
-			writer.Int(tempPos.x);
-			writer.Int(tempPos.y);
+			temp.index = i;
+			temp.pos = _transforms[i]->GetPos();
+			datas.emplace_back(temp);
+			size++;
 		}
 	}
 
-	writer.Int(-2147483647);
+	writer.UInt(size);
+	writer.Byte(&datas[0], sizeof(BlockData) * size);
 
-	tempPos = _spawnPoint->GetTransform()->GetPos();
-	writer.Int(tempPos.x);
-	writer.Int(tempPos.y);
+	Vector2 tempPos = _spawnPoint->GetTransform()->GetPos();
+	writer.Byte(&tempPos, sizeof(Vector2));
 }
 
 void Brick::Load()
 {
-	BinaryReader reader = BinaryReader(L"Maps/GrassField2.map");
+	BinaryReader reader = BinaryReader(L"Maps/Field4.map");
+
+	UINT size = reader.UInt();
+	vector<BlockData> datas;
+	datas.reserve(size);
+
+	void* ptr = &datas[0];
+	
+	reader.Byte((void**)&ptr, sizeof(BlockData) * size);
+
+	// TODO
+
 	Vector2 tempVector;
-
-	while(true)
-	{
-		int index = reader.Int();
-		if (index == -2147483647)
-			break;
-		_activeBlocks[index] = true;
-
-		tempVector.x = reader.Int();
-		tempVector.y = reader.Int();
-		_transforms[index]->SetPos(tempVector);
-		_transforms[index]->UpdateSRT();
-		_instanceDatas[index].matrix = XMMatrixTranspose(_transforms[index]->GetMatrix());
-		_instanceBuffer->Update();
-	}
 
 	tempVector.x = reader.Int();
 	tempVector.y = reader.Int();

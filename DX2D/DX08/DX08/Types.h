@@ -61,3 +61,17 @@ struct HIT_RESULT
 	bool isHit;
 	Direction dir = NONE;
 };
+
+struct ItemInfo
+{
+	ItemInfo() {}
+	ItemInfo(string name, int price, int atk, int def, int rare)
+	: name(name), price(price), atk(atk), def(def), rare(rare)
+	{}
+
+	string name;
+	int price = 0;
+	int atk = 0;
+	int def = 0;
+	int rare = 0;
+};
