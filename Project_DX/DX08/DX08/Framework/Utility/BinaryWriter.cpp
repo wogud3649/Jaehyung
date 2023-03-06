@@ -12,11 +12,6 @@ BinaryWriter::~BinaryWriter()
 	CloseHandle(_file);
 }
 
-void BinaryWriter::Bool(bool data)
-{
-	WriteFile(_file, &data, sizeof(bool), IN & _size, nullptr);
-}
-
 void BinaryWriter::Int(int data)
 {
 	WriteFile(_file, &data, sizeof(int), IN & _size, nullptr);

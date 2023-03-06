@@ -198,6 +198,7 @@
     <ClInclude Include="Framework\Utility\Timer.h" />
     <ClInclude Include="Scene\BasicScene\TestScene.h" />
     <ClInclude Include="Types.h" />
+    <ClInclude Include="Object\GameObj\Boss\Yggdrasil.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Framework\Utility\BinaryWriter.cpp" />
@@ -251,6 +252,7 @@
     <ClCompile Include="Framework\Render\Shader.cpp" />
     <ClCompile Include="Framework\Render\ShaderManager.cpp" />
     <ClCompile Include="Scene\BasicScene\TestScene.cpp" />
+    <ClCompile Include="Object\GameObj\Boss\Yggdrasil.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX08.rc" />

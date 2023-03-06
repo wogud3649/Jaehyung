@@ -29,13 +29,8 @@ private:
 
 	shared_ptr<Brick> _brick;
 	int _selectedIndex;
-	
-	Vector2 _playerSpawnPos;
-	shared_ptr<Quad> _quad;
 
 	int _type = EditorType::DRAW;
-
-	bool _isClicked = false;
 
 	vector<Vector2> _monsterSpawnPos;
 

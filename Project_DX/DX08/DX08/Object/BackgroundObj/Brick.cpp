@@ -4,6 +4,9 @@
 Brick::Brick()
 {
 	CreateBlocks();
+
+	_spawnPoint = make_shared<Quad>(L"Resources/Texture/SKUL/SkulDead.png");
+	_spawnPoint->GetTransform()->SetPos(Vector2(-30, -30));
 }
 
 Brick::~Brick()
@@ -12,12 +15,14 @@ Brick::~Brick()
 
 void Brick::Update()
 {
+	_spawnPoint->Update();
+
 	for (const auto& col : _cols)
 	{
 		col->Update();
 	}
 
-	if (KEY_DOWN('4'))
+	if (KEY_DOWN('E'))
 	{
 		_blockType++;
 		_blockType %= _blockShapeType;
@@ -54,6 +59,8 @@ void Brick::Update()
 
 void Brick::Render()
 {
+	_spawnPoint->Render();
+
 	_instanceBuffer->IASet(1);
 
 	_quad->SetRender();
@@ -130,6 +137,11 @@ void Brick::Drag(int index, Vector2 pos)
 	_activeBlocks[index] = true;
 }
 
+void Brick::SetSpawnPoint(Vector2 pos)
+{
+	_spawnPoint->GetTransform()->SetPos(pos);
+}
+
 int Brick::SelectBlock(Vector2 pos)
 {
 	for (int i = 0; i < _activeBlocks.size(); i++)
@@ -147,41 +159,51 @@ int Brick::SelectBlock(Vector2 pos)
 
 void Brick::Save()
 {
-	BinaryWriter writer = BinaryWriter(L"Save/Blocks.block");
+	BinaryWriter writer = BinaryWriter(L"Maps/GrassField2.map");
+	Vector2 tempPos;
 
 	for (int i = 0; i < _activeBlocks.size(); i++)
 	{
-		bool tempBool = _activeBlocks[i];
-		writer.Bool(tempBool);
-		
-		if (tempBool)
+		if (_activeBlocks[i])
 		{
-			Vector2 tempPos(_transforms[i]->GetPos());
+			writer.Int(i);
+
+			tempPos = _transforms[i]->GetPos();
 			writer.Int(tempPos.x);
 			writer.Int(tempPos.y);
 		}
 	}
+
+	writer.Int(-2147483647);
+
+	tempPos = _spawnPoint->GetTransform()->GetPos();
+	writer.Int(tempPos.x);
+	writer.Int(tempPos.y);
 }
 
 void Brick::Load()
 {
-	BinaryReader reader = BinaryReader(L"Save/Blocks.block");
+	BinaryReader reader = BinaryReader(L"Maps/GrassField2.map");
+	Vector2 tempVector;
 
-	for (int i = 0; i < _activeBlocks.size(); i++)
+	while(true)
 	{
-		_activeBlocks[i] = reader.Bool();
+		int index = reader.Int();
+		if (index == -2147483647)
+			break;
+		_activeBlocks[index] = true;
 
-		if (_activeBlocks[i])
-		{
-			Vector2 tempVector;
-			tempVector.x = reader.Int();
-			tempVector.y = reader.Int();
-			_transforms[i]->SetPos(tempVector);
-			_transforms[i]->UpdateSRT();
-			_instanceDatas[i].matrix = XMMatrixTranspose(_transforms[i]->GetMatrix());
-			_instanceBuffer->Update();
-		}
+		tempVector.x = reader.Int();
+		tempVector.y = reader.Int();
+		_transforms[index]->SetPos(tempVector);
+		_transforms[index]->UpdateSRT();
+		_instanceDatas[index].matrix = XMMatrixTranspose(_transforms[index]->GetMatrix());
+		_instanceBuffer->Update();
 	}
+
+	tempVector.x = reader.Int();
+	tempVector.y = reader.Int();
+	_spawnPoint->GetTransform()->SetPos(tempVector);
 }
 
 void Brick::CreateBlocks()

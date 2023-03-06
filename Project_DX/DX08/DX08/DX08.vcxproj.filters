@@ -156,6 +156,9 @@
     <ClInclude Include="Scene\BasicScene\GrassMapScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Object\GameObj\Boss\Yggdrasil.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DX08.cpp">
@@ -282,6 +285,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Scene\BasicScene\GrassMapScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\GameObj\Boss\Yggdrasil.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

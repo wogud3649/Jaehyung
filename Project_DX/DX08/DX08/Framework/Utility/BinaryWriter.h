@@ -5,7 +5,6 @@ public:
 	BinaryWriter(wstring path);
 	~BinaryWriter();
 
-	void Bool(bool data);
 	void Int(int data);
 	void UInt(UINT data);
 	void Float(float data);

@@ -8,9 +8,6 @@ MapEditorTestScene::MapEditorTestScene()
 
 	_brick = make_shared<Brick>();
 
-	_quad = make_shared<Quad>(L"Resources/Texture/SKUL/SkulDead.png");
-	_quad->GetTransform()->SetPos(Vector2(-30, -30));
-
 	CAMERA->SetOffset(CENTER);
 	CAMERA->SetLeftBottom(_background->LeftBottom());
 	CAMERA->SetRightTop(_background->RightTop());
@@ -31,7 +28,6 @@ void MapEditorTestScene::Fin()
 void MapEditorTestScene::Update()
 {
 	_brick->Update();
-	_quad->Update();
 
 	if (KEY_DOWN(VK_F2))
 		ActivatePlayer();
@@ -39,17 +35,16 @@ void MapEditorTestScene::Update()
 		DeactivatePlayer();
 
 	if (KEY_DOWN('1'))
-	{
 		_type = EditorType::DRAW;
-	}
-	if (KEY_DOWN('2'))
-	{
+	else if (KEY_DOWN('2'))
 		_type = EditorType::ERASE;
-	}
-	if (KEY_DOWN('3'))
-	{
+	else if (KEY_DOWN('3'))
 		_type = EditorType::DRAG;
-	}
+	else if (KEY_DOWN('4'))
+		_type = EditorType::PLAYERSPAWN;
+	else if (KEY_DOWN('5'))
+		_type = EditorType::MONSTERSPAWN;
+
 	if (KEY_DOWN(VK_LBUTTON))
 	{
 		Vector2 mousePos = CAMERA->GetWorldMousePos();
@@ -80,14 +75,13 @@ void MapEditorTestScene::Update()
 		}
 		else if (_type == EditorType::PLAYERSPAWN)
 		{
-			_quad->GetTransform()->SetPos(tempPos);
+			_brick->SetSpawnPoint(tempPos);
 		}
 	}
 }
 
 void MapEditorTestScene::Render()
 {
-	_quad->Render();
 }
 
 void MapEditorTestScene::PreRender()
@@ -99,7 +93,7 @@ void MapEditorTestScene::PreRender()
 void MapEditorTestScene::PostRender()
 {
 	_brick->PostRender();
-	ImGui::SliderInt("Type", &(_type), EditorType::DRAW, EditorType::MONSTERSPAWN);
+	ImGui::SliderInt("EDIT MODE", &_type, EditorType::DRAW, EditorType::MONSTERSPAWN);
 	if (ImGui::Button("SAVE MAP", { 100, 30 }))
 	{
 		Save();
@@ -114,6 +108,7 @@ void MapEditorTestScene::PostRender()
 void MapEditorTestScene::Save()
 {
 	_brick->Save();
+	BinaryWriter writer = BinaryWriter(L"Save/PlayerSpqwn.block");
 }
 
 void MapEditorTestScene::Load()

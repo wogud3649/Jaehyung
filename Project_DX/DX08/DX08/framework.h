@@ -100,6 +100,9 @@ using namespace DirectX;
 #include "Object/GameObj/Player.h"
 #include "Object/GameObj/Advanced_Player.h"
 
+// Boss
+#include "Object/GameObj/Boss/Yggdrasil.h"
+
 // BackGroundObject
 #include "Object/BackgroundObj/Floor.h"
 #include "Object/BackgroundObj/Background.h"

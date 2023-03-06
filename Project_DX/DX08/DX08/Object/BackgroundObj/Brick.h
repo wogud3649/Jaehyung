@@ -25,6 +25,7 @@ public:
 	void Draw(Vector2 pos);
 	void Erase(Vector2 pos);
 	void Drag(int index, Vector2 pos);
+	void SetSpawnPoint(Vector2 pos);
 	void SetTarget(shared_ptr<Advanced_Player> player) { _player = player; }
 
 	int SelectBlock(Vector2 pos);
@@ -53,5 +54,8 @@ private:
 	Vector2 _outPos = Vector2(-30, -30);
 
 	weak_ptr<Advanced_Player> _player;
+
+	Vector2 _playerSpawnPos;
+	shared_ptr<Quad> _spawnPoint;
 };
 
