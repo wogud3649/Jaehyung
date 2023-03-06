@@ -3,31 +3,13 @@
 
 Background::Background()
 {
-	_background = make_shared<Quad>(L"Resources/Texture/BackGround/Background.png");
-	_backgroundSize = _background->GetSize();
+	_background = make_shared<Quad>(L"Resources/Texture/BackGround/GrayBackground.png");
+	Vector2 size = _background->GetSize();
+	Vector2 tempPos = Vector2(size.x * 0.5f, -size.y * 0.5f + WIN_HEIGHT);
 
-	for (int i = 0; i < _poolCountFloor; i++)
-		_floors.emplace_back(make_shared<Floor>());
-	for (auto floor : _floors)
-		floor->GetCollider()->GetTransform()->SetParent(_background->GetTransform());
+	_background->GetTransform()->SetPos(tempPos);
+	_backgroundSize = size;
 
-	float floorHeight = 80 - _backgroundSize.y * 0.5;
-
-	_floors[0]->GetCollider()->GetTransform()->MoveY(floorHeight);
-	_floors[0]->GetCollider()->GetTransform()->MoveX(-1024);
-
-	_floors[1]->GetCollider()->GetTransform()->MoveY(floorHeight);
-	_floors[1]->GetCollider()->GetTransform()->MoveX(-512);
-
-	_floors[2]->GetCollider()->GetTransform()->MoveY(floorHeight);
-
-	_floors[3]->GetCollider()->GetTransform()->MoveY(floorHeight);
-	_floors[3]->GetCollider()->GetTransform()->MoveX(512);
-
-	_floors[4]->GetCollider()->GetTransform()->MoveY(floorHeight);
-	_floors[4]->GetCollider()->GetTransform()->MoveX(1024);
-
-	_floors[5]->GetCollider()->GetTransform()->MoveY(floorHeight * 0.5);
 }
 
 Background::~Background()
@@ -37,30 +19,11 @@ Background::~Background()
 void Background::Update()
 {
 	_background->Update();
-	for (auto floor : _floors)
-		floor->Update();
-
-	if (_player.expired() == false)
-	{
-		for (auto floor : _floors)
-		{
-			HIT_RESULT result = floor->GetHIT_RESULT(_player.lock()->GetFootCollider());
-			if (result.isHit == false)
-				continue;
-
-			if (result.dir == Direction::UP)
-				_player.lock()->Ground();
-			else if (result.dir == Direction::DOWN)
-				_player.lock()->Beat();
-		}
-	}
 }
 
 void Background::Render()
 {
 	_background->Render();
-	for (auto floor : _floors)
-		floor->Render();
 }
 
 Vector2 Background::LeftBottom()

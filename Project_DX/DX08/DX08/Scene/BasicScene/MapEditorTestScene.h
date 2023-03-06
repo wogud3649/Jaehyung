@@ -6,7 +6,9 @@ public:
 	{
 		DRAW,
 		ERASE,
-		DRAG
+		DRAG,
+		PLAYERSPAWN,
+		MONSTERSPAWN
 	};
 	MapEditorTestScene();
 	virtual ~MapEditorTestScene();
@@ -28,11 +30,15 @@ private:
 	shared_ptr<Brick> _brick;
 	int _selectedIndex;
 	
-	shared_ptr<Advanced_Player> _player;
-	bool _playerActive = false;
+	Vector2 _playerSpawnPos;
+	shared_ptr<Quad> _quad;
 
 	int _type = EditorType::DRAW;
 
 	bool _isClicked = false;
+
+	vector<Vector2> _monsterSpawnPos;
+
+	shared_ptr<Background> _background;
 };
 

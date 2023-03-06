@@ -108,14 +108,14 @@ void Camera::FreeMode()
 {
 	if (KEY_PRESS(VK_RBUTTON))
 	{
-		if (KEY_PRESS('W'))
-			_transform->MoveY( -_speed * DELTA_TIME);
-		if (KEY_PRESS('S'))
-			_transform->MoveY(_speed * DELTA_TIME);
-		if (KEY_PRESS('A'))
-			_transform->MoveX(_speed * DELTA_TIME);
-		if (KEY_PRESS('D'))
-			_transform->MoveX(-_speed * DELTA_TIME);
+		if (KEY_DOWN('W'))
+			_transform->MoveY(-_speed);
+		if (KEY_DOWN('S'))
+			_transform->MoveY(_speed);
+		if (KEY_DOWN('A'))
+			_transform->MoveX(_speed);
+		if (KEY_DOWN('D'))
+			_transform->MoveX(-_speed);
 	}
 }
 

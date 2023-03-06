@@ -3,10 +3,17 @@
 
 MapEditorTestScene::MapEditorTestScene()
 {
-	_player = make_shared<Advanced_Player>();
+	_background = make_shared<Background>();
+	_background->Update();
 
 	_brick = make_shared<Brick>();
-	_brick->SetTarget(_player);
+
+	_quad = make_shared<Quad>(L"Resources/Texture/SKUL/SkulDead.png");
+	_quad->GetTransform()->SetPos(Vector2(-30, -30));
+
+	CAMERA->SetOffset(CENTER);
+	CAMERA->SetLeftBottom(_background->LeftBottom());
+	CAMERA->SetRightTop(_background->RightTop());
 }
 
 MapEditorTestScene::~MapEditorTestScene()
@@ -24,8 +31,7 @@ void MapEditorTestScene::Fin()
 void MapEditorTestScene::Update()
 {
 	_brick->Update();
-	if (_playerActive)
-		_player->Update();
+	_quad->Update();
 
 	if (KEY_DOWN(VK_F2))
 		ActivatePlayer();
@@ -46,7 +52,8 @@ void MapEditorTestScene::Update()
 	}
 	if (KEY_DOWN(VK_LBUTTON))
 	{
-		Vector2 tempPos = Vector2((int)(MOUSE_POS.x / 60) * 60 + 30, (int)(MOUSE_POS.y / 60) * 60 + 30);
+		Vector2 mousePos = CAMERA->GetWorldMousePos();
+		Vector2 tempPos = Vector2((int)(mousePos.x / 60) * 60 + 30, (int)(mousePos.y / 60) * 60 + 30);
 		if (_type == EditorType::DRAG)
 		{
 			_selectedIndex = _brick->SelectBlock(tempPos);
@@ -54,7 +61,8 @@ void MapEditorTestScene::Update()
 	}
 	if (KEY_PRESS(VK_LBUTTON))
 	{
-		Vector2 tempPos = Vector2((int)(MOUSE_POS.x / 60) * 60 + 30, (int)(MOUSE_POS.y / 60) * 60 + 30);
+		Vector2 mousePos = CAMERA->GetWorldMousePos();
+		Vector2 tempPos = Vector2((int)(mousePos.x / 60) * 60 + 30, (int)(mousePos.y / 60) * 60 + 30);
 		if (_type == EditorType::DRAW)
 		{
 			_brick->Draw(tempPos);
@@ -70,23 +78,28 @@ void MapEditorTestScene::Update()
 
 			_brick->Drag(_selectedIndex, tempPos);
 		}
+		else if (_type == EditorType::PLAYERSPAWN)
+		{
+			_quad->GetTransform()->SetPos(tempPos);
+		}
 	}
 }
 
 void MapEditorTestScene::Render()
 {
-	_player->Render();
+	_quad->Render();
 }
 
 void MapEditorTestScene::PreRender()
 {
+	_background->Render();
 	_brick->Render();
 }
 
 void MapEditorTestScene::PostRender()
 {
 	_brick->PostRender();
-	ImGui::SliderInt("Type", &(_type), EditorType::DRAW, EditorType::DRAG);
+	ImGui::SliderInt("Type", &(_type), EditorType::DRAW, EditorType::MONSTERSPAWN);
 	if (ImGui::Button("SAVE MAP", { 100, 30 }))
 	{
 		Save();
@@ -110,11 +123,8 @@ void MapEditorTestScene::Load()
 
 void MapEditorTestScene::ActivatePlayer()
 {
-	_player->GetFootCollider()->GetTransform()->SetPos(CENTER);
-	_playerActive = true;
 }
 
 void MapEditorTestScene::DeactivatePlayer()
 {
-	_playerActive = false;
 }
