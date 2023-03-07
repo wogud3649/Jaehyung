@@ -20,6 +20,8 @@ public:
 	void AddAngle(float angle)		{ _angle += angle; }
 
 	void SetPos(Vector2 pos)		{ _pos = pos; }
+	void SetX(float x)				{ _pos.x = x; }
+	void SetY(float y)				{ _pos.y = y; }
 	void Move(Vector2 vector)		{ _pos += vector; }
 	void MoveX(float distance)		{ _pos.x += distance; }
 	void MoveY(float distance)		{ _pos.y += distance; }

@@ -25,12 +25,14 @@ public:
 	void Erase(Vector2 pos);
 	void Drag(int index, Vector2 pos);
 	void SetSpawnPoint(Vector2 pos);
-	void SetTarget(shared_ptr<Advanced_Player> player) { _player = player; }
 
 	int SelectBlock(Vector2 pos);
 
 	void Save();
 	void Load();
+
+	Vector2 GetPlayerPos() { return _playerSpawnPos; }
+	Vector2 GetSize() { return _size; }
 
 private:
 	void CreateBlocks();
@@ -38,11 +40,10 @@ private:
 
 	shared_ptr<Quad> _quad;
 	vector<shared_ptr<Transform>> _transforms;
-	vector<shared_ptr<RectCollider>> _cols;
 	Vector2 _size;
 	int _blockType = 0;
 	int _blockShapeType = 2;
-	int _blockPairNumber = 150;
+	int _blockPairNumber = 90;
 	int _totalBlocks = _blockShapeType * _blockPairNumber;
 	int _blockIndex = 0;
 	vector<bool> _activeBlocks = vector<bool>(_totalBlocks, false);
@@ -50,9 +51,7 @@ private:
 	vector<InstanceData> _instanceDatas;
 	shared_ptr<VertexBuffer> _instanceBuffer;
 
-	Vector2 _outPos = Vector2(-30, -30);
-
-	weak_ptr<Advanced_Player> _player;
+	Vector2 _outPos = Vector2(-50, -50);
 
 	Vector2 _playerSpawnPos;
 	shared_ptr<Quad> _spawnPoint;

@@ -4,12 +4,14 @@
 #include "../Scene/BasicScene/TestScene.h"
 #include "../Scene/BasicScene/MapEditorTestScene.h"
 #include "../Scene/BasicScene/GrassMapScene.h"
+#include "../Scene/BasicScene/BossScene.h"
 
 SceneManager* SceneManager::_instance = nullptr;
 SceneManager::SceneManager()
 {
 	//_sceneTable["TestScene"] = make_shared<TestScene>();
 	_sceneTable["MapEditorTestScene"] = make_shared<MapEditorTestScene>();
+	//_sceneTable["BossScene"] = make_shared<BossScene>();
 
 	_curScene = _sceneTable["MapEditorTestScene"];
 }

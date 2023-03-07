@@ -1,0 +1,15 @@
+#pragma once
+class BossScene : public Scene
+{
+public:
+	BossScene();
+	~BossScene();
+
+	virtual void Update() override;
+	virtual void Render() override;
+	virtual void PreRender() override;
+private:
+	shared_ptr<Brick> _brick;
+	shared_ptr<Advanced_Player> _player;
+};
+

@@ -7,7 +7,6 @@ GrassMapScene::GrassMapScene()
 	_player->GetFootCollider()->GetTransform()->SetPos(CENTER);
 
 	_brick = make_shared<Brick>();
-	_brick->SetTarget(_player);
 	_brick->Load();
 }
 

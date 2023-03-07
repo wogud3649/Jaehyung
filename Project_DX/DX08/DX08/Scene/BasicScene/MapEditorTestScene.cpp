@@ -3,14 +3,7 @@
 
 MapEditorTestScene::MapEditorTestScene()
 {
-	_background = make_shared<Background>();
-	_background->Update();
-
 	_brick = make_shared<Brick>();
-
-	CAMERA->SetOffset(CENTER);
-	CAMERA->SetLeftBottom(_background->LeftBottom());
-	CAMERA->SetRightTop(_background->RightTop());
 }
 
 MapEditorTestScene::~MapEditorTestScene()
@@ -27,6 +20,11 @@ void MapEditorTestScene::Fin()
 
 void MapEditorTestScene::Update()
 {
+	for (const auto& block : _blocks)
+		block->Update();
+	for (const auto& floor : _floors)
+		floor->Update();
+
 	_brick->Update();
 
 	if (KEY_DOWN(VK_F2))
@@ -44,25 +42,29 @@ void MapEditorTestScene::Update()
 		_type = EditorType::PLAYERSPAWN;
 	else if (KEY_DOWN('5'))
 		_type = EditorType::MONSTERSPAWN;
+	else if (KEY_DOWN('6'))
+		_type = EditorType::BLOCKCOLLIDER;
+	else if (KEY_DOWN('7'))
+		_type = EditorType::FLOORCOLLIDER;
 
 	if (KEY_DOWN(VK_LBUTTON))
 	{
 		Vector2 mousePos = CAMERA->GetWorldMousePos();
-		if (mousePos.y < 0)
-			mousePos.y -= 60;
-		Vector2 tempPos = Vector2((int)(mousePos.x / 60.0f) * 60 + 30, (int)(mousePos.y / 60.0f) * 60 + 30);
+		Vector2 tempPos = Vector2((int)(mousePos.x / 100.0f) * 100 + 50, (int)(mousePos.y / 100.0f) * 100 + 50);
 
 		if (_type == EditorType::DRAG)
 		{
 			_selectedIndex = _brick->SelectBlock(tempPos);
 		}
+		else if (_type == EditorType::BLOCKCOLLIDER || _type == EditorType::FLOORCOLLIDER)
+		{
+			_startPos = tempPos;
+		}
 	}
 	if (KEY_PRESS(VK_LBUTTON))
 	{
 		Vector2 mousePos = CAMERA->GetWorldMousePos();
-		if (mousePos.y < 0)
-			mousePos.y -= 60;
-		Vector2 tempPos = Vector2((int)(mousePos.x / 60.0f) * 60 + 30, (int)(mousePos.y / 60.0f) * 60 + 30);
+		Vector2 tempPos = Vector2((int)(mousePos.x / 100.0f) * 100 + 50, (int)(mousePos.y / 100.0f) * 100 + 50);
 
 		if (_type == EditorType::DRAW)
 		{
@@ -84,22 +86,55 @@ void MapEditorTestScene::Update()
 			_brick->SetSpawnPoint(tempPos);
 		}
 	}
+
+	if (KEY_UP(VK_LBUTTON))
+	{
+		Vector2 mousePos = CAMERA->GetWorldMousePos();
+		Vector2 tempPos = Vector2((int)(mousePos.x / 100.0f) * 100 + 50, (int)(mousePos.y / 100.0f) * 100 + 50);
+		_endPos = tempPos;
+
+		if (_type == EditorType::BLOCKCOLLIDER)
+		{
+			shared_ptr<RectCollider> rect = make_shared<RectCollider>(Vector2(abs(_endPos.x - _startPos.x) + _brick->GetSize().x, abs(_endPos.y - _startPos.y) + _brick->GetSize().y + 20));
+			_blocks.emplace_back(rect);
+			_blocks.back()->GetTransform()->SetPos(Vector2((_endPos.x + _startPos.x) * 0.5f,(_endPos.y + _startPos.y) * 0.5f - 10.0f));
+		}
+		else if (_type == EditorType::FLOORCOLLIDER)
+		{
+			shared_ptr<RectCollider> rect = make_shared<RectCollider>(Vector2(abs(_endPos.x - _startPos.x) + _brick->GetSize().x, abs(_endPos.y - _startPos.y) + _brick->GetSize().y));
+			_floors.emplace_back(rect);
+			_floors.back()->GetTransform()->SetPos((_endPos + _startPos) * 0.5f);
+		}
+	}
+
+	if (KEY_PRESS(VK_LCONTROL) && KEY_PRESS('Z'))
+	{
+		_blocks.pop_back();
+		// TODO
+	}
+	if (KEY_DOWN(VK_CONTROL) && KEY_DOWN('X'))
+	{
+		_floors.pop_back();
+	}
 }
 
 void MapEditorTestScene::Render()
 {
+	for (const auto& block : _blocks)
+		block->Render();
+	for (const auto& floor : _floors)
+		floor->Render();
 }
 
 void MapEditorTestScene::PreRender()
 {
-	_background->Render();
 	_brick->Render();
 }
 
 void MapEditorTestScene::PostRender()
 {
 	_brick->PostRender();
-	ImGui::SliderInt("EDIT MODE", &_type, EditorType::DRAW, EditorType::MONSTERSPAWN);
+	ImGui::SliderInt("EDIT MODE", &_type, EditorType::DRAW, EditorType::BLOCKCOLLIDER);
 	if (ImGui::Button("SAVE MAP", { 100, 30 }))
 	{
 		Save();
@@ -114,7 +149,6 @@ void MapEditorTestScene::PostRender()
 void MapEditorTestScene::Save()
 {
 	_brick->Save();
-	BinaryWriter writer = BinaryWriter(L"Save/PlayerSpqwn.block");
 }
 
 void MapEditorTestScene::Load()

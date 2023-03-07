@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Scene\BasicScene\BossScene.h" />
     <ClInclude Include="Framework\Utility\BinaryWriter.h" />
     <ClInclude Include="Framework\Utility\BinaryReader.h" />
     <ClInclude Include="Scene\BasicScene\GrassMapScene.h" />
@@ -201,6 +202,7 @@
     <ClInclude Include="Object\GameObj\Boss\Yggdrasil.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Scene\BasicScene\BossScene.cpp" />
     <ClCompile Include="Framework\Utility\BinaryWriter.cpp" />
     <ClCompile Include="Framework\Utility\BinaryReader.cpp" />
     <ClCompile Include="Scene\BasicScene\GrassMapScene.cpp" />

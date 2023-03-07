@@ -8,7 +8,9 @@ public:
 		ERASE,
 		DRAG,
 		PLAYERSPAWN,
-		MONSTERSPAWN
+		MONSTERSPAWN,
+		BLOCKCOLLIDER,
+		FLOORCOLLIDER
 	};
 	MapEditorTestScene();
 	virtual ~MapEditorTestScene();
@@ -30,10 +32,15 @@ private:
 	shared_ptr<Brick> _brick;
 	int _selectedIndex;
 
+	vector<shared_ptr<RectCollider>> _blocks;
+	vector<shared_ptr<RectCollider>> _floors;
+	Vector2 _colPaddingSize;
+
 	int _type = EditorType::DRAW;
 
 	vector<Vector2> _monsterSpawnPos;
 
-	shared_ptr<Background> _background;
+	Vector2 _startPos;
+	Vector2 _endPos;
 };
 

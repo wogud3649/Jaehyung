@@ -3,6 +3,8 @@
 
 InventoryScene::InventoryScene()
 {
+	_inventory = make_shared<Inventory>();
+	_inventory->SetPannelPos(CENTER);
 }
 
 InventoryScene::~InventoryScene()
@@ -11,8 +13,11 @@ InventoryScene::~InventoryScene()
 
 void InventoryScene::Update()
 {
+	_inventory->Update();
+
 }
 
 void InventoryScene::Render()
 {
+	_inventory->Render();
 }

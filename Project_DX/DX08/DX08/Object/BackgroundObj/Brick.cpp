@@ -6,7 +6,7 @@ Brick::Brick()
 	CreateBlocks();
 
 	_spawnPoint = make_shared<Quad>(L"Resources/Texture/SKUL/SkulDead.png");
-	_spawnPoint->GetTransform()->SetPos(Vector2(-30, -30));
+	_spawnPoint->GetTransform()->SetPos(Vector2(-50, -50));
 }
 
 Brick::~Brick()
@@ -17,43 +17,10 @@ void Brick::Update()
 {
 	_spawnPoint->Update();
 
-	for (const auto& col : _cols)
-	{
-		col->Update();
-	}
-
 	if (KEY_DOWN('E'))
 	{
 		_blockType++;
 		_blockType %= _blockShapeType;
-	}
-
-	if (_player.expired() == false)
-	{
-		for (int i = 0; i < _cols.size(); i++)
-		{
-			if (_activeBlocks[i] == false)
-				continue;
-
-			int tempIdx = i / _blockPairNumber;
-			if (tempIdx == 0)
-			{
-				HIT_RESULT result = _cols[i]->Block(_player.lock()->GetFootCollider());
-				if (result.dir == Direction::UP)
-					_player.lock()->Ground();
-				if (result.dir == Direction::DOWN)
-					_player.lock()->Beat();
-			}
-			else
-			{
-				if (_player.lock()->GetJumpPower() >= 0.0f)
-					return;
-
-				HIT_RESULT result = _cols[i]->TopBlock(_player.lock()->GetFootCollider());
-				if (result.dir == Direction::UP)
-					_player.lock()->Ground();
-			}
-		}
 	}
 }
 
@@ -66,11 +33,6 @@ void Brick::Render()
 	_quad->SetRender();
 
 	DC->DrawIndexedInstanced(6, _instanceDatas.size(), 0, 0, 0);
-
-	for (const auto& col : _cols)
-	{
-		col->Render();
-	}
 }
 
 void Brick::PostRender()
@@ -159,11 +121,13 @@ int Brick::SelectBlock(Vector2 pos)
 
 void Brick::Save()
 {
-	BinaryWriter writer = BinaryWriter(L"Maps/Field1.map");
+	BinaryWriter writer = BinaryWriter(L"Maps/BossField1.map");
 
 	vector<BlockData> datas;
 	BlockData temp;
 	int size = 0;
+	Vector2 LeftBottom = {INT_MAX, INT_MAX};
+	Vector2 RightTop = {0, INT_MIN};
 
 	for (int i = 0; i < _activeBlocks.size(); i++)
 	{
@@ -173,11 +137,22 @@ void Brick::Save()
 			temp.pos = _transforms[i]->GetPos();
 			datas.emplace_back(temp);
 			size++;
+
+			if (LeftBottom.x > temp.pos.x)
+				LeftBottom.x = temp.pos.x;
+			if (LeftBottom.y > temp.pos.y)
+				LeftBottom.y = temp.pos.y;
+			if (RightTop.x < temp.pos.x)
+				RightTop.x = temp.pos.x;
+			if (RightTop.y < temp.pos.y)
+				RightTop.y = temp.pos.y;
 		}
 	}
 
 	writer.UInt(size);
 	writer.Byte(&datas[0], sizeof(BlockData) * size);
+	writer.Byte(&LeftBottom, sizeof(Vector2));
+	writer.Byte(&RightTop, sizeof(Vector2));
 
 	Vector2 tempPos = _spawnPoint->GetTransform()->GetPos();
 	writer.Byte(&tempPos, sizeof(Vector2));
@@ -185,7 +160,7 @@ void Brick::Save()
 
 void Brick::Load()
 {
-	BinaryReader reader = BinaryReader(L"Maps/Field2.map");
+	BinaryReader reader = BinaryReader(L"Maps/BossField1.map");
 
 	int size = reader.UInt();
 	vector<BlockData> datas;
@@ -207,8 +182,11 @@ void Brick::Load()
 	ptr = &tempVector;
 
 	reader.Byte(&ptr, sizeof(Vector2));
+	CAMERA->SetLeftBottom(Vector2(tempVector.x, tempVector.y - 300));
+	reader.Byte(&ptr, sizeof(Vector2));
+	CAMERA->SetRightTop(tempVector);
 
-	_spawnPoint->GetTransform()->SetPos(tempVector);
+	reader.Byte(&ptr, sizeof(Vector2));
 }
 
 void Brick::CreateBlocks()
@@ -222,28 +200,12 @@ void Brick::CreateBlocks()
 	{
 		Brick::InstanceData instanceData;
 
-		Vector2 colSize;
-		Vector2 colPos;
-
 		shared_ptr<Transform> transform = make_shared<Transform>();
 
 		transform->SetPos(_outPos);
 		transform->UpdateSRT();
 
 		int block = i / (_blockPairNumber);
-		switch (block % _blockShapeType)
-		{
-		case 0:
-			colSize = Vector2(_size.x, _size.y + 30.0f);
-			colPos = Vector2(0.0f, -15.0f);
-			break;
-		case 1:
-			colSize = Vector2(_size.x, _size.y * 0.5f + 20.0f);
-			colPos = Vector2(0, 5);
-			break;
-		default:
-			break;
-		}
 
 		instanceData.maxFrame = Vector2(_blockShapeType, 1);
 		instanceData.curFrame = Vector2(block % _blockShapeType, 0);
@@ -252,11 +214,6 @@ void Brick::CreateBlocks()
 		_instanceDatas.emplace_back(instanceData);
 
 		_transforms.emplace_back(transform);
-
-		shared_ptr<RectCollider> col = make_shared<RectCollider>(colSize);
-		_cols.emplace_back(col);
-		_cols[i]->GetTransform()->SetParent(_transforms[i]);
-		_cols[i]->GetTransform()->Move(colPos);
 	}
 
 	_instanceBuffer = make_shared<VertexBuffer>(_instanceDatas.data(), sizeof(InstanceData), _instanceDatas.size(), 0, true);

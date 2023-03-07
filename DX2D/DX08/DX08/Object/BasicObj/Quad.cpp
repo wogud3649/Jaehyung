@@ -50,9 +50,11 @@ void Quad::Render()
 
     DC->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-    //ALPHA->SetState();
-    _srv->Set(0);
-    SAMPLER->Set(0);
+    if (_srv != nullptr)
+    {
+        _srv->Set(0);
+        SAMPLER->Set(0);
+    }
 
     _transform->SetBuffer(0);
 
