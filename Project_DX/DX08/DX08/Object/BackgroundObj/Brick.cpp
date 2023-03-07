@@ -159,11 +159,11 @@ int Brick::SelectBlock(Vector2 pos)
 
 void Brick::Save()
 {
-	BinaryWriter writer = BinaryWriter(L"Maps/Field4.map");
+	BinaryWriter writer = BinaryWriter(L"Maps/Field1.map");
 
 	vector<BlockData> datas;
 	BlockData temp;
-	UINT size = 0;
+	int size = 0;
 
 	for (int i = 0; i < _activeBlocks.size(); i++)
 	{
@@ -185,22 +185,29 @@ void Brick::Save()
 
 void Brick::Load()
 {
-	BinaryReader reader = BinaryReader(L"Maps/Field4.map");
+	BinaryReader reader = BinaryReader(L"Maps/Field2.map");
 
-	UINT size = reader.UInt();
+	int size = reader.UInt();
 	vector<BlockData> datas;
-	datas.reserve(size);
-
+	datas.resize(size);
 	void* ptr = &datas[0];
 	
-	reader.Byte((void**)&ptr, sizeof(BlockData) * size);
-
-	// TODO
+	reader.Byte(&ptr, sizeof(BlockData) * size);
+	for (auto data : datas)
+	{
+		int index = data.index;
+		_activeBlocks[index] = true;
+		_transforms[index]->SetPos(data.pos);
+		_transforms[index]->UpdateSRT();
+		_instanceDatas[index].matrix = XMMatrixTranspose(_transforms[index]->GetMatrix());
+		_instanceBuffer->Update();
+	}
 
 	Vector2 tempVector;
+	ptr = &tempVector;
 
-	tempVector.x = reader.Int();
-	tempVector.y = reader.Int();
+	reader.Byte(&ptr, sizeof(Vector2));
+
 	_spawnPoint->GetTransform()->SetPos(tempVector);
 }
 
