@@ -45,12 +45,18 @@ void Program::Render()
 	SCENE->Render();
 	EFFECT->Render();
 
-	ImGui::Text("FPS : %d", TIMER->GetFPS());
+	DirectWrite::GetInstance()->GetDC()->BeginDraw();
+
+	wstring fps = L"FPS : " + to_wstring((int)Timer::GetInstance()->GetFPS());
+	RECT rect = { 0,0,100,100 };
+	DirectWrite::GetInstance()->RenderText(fps, rect);
+
 	CAMERA->UICameraBuffer();
 	CAMERA->PostRender();
 	SCENE->PostRender();
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
+	DirectWrite::GetInstance()->GetDC()->EndDraw();
 	Device::GetInstance()->Present();
 }

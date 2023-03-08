@@ -38,6 +38,13 @@
 #include "../ImGUI/imgui_impl_dx11.h"
 #include "../ImGUI/imgui_impl_win32.h"
 
+// DirectWrite
+#include <d2d1_1.h>
+#include <dwrite.h>
+
+#pragma comment(lib, "d2d1.lib")
+#pragma comment(lib, "dwrite.lib")
+
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "dxguid.lib")
@@ -80,6 +87,7 @@ using namespace DirectX;
 #include "Framework/Utility/BinaryWriter.h"
 #include "Framework/Utility/BinaryReader.h"
 #include "Framework/Utility/DataManager.h"
+#include "Framework/Utility/DirectWrite.h"
 
 // Camera
 #include "Framework/Camera/Camera.h"
