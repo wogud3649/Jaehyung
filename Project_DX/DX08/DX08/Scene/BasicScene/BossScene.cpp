@@ -7,7 +7,9 @@ BossScene::BossScene()
 	CAMERA->SetTarget(_player->GetBodyCollider()->GetTransform());
 	
 	_brick = make_shared<Brick>();
+	_brick->SetPlayer(_player);
 	_brick->Load();
+	_player->GetFootCollider()->GetTransform()->SetPos(_brick->GetPlayerSpawn());
 
 	CAMERA->SetOffset(CENTER);
 }

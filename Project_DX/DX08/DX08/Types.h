@@ -1,4 +1,5 @@
 #pragma once
+
 #define WIN_WIDTH 1280
 #define WIN_HEIGHT 720
 #define CENTER_X 640
@@ -51,4 +52,16 @@ struct HIT_RESULT
 {
 	bool isHit;
 	Direction dir = NONE;
+};
+
+struct BlockData
+{
+	int index;
+	Vector2 pos;
+};
+
+struct ColliderData
+{
+	Vector2 size;
+	Vector2 pos;
 };

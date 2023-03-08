@@ -1,6 +1,4 @@
 #pragma once
-class CircleCollider;
-
 class RectCollider : public Collider, public enable_shared_from_this<RectCollider>
 {
 public:
@@ -21,6 +19,7 @@ public:
 	float Top() { return _transform->GetWorldPos().y + _size.y * 0.5f * _transform->GetWorldScale().y; }
 	float Bottom() { return _transform->GetWorldPos().y - _size.y * 0.5f * _transform->GetWorldScale().y; }
 
+	Vector2 GetSize() { return _size; }
 	Vector2 GetWorldHalfSize();
 
 	virtual void CreateData() override;

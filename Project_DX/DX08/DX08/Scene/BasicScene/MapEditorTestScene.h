@@ -26,15 +26,10 @@ public:
 	void Load();
 
 private:
-	void ActivatePlayer();
-	void DeactivatePlayer();
+	void Functions();
 
 	shared_ptr<Brick> _brick;
 	int _selectedIndex;
-
-	vector<shared_ptr<RectCollider>> _blocks;
-	vector<shared_ptr<RectCollider>> _floors;
-	Vector2 _colPaddingSize;
 
 	int _type = EditorType::DRAW;
 
@@ -42,5 +37,7 @@ private:
 
 	Vector2 _startPos;
 	Vector2 _endPos;
+
+	shared_ptr<Quad> _playerSpawn;
 };
 

@@ -45,14 +45,15 @@
 using namespace std;
 using namespace DirectX;
 
-#include "Types.h"
-
 // Framework
 #include "Framework/Device/Device.h"
 
 // Math
 #include "Framework/Math/Vector2.h"
 #include "Framework/Math/Transform.h"
+
+// Types
+#include "Types.h"
 
 // Render
 #include "Framework/Render/ConstantBuffer.h"
