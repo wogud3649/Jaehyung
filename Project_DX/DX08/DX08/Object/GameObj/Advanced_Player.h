@@ -51,7 +51,7 @@ private:
 	bool _doubleJump = false;
 	bool _isGround = false;
 
-	float _maxDashDistance = 1000.0f;
+	float _maxDashDistance = 150.0f;
 	float _curDashDistance = _maxDashDistance;
 	float _maxDashCD = 2.0f;
 	vector<float> _curDashCD = vector<float>(2, _maxDashCD);

@@ -26,11 +26,11 @@ void Advanced_Player::Update()
 	}
 
 	SetIdle();
+	Attack();
 	Move();
 	Flip();
 	Jump();
 	Dash();
-	Attack();
 	Fall();
 	Skill();
 	if (!_headOn)
@@ -48,7 +48,7 @@ void Advanced_Player::Update()
 	}
 	if (_curState == State::DASH)
 	{
-		float distance = LERP(0, _curDashDistance, DELTA_TIME);
+		float distance = LERP(0, _curDashDistance, DELTA_TIME * 10.0f);
 		_curDashDistance -= distance;
 		if (_direction == Direction::RIGHT)
 			_footCol->GetTransform()->MoveX(distance);

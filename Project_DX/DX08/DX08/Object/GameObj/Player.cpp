@@ -104,7 +104,7 @@ void Player::CreateAction(SkulType _skulType)
 		case 3:
 			state = "DASH";
 			type = Action::Type::END;
-			speed = 0.15f;
+			speed = 0.3f;
 			sortX = MyXML::Sort::RIGHT;
 			sortY = MyXML::Sort::BOTTOM;
 			break;
