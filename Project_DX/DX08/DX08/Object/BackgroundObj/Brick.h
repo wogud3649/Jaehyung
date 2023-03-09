@@ -61,6 +61,7 @@ private:
 	Vector2 _rightTop = { 0, INT_MIN };
 
 	Vector2 _playerSpawn = _outPos;
+	vector<Vector2> _monsterSpawn;
 
 	vector<shared_ptr<RectCollider>> _blocks;
 	vector<shared_ptr<RectCollider>> _floors;

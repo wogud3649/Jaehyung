@@ -27,10 +27,10 @@ void Advanced_Player::Update()
 
 	SetIdle();
 	Attack();
-	Move();
 	Flip();
 	Jump();
 	Dash();
+	Move();
 	Fall();
 	Skill();
 	if (!_headOn)
@@ -204,12 +204,6 @@ void Advanced_Player::Ground()
 	_curJumpPower = 0.0f;
 	if (_curState == FALL || _curState == FALLREPEAT || _curState == JUMPATTACK)
 		SetAction(State::IDLE);
-}
-
-void Advanced_Player::Beat()
-{
-	_curJumpPower = 0.0f;
-	_footCol->GetTransform()->MoveY(-2.0f);
 }
 
 void Advanced_Player::Attack()

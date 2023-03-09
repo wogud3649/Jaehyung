@@ -5,6 +5,8 @@ BossScene::BossScene()
 {
 	_player = make_shared<Advanced_Player>();
 	CAMERA->SetTarget(_player->GetBodyCollider()->GetTransform());
+
+	_yggdrasil = make_shared<Yggdrasil>();
 	
 	_brick = make_shared<Brick>();
 	_brick->SetPlayer(_player);
@@ -21,6 +23,7 @@ BossScene::~BossScene()
 void BossScene::Update()
 {
 	_player->Update();
+	_yggdrasil->Update();
 	_brick->Update();
 }
 
@@ -32,4 +35,5 @@ void BossScene::Render()
 void BossScene::PreRender()
 {
 	_brick->Render();
+	_yggdrasil->Render();
 }

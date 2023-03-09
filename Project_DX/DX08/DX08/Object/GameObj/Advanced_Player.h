@@ -18,7 +18,6 @@ public:
 	void Fall();
 
 	void Ground();
-	void Beat();
 
 	void Attack();
 	void Skill();

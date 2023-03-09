@@ -9,6 +9,7 @@ public:
 	virtual void Render() override;
 	virtual void PreRender() override;
 private:
+	shared_ptr<Yggdrasil> _yggdrasil;
 	shared_ptr<Brick> _brick;
 	shared_ptr<Advanced_Player> _player;
 };
