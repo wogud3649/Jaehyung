@@ -25,6 +25,8 @@ void Brick::Update()
 	for (const auto& floor : _floors)
 	{
 		floor->Update();
+		if (_player.lock()->GetJumpPower() > 0.0f)
+			return;
 		if (_player.expired() == false)
 		{
 			HIT_RESULT result = floor->TopBlock(_player.lock()->GetFootCollider());
@@ -52,11 +54,6 @@ void Brick::Render()
 		block->Render();
 	for (const auto& floor : _floors)
 		floor->Render();
-}
-
-void Brick::PostRender()
-{
-	ImGui::SliderInt("BlockType", &_blockType, 0, _blockShapeType - 1);
 }
 
 void Brick::Draw(Vector2 pos)
@@ -187,7 +184,7 @@ void Brick::Load()
 	Vector2 tempVector;
 	ptr = &tempVector;
 	reader.Byte(&ptr, sizeof(Vector2));
-	CAMERA->SetLeftBottom(Vector2(tempVector.x, tempVector.y - 300));
+	CAMERA->SetLeftBottom(Vector2(tempVector.x, tempVector.y - 200));
 	reader.Byte(&ptr, sizeof(Vector2));
 	CAMERA->SetRightTop(tempVector);
 
@@ -229,6 +226,21 @@ void Brick::Load()
 	ptr = &tempVector;
 	reader.Byte(&ptr, sizeof(Vector2));
 	_playerSpawn = tempVector;
+
+	size = reader.UInt();
+
+	if (size != 0)
+	{
+		vector<Vector2> spawnPoses;
+		spawnPoses.resize(size);
+		ptr = &spawnPoses[0];
+		reader.Byte(&ptr, sizeof(Vector2) * size);
+		_monsterSpawn.clear();
+		for (const auto& spawnPos : spawnPoses)
+		{
+			_monsterSpawn.emplace_back(spawnPos);
+		}
+	}
 }
 
 vector<BlockData> Brick::GetBlockDatas()

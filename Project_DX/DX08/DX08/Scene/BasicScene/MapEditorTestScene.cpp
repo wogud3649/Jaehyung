@@ -25,12 +25,22 @@ void MapEditorTestScene::Update()
 {
 	_brick->Update();
 	_playerSpawn->Update();
+	
+	for (const auto& monsterSpawn : _monsterSpawn)
+	{
+		monsterSpawn->Update();
+	}
 
 	Functions();
 }
 
 void MapEditorTestScene::Render()
 {
+	for (const auto& monsterSpawn : _monsterSpawn)
+	{
+		monsterSpawn->Render();
+	}
+
 	_playerSpawn->Render();
 }
 
@@ -41,7 +51,7 @@ void MapEditorTestScene::PreRender()
 
 void MapEditorTestScene::PostRender()
 {
-	_brick->PostRender();
+	ImGui::SliderInt("BlockType", &_brick->GetCurBlockType(), 0, _brick->GetBlockShapeType() - 1);
 	ImGui::SliderInt("EDIT MODE", &_type, EditorType::DRAW, EditorType::FLOORCOLLIDER);
 	if (ImGui::Button("SAVE MAP", { 100, 30 }))
 	{
@@ -86,12 +96,34 @@ void MapEditorTestScene::Save()
 
 	Vector2 spawnPos = _playerSpawn->GetTransform()->GetPos();
 	writer.Byte(&spawnPos, sizeof(Vector2));
+
+	size = _monsterSpawn.size();
+	writer.UInt(size);
+	if (_monsterSpawn.size() != 0)
+	{
+		vector<Vector2> SpawnPoses;
+		for (const auto& monsterSpawn : _monsterSpawn)
+			SpawnPoses.emplace_back(monsterSpawn->GetTransform()->GetPos());
+		writer.Byte(&SpawnPoses[0], sizeof(Vector2) * size);
+	}
 }
 
 void MapEditorTestScene::Load()
 {
 	_brick->Load();
 	_playerSpawn->GetTransform()->SetPos(_brick->GetPlayerSpawn());
+	
+	vector<Vector2> spawnPoses = _brick->GetMonsterSpawn();
+	_monsterSpawn.clear();
+	if (spawnPoses.size() == 0)
+		return;
+	for (int i = 0; i < spawnPoses.size(); i++)
+	{
+		shared_ptr<Quad> monster = make_shared<Quad>(L"Resources/Texture/Slime/Dead/Dead6.png");
+		Vector2 temp = spawnPoses[i];
+		monster->GetTransform()->SetPos(temp);
+		_monsterSpawn.emplace_back(monster);
+	}
 }
 
 void MapEditorTestScene::Functions()
@@ -119,6 +151,17 @@ void MapEditorTestScene::Functions()
 		if (_type == EditorType::DRAG)
 		{
 			_selectedIndex = _brick->SelectBlock(tempPos);
+		}
+		else if (_type == EditorType::MONSTERSPAWN)
+		{
+			for (const auto& spawn : _monsterSpawn)
+			{
+				if (spawn->GetTransform()->GetPos() == tempPos)
+					return;
+			}
+			shared_ptr<Quad> monster = make_shared<Quad>(L"Resources/Texture/Slime/Dead/Dead6.png");
+			monster->GetTransform()->SetPos(tempPos);
+			_monsterSpawn.emplace_back(monster);
 		}
 		else if (_type == EditorType::BLOCKCOLLIDER || _type == EditorType::FLOORCOLLIDER)
 		{
@@ -169,10 +212,15 @@ void MapEditorTestScene::Functions()
 
 	if (KEY_PRESS(VK_LCONTROL) && KEY_DOWN('Z'))
 	{
-		_brick->DeleteBlockCollider();
-	}
-	if (KEY_PRESS(VK_CONTROL) && KEY_DOWN('X'))
-	{
-		_brick->DeleteFloorCollider();
+		if (_type == EditorType::BLOCKCOLLIDER)
+			_brick->DeleteBlockCollider();
+		else if (_type == EditorType::FLOORCOLLIDER)
+			_brick->DeleteFloorCollider();
+		else if (_type == EditorType::MONSTERSPAWN)
+		{
+			if (_monsterSpawn.empty())
+				return;
+			_monsterSpawn.resize(_monsterSpawn.size() - 1);
+		}
 	}
 }

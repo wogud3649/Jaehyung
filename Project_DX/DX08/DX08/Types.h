@@ -7,7 +7,7 @@
 #define CENTER Vector2(CENTER_X, CENTER_Y)
 
 #define PI 3.141592
-#define GRAVITY 50
+#define GRAVITY 45
 
 #define LERP(s, e, t) s + (e - s) * t
 

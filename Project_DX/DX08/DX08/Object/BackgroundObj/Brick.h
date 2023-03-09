@@ -14,7 +14,6 @@ public:
 
 	void Update();
 	void Render();
-	void PostRender();
 
 	void SetPlayer(shared_ptr<Advanced_Player> player) { _player = player; }
 
@@ -38,6 +37,10 @@ public:
 	Vector2 GetLeftBottom() { return _leftBottom; }
 	Vector2 GetRightTop() { return _rightTop; }
 	Vector2 GetPlayerSpawn() { return _playerSpawn; }
+	vector<Vector2> GetMonsterSpawn() { return _monsterSpawn; }
+
+	int& GetCurBlockType() { return _blockType; }
+	int GetBlockShapeType() { return _blockShapeType; }
 
 private:
 	void CreateBlocks();

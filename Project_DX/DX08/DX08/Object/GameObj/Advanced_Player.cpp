@@ -181,7 +181,7 @@ void Advanced_Player::Dash()
 
 void Advanced_Player::Fall()
 {
-	if (_isGround || _curState == State::DASH || _curState == State::ATTACKA || _curState == State::ATTACKB)
+	if (_curState == State::DASH || _curState == State::ATTACKA || _curState == State::ATTACKB)
 		return;
 
 	_footCol->GetTransform()->MoveY(_curJumpPower * DELTA_TIME);
@@ -190,6 +190,8 @@ void Advanced_Player::Fall()
 	if (_curJumpPower <= 0 && _curState != State::FALLREPEAT && _curState != State::JUMPATTACK && _curState != State::SKILL)
 	{
 		if (_curState == State::WALK && _curJumpPower >= -100.0f)
+			return;
+		if (_isGround)
 			return;
 		
 		SetAction(State::FALL);

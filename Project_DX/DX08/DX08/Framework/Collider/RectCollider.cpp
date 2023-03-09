@@ -214,25 +214,19 @@ HIT_RESULT RectCollider::TopBlock(shared_ptr<CircleCollider> other)
     HIT_RESULT result;
     if (IsAABB(other))
     {
-        float dir = other->GetTransform()->GetWorldPos().y - _transform->GetWorldPos().y;
-        float sum = other->WorldRadius() + _size.y * 0.5f;
-        if (dir < 0.0f)
-        {
-            result.isHit = false;
+        if (other->GetTransform()->GetPos().x < Left() || other->GetTransform()->GetPos().x > Right())
             return result;
-        }
-        if (sum >= dir)
+        float dir = abs(other->GetTransform()->GetWorldPos().y - Top());
+        float sum = other->WorldRadius();
+        float overlap = sum - dir;
+
+        if (overlap > 0.0f)
         {
-            float overlap = sum - dir;
-
             other->GetTransform()->MoveY(overlap);
-
             result.dir = Direction::UP;
             result.isHit = true;
-        }
-        else
-        {
-            result.isHit = false;
+
+            return result;
         }
     }
     else

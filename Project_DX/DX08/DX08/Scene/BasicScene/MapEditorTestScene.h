@@ -33,11 +33,10 @@ private:
 
 	int _type = EditorType::DRAW;
 
-	vector<Vector2> _monsterSpawnPos;
-
 	Vector2 _startPos;
 	Vector2 _endPos;
 
 	shared_ptr<Quad> _playerSpawn;
+	vector<shared_ptr<Quad>> _monsterSpawn;
 };
 

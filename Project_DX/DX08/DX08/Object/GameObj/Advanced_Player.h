@@ -44,13 +44,13 @@ private:
 
 	float _speed = 500.0f;
 
-	float _maxJumpPower = 1200.0f;
+	float _maxJumpPower = 800.0f;
 	float _curJumpPower = 0.0f;
 	bool _isJump = false;
 	bool _doubleJump = false;
 	bool _isGround = false;
 
-	float _maxDashDistance = 150.0f;
+	float _maxDashDistance = 200.0f;
 	float _curDashDistance = _maxDashDistance;
 	float _maxDashCD = 2.0f;
 	vector<float> _curDashCD = vector<float>(2, _maxDashCD);
