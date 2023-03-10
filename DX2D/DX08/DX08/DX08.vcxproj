@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClInclude Include="Framework\Utility\DirectWrite.h" />
     <ClInclude Include="Framework\Utility\DataManager.h" />
+    <ClInclude Include="Object\UI\ItemIcon.h" />
     <ClInclude Include="Object\UI\Inventory.h" />
     <ClInclude Include="Scene\BasicScene\InventoryScene.h" />
     <ClInclude Include="Object\UI\Button.h" />
@@ -227,6 +228,7 @@
   <ItemGroup>
     <ClCompile Include="Framework\Utility\DirectWrite.cpp" />
     <ClCompile Include="Framework\Utility\DataManager.cpp" />
+    <ClCompile Include="Object\UI\ItemIcon.cpp" />
     <ClCompile Include="Object\UI\Inventory.cpp" />
     <ClCompile Include="Scene\BasicScene\InventoryScene.cpp" />
     <ClCompile Include="Object\UI\Button.cpp" />

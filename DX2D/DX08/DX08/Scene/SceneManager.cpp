@@ -16,6 +16,7 @@ SceneManager* SceneManager::_instance = nullptr;
 
 SceneManager::SceneManager()
 {
+	DATA_M->LoadItemInfo();
 	_sceneTable["InventoryScene"] = make_shared<InventoryScene>();
 	
 	_curScene = _sceneTable["InventoryScene"];

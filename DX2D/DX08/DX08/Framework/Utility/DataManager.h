@@ -27,10 +27,13 @@ public:
 	}
 
 	void LoadItemInfo();
+
+	const ItemInfo& GetItemByName(string name);
+
 private:
 	static DataManager* _instance;
 
-	vector<ItemInfo> _itemInfo;
+	unordered_map<string, ItemInfo> _itemTable;
 	shared_ptr<tinyxml2::XMLDocument> _document;
 };
 

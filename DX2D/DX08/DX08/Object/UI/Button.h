@@ -10,6 +10,7 @@ public:
 	};
 
 	Button(wstring path);
+	Button(Vector2 size);
 	~Button();
 
 	void Update();
@@ -23,7 +24,9 @@ public:
 
 	Vector2 GetSize() { return _quad->GetImageSize(); }
 
+	void SetParent(shared_ptr<Transform> transform) { GetTransform()->SetParent(transform); }
 private:
+	shared_ptr<Transform> GetTransform();
 	State _state;
 
 	shared_ptr<Quad> _quad;
