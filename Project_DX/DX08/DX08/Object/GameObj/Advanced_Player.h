@@ -7,6 +7,7 @@ public:
 
 	virtual void Update() override;
 	virtual void Render() override;
+	void PostRender();
 
 	void EnAble();
 	void DisAble();
@@ -43,6 +44,8 @@ private:
 	bool _headOn = true;
 
 	float _speed = 500.0f;
+
+	bool _isDamaged = false;
 
 	float _maxJumpPower = 800.0f;
 	float _curJumpPower = 0.0f;

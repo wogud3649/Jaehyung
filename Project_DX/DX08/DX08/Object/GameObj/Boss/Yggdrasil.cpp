@@ -86,7 +86,7 @@ void Yggdrasil::Update()
 					_rightHandCol->GetTransform()->Update();
 					_rightHandCol->Activate();
 				}
-				_curAttackDelay = 1.0f;
+				_curAttackDelay = 0.25f;
 				break;
 			case State::ATTACK:
 				_curState = State::AFTERATTACK;
@@ -149,8 +149,8 @@ void Yggdrasil::MakeShared()
 	_headCol = make_shared<CircleCollider>(150);
 	_rightBranchCol = make_shared<RectCollider>(Vector2(130, 10));
 	_leftBranchCol = make_shared<RectCollider>(Vector2(125, 10));
-	_rightHandCol = make_shared<RectCollider>(Vector2(200, 180));
-	_leftHandCol = make_shared<RectCollider>(Vector2(200, 180));
+	_rightHandCol = make_shared<RectCollider>(Vector2(200, 210));
+	_leftHandCol = make_shared<RectCollider>(Vector2(200, 210));
 }
 
 void Yggdrasil::SetParent()
@@ -183,11 +183,11 @@ void Yggdrasil::Adjust()
 	_leftBranchCol->GetTransform()->MoveY(-72);
 
 	_rightHandCol->GetTransform()->MoveX(20);
-	_rightHandCol->GetTransform()->MoveY(-20);
+	_rightHandCol->GetTransform()->MoveY(-35);
 	_rightHandCol->DeActivate();
 
 	_leftHandCol->GetTransform()->MoveX(-20);
-	_leftHandCol->GetTransform()->MoveY(-20);
+	_leftHandCol->GetTransform()->MoveY(-35);
 	_leftHandCol->DeActivate();
 }
 
@@ -212,6 +212,9 @@ void Yggdrasil::Attack()
 		Vector2 goalPos = _attackPos - curPos;
 		Vector2 distance = LERP(Vector2(0,0), Vector2(goalPos.x,goalPos.y + 100), DELTA_TIME * 8.0f);
 		_rightHand->GetTransform()->Move(distance);
+
+		if (_rightHandCol->IsCollision(_player.lock()->GetFootCollider()))
+			_player.lock()->Damaged();
 	}
 	else
 	{
@@ -219,6 +222,9 @@ void Yggdrasil::Attack()
 		Vector2 goalPos = _attackPos - curPos;
 		Vector2 distance = LERP(Vector2(0, 0), Vector2(goalPos.x, goalPos.y + 100), DELTA_TIME * 8.0f);
 		_leftHand->GetTransform()->Move(distance);
+
+		if (_leftHandCol->IsCollision(_player.lock()->GetFootCollider()))
+			_player.lock()->Damaged();
 	}
 }
 
@@ -231,7 +237,7 @@ void Yggdrasil::AfterAttack()
 		Vector2 distance = LERP(Vector2(0, 0), Vector2(goalPos.x, goalPos.y + 100), DELTA_TIME * 8.0f);
 		_rightHand->GetTransform()->Move(distance);
 
-		HIT_RESULT result = _rightHandCol->Block(_player.lock()->GetFootCollider());
+		HIT_RESULT result = _rightHandCol->SideBlock(_player.lock()->GetFootCollider());
 		if (result.dir == Direction::UP)
 			_player.lock()->Ground();
 	}
@@ -242,7 +248,7 @@ void Yggdrasil::AfterAttack()
 		Vector2 distance = LERP(Vector2(0, 0), Vector2(goalPos.x, goalPos.y + 100), DELTA_TIME * 8.0f);
 		_leftHand->GetTransform()->Move(distance);
 
-		HIT_RESULT result = _leftHandCol->Block(_player.lock()->GetFootCollider());
+		HIT_RESULT result = _leftHandCol->SideBlock(_player.lock()->GetFootCollider());
 		if (result.dir == Direction::UP)
 			_player.lock()->Ground();
 	}

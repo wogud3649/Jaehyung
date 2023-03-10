@@ -42,5 +42,6 @@ void BossScene::PreRender()
 
 void BossScene::PostRender()
 {
+	_player->PostRender();
 	_yggdrasil->PostRender();
 }

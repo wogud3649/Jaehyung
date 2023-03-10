@@ -53,8 +53,8 @@ protected:
 	vector<vector<shared_ptr<Sprite>>> _sprites;
 	vector<vector<shared_ptr<Action>>> _actions;
 
-	int _maxHp = 100;
-	int _curHp = _maxHp;
+	float _maxHp = 100;
+	float _curHp = _maxHp;
 
 	bool _isAlive = true;
 	Direction _direction = Direction::RIGHT;

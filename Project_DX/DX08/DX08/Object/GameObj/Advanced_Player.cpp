@@ -84,6 +84,11 @@ void Advanced_Player::Render()
 	Player::Render();
 }
 
+void Advanced_Player::PostRender()
+{
+	ImGui::SliderFloat("PLAYER HP", &_curHp, 0, _maxHp);
+}
+
 void Advanced_Player::EnAble()
 {
 }
@@ -245,6 +250,8 @@ void Advanced_Player::Skill()
 
 void Advanced_Player::Damaged()
 {
+	_isDamaged = true;
+	_curHp -= 10.0f;
 }
 
 void Advanced_Player::Dead()
