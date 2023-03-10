@@ -27,13 +27,29 @@ void Yggdrasil::Update()
 
 	Idle();
 
-	if (_isAttack)
-		Attack();
-	else
-		SetIdle();
-
 	if (_player.expired() == false)
 	{
+		switch (_curState)
+		{
+		case State::IDLE:
+			SetIdle();
+			break;
+		case State::ATTACKREADY:
+			AttackReady();
+			break;
+		case State::ATTACK:
+			Attack();
+			break;
+		case State::AFTERATTACK:
+			AfterAttack();
+			break;
+		case State::ATTACKEND:
+			AttackReady();
+			break;
+		default:
+			break;
+		}
+
 		if (_player.lock()->GetJumpPower() <= 0.0f)
 		{
 			HIT_RESULT result;
@@ -44,33 +60,54 @@ void Yggdrasil::Update()
 			if (result.dir == Direction::UP)
 				_player.lock()->Ground();
 		}
-	}
 
-	_curAttackCooldown -= DELTA_TIME;
-
-	if (_curAttackCooldown <= 0.0f)
-	{
-		_curAfterAttackDelay -= DELTA_TIME;
-
-		if (_isAttack == false)
+		_curAttackDelay -= DELTA_TIME;
+			
+		if (_curAttackDelay <= 0.0f)
 		{
-			if (_player.expired() == false)
+			switch (_curState)
 			{
+			case State::IDLE:
+				_curState = State::ATTACKREADY;
+				_curAttackDelay = _maxAttackDelay;
+				break;
+			case State::ATTACKREADY:
+				_curState = State::ATTACK;
 				_attackPos.x = _player.lock()->GetFootCollider()->GetTransform()->GetPos().x;
 				if (_attackPos.x > _body->GetTransform()->GetWorldPos().x)
+				{
 					_isRightHand = false;
+					_leftHandCol->GetTransform()->Update();
+					_leftHandCol->Activate();
+				}
 				else
+				{
 					_isRightHand = true;
+					_rightHandCol->GetTransform()->Update();
+					_rightHandCol->Activate();
+				}
+				_curAttackDelay = 1.0f;
+				break;
+			case State::ATTACK:
+				_curState = State::AFTERATTACK;
+				_curAttackDelay = _maxAttackDelay;
+				break;
+			case State::AFTERATTACK:
+				_curState = State::ATTACKEND;
+				if (_isRightHand)
+					_rightHandCol->DeActivate();
+				else
+					_leftHandCol->DeActivate();
+				_curAttackDelay = _maxAttackDelay;
+				break;
+			case State::ATTACKEND:
+				_curState = State::IDLE;
+				_curAttackDelay = _maxAttackDelay;
+				break;
+			default:
+				break;
 			}
-			_isAttack = true;
 		}
-	}
-
-	if (_curAfterAttackDelay <= 0.0f)
-	{
-		_curAttackCooldown = _maxAttackCooldown;
-		_curAfterAttackDelay = _maxAfterAttackDelay;
-		_isAttack = false;
 	}
 }
 
@@ -90,13 +127,6 @@ void Yggdrasil::Render()
 
 void Yggdrasil::PostRender()
 {
-	ImGui::SliderFloat("AttackDelay", &_curAfterAttackDelay, 0, 3.0f);
-	if (_player.expired() == false)
-	{
-		Vector2 pos = _player.lock()->GetFootCollider()->GetTransform()->GetWorldPos();
-		ImGui::SliderFloat2("pos", (float*)&pos, 0, 99999);
-	}
-
 }
 
 void Yggdrasil::SetOriginPos(Vector2 pos)
@@ -116,11 +146,11 @@ void Yggdrasil::MakeShared()
 	_rightHand = make_shared<Quad>(L"Resources/Texture/Boss/Yggdrasil/rightHand.png");
 	_leftHand = make_shared<Quad>(L"Resources/Texture/Boss/Yggdrasil/leftHand.png");
 
-	_headCol = make_shared<CircleCollider>(125);
+	_headCol = make_shared<CircleCollider>(150);
 	_rightBranchCol = make_shared<RectCollider>(Vector2(130, 10));
 	_leftBranchCol = make_shared<RectCollider>(Vector2(125, 10));
-	_rightHandCol = make_shared<RectCollider>(Vector2(150, 180));
-	_leftHandCol = make_shared<RectCollider>(Vector2(150, 170));
+	_rightHandCol = make_shared<RectCollider>(Vector2(200, 180));
+	_leftHandCol = make_shared<RectCollider>(Vector2(200, 180));
 }
 
 void Yggdrasil::SetParent()
@@ -154,9 +184,24 @@ void Yggdrasil::Adjust()
 
 	_rightHandCol->GetTransform()->MoveX(20);
 	_rightHandCol->GetTransform()->MoveY(-20);
+	_rightHandCol->DeActivate();
 
 	_leftHandCol->GetTransform()->MoveX(-20);
 	_leftHandCol->GetTransform()->MoveY(-20);
+	_leftHandCol->DeActivate();
+}
+
+void Yggdrasil::AttackReady()
+{
+	Vector2 curPos = _rightHand->GetTransform()->GetWorldPos();
+	Vector2 goalPos = Vector2(_originRightHandPos.x, _originRightHandPos.y + 300) - curPos;
+	Vector2 distance = LERP(Vector2(0, 0), goalPos, DELTA_TIME * 2.0f);
+	_rightHand->GetTransform()->Move(distance);
+
+	curPos = _leftHand->GetTransform()->GetWorldPos();
+	goalPos = Vector2(_originLeftHandPos.x, _originLeftHandPos.y + 300) - curPos;
+	distance = LERP(Vector2(0, 0), goalPos, DELTA_TIME * 2.0f);
+	_leftHand->GetTransform()->Move(distance);
 }
 
 void Yggdrasil::Attack()
@@ -174,6 +219,32 @@ void Yggdrasil::Attack()
 		Vector2 goalPos = _attackPos - curPos;
 		Vector2 distance = LERP(Vector2(0, 0), Vector2(goalPos.x, goalPos.y + 100), DELTA_TIME * 8.0f);
 		_leftHand->GetTransform()->Move(distance);
+	}
+}
+
+void Yggdrasil::AfterAttack()
+{
+	if (_isRightHand)
+	{
+		Vector2 curPos = _rightHand->GetTransform()->GetWorldPos();
+		Vector2 goalPos = _attackPos - curPos;
+		Vector2 distance = LERP(Vector2(0, 0), Vector2(goalPos.x, goalPos.y + 100), DELTA_TIME * 8.0f);
+		_rightHand->GetTransform()->Move(distance);
+
+		HIT_RESULT result = _rightHandCol->Block(_player.lock()->GetFootCollider());
+		if (result.dir == Direction::UP)
+			_player.lock()->Ground();
+	}
+	else
+	{
+		Vector2 curPos = _leftHand->GetTransform()->GetWorldPos();
+		Vector2 goalPos = _attackPos - curPos;
+		Vector2 distance = LERP(Vector2(0, 0), Vector2(goalPos.x, goalPos.y + 100), DELTA_TIME * 8.0f);
+		_leftHand->GetTransform()->Move(distance);
+
+		HIT_RESULT result = _leftHandCol->Block(_player.lock()->GetFootCollider());
+		if (result.dir == Direction::UP)
+			_player.lock()->Ground();
 	}
 }
 

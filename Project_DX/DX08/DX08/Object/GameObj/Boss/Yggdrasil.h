@@ -2,6 +2,14 @@
 class Yggdrasil
 {
 public:
+	enum State
+	{
+		IDLE,
+		ATTACKREADY,
+		ATTACK,
+		AFTERATTACK,
+		ATTACKEND
+	};
 	Yggdrasil();
 	~Yggdrasil();
 
@@ -18,7 +26,10 @@ private:
 	void MakeShared();
 	void SetParent();
 	void Adjust();
+	
+	void AttackReady();
 	void Attack();
+	void AfterAttack();
 
 	void SetIdle();
 	void Idle();
@@ -42,11 +53,10 @@ private:
 	float _curHp = _maxHp;
 
 	Vector2 _attackPos = Vector2(0, 70);
-	float _maxAttackCooldown = 2.0f;
-	float _curAttackCooldown = _maxAttackCooldown;
-	float _maxAfterAttackDelay = 2.0f;
-	float _curAfterAttackDelay = _maxAfterAttackDelay;
-	bool _isAttack = false;
+	float _maxAttackDelay = 2.0f;
+	float _curAttackDelay = _maxAttackDelay;
+
+	State _curState = State::IDLE;
 	bool _isRightHand = true;
 
 	float maxDamage = 15.0f;

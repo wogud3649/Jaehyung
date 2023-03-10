@@ -191,7 +191,7 @@ void Advanced_Player::Fall()
 	{
 		if (_curState == State::WALK && _curJumpPower >= -100.0f)
 			return;
-		if (_isGround)
+		if (_isGround && _curJumpPower >= -100.0f)
 			return;
 		
 		SetAction(State::FALL);

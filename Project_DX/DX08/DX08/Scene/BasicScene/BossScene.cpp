@@ -36,8 +36,8 @@ void BossScene::Render()
 
 void BossScene::PreRender()
 {
-	_brick->Render();
 	_yggdrasil->Render();
+	_brick->Render();
 }
 
 void BossScene::PostRender()
