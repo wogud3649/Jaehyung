@@ -27,22 +27,24 @@ void Yggdrasil::Update()
 
 	Idle();
 
-	if (_player.expired() == false)
-	{
-		if (_player.lock()->GetJumpPower() > 0.0f)
-			return;
-		HIT_RESULT result;
-		result = _rightBranchCol->TopBlock(_player.lock()->GetFootCollider());
-		if (result.dir == Direction::UP)
-			_player.lock()->Ground();
-		result = _leftBranchCol->TopBlock(_player.lock()->GetFootCollider());
-		if (result.dir == Direction::UP)
-			_player.lock()->Ground();
-	}
 	if (_isAttack)
 		Attack();
 	else
 		SetIdle();
+
+	if (_player.expired() == false)
+	{
+		if (_player.lock()->GetJumpPower() <= 0.0f)
+		{
+			HIT_RESULT result;
+			result = _rightBranchCol->TopBlock(_player.lock()->GetFootCollider());
+			if (result.dir == Direction::UP)
+				_player.lock()->Ground();
+			result = _leftBranchCol->TopBlock(_player.lock()->GetFootCollider());
+			if (result.dir == Direction::UP)
+				_player.lock()->Ground();
+		}
+	}
 
 	_curAttackCooldown -= DELTA_TIME;
 
@@ -88,12 +90,13 @@ void Yggdrasil::Render()
 
 void Yggdrasil::PostRender()
 {
+	ImGui::SliderFloat("AttackDelay", &_curAfterAttackDelay, 0, 3.0f);
 	if (_player.expired() == false)
 	{
 		Vector2 pos = _player.lock()->GetFootCollider()->GetTransform()->GetWorldPos();
 		ImGui::SliderFloat2("pos", (float*)&pos, 0, 99999);
-
 	}
+
 }
 
 void Yggdrasil::SetOriginPos(Vector2 pos)
