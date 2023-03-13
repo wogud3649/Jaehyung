@@ -116,11 +116,6 @@ void Camera::FreeMode()
 			_transform->MoveX(_speed);
 		if (KEY_DOWN('D'))
 			_transform->MoveX(-_speed);
-
-		if (_transform->GetPos().x > 0)
-			_transform->SetX(0);
-		if (_transform->GetPos().y > 0)
-			_transform->SetY(0);
 	}
 }
 

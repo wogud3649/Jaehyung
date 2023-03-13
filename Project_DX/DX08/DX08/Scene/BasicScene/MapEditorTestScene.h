@@ -27,6 +27,7 @@ public:
 
 private:
 	void Functions();
+	Vector2 GetTiledPos();
 
 	shared_ptr<Brick> _brick;
 	int _selectedIndex;

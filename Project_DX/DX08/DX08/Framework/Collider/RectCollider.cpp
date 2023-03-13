@@ -108,6 +108,29 @@ bool RectCollider::IsCollision(shared_ptr<RectCollider> other, bool isObb)
         return IsAABB(other);
 }
 
+HIT_RESULT RectCollider::SideCollision(shared_ptr<CircleCollider> other)
+{
+    HIT_RESULT result;
+    if (IsAABB(other))
+    {
+        Vector2 circlePos = other->GetTransform()->GetWorldPos();
+        Vector2 rectPos = _transform->GetWorldPos();
+
+        Vector2 dir = Vector2(circlePos.x - rectPos.x, 0.0f);
+        dir.Normalize();
+
+        if (dir.x > 0)
+            result.dir = Direction::RIGHT;
+        else
+            result.dir = Direction::LEFT;
+    }
+    else
+    {
+        result.isHit = false;
+    }
+    return result;
+}
+
 HIT_RESULT RectCollider::Block(shared_ptr<CircleCollider> other)
 {
     HIT_RESULT result;
@@ -280,28 +303,6 @@ HIT_RESULT RectCollider::SideBlock(shared_ptr<CircleCollider> other)
 
             other->GetTransform()->Move(dir * (sum - distance));
         }
-        else
-        {
-            Vector2 closerVertex = other->GetCloserVertex(shared_from_this());
-
-            Vector2 vToCircle = circlePos - closerVertex;
-
-            Vector2 dir = circlePos - closerVertex;
-
-            if (dir.x < 0 && dir.y > 0)
-                result.dir == Direction::LEFTUP;
-            else if (dir.x > 0 && dir.y > 0)
-                result.dir == Direction::RIGHTUP;
-            else if (dir.x < 0 && dir.y < 0)
-                result.dir == Direction::LEFTDOWN;
-            else
-                result.dir == Direction::RIGHTDOWN;
-
-            float magnitude = other->WorldRadius() - dir.Length();
-            dir.Normalize();
-            other->GetTransform()->Move(dir * magnitude);
-        }
-        result.isHit = true;
     }
     else
     {

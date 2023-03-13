@@ -21,17 +21,22 @@ public:
 	void Ground();
 
 	void Attack();
+	void Hit();
 	void Skill();
-	void Damaged();
+	void Damaged(int damage, Direction dir);
 
 	void Dead();
 	void Revive();
 
 	const float& GetJumpPower() { return _curJumpPower; }
 
+	shared_ptr<CircleCollider> GetAttackCol() { return _attackCol; }
+	float GetAttackDamage() { return (rand() % (_maxAttackDamage - _minAttackDamage) + _minAttackDamage); }
+
 private:
 	void SetIdle();
 	void DashEnd();
+	void AttackMid();
 	void AttackEnd();
 	void FallEnd();
 	void SkillEnd();
@@ -40,12 +45,20 @@ private:
 	void SetAction(State state);
 	void SetSkul(SkulType skulType);
 
+	shared_ptr<CircleCollider> _attackCol;
+
 	float _headDelay = 5.0f;
 	bool _headOn = true;
 
 	float _speed = 500.0f;
 
-	bool _isDamaged = false;
+	float _maxInvincibleTime = 1.0f;
+	float _curInvincibleTime = _maxInvincibleTime;
+	bool _isInvincible = false;
+
+	float _knockBackPower = 0.0f;
+	bool _isKnockBacked = false;
+	bool _knockBackRight = false;
 
 	float _maxJumpPower = 800.0f;
 	float _curJumpPower = 0.0f;
@@ -62,5 +75,8 @@ private:
 	float _maxComboDuration = 0.9f;
 	float _curComboDuration = _maxComboDuration;
 	bool _attackB = false;
+
+	int _maxAttackDamage = 15.0f;
+	int _minAttackDamage = 5.0f;
 };
 

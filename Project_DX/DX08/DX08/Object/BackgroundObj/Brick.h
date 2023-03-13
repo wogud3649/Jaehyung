@@ -51,7 +51,7 @@ private:
 	Vector2 _size;
 	int _blockType = 0;
 	int _blockShapeType = 2;
-	int _blockPairNumber = 150;
+	int _blockPairNumber = 200;
 	int _totalBlocks = _blockShapeType * _blockPairNumber;
 	int _blockIndex = 0;
 	vector<bool> _activeBlocks = vector<bool>(_totalBlocks, false);

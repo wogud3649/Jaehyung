@@ -12,7 +12,7 @@ Player::Player()
 
 	_footCol = make_shared<CircleCollider>(15);
 
-	_bodyCol = make_shared<CircleCollider>(15);
+	_bodyCol = make_shared<CircleCollider>(30);
 	_bodyCol->GetTransform()->SetParent(_footCol->GetTransform());
 	_bodyCol->GetTransform()->MoveY(20.0f);
 

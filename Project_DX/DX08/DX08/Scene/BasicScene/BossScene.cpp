@@ -27,6 +27,15 @@ void BossScene::Update()
 	_player->Update();
 	_yggdrasil->Update();
 	_brick->Update();
+
+	if (_player->GetAttackCol()->IsCollision(_yggdrasil->GetHeadCollider()))
+	{
+		if (_player->GetAttackCol()->GetActive())
+		{
+			_yggdrasil->Damaged(_player->GetAttackDamage());
+			_player->Hit();
+		}
+	}
 }
 
 void BossScene::Render()

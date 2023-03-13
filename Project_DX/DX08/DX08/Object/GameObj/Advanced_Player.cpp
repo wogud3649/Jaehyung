@@ -3,6 +3,11 @@
 
 Advanced_Player::Advanced_Player()
 {
+	_attackCol = make_shared<CircleCollider>(50);
+	_attackCol->GetTransform()->SetParent(_footCol->GetTransform());
+	_attackCol->GetTransform()->MoveX(5);
+	_attackCol->GetTransform()->MoveY(25);
+
 	SetCallback();
 }
 
@@ -12,6 +17,8 @@ Advanced_Player::~Advanced_Player()
 
 void Advanced_Player::Update()
 {
+	_attackCol->Update();
+
 	if (KEY_DOWN(VK_F2))
 	{
 		SetSkul(SkulType::SKUL);
@@ -33,6 +40,9 @@ void Advanced_Player::Update()
 	Move();
 	Fall();
 	Skill();
+
+	Player::Update();
+
 	if (!_headOn)
 	{
 		if (_headDelay > 0.0f)
@@ -46,6 +56,7 @@ void Advanced_Player::Update()
 			SetSkul(SkulType::SKUL);
 		}
 	}
+
 	if (_curState == State::DASH)
 	{
 		float distance = LERP(0, _curDashDistance, DELTA_TIME * 10.0f);
@@ -55,6 +66,7 @@ void Advanced_Player::Update()
 		if (_direction == Direction::LEFT)
 			_footCol->GetTransform()->MoveX(-distance);
 	}
+
 	for (int i = 0; i < _isDash.size(); i++)
 	{
 		if (_isDash[i])
@@ -67,6 +79,7 @@ void Advanced_Player::Update()
 			}
 		}
 	}
+
 	if (_attackB)
 	{
 		_curComboDuration -= DELTA_TIME;
@@ -76,17 +89,46 @@ void Advanced_Player::Update()
 			_attackB = false;
 		}
 	}
-	Player::Update();
+
+	if (_isInvincible)
+	{
+		_curInvincibleTime -= DELTA_TIME;
+		if (_curInvincibleTime < 0.0f)
+		{
+			_isInvincible = false;
+			_curInvincibleTime = _maxInvincibleTime;
+		}
+	}
+
+	if (_isKnockBacked)
+	{
+		float distance = LERP(0.0f, _knockBackPower, DELTA_TIME * 6.0f);
+		_knockBackPower -= distance;
+
+		if (_knockBackRight)
+			_footCol->GetTransform()->MoveX(distance);
+		else
+			_footCol->GetTransform()->MoveX(-distance);
+
+		if (_knockBackPower <= 0.0f)
+			_isKnockBacked = false;
+	}
+
+	if (_curState != State::ATTACKA && _curState != State::ATTACKB && _curState != State::JUMPATTACK)
+		_attackCol->DeActivate();
 }
 
 void Advanced_Player::Render()
 {
 	Player::Render();
+
+	_attackCol->Render();
 }
 
 void Advanced_Player::PostRender()
 {
 	ImGui::SliderFloat("PLAYER HP", &_curHp, 0, _maxHp);
+	ImGui::SliderFloat("KnockBack", &_knockBackPower, 0, 9999);
 }
 
 void Advanced_Player::EnAble()
@@ -238,6 +280,11 @@ void Advanced_Player::Attack()
 	}
 }
 
+void Advanced_Player::Hit()
+{
+	_attackCol->DeActivate();
+}
+
 void Advanced_Player::Skill()
 {
 	if (KEY_DOWN('A'))
@@ -248,10 +295,20 @@ void Advanced_Player::Skill()
 	}
 }
 
-void Advanced_Player::Damaged()
+void Advanced_Player::Damaged(int damage, Direction dir)
 {
-	_isDamaged = true;
-	_curHp -= 10.0f;
+	if (_isInvincible)
+		return;
+	_isInvincible = true;
+
+	_isKnockBacked = true;
+	_knockBackPower = 250.0f;
+	if (dir == Direction::RIGHT)
+		_knockBackRight = true;
+	else
+		_knockBackRight = false;
+
+	_curHp -= damage;
 }
 
 void Advanced_Player::Dead()
@@ -274,6 +331,12 @@ void Advanced_Player::DashEnd()
 {
 	_curDashDistance = _maxDashDistance;
 	SetAction(State::FALL);
+}
+
+void Advanced_Player::AttackMid()
+{
+	_attackCol->GetTransform()->Update();
+	_attackCol->Activate();
 }
 
 void Advanced_Player::AttackEnd()
@@ -312,8 +375,18 @@ void Advanced_Player::SetCallback()
 		_actions[i][State::ATTACKB]->SetCallBack(std::bind(&Advanced_Player::AttackEnd, this));
 		_actions[i][State::JUMPATTACK]->SetCallBack(std::bind(&Advanced_Player::AttackEnd, this));
 	}
+	_actions[SkulType::SKUL][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this));
+	_actions[SkulType::SKUL][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this));
+	_actions[SkulType::SKUL][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this));
+
 	_actions[SkulType::SKUL][State::SKILL]->SetCallBack(std::bind(&Advanced_Player::SkillEnd, this));
+
+	_actions[SkulType::HEADLESS][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this));
+	_actions[SkulType::HEADLESS][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this));
+	_actions[SkulType::HEADLESS][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this));
+
 	_actions[SkulType::PIKE][State::SKILL]->SetCallBack(std::bind(&Advanced_Player::SkillEnd, this));
+
 	_actions[SkulType::SWORD][State::SKILL]->SetCallBack(std::bind(&Advanced_Player::SkillEnd, this));
 }
 

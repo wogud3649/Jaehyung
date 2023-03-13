@@ -30,6 +30,7 @@ public:
 	virtual bool IsCollision(Vector2 pos) override;
 	virtual bool IsCollision(shared_ptr<CircleCollider> other, bool isObb = false) override;
 	virtual bool IsCollision(shared_ptr<RectCollider> other, bool isObb = false) override;
+	HIT_RESULT SideCollision(shared_ptr<CircleCollider> other);
 	
 	virtual HIT_RESULT Block(shared_ptr<CircleCollider> other);
 	virtual HIT_RESULT Block(shared_ptr<RectCollider> other);

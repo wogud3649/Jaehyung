@@ -38,6 +38,7 @@ public:
 	string GetName() { return _name; }
 	bool IsPlay() { return _isPlay; }
 
+	void SetMidCallBack(function<void(void)> event) { _midEvent = event; }
 	void SetCallBack(function<void(void)> event) { _endEvent = event; }
 
 private:
@@ -53,6 +54,7 @@ private:
 
 	bool _isReverse = false;
 
+	function<void(void)> _midEvent = nullptr;
 	function<void(void)> _endEvent = nullptr;
 };
 

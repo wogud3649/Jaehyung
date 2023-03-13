@@ -145,8 +145,7 @@ void MapEditorTestScene::Functions()
 
 	if (KEY_DOWN(VK_LBUTTON))
 	{
-		Vector2 mousePos = CAMERA->GetWorldMousePos();
-		Vector2 tempPos = Vector2((int)(mousePos.x / 60.0f) * 60 + 30, (int)(mousePos.y / 60.0f) * 60 + 30);
+		Vector2 tempPos = GetTiledPos();
 
 		if (_type == EditorType::DRAG)
 		{
@@ -170,8 +169,7 @@ void MapEditorTestScene::Functions()
 	}
 	if (KEY_PRESS(VK_LBUTTON))
 	{
-		Vector2 mousePos = CAMERA->GetWorldMousePos();
-		Vector2 tempPos = Vector2((int)(mousePos.x / 60.0f) * 60 + 30, (int)(mousePos.y / 60.0f) * 60 + 30);
+		Vector2 tempPos = GetTiledPos();
 
 		if (_type == EditorType::DRAW)
 		{
@@ -196,8 +194,7 @@ void MapEditorTestScene::Functions()
 
 	if (KEY_UP(VK_LBUTTON))
 	{
-		Vector2 mousePos = CAMERA->GetWorldMousePos();
-		Vector2 tempPos = Vector2((int)(mousePos.x / 60.0f) * 60 + 30, (int)(mousePos.y / 60.0f) * 60 + 30);
+		Vector2 tempPos = GetTiledPos();
 		_endPos = tempPos;
 
 		if (_type == EditorType::BLOCKCOLLIDER)
@@ -223,4 +220,16 @@ void MapEditorTestScene::Functions()
 			_monsterSpawn.resize(_monsterSpawn.size() - 1);
 		}
 	}
+}
+
+Vector2 MapEditorTestScene::GetTiledPos()
+{
+	Vector2 mousePos = CAMERA->GetWorldMousePos();
+	if (mousePos.x < 0.0f)
+		mousePos.x -= 60.0f;
+	if (mousePos.y < 0.0f)
+		mousePos.y -= 60.0f;
+	Vector2 tempPos = Vector2((int)(mousePos.x / 60.0f) * 60 + 30, (int)(mousePos.y / 60.0f) * 60 + 30);
+
+	return tempPos;
 }
