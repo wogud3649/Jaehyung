@@ -9,7 +9,13 @@ public:
 	void Render();
 	void PostRender();
 
-	void SetPannelPos(Vector2 pos) { _pannel->GetTransform()->SetPos(pos); }
+	void Set();
+	void SetPannelPos(Vector2 pos) { _pannel->GetTransform()->SetPos(pos); Update(); Set(); }
+
+	void BuyItem(string name);
+	void SellItem(string name);
+	bool AddMoney(UINT amount);
+	bool SubMoney(UINT amount);
 
 	void AddMoney(int money) { if (money > 0) return; _money += money; }
 
@@ -20,8 +26,8 @@ private:
 	vector<shared_ptr<Slot>> _slots;
 	vector<ItemInfo> _itemDatas;
 
-	shared_ptr<ItemIcon> _icon;
+	vector<shared_ptr<ItemIcon>> _icons;
 
-	UINT _money = 0;
+	int _money = 0;
 };
 
