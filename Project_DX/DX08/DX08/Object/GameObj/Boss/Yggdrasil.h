@@ -37,9 +37,14 @@ private:
 	void SetParent();
 	void Adjust();
 	
-	void FistAttackReady();
-	void FistAttack();
-	void FistAttackAfter();
+	void StampAttackReady();
+	void StampAttack();
+	void StampAttackAfter();
+
+	void SweepAttackReady();
+	void SweepAttack();
+	void SweepAttackAfter();
+	void SweepAttackEnd();
 
 	Vector2 SetLERP(Vector2 objPos, Vector2 targetPos, float speed);
 	void SetIdle();

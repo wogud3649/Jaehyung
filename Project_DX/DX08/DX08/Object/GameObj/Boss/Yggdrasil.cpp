@@ -43,16 +43,16 @@ void Yggdrasil::Update()
 				SetIdle();
 				break;
 			case State::ATTACKREADY:
-				FistAttackReady();
+				StampAttackReady();
 				break;
 			case State::ATTACK:
-				FistAttack();
+				StampAttack();
 				break;
 			case State::ATTACKAFTER:
-				FistAttackAfter();
+				StampAttackAfter();
 				break;
 			case State::ATTACKEND:
-				FistAttackReady();
+				StampAttackReady();
 				break;
 			default:
 				break;
@@ -106,26 +106,30 @@ void Yggdrasil::Update()
 		}
 		else if (_curAttackDelay <= 0.0f)
 		{
+			float curX;
 			switch (_curState)
 			{
 			case State::IDLE:
+				curX = _player.lock()->GetFootCollider()->GetTransform()->GetPos().x;
 				_curState = State::ATTACKREADY;
 				_curAttackDelay = _maxAttackDelay;
+				if (curX > _body->GetTransform()->GetWorldPos().x)
+					_isRightHand = false;
+				else
+					_isRightHand = true;
 				break;
 			case State::ATTACKREADY:
 				_curState = State::ATTACK;
 				_attackPos.x = _player.lock()->GetFootCollider()->GetTransform()->GetPos().x;
-				if (_attackPos.x > _body->GetTransform()->GetWorldPos().x)
+				if (_isRightHand)
 				{
-					_isRightHand = false;
-					_leftHandCol->GetTransform()->Update();
-					_leftHandCol->Activate();
+					_rightHandCol->GetTransform()->Update();
+					_rightHandCol->Activate();
 				}
 				else
 				{
-					_isRightHand = true;
-					_rightHandCol->GetTransform()->Update();
-					_rightHandCol->Activate();
+					_leftHandCol->GetTransform()->Update();
+					_leftHandCol->Activate();
 				}
 				break;
 			case State::ATTACKAFTER:
@@ -251,13 +255,13 @@ void Yggdrasil::Adjust()
 	_leftHandCol->DeActivate();
 }
 
-void Yggdrasil::FistAttackReady()
+void Yggdrasil::StampAttackReady()
 {
 	_rightHand->GetTransform()->Move(SetLERP(_rightHand->GetTransform()->GetWorldPos(), Vector2(_originRightHandPos.x, _originRightHandPos.y + 300), DELTA_TIME * 2.0f));
 	_leftHand->GetTransform()->Move(SetLERP(_leftHand->GetTransform()->GetWorldPos(), Vector2(_originLeftHandPos.x, _originLeftHandPos.y + 300), DELTA_TIME * 2.0f));
 }
 
-void Yggdrasil::FistAttack()
+void Yggdrasil::StampAttack()
 {
 	int damage = rand() % (_maxDamage - _minDamage) + _minDamage;
 	if (_isRightHand)
@@ -278,7 +282,7 @@ void Yggdrasil::FistAttack()
 	}
 }
 
-void Yggdrasil::FistAttackAfter()
+void Yggdrasil::StampAttackAfter()
 {
 	if (_isRightHand)
 	{
@@ -296,6 +300,24 @@ void Yggdrasil::FistAttackAfter()
 		if (result.dir == Direction::UP)
 			_player.lock()->Ground();
 	}
+}
+
+void Yggdrasil::SweepAttackReady()
+{
+	_rightHand->GetTransform()->Move(SetLERP(_rightHand->GetTransform()->GetWorldPos(), Vector2(_originRightHandPos.x, _originRightHandPos.y), DELTA_TIME * 2.0f));
+	_leftHand->GetTransform()->Move(SetLERP(_leftHand->GetTransform()->GetWorldPos(), Vector2(_originLeftHandPos.x, _originLeftHandPos.y), DELTA_TIME * 2.0f));
+}
+
+void Yggdrasil::SweepAttack()
+{
+}
+
+void Yggdrasil::SweepAttackAfter()
+{
+}
+
+void Yggdrasil::SweepAttackEnd()
+{
 }
 
 void Yggdrasil::SetIdle()
