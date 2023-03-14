@@ -65,6 +65,7 @@ void Yggdrasil::Update()
 				SetIdle();
 				break;
 			case State::ATTACKREADY:
+				SweepAttackReady();
 				break;
 			case State::ATTACK:
 				break;
@@ -110,9 +111,9 @@ void Yggdrasil::Update()
 			switch (_curState)
 			{
 			case State::IDLE:
-				curX = _player.lock()->GetFootCollider()->GetTransform()->GetPos().x;
 				_curState = State::ATTACKREADY;
 				_curAttackDelay = _maxAttackDelay;
+				curX = _player.lock()->GetFootCollider()->GetTransform()->GetPos().x;
 				if (curX > _body->GetTransform()->GetWorldPos().x)
 					_isRightHand = false;
 				else
@@ -304,8 +305,16 @@ void Yggdrasil::StampAttackAfter()
 
 void Yggdrasil::SweepAttackReady()
 {
-	_rightHand->GetTransform()->Move(SetLERP(_rightHand->GetTransform()->GetWorldPos(), Vector2(_originRightHandPos.x, _originRightHandPos.y), DELTA_TIME * 2.0f));
-	_leftHand->GetTransform()->Move(SetLERP(_leftHand->GetTransform()->GetWorldPos(), Vector2(_originLeftHandPos.x, _originLeftHandPos.y), DELTA_TIME * 2.0f));
+	if (_isRightHand)
+	{
+		_rightHand->GetTransform()->Move(SetLERP(_rightHand->GetTransform()->GetWorldPos(), Vector2(_originRightHandPos.x + 1000, _attackPos.y), DELTA_TIME * 2.0f));
+		_leftHand->GetTransform()->Move(SetLERP(_leftHand->GetTransform()->GetWorldPos(), Vector2(_originLeftHandPos.x + 100, _originLeftHandPos.y), DELTA_TIME * 2.0f));
+	}
+	else
+	{
+		_rightHand->GetTransform()->Move(SetLERP(_rightHand->GetTransform()->GetWorldPos(), Vector2(_originRightHandPos.x - 100, _originRightHandPos.y), DELTA_TIME * 2.0f));
+		_leftHand->GetTransform()->Move(SetLERP(_leftHand->GetTransform()->GetWorldPos(), Vector2(_originLeftHandPos.x - 1000, _attackPos.y), DELTA_TIME * 2.0f));
+	}
 }
 
 void Yggdrasil::SweepAttack()
