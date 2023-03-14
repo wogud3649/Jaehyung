@@ -160,7 +160,7 @@ int Brick::SelectBlock(Vector2 pos)
 
 void Brick::Load()
 {
-	wstring name = L"Maps/Field1.map";
+	wstring name = L"Maps/Field2.map";
 	BinaryReader reader = BinaryReader(name);
 
 	void* ptr;

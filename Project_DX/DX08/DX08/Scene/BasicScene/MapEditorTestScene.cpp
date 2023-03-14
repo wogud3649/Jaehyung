@@ -66,7 +66,7 @@ void MapEditorTestScene::PostRender()
 
 void MapEditorTestScene::Save()
 {
-	wstring name = L"Maps/Field1.map";
+	wstring name = L"Maps/Field2.map";
 	BinaryWriter writer = BinaryWriter(name);
 
 	vector<BlockData> data = _brick->GetBlockDatas();

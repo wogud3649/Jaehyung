@@ -14,6 +14,11 @@ Yggdrasil::~Yggdrasil()
 
 void Yggdrasil::Update()
 {
+	if (_isAlive == false)
+	{
+		return;
+	}
+
 	_headCol->Update();
 	_rightBranchCol->Update();
 	_leftBranchCol->Update();
@@ -117,6 +122,11 @@ void Yggdrasil::Update()
 
 void Yggdrasil::Render()
 {
+	if (_isAlive == false)
+	{
+		return;
+	}
+
 	_body->Render();
 
 	_rightHand->Render();
@@ -139,7 +149,15 @@ void Yggdrasil::Damaged(int damage)
 	_curHp -= damage;
 
 	if (_curHp < 0)
+	{
 		_curHp = 0;
+		Dead();
+	}
+}
+
+void Yggdrasil::Dead()
+{
+	DeActivate();
 }
 
 void Yggdrasil::SetOriginPos(Vector2 pos)
@@ -156,7 +174,9 @@ void Yggdrasil::SetOriginPos(Vector2 pos)
 void Yggdrasil::MakeShared()
 {
 	_body = make_shared<Quad>(L"Resources/Texture/Boss/Yggdrasil/Body.png");
+
 	_rightHand = make_shared<Quad>(L"Resources/Texture/Boss/Yggdrasil/rightHand.png");
+	
 	_leftHand = make_shared<Quad>(L"Resources/Texture/Boss/Yggdrasil/leftHand.png");
 
 	_headCol = make_shared<CircleCollider>(125);
@@ -237,7 +257,7 @@ void Yggdrasil::FistAttackAfter()
 	{
 		_rightHand->GetTransform()->Move(SetLERP(_rightHand->GetTransform()->GetWorldPos(), _attackPos, DELTA_TIME * 8.0f));
 
-		HIT_RESULT result = _rightHandCol->SideBlock(_player.lock()->GetFootCollider());
+		HIT_RESULT result = _rightHandCol->Block(_player.lock()->GetFootCollider());
 		if (result.dir == Direction::UP)
 			_player.lock()->Ground();
 	}
@@ -245,7 +265,7 @@ void Yggdrasil::FistAttackAfter()
 	{
 		_leftHand->GetTransform()->Move(SetLERP(_leftHand->GetTransform()->GetWorldPos(), _attackPos, DELTA_TIME * 8.0f));
 
-		HIT_RESULT result = _leftHandCol->SideBlock(_player.lock()->GetFootCollider());
+		HIT_RESULT result = _leftHandCol->Block(_player.lock()->GetFootCollider());
 		if (result.dir == Direction::UP)
 			_player.lock()->Ground();
 	}
@@ -292,4 +312,12 @@ void Yggdrasil::Idle()
 	}
 
 	_body->GetTransform()->MoveY(speed * DELTA_TIME);
+}
+
+void Yggdrasil::DeActivate()
+{
+	_rightBranchCol->DeActivate();
+	_leftBranchCol->DeActivate();
+	_headCol->DeActivate();
+	_isAlive = false;
 }

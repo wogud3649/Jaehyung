@@ -18,6 +18,7 @@ public:
 	void PostRender();
 
 	void Damaged(int damage);
+	void Dead();
 
 	void SetTarget(shared_ptr<Advanced_Player> player) { _player = player; }
 	void SetOriginPos(Vector2 pos);
@@ -38,6 +39,8 @@ private:
 	void SetIdle();
 	void Idle();
 
+	void DeActivate();
+
 	shared_ptr<Quad> _body;
 	Vector2 _originBodyPos;
 	bool _up = true;
@@ -53,8 +56,9 @@ private:
 	shared_ptr<RectCollider> _rightHandCol;
 	shared_ptr<RectCollider> _leftHandCol;
 
-	int _maxHp = 500.0f;
+	int _maxHp = 500;
 	int _curHp = _maxHp;
+	bool _isAlive = true;
 
 	Vector2 _attackPos = Vector2(0, 170);
 	float _maxAttackDelay = 2.0f;
@@ -63,8 +67,8 @@ private:
 	State _curState = State::IDLE;
 	bool _isRightHand = true;
 
-	int _maxDamage = 15.0f;
-	int _minDamage = 4.0f;
+	int _maxDamage = 15;
+	int _minDamage = 4;
 
 	weak_ptr<Advanced_Player> _player;
 };
