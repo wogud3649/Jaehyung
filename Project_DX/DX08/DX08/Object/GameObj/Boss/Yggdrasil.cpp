@@ -34,22 +34,49 @@ void Yggdrasil::Update()
 
 	if (_player.expired() == false)
 	{
-		switch (_curState)
+		switch (_attackType)
 		{
-		case State::IDLE:
-			SetIdle();
+		case Yggdrasil::STAMP:
+			switch (_curState)
+			{
+			case State::IDLE:
+				SetIdle();
+				break;
+			case State::ATTACKREADY:
+				FistAttackReady();
+				break;
+			case State::ATTACK:
+				FistAttack();
+				break;
+			case State::ATTACKAFTER:
+				FistAttackAfter();
+				break;
+			case State::ATTACKEND:
+				FistAttackReady();
+				break;
+			default:
+				break;
+			}
 			break;
-		case State::FISTATTACKREADY:
-			FistAttackReady();
+		case Yggdrasil::SWEEP:
+			switch (_curState)
+			{
+			case State::IDLE:
+				SetIdle();
+				break;
+			case State::ATTACKREADY:
+				break;
+			case State::ATTACK:
+				break;
+			case State::ATTACKAFTER:
+				break;
+			case State::ATTACKEND:
+				break;
+			default:
+				break;
+			}
 			break;
-		case State::FISTATTACK:
-			FistAttack();
-			break;
-		case State::FISTATTACKAFTER:
-			FistAttackAfter();
-			break;
-		case State::FISTATTACKEND:
-			FistAttackReady();
+		case Yggdrasil::SHOOT:
 			break;
 		default:
 			break;
@@ -69,11 +96,11 @@ void Yggdrasil::Update()
 		if (_curAttackDelay > 0.0f)
 			_curAttackDelay -= DELTA_TIME;
 			
-		if (_curState == State::FISTATTACK)
+		if (_curState == State::ATTACK)
 		{
 			if ((_isRightHand && _rightHandCol->GetTransform()->GetWorldPos().y <= _attackPos.y + 10.0f) || (!_isRightHand && _leftHandCol->GetTransform()->GetWorldPos().y <= _attackPos.y + 10.0f))
 			{
-				_curState = State::FISTATTACKAFTER;
+				_curState = State::ATTACKAFTER;
 				_curAttackDelay = _maxAttackDelay;
 			}
 		}
@@ -82,11 +109,11 @@ void Yggdrasil::Update()
 			switch (_curState)
 			{
 			case State::IDLE:
-				_curState = State::FISTATTACKREADY;
+				_curState = State::ATTACKREADY;
 				_curAttackDelay = _maxAttackDelay;
 				break;
-			case State::FISTATTACKREADY:
-				_curState = State::FISTATTACK;
+			case State::ATTACKREADY:
+				_curState = State::ATTACK;
 				_attackPos.x = _player.lock()->GetFootCollider()->GetTransform()->GetPos().x;
 				if (_attackPos.x > _body->GetTransform()->GetWorldPos().x)
 				{
@@ -101,15 +128,15 @@ void Yggdrasil::Update()
 					_rightHandCol->Activate();
 				}
 				break;
-			case State::FISTATTACKAFTER:
-				_curState = State::FISTATTACKEND;
+			case State::ATTACKAFTER:
+				_curState = State::ATTACKEND;
 				if (_isRightHand)
 					_rightHandCol->DeActivate();
 				else
 					_leftHandCol->DeActivate();
 				_curAttackDelay = _maxAttackDelay;
 				break;
-			case State::FISTATTACKEND:
+			case State::ATTACKEND:
 				_curState = State::IDLE;
 				_curAttackDelay = _maxAttackDelay;
 				break;

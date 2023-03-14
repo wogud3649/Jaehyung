@@ -2,13 +2,19 @@
 class Yggdrasil
 {
 public:
+	enum AttackType
+	{
+		STAMP,
+		SWEEP,
+		SHOOT
+	};
 	enum State
 	{
 		IDLE,
-		FISTATTACKREADY,
-		FISTATTACK,
-		FISTATTACKAFTER,
-		FISTATTACKEND
+		ATTACKREADY,
+		ATTACK,
+		ATTACKAFTER,
+		ATTACKEND
 	};
 	Yggdrasil();
 	~Yggdrasil();
@@ -71,4 +77,6 @@ private:
 	int _minDamage = 4;
 
 	weak_ptr<Advanced_Player> _player;
+
+	AttackType _attackType = AttackType::STAMP;
 };
