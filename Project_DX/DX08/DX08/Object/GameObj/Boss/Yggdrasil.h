@@ -47,6 +47,7 @@ private:
 	void SweepAttackEnd();
 
 	Vector2 SetLERP(Vector2 objPos, Vector2 targetPos, float speed);
+	float SetLERP(float start, float end, float speed);
 	void SetIdle();
 	void Idle();
 
@@ -83,5 +84,5 @@ private:
 
 	weak_ptr<Advanced_Player> _player;
 
-	AttackType _attackType = AttackType::STAMP;
+	AttackType _attackType = AttackType::SWEEP;
 };

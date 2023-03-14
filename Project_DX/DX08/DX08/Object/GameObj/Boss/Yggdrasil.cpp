@@ -68,10 +68,13 @@ void Yggdrasil::Update()
 				SweepAttackReady();
 				break;
 			case State::ATTACK:
+				SweepAttack();
 				break;
 			case State::ATTACKAFTER:
+				SweepAttackAfter();
 				break;
 			case State::ATTACKEND:
+				SweepAttackEnd();
 				break;
 			default:
 				break;
@@ -99,10 +102,37 @@ void Yggdrasil::Update()
 			
 		if (_curState == State::ATTACK)
 		{
-			if ((_isRightHand && _rightHandCol->GetTransform()->GetWorldPos().y <= _attackPos.y + 10.0f) || (!_isRightHand && _leftHandCol->GetTransform()->GetWorldPos().y <= _attackPos.y + 10.0f))
+			switch (_attackType)
 			{
-				_curState = State::ATTACKAFTER;
-				_curAttackDelay = _maxAttackDelay;
+			case Yggdrasil::STAMP:
+				if ((_isRightHand && _rightHandCol->GetTransform()->GetWorldPos().y <= _attackPos.y + 10.0f) || (!_isRightHand && _leftHandCol->GetTransform()->GetWorldPos().y <= _attackPos.y + 10.0f))
+				{
+					_curState = State::ATTACKAFTER;
+					_curAttackDelay = _maxAttackDelay;
+				}
+				break;
+			case Yggdrasil::SWEEP:
+				if (_isRightHand)
+				{
+					if (_rightHand->GetTransform()->GetWorldPos().x > _originRightHandPos.x + 1700)
+					{
+						_curState = State::ATTACKAFTER;
+						_curAttackDelay = _maxAttackDelay;
+					}
+				}
+				else
+				{
+					if (_leftHand->GetTransform()->GetWorldPos().x < _originLeftHandPos.x - 1700)
+					{
+						_curState = State::ATTACKAFTER;
+						_curAttackDelay = _maxAttackDelay;
+					}
+				}
+				break;
+			case Yggdrasil::SHOOT:
+				break;
+			default:
+				break;
 			}
 		}
 		else if (_curAttackDelay <= 0.0f)
@@ -173,7 +203,11 @@ void Yggdrasil::Render()
 
 void Yggdrasil::PostRender()
 {
+	float _curX = _body->GetTransform()->GetPos().x;
+	float _originX = _originBodyPos.x;
 	ImGui::SliderInt("BossHP", &_curHp, 0, _maxHp);
+	ImGui::SliderFloat("BodyPos", &_curX, 0, 20000);
+	ImGui::SliderFloat("OriginX", &_originX, 0, 20000);
 }
 
 void Yggdrasil::Damaged(int damage)
@@ -197,10 +231,17 @@ void Yggdrasil::SetOriginPos(Vector2 pos)
 	_originBodyPos = pos;
 	_body->GetTransform()->SetPos(pos);
 
-	_rightHand->GetTransform()->UpdateSRT();
+	_rightHand->GetTransform()->SetPos(pos);
+	_rightHand->GetTransform()->MoveX(-350);
+	_rightHand->GetTransform()->MoveY(-120);
 	_originRightHandPos = _rightHand->GetTransform()->GetWorldPos();
-	_leftHand->GetTransform()->UpdateSRT();
+
+	_leftHand->GetTransform()->SetPos(pos);
+	_leftHand->GetTransform()->MoveX(350);
+	_leftHand->GetTransform()->MoveY(-120);
 	_originLeftHandPos = _leftHand->GetTransform()->GetWorldPos();
+
+
 }
 
 void Yggdrasil::MakeShared()
@@ -220,9 +261,6 @@ void Yggdrasil::MakeShared()
 
 void Yggdrasil::SetParent()
 {
-	_rightHand->GetTransform()->SetParent(_body->GetTransform());
-	_leftHand->GetTransform()->SetParent(_body->GetTransform());
-
 	_headCol->GetTransform()->SetParent(_body->GetTransform());
 	_rightBranchCol->GetTransform()->SetParent(_body->GetTransform());
 	_leftBranchCol->GetTransform()->SetParent(_body->GetTransform());
@@ -232,12 +270,6 @@ void Yggdrasil::SetParent()
 
 void Yggdrasil::Adjust()
 {
-	_rightHand->GetTransform()->MoveX(-350);
-	_rightHand->GetTransform()->MoveY(-120);
-
-	_leftHand->GetTransform()->MoveX(350);
-	_leftHand->GetTransform()->MoveY(-120);
-
 	_headCol->GetTransform()->MoveX(20);
 	_headCol->GetTransform()->MoveY(20);
 
@@ -307,30 +339,85 @@ void Yggdrasil::SweepAttackReady()
 {
 	if (_isRightHand)
 	{
-		_rightHand->GetTransform()->Move(SetLERP(_rightHand->GetTransform()->GetWorldPos(), Vector2(_originRightHandPos.x + 1000, _attackPos.y), DELTA_TIME * 2.0f));
-		_leftHand->GetTransform()->Move(SetLERP(_leftHand->GetTransform()->GetWorldPos(), Vector2(_originLeftHandPos.x + 100, _originLeftHandPos.y), DELTA_TIME * 2.0f));
+		if (_body->GetTransform()->GetAngle() < 0.25f)
+			_body->GetTransform()->AddAngle(SetLERP(0, 0.3f, DELTA_TIME * 1.5f));
+		_body->GetTransform()->Move(SetLERP(_body->GetTransform()->GetWorldPos(), Vector2(_originBodyPos.x - 250, _originBodyPos.y - 100), DELTA_TIME * 2.0f));
+		_rightHand->GetTransform()->Move(SetLERP(_rightHand->GetTransform()->GetWorldPos(), Vector2(_originRightHandPos.x - 1500, _attackPos.y), DELTA_TIME * 2.0f));
+		_leftHand->GetTransform()->Move(SetLERP(_leftHand->GetTransform()->GetWorldPos(), Vector2(_originLeftHandPos.x - 250, _originLeftHandPos.y - 100), DELTA_TIME * 2.0f));
 	}
 	else
 	{
-		_rightHand->GetTransform()->Move(SetLERP(_rightHand->GetTransform()->GetWorldPos(), Vector2(_originRightHandPos.x - 100, _originRightHandPos.y), DELTA_TIME * 2.0f));
-		_leftHand->GetTransform()->Move(SetLERP(_leftHand->GetTransform()->GetWorldPos(), Vector2(_originLeftHandPos.x - 1000, _attackPos.y), DELTA_TIME * 2.0f));
+		if (_body->GetTransform()->GetAngle() > -0.25f)
+			_body->GetTransform()->AddAngle(SetLERP(0, -0.3f, DELTA_TIME * 1.5f));
+		_body->GetTransform()->Move(SetLERP(_body->GetTransform()->GetWorldPos(), Vector2(_originBodyPos.x + 250, _originBodyPos.y - 100), DELTA_TIME * 2.0f));
+		_rightHand->GetTransform()->Move(SetLERP(_rightHand->GetTransform()->GetWorldPos(), Vector2(_originRightHandPos.x + 250, _originRightHandPos.y - 100), DELTA_TIME * 2.0f));
+		_leftHand->GetTransform()->Move(SetLERP(_leftHand->GetTransform()->GetWorldPos(), Vector2(_originLeftHandPos.x + 1500, _attackPos.y), DELTA_TIME * 2.0f));
 	}
 }
 
 void Yggdrasil::SweepAttack()
 {
+	if (_isRightHand)
+	{
+		if (_body->GetTransform()->GetAngle() > -0.35f)
+			_body->GetTransform()->AddAngle(SetLERP(0, -0.6f, DELTA_TIME));
+		_body->GetTransform()->Move(SetLERP(_body->GetTransform()->GetWorldPos(), Vector2(_originBodyPos.x + 250, _originBodyPos.y - 100), DELTA_TIME * 2.0f));
+		_rightHand->GetTransform()->Move(SetLERP(_rightHand->GetTransform()->GetPos(), Vector2(_originRightHandPos.x + 1900, _attackPos.y), DELTA_TIME));
+		_leftHand->GetTransform()->Move(SetLERP(_leftHand->GetTransform()->GetPos(), Vector2(_originLeftHandPos.x + 250, _attackPos.y), DELTA_TIME * 2.0f));
+	}
+	else
+	{
+		if (_body->GetTransform()->GetAngle() < 0.35f)
+			_body->GetTransform()->AddAngle(SetLERP(0, 0.6f, DELTA_TIME));
+		_body->GetTransform()->Move(SetLERP(_body->GetTransform()->GetWorldPos(), Vector2(_originBodyPos.x - 250, _originBodyPos.y), DELTA_TIME * 2.0f));
+		_rightHand->GetTransform()->Move(SetLERP(_rightHand->GetTransform()->GetPos(), Vector2(_originRightHandPos.x - 250, _attackPos.y), DELTA_TIME * 2.0f));
+		_leftHand->GetTransform()->Move(SetLERP(_leftHand->GetTransform()->GetPos(), Vector2(_originLeftHandPos.x + 1900, _attackPos.y), DELTA_TIME));
+	}
 }
 
 void Yggdrasil::SweepAttackAfter()
 {
+	if (_isRightHand)
+	{
+		if (_body->GetTransform()->GetAngle() > -0.35f)
+			_body->GetTransform()->AddAngle(SetLERP(0, -0.6f, DELTA_TIME));
+		_body->GetTransform()->Move(SetLERP(_body->GetTransform()->GetWorldPos(), Vector2(_originBodyPos.x + 250, _originBodyPos.y - 100), DELTA_TIME * 2.0f));
+		_rightHand->GetTransform()->Move(SetLERP(_rightHand->GetTransform()->GetPos(), Vector2(_originRightHandPos.x + 1900, _attackPos.y), DELTA_TIME));
+		_leftHand->GetTransform()->Move(SetLERP(_leftHand->GetTransform()->GetPos(), Vector2(_originLeftHandPos.x + 250, _attackPos.y), DELTA_TIME * 2.0f));
+	}
+	else
+	{
+		if (_body->GetTransform()->GetAngle() < 0.35f)
+			_body->GetTransform()->AddAngle(SetLERP(0, 0.6f, DELTA_TIME));
+		_body->GetTransform()->Move(SetLERP(_body->GetTransform()->GetWorldPos(), Vector2(_originBodyPos.x - 250, _originBodyPos.y), DELTA_TIME * 2.0f));
+		_rightHand->GetTransform()->Move(SetLERP(_rightHand->GetTransform()->GetPos(), Vector2(_originRightHandPos.x - 250, _attackPos.y), DELTA_TIME * 2.0f));
+		_leftHand->GetTransform()->Move(SetLERP(_leftHand->GetTransform()->GetPos(), Vector2(_originLeftHandPos.x + 1900, _attackPos.y), DELTA_TIME));
+	}
 }
 
 void Yggdrasil::SweepAttackEnd()
 {
+	if (_isRightHand)
+	{
+		if (_body->GetTransform()->GetAngle() < 0) // TODO
+			_body->GetTransform()->AddAngle(SetLERP(0, 0.3f, DELTA_TIME));
+		_body->GetTransform()->Move(SetLERP(_body->GetTransform()->GetWorldPos(), _originBodyPos, DELTA_TIME * 2.0f));
+		_rightHand->GetTransform()->Move(SetLERP(_rightHand->GetTransform()->GetPos(), _originRightHandPos, DELTA_TIME));
+		_leftHand->GetTransform()->Move(SetLERP(_leftHand->GetTransform()->GetPos(), _originLeftHandPos, DELTA_TIME * 2.0f));
+	}
+	else
+	{
+		if (_body->GetTransform()->GetAngle() < 0.35f)
+			_body->GetTransform()->AddAngle(SetLERP(0, 0.6f, DELTA_TIME));
+		_body->GetTransform()->Move(SetLERP(_body->GetTransform()->GetWorldPos(), _originBodyPos, DELTA_TIME * 2.0f));
+		_rightHand->GetTransform()->Move(SetLERP(_rightHand->GetTransform()->GetPos(), _originRightHandPos, DELTA_TIME * 2.0f));
+		_leftHand->GetTransform()->Move(SetLERP(_leftHand->GetTransform()->GetPos(), _originLeftHandPos, DELTA_TIME));
+	}
 }
 
 void Yggdrasil::SetIdle()
 {
+	_body->GetTransform()->Move(SetLERP(_body->GetTransform()->GetWorldPos(), _originBodyPos, DELTA_TIME * 8.0f));
 	_rightHand->GetTransform()->Move(SetLERP(_rightHand->GetTransform()->GetWorldPos(), _originRightHandPos, DELTA_TIME * 8.0f));
 	_leftHand->GetTransform()->Move(SetLERP(_leftHand->GetTransform()->GetWorldPos(), _originLeftHandPos, DELTA_TIME * 8.0f));
 }
@@ -340,6 +427,15 @@ Vector2 Yggdrasil::SetLERP(Vector2 objPos, Vector2 targetPos, float speed)
 	Vector2 curPos = objPos;
 	Vector2 goalPos = targetPos - objPos;
 	Vector2 distance = LERP(Vector2(0, 0), goalPos, speed);
+
+	return distance;
+}
+
+float Yggdrasil::SetLERP(float start, float end, float speed)
+{
+	float curPos = start;
+	float goalPos = end - start;
+	float distance = LERP(0, goalPos, speed);
 
 	return distance;
 }
@@ -370,6 +466,8 @@ void Yggdrasil::Idle()
 	}
 
 	_body->GetTransform()->MoveY(speed * DELTA_TIME);
+	_rightHand->GetTransform()->MoveY(speed * DELTA_TIME);
+	_leftHand->GetTransform()->MoveY(speed * DELTA_TIME);
 }
 
 void Yggdrasil::DeActivate()

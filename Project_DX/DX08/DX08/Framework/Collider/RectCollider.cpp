@@ -157,11 +157,13 @@ HIT_RESULT RectCollider::Block(shared_ptr<CircleCollider> other)
                 if (dir.y >= 0)
                 {
                     result.dir = Direction::UP;
+                    dir.y += other->WorldRadius();
                     dir.x = 0;
                 }
                 else
                 {
                     result.dir = Direction::DOWN;
+                    dir.y -= other->WorldRadius();
                     dir.x = 0;
                 }
             }
@@ -170,11 +172,13 @@ HIT_RESULT RectCollider::Block(shared_ptr<CircleCollider> other)
                 if (dir.x >= 0)
                 {
                     result.dir = Direction::RIGHT;
+                    dir.x += other->WorldRadius();
                     dir.y = 0;
                 }
                 else
                 {
                     result.dir = Direction::LEFT;
+                    dir.x -= other->WorldRadius();
                     dir.y = 0;
                 }
             }
