@@ -51,27 +51,31 @@ void MapEditorTestScene::PreRender()
 
 void MapEditorTestScene::PostRender()
 {
-	ImGui::SetWindowSize({ 500, 680 });
-	ImGui::SliderInt("BlockType", &_brick->GetCurBlockType(), 0, _brick->GetBlockShapeType() - 1);
 	ImGui::SliderInt("EDIT MODE", &_type, EditorType::DRAW, EditorType::FLOORCOLLIDER);
+
 	if (ImGui::TreeNode("EditTools"))
 	{
 		if (ImGui::TreeNode("BlockType"))
 		{
 			ID3D11ShaderResourceView* textureView = SRV_ADD(L"Resources/Texture/Background/Tiles_16x10.png")->GetSRVPointer();
-			ImTextureID textureID = (ImTextureID)textureView;
-			ImVec2 size = { 32, 32 };
-			ImGui::Columns(8, 0, false);
-			for (int col = 0; col < 16; col++)
-			{
-				for (int row = 0; row < 10; row++)
-				{
-					if (ImGui::ImageButton((void*)textureID, size, { 0.0625f * col, 0.1f * row }, { 0.0625f * (col + 1), 0.1f * (row + 1) }, 0));
-					{
 
+			ImTextureID textureID = (ImTextureID)textureView;
+
+			ImVec2 size = { 32, 32 };
+
+			for (int row = 0; row < 20; row++)
+			{
+				for (int col = 0; col < 8; col++)
+				{
+					ImGui::Image((void*)textureID, size, { 0.125f * col, 0.05f * row }, { 0.125f * (col + 1), 0.05f * (row + 1) });
+					if (ImGui::IsItemClicked())
+					{
+						_brick->SetBlockeType({ col, row });
 					}
+
+					ImGui::SameLine();
 				}
-				ImGui::NextColumn();
+				ImGui::NewLine();
 			}
 
 			ImGui::TreePop();
@@ -79,6 +83,7 @@ void MapEditorTestScene::PostRender()
 
 		ImGui::TreePop();
 	}
+
 	if (ImGui::TreeNode("Save/Load"))
 	{
 		if (ImGui::Button("SAVE MAP", { 100, 30 }))
@@ -178,7 +183,7 @@ void MapEditorTestScene::Functions()
 
 		if (_type == EditorType::DRAG)
 		{
-			_selectedIndex = _brick->SelectBlock(tempPos);
+			_selectedIndex = _brick->SelectActiveBlock(tempPos);
 		}
 		else if (_type == EditorType::MONSTERSPAWN)
 		{
@@ -202,18 +207,18 @@ void MapEditorTestScene::Functions()
 
 		if (_type == EditorType::DRAW)
 		{
-			_brick->Draw(tempPos);
+			Draw(tempPos);
 		}
 		else if (_type == EditorType::ERASE)
 		{
-			_brick->Erase(tempPos);
+			Erase(tempPos);
 		}
 		else if (_type == EditorType::DRAG)
 		{
 			if (_selectedIndex == -1)
 				return;
 
-			_brick->Drag(_selectedIndex, tempPos);
+			Drag(tempPos);
 		}
 		else if (_type == EditorType::PLAYERSPAWN)
 		{
@@ -251,14 +256,53 @@ void MapEditorTestScene::Functions()
 	}
 }
 
+void MapEditorTestScene::Draw(Vector2 pos)
+{
+	if (_brick->CheckOverlap(pos) == true)
+		return;
+	
+	int index = _brick->GetBlockIndex();
+	if (index == -1)
+		return;
+
+	_brick->GetTransforms()[index]->SetPos(pos);
+	_brick->GetInstanceDatas()[index].curFrame = _brick->GetCurFrame();
+	_brick->GetInstanceDatas()[index].matrix = XMMatrixTranspose(_brick->GetTransforms()[index]->GetMatrix());
+	_brick->GetInstanceBuffer()->Update();
+}
+
+void MapEditorTestScene::Erase(Vector2 pos)
+{
+	int index = _brick->SelectActiveBlock(pos, false);
+	if (index == -1)
+		return;
+
+	_brick->GetTransforms()[index]->SetPos(_brick->GetOutPos());
+	_brick->GetInstanceDatas()[index].matrix = XMMatrixTranspose(_brick->GetTransforms()[index]->GetMatrix());
+	_brick->GetInstanceBuffer()->Update();
+}
+
+void MapEditorTestScene::Drag(Vector2 pos)
+{
+	if (_brick->CheckOverlap(pos) == true)
+		return;
+	
+	if (_selectedIndex == -1)
+		return;
+
+	_brick->GetTransforms()[_selectedIndex]->SetPos(pos);
+	_brick->GetInstanceDatas()[_selectedIndex].matrix = XMMatrixTranspose(_brick->GetTransforms()[_selectedIndex]->GetMatrix());
+	_brick->GetInstanceBuffer()->Update();
+}
+
 Vector2 MapEditorTestScene::GetTiledPos()
 {
 	Vector2 mousePos = CAMERA->GetWorldMousePos();
 	if (mousePos.x < 0.0f)
-		mousePos.x -= 60.0f;
+		mousePos.x -= 64.0f;
 	if (mousePos.y < 0.0f)
-		mousePos.y -= 60.0f;
-	Vector2 tempPos = Vector2((int)(mousePos.x / 60.0f) * 60 + 30, (int)(mousePos.y / 60.0f) * 60 + 30);
+		mousePos.y -= 64.0f;
+	Vector2 tempPos = Vector2((int)(mousePos.x / 64.0f) * 64 + 32, (int)(mousePos.y / 64.0f) * 64 + 32);
 
 	return tempPos;
 }

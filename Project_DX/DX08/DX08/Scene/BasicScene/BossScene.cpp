@@ -7,12 +7,9 @@ BossScene::BossScene()
 	
 	_brick = make_shared<Brick>();
 	_brick->SetPlayer(_player);
-	_brick->Load();
-	_player->GetFootCollider()->GetTransform()->SetPos(_brick->GetPlayerSpawn());
 
 	_yggdrasil = make_shared<Yggdrasil>();
 	_yggdrasil->SetTarget(_player);
-	_yggdrasil->SetOriginPos(_brick->GetMonsterSpawn()[0]);
 }
 
 BossScene::~BossScene()
@@ -21,6 +18,10 @@ BossScene::~BossScene()
 
 void BossScene::Init()
 {
+	_brick->Load();
+	_player->GetFootCollider()->GetTransform()->SetPos(_brick->GetPlayerSpawn());
+	_yggdrasil->SetOriginPos(_brick->GetMonsterSpawn()[0]);
+
 	CAMERA->SetTarget(_player->GetBodyCollider()->GetTransform());
 	CAMERA->SetOffset(CENTER);
 }

@@ -9,7 +9,6 @@ TestScene::TestScene()
 
 	_brick = make_shared<Brick>();
 	_brick->SetPlayer(_player);
-	_brick->Load();
 }
 
 TestScene::~TestScene()
@@ -18,6 +17,8 @@ TestScene::~TestScene()
 
 void TestScene::Init()
 {
+	_brick->Load();
+
 	CAMERA->SetTarget(_player->GetBodyCollider()->GetTransform());
 	CAMERA->SetOffset(CENTER);
 }

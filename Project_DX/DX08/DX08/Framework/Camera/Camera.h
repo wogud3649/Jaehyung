@@ -56,7 +56,7 @@ private:
 	shared_ptr<MatrixBuffer> _projection;
 	shared_ptr<MatrixBuffer> _uiCameraBuffer;
 
-	float _speed = 120.0f;
+	float _speed = 128.0f;
 
 	shared_ptr<Transform> _target = nullptr;
 	Vector2 _offset;

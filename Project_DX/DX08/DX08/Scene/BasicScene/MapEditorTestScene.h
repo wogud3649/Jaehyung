@@ -27,6 +27,9 @@ public:
 
 private:
 	void Functions();
+	void Draw(Vector2 pos);
+	void Erase(Vector2 pos);
+	void Drag(Vector2 pos);
 	Vector2 GetTiledPos();
 
 	shared_ptr<Brick> _brick;

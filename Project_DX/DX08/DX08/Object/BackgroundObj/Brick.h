@@ -17,49 +17,49 @@ public:
 
 	void SetPlayer(shared_ptr<Advanced_Player> player) { _player = player; }
 
-	void Draw(Vector2 pos);
-	void Erase(Vector2 pos);
-	void Drag(int index, Vector2 pos);
-
 	void SetBlockCollider(Vector2 start, Vector2 end);
 	void SetFloorCollider(Vector2 start, Vector2 end);
 	void DeleteBlockCollider();
 	void DeleteFloorCollider();
 
-	int SelectBlock(Vector2 pos);
+	int SelectActiveBlock(Vector2 pos, bool activate = true);
 
 	void Load();
 
 	vector<BlockData> GetBlockDatas();
 	vector<ColliderData> GetBlockColliderDatas();
 	vector<ColliderData> GetFloorColliderDatas();
+	vector<shared_ptr<Transform>> GetTransforms() { return _transforms; }
+	vector<InstanceData>& GetInstanceDatas() { return _instanceDatas; }
+	shared_ptr<VertexBuffer> GetInstanceBuffer() { return _instanceBuffer; }
 	Vector2 GetSize() { return _size; }
+	Vector2 GetOutPos() { return _outPos; }
+	Vector2 GetCurFrame() { return _curFrame; }
 	Vector2 GetLeftBottom() { return _leftBottom; }
 	Vector2 GetRightTop() { return _rightTop; }
 	Vector2 GetPlayerSpawn() { return _playerSpawn; }
 	vector<Vector2> GetMonsterSpawn() { return _monsterSpawn; }
 
-	int& GetCurBlockType() { return _blockType; }
-	int GetBlockShapeType() { return _blockShapeType; }
+	void SetBlockeType(Vector2 curFrame) { _curFrame = curFrame; }
+	
+	int GetBlockIndex();
+	bool CheckOverlap(Vector2 pos);
 
 private:
 	void CreateBlocks();
-	bool CheckOverlap(Vector2 pos);
 
 	shared_ptr<Quad> _quad;
 	vector<shared_ptr<Transform>> _transforms;
-	Vector2 _size;
-	int _blockType = 0;
-	int _blockShapeType = 2;
-	int _blockPairNumber = 200;
-	int _totalBlocks = _blockShapeType * _blockPairNumber;
-	int _blockIndex = 0;
-	vector<bool> _activeBlocks = vector<bool>(_totalBlocks, false);
+	Vector2 _size = { 32, 32 };
+	Vector2 _maxFrame = { 8, 20 };
+	Vector2 _curFrame = { 0,0 };
+	unsigned int _blockPoolCount = 2000;
+	vector<bool> _activeBlocks = vector<bool>(_blockPoolCount, false);
 	
 	vector<InstanceData> _instanceDatas;
 	shared_ptr<VertexBuffer> _instanceBuffer;
 
-	Vector2 _outPos = Vector2(-30, -30);
+	Vector2 _outPos = Vector2(-32, -32);
 	Vector2 _leftBottom = { INT_MAX, INT_MAX };
 	Vector2 _rightTop = { 0, INT_MIN };
 

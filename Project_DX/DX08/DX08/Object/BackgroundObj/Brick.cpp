@@ -25,20 +25,15 @@ void Brick::Update()
 	for (const auto& floor : _floors)
 	{
 		floor->Update();
-		if (_player.lock()->GetJumpPower() > 0.0f)
-			return;
+
 		if (_player.expired() == false)
 		{
+			if (_player.lock()->GetJumpPower() > 0.0f)
+				return;
 			HIT_RESULT result = floor->TopBlock(_player.lock()->GetFootCollider());
 			if (result.dir == Direction::UP)
 				_player.lock()->Ground();
 		}
-	}
-
-	if (KEY_DOWN('E'))
-	{
-		_blockType++;
-		_blockType %= _blockShapeType;
 	}
 }
 
@@ -54,65 +49,6 @@ void Brick::Render()
 		block->Render();
 	for (const auto& floor : _floors)
 		floor->Render();
-}
-
-void Brick::Draw(Vector2 pos)
-{
-	if (CheckOverlap(pos))
-		return;
-
-	int minBlockIndex = _blockType * _blockPairNumber;
-
-	int tempIdx = -1;
-	for (int i = minBlockIndex; i < minBlockIndex + _blockPairNumber; i++)
-	{
-		if (_activeBlocks[i] == false)
-		{
-			tempIdx = i;
-			break;
-		}
-	}
-	if (tempIdx == -1)
-		return;
-
-	_transforms[tempIdx]->SetPos(pos);
-	_transforms[tempIdx]->UpdateSRT();
-	_instanceDatas[tempIdx].matrix = XMMatrixTranspose(_transforms[tempIdx]->GetMatrix());
-	_instanceBuffer->Update();
-
-	_activeBlocks[tempIdx] = true;
-}
-
-void Brick::Erase(Vector2 pos)
-{
-	for (int i = 0; i < _activeBlocks.size(); i++)
-	{
-		if (_activeBlocks[i] == false)
-			continue;
-
-		if (_transforms[i]->GetPos() == pos)
-		{
-			_transforms[i]->SetPos(_outPos);
-			_transforms[i]->UpdateSRT();
-			_instanceDatas[i].matrix = XMMatrixTranspose(_transforms[i]->GetMatrix());
-			_instanceBuffer->Update();
-
-			_activeBlocks[i] = false;
-		}
-	}
-}
-
-void Brick::Drag(int index, Vector2 pos)
-{
-	if (CheckOverlap(pos))
-		return;
-
-	_transforms[index]->SetPos(pos);
-	_transforms[index]->UpdateSRT();
-	_instanceDatas[index].matrix = XMMatrixTranspose(_transforms[index]->GetMatrix());
-	_instanceBuffer->Update();
-
-	_activeBlocks[index] = true;
 }
 
 void Brick::SetBlockCollider(Vector2 start, Vector2 end)
@@ -143,7 +79,7 @@ void Brick::DeleteFloorCollider()
 	_floors.resize(_blocks.size() - 1);
 }
 
-int Brick::SelectBlock(Vector2 pos)
+int Brick::SelectActiveBlock(Vector2 pos, bool activate)
 {
 	for (int i = 0; i < _activeBlocks.size(); i++)
 	{
@@ -152,6 +88,8 @@ int Brick::SelectBlock(Vector2 pos)
 
 		if (_transforms[i]->GetPos() == pos)
 		{
+			if (activate == false)
+				_activeBlocks[i] = false;
 			return i;
 		}
 	}
@@ -176,8 +114,8 @@ void Brick::Load()
 		int index = data.index;
 		_activeBlocks[index] = true;
 		_transforms[index]->SetPos(data.pos);
-		_transforms[index]->UpdateSRT();
 		_instanceDatas[index].matrix = XMMatrixTranspose(_transforms[index]->GetMatrix());
+		_instanceDatas[index].curFrame = data.curFrame;
 		_instanceBuffer->Update();
 	}
 
@@ -254,6 +192,7 @@ vector<BlockData> Brick::GetBlockDatas()
 		{
 			temp.index = i;
 			temp.pos = _transforms[i]->GetPos();
+			temp.curFrame = _instanceDatas[i].curFrame;
 			datas.emplace_back(temp);
 
 			if (_leftBottom.x > temp.pos.x)
@@ -302,32 +241,40 @@ vector<ColliderData> Brick::GetFloorColliderDatas()
 
 void Brick::CreateBlocks()
 {
-	_quad = make_shared<Quad>(L"Resources/Texture/Background/Grass.png", Vector2(2, 1));
+	_quad = make_shared<Quad>(L"Resources/Texture/Background/Tiles_16x10.png", _maxFrame);
 	_size = _quad->GetSize();
 	_quad->SetVS(ADD_VS(L"Shader/InstancingVertexShader.hlsl"));
 	_quad->SetPS(ADD_PS(L"Shader/InstancingPixelShader.hlsl"));
 
-	for (int i = 0; i < _blockShapeType * _blockPairNumber; i++)
+	for (int i = 0; i < _blockPoolCount; i++)
 	{
 		Brick::InstanceData instanceData;
 
 		shared_ptr<Transform> transform = make_shared<Transform>();
 
 		transform->SetPos(_outPos);
-		transform->UpdateSRT();
-
-		int block = i / (_blockPairNumber);
-
-		instanceData.maxFrame = Vector2(_blockShapeType, 1);
-		instanceData.curFrame = Vector2(block % _blockShapeType, 0);
+		instanceData.maxFrame = _maxFrame;
+		instanceData.curFrame = { 0,0 };
 		instanceData.matrix = XMMatrixTranspose(transform->GetMatrix());
 
 		_instanceDatas.emplace_back(instanceData);
-
 		_transforms.emplace_back(transform);
 	}
 
 	_instanceBuffer = make_shared<VertexBuffer>(_instanceDatas.data(), sizeof(InstanceData), _instanceDatas.size(), 0, true);
+}
+
+int Brick::GetBlockIndex()
+{
+	for (int i = 0; i < _blockPoolCount; i++)
+	{
+		if (_activeBlocks[i] == false)
+		{
+			_activeBlocks[i] = true;
+			return i;
+		}
+	}
+	return -1;
 }
 
 bool Brick::CheckOverlap(Vector2 pos)
