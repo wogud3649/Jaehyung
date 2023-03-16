@@ -5,8 +5,7 @@ public:
 	enum AttackType
 	{
 		STAMP,
-		SWEEP,
-		SHOOT
+		SWEEP
 	};
 	enum State
 	{
@@ -36,6 +35,8 @@ private:
 	void MakeShared();
 	void SetParent();
 	void Adjust();
+
+	void Hit();
 	
 	void StampAttackReady();
 	void StampAttack();
@@ -84,5 +85,5 @@ private:
 
 	weak_ptr<Advanced_Player> _player;
 
-	AttackType _attackType = AttackType::SWEEP;
+	AttackType _attackType = AttackType::STAMP;
 };

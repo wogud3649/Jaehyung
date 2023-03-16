@@ -39,6 +39,6 @@ private:
 
 	unordered_map<string, shared_ptr<Scene>> _sceneTable;
 	shared_ptr<Scene> _curScene;
-
+	int _curSceneIndex = 0;
 };
 

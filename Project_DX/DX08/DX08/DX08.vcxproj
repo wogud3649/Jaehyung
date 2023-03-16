@@ -154,7 +154,6 @@
     <ClInclude Include="Scene\BasicScene\BossScene.h" />
     <ClInclude Include="Framework\Utility\BinaryWriter.h" />
     <ClInclude Include="Framework\Utility\BinaryReader.h" />
-    <ClInclude Include="Scene\BasicScene\GrassMapScene.h" />
     <ClInclude Include="Object\BackgroundObj\Brick.h" />
     <ClInclude Include="Framework\Camera\Camera.h" />
     <ClInclude Include="Framework\Utility\MathUtility.h" />
@@ -200,12 +199,12 @@
     <ClInclude Include="Scene\BasicScene\TestScene.h" />
     <ClInclude Include="Types.h" />
     <ClInclude Include="Object\GameObj\Boss\Yggdrasil.h" />
+    <ClInclude Include="Scene\BasicScene\UIScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene\BasicScene\BossScene.cpp" />
     <ClCompile Include="Framework\Utility\BinaryWriter.cpp" />
     <ClCompile Include="Framework\Utility\BinaryReader.cpp" />
-    <ClCompile Include="Scene\BasicScene\GrassMapScene.cpp" />
     <ClCompile Include="Object\BackgroundObj\Brick.cpp" />
     <ClCompile Include="Framework\Camera\Camera.cpp" />
     <ClCompile Include="Framework\Utility\MathUtility.cpp" />
@@ -255,6 +254,7 @@
     <ClCompile Include="Framework\Render\ShaderManager.cpp" />
     <ClCompile Include="Scene\BasicScene\TestScene.cpp" />
     <ClCompile Include="Object\GameObj\Boss\Yggdrasil.cpp" />
+    <ClCompile Include="Scene\BasicScene\UIScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX08.rc" />

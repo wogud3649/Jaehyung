@@ -5,6 +5,8 @@ public:
 	TestScene();
 	~TestScene();
 
+	virtual void Init() override;
+	virtual void Fin() override;
 	virtual void Update() override;
 	virtual void Render() override;
 	virtual void PreRender() override;
@@ -12,6 +14,6 @@ public:
 
 private:
 	shared_ptr<Advanced_Player> _player;
-	shared_ptr<Background> _background;
+	shared_ptr<Brick> _brick;
 };
 

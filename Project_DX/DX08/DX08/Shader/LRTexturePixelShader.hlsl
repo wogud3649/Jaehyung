@@ -1,7 +1,7 @@
 Texture2D map: register(t0);
 SamplerState samp :register(s0);
 
-cbuffer ReverseBuffer : register(b0)
+cbuffer ReverseBuffer : register(b2)
 {
 	int reverse;
 	int padding[3];

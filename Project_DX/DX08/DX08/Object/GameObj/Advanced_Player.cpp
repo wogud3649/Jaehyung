@@ -8,6 +8,14 @@ Advanced_Player::Advanced_Player()
 	_attackCol->GetTransform()->MoveX(5);
 	_attackCol->GetTransform()->MoveY(25);
 
+	_proj = make_shared<Quad>(L"Resources/Texture/SKUL/Head.png", Vector2(1,1));
+	_proj->SetPS(ADD_PS(L"Shader/LRTexturePixelShader.hlsl"));
+	_proj->Update();
+	_projCol = make_shared<CircleCollider>(_proj->GetSize().y * 0.7f);
+	_projCol->GetTransform()->SetParent(_proj->GetTransform());
+
+	_reverseBuffer = make_shared<ReverseBuffer>();
+
 	SetCallback();
 }
 
@@ -17,20 +25,9 @@ Advanced_Player::~Advanced_Player()
 
 void Advanced_Player::Update()
 {
+	_reverseBuffer->Update();
 	_attackCol->Update();
-
-	if (KEY_DOWN(VK_F2))
-	{
-		SetSkul(SkulType::SKUL);
-	}
-	if (KEY_DOWN(VK_F3))
-	{
-		SetSkul(SkulType::PIKE);
-	}
-	if (KEY_DOWN(VK_F4))
-	{
-		SetSkul(SkulType::SWORD);
-	}
+	_projCol->Update();
 
 	SetIdle();
 	Attack();
@@ -43,7 +40,7 @@ void Advanced_Player::Update()
 
 	Player::Update();
 
-	if (!_headOn)
+	if (!_isHeadOn)
 	{
 		if (_headDelay > 0.0f)
 		{
@@ -52,7 +49,7 @@ void Advanced_Player::Update()
 		if (_headDelay <= 0.0f)
 		{
 			_headDelay = 5.0f;
-			_headOn = true;
+			_isHeadOn = true;
 			SetSkul(SkulType::SKUL);
 		}
 	}
@@ -80,13 +77,13 @@ void Advanced_Player::Update()
 		}
 	}
 
-	if (_attackB)
+	if (_isAttackB)
 	{
 		_curComboDuration -= DELTA_TIME;
 		if (_curComboDuration < 0.0f)
 		{
 			_curComboDuration = _maxComboDuration;
-			_attackB = false;
+			_isAttackB = false;
 		}
 	}
 
@@ -105,7 +102,7 @@ void Advanced_Player::Update()
 		float distance = LERP(0.0f, _knockBackPower, DELTA_TIME * 6.0f);
 		_knockBackPower -= distance;
 
-		if (_knockBackRight)
+		if (_isKnockBackRight)
 			_footCol->GetTransform()->MoveX(distance);
 		else
 			_footCol->GetTransform()->MoveX(-distance);
@@ -116,19 +113,44 @@ void Advanced_Player::Update()
 
 	if (_curState != State::ATTACKA && _curState != State::ATTACKB && _curState != State::JUMPATTACK)
 		_attackCol->DeActivate();
+
+	if (_isProjFired)
+	{
+		_curProjCD -= DELTA_TIME;
+		_proj->Update();
+		if (_curProjCD < 0.0f)
+		{
+			_isProjFired = false;
+			_curProjCD = _maxProjCD;
+		}
+		if (_projCol->GetActive())
+		{
+			if (_reverseBuffer->_data.reverse == 0)
+				_proj->GetTransform()->MoveX(_projSpeed * DELTA_TIME);
+			else
+				_proj->GetTransform()->MoveX(-_projSpeed * DELTA_TIME);
+		}
+	}
 }
 
 void Advanced_Player::Render()
 {
+	_reverseBuffer->SetPSBuffer(2);
+
 	Player::Render();
 
+	if (_projCol->GetActive())
+	{
+		_proj->Render();
+	}
+
 	_attackCol->Render();
+	_projCol->Render();
 }
 
 void Advanced_Player::PostRender()
 {
 	ImGui::SliderFloat("PLAYER HP", &_curHp, 0, _maxHp);
-	ImGui::SliderFloat("KnockBack", &_knockBackPower, 0, 9999);
 }
 
 void Advanced_Player::EnAble()
@@ -191,11 +213,11 @@ void Advanced_Player::Jump()
 	{
 		if (_curState == State::ATTACKA || _curState == State::ATTACKB || _curState == State::JUMPATTACK || _curState == State::SKILL || _curState == State::DASH)
 			return;
-		if (_doubleJump)
+		if (_isDoubleJump)
 			return;
 		if (_isJump)
 		{
-			_doubleJump = true;
+			_isDoubleJump = true;
 			SetAction(State::JUMP);
 			_curJumpPower = _maxJumpPower;
 			return;
@@ -223,6 +245,7 @@ void Advanced_Player::Dash()
 		_isGround = false;
 		_curJumpPower = 0.0f;
 		SetAction(State::DASH);
+		_isDodge = true;
 	}
 }
 
@@ -249,7 +272,7 @@ void Advanced_Player::Ground()
 {
 	_isGround = true;
 	_isJump = false;
-	_doubleJump = false;
+	_isDoubleJump = false;
 	_curJumpPower = 0.0f;
 	if (_curState == FALL || _curState == FALLREPEAT || _curState == JUMPATTACK)
 		SetAction(State::IDLE);
@@ -266,21 +289,21 @@ void Advanced_Player::Attack()
 		{
 			SetAction(State::JUMPATTACK);
 		}
-		else if (_attackB)
+		else if (_isAttackB)
 		{
-			_attackB = false;
+			_isAttackB = false;
 			_curComboDuration = _maxComboDuration;
 			SetAction(State::ATTACKB);
 		}
 		else
 		{
-			_attackB = true;
+			_isAttackB = true;
 			SetAction(State::ATTACKA);
 		}
 	}
 }
 
-void Advanced_Player::Hit()
+void Advanced_Player::AttackHit()
 {
 	_attackCol->DeActivate();
 }
@@ -289,24 +312,43 @@ void Advanced_Player::Skill()
 {
 	if (KEY_DOWN('A'))
 	{
-		if (_curSkul == SkulType::HEADLESS)
+		if (_isProjFired)
 			return;
 		SetAction(State::SKILL);
+		_isProjFired = true;
+		_proj->GetTransform()->SetPos(_bodyCol->GetTransform()->GetWorldPos());
+		_projCol->GetTransform()->UpdateSRT();
+		_projCol->Activate();
+
+		if (_direction == Direction::RIGHT)
+			_reverseBuffer->_data.reverse = 0;
+		else
+			_reverseBuffer->_data.reverse = 1;
 	}
+}
+
+void Advanced_Player::SkillHit()
+{
+	_headDelay = 5.0f;
+	_isHeadOn = true;
+	SetSkul(SkulType::SKUL);
+	_projCol->DeActivate();
+	_footCol->GetTransform()->SetPos(_proj->GetTransform()->GetWorldPos());
 }
 
 void Advanced_Player::Damaged(int damage, Direction dir)
 {
-	if (_isInvincible)
+	if (_isInvincible || _isDodge)
 		return;
+
 	_isInvincible = true;
 
 	_isKnockBacked = true;
 	_knockBackPower = 250.0f;
 	if (dir == Direction::RIGHT)
-		_knockBackRight = true;
+		_isKnockBackRight = true;
 	else
-		_knockBackRight = false;
+		_isKnockBackRight = false;
 
 	_curHp -= damage;
 }
@@ -331,6 +373,7 @@ void Advanced_Player::DashEnd()
 {
 	_curDashDistance = _maxDashDistance;
 	SetAction(State::FALL);
+	_isDodge = false;
 }
 
 void Advanced_Player::AttackMid()
@@ -354,9 +397,9 @@ void Advanced_Player::FallEnd()
 
 void Advanced_Player::SkillEnd()
 {
-	if (_curSkul == SkulType::SKUL)
+	if (_curSkul == SkulType::SKUL && _projCol->GetActive())
 	{
-		_headOn = false;
+		_isHeadOn = false;
 		SetSkul(SkulType::HEADLESS);
 	}
 	else

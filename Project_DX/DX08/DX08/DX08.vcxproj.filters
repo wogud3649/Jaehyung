@@ -153,13 +153,13 @@
     <ClInclude Include="Framework\Utility\BinaryWriter.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\BasicScene\GrassMapScene.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Object\GameObj\Boss\Yggdrasil.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Scene\BasicScene\BossScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\BasicScene\UIScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -287,13 +287,13 @@
     <ClCompile Include="Framework\Utility\BinaryWriter.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\BasicScene\GrassMapScene.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Object\GameObj\Boss\Yggdrasil.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Scene\BasicScene\BossScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\BasicScene\UIScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

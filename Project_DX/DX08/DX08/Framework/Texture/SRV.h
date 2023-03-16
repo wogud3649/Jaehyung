@@ -8,6 +8,7 @@ public:
 	void Set(int slot = 0);
 
 	Vector2 GetImageSize();
+	ID3D11ShaderResourceView* GetSRVPointer() { return shaderResourceView.Get(); }
 
 private:
 	Vector2 _size;

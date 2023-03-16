@@ -51,17 +51,46 @@ void MapEditorTestScene::PreRender()
 
 void MapEditorTestScene::PostRender()
 {
+	ImGui::SetWindowSize({ 500, 680 });
 	ImGui::SliderInt("BlockType", &_brick->GetCurBlockType(), 0, _brick->GetBlockShapeType() - 1);
 	ImGui::SliderInt("EDIT MODE", &_type, EditorType::DRAW, EditorType::FLOORCOLLIDER);
-	if (ImGui::Button("SAVE MAP", { 100, 30 }))
+	if (ImGui::TreeNode("EditTools"))
 	{
-		Save();
-	}
-	if (ImGui::Button("LOAD MAP", { 100, 30 }))
-	{
-		Load();
-	}
+		if (ImGui::TreeNode("BlockType"))
+		{
+			ID3D11ShaderResourceView* textureView = SRV_ADD(L"Resources/Texture/Background/Tiles_16x10.png")->GetSRVPointer();
+			ImTextureID textureID = (ImTextureID)textureView;
+			ImVec2 size = { 32, 32 };
+			ImGui::Columns(8, 0, false);
+			for (int col = 0; col < 16; col++)
+			{
+				for (int row = 0; row < 10; row++)
+				{
+					if (ImGui::ImageButton((void*)textureID, size, { 0.0625f * col, 0.1f * row }, { 0.0625f * (col + 1), 0.1f * (row + 1) }, 0));
+					{
 
+					}
+				}
+				ImGui::NextColumn();
+			}
+
+			ImGui::TreePop();
+		}
+
+		ImGui::TreePop();
+	}
+	if (ImGui::TreeNode("Save/Load"))
+	{
+		if (ImGui::Button("SAVE MAP", { 100, 30 }))
+		{
+			Save();
+		}
+		if (ImGui::Button("LOAD MAP", { 100, 30 }))
+		{
+			Load();
+		}
+		ImGui::TreePop();
+	}
 }
 
 void MapEditorTestScene::Save()

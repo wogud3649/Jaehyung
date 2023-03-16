@@ -7,25 +7,30 @@ TestScene::TestScene()
 	_player->GetFootCollider()->GetTransform()->SetPos(CENTER);
 	_player->GetFootCollider()->GetTransform()->UpdateSRT();
 
-	_background = make_shared<Background>();
-	_background->GetTransform()->SetPos(CENTER);
-	_background->GetTransform()->UpdateSRT();
-	_background->SetPlayer(_player);
-
-	CAMERA->SetTarget(_player->GetBodyCollider()->GetTransform());
-	CAMERA->SetLeftBottom(_background->LeftBottom());
-	CAMERA->SetRightTop(_background->RightTop());
-	CAMERA->SetOffset(CENTER);
+	_brick = make_shared<Brick>();
+	_brick->SetPlayer(_player);
+	_brick->Load();
 }
 
 TestScene::~TestScene()
 {
 }
 
+void TestScene::Init()
+{
+	CAMERA->SetTarget(_player->GetBodyCollider()->GetTransform());
+	CAMERA->SetOffset(CENTER);
+}
+
+void TestScene::Fin()
+{
+	CAMERA->SetTarget(nullptr);
+}
+
 void TestScene::Update()
 {
-	_background->Update();
 	_player->Update();
+	_brick->Update();
 }
 
 void TestScene::Render()
@@ -35,7 +40,7 @@ void TestScene::Render()
 
 void TestScene::PreRender()
 {
-	_background->Render();
+	_brick->Render();
 }
 
 void TestScene::PostRender()

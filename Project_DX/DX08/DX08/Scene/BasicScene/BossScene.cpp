@@ -4,7 +4,6 @@
 BossScene::BossScene()
 {
 	_player = make_shared<Advanced_Player>();
-	CAMERA->SetTarget(_player->GetBodyCollider()->GetTransform());
 	
 	_brick = make_shared<Brick>();
 	_brick->SetPlayer(_player);
@@ -14,12 +13,21 @@ BossScene::BossScene()
 	_yggdrasil = make_shared<Yggdrasil>();
 	_yggdrasil->SetTarget(_player);
 	_yggdrasil->SetOriginPos(_brick->GetMonsterSpawn()[0]);
-
-	CAMERA->SetOffset(CENTER);
 }
 
 BossScene::~BossScene()
 {
+}
+
+void BossScene::Init()
+{
+	CAMERA->SetTarget(_player->GetBodyCollider()->GetTransform());
+	CAMERA->SetOffset(CENTER);
+}
+
+void BossScene::Fin()
+{
+	CAMERA->SetTarget(nullptr);
 }
 
 void BossScene::Update()
@@ -28,12 +36,21 @@ void BossScene::Update()
 	_yggdrasil->Update();
 	_brick->Update();
 
-	if (_player->GetAttackCol()->IsCollision(_yggdrasil->GetHeadCollider()))
+	if (_player->GetAttackCol()->GetActive())
 	{
-		if (_player->GetAttackCol()->GetActive())
+		if (_player->GetAttackCol()->IsCollision(_yggdrasil->GetHeadCollider()))
 		{
 			_yggdrasil->Damaged(_player->GetAttackDamage());
-			_player->Hit();
+			_player->AttackHit();
+		}
+	}
+
+	if (_player->GetProjCol()->GetActive())
+	{
+		if (_player->GetProjCol()->IsCollision(_yggdrasil->GetHeadCollider()))
+		{
+			_yggdrasil->Damaged(_player->GetProjDamage());
+			_player->SkillHit();
 		}
 	}
 }

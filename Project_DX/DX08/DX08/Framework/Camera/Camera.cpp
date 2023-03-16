@@ -36,10 +36,6 @@ void Camera::Update()
 
 void Camera::PostRender()
 {
-	ImGui::SliderFloat2("CameraPos", (float*)&_moveVector.x, -1300, 1300);
-
-	Vector2 mousePos = GetWorldMousePos();
-	ImGui::SliderFloat2("MousePos", (float*)&mousePos.x, -1300, 1300);
 }
 
 void Camera::ShakeStart(float magnitude, float duration, float reduceDamping)
