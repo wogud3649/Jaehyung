@@ -42,5 +42,7 @@ private:
 
 	shared_ptr<Quad> _playerSpawn;
 	vector<shared_ptr<Quad>> _monsterSpawn;
+
+	string _history = "";
 };
 

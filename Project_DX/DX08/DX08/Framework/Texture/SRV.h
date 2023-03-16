@@ -8,7 +8,7 @@ public:
 	void Set(int slot = 0);
 
 	Vector2 GetImageSize();
-	ID3D11ShaderResourceView* GetSRVPointer() { return shaderResourceView.Get(); }
+	const Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> GetSRVPointer() { return shaderResourceView; }
 
 private:
 	Vector2 _size;

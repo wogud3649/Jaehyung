@@ -101,30 +101,33 @@ void Brick::Load()
 	wstring name = L"Maps/Field2.map";
 	BinaryReader reader = BinaryReader(name);
 
+	Vector2 tempVector;
 	void* ptr;
 
 	int size = reader.UInt();
 
-	vector<BlockData> datas;
-	datas.resize(size);
-	ptr = &datas[0];
-	reader.Byte(&ptr, sizeof(BlockData) * size);
-	for (auto data : datas)
+	if (size != 0)
 	{
-		int index = data.index;
-		_activeBlocks[index] = true;
-		_transforms[index]->SetPos(data.pos);
-		_instanceDatas[index].matrix = XMMatrixTranspose(_transforms[index]->GetMatrix());
-		_instanceDatas[index].curFrame = data.curFrame;
-		_instanceBuffer->Update();
-	}
+		vector<BlockData> datas;
+		datas.resize(size);
+		ptr = &datas[0];
+		reader.Byte(&ptr, sizeof(BlockData) * size);
+		for (auto data : datas)
+		{
+			int index = data.index;
+			_activeBlocks[index] = true;
+			_transforms[index]->SetPos(data.pos);
+			_instanceDatas[index].matrix = XMMatrixTranspose(_transforms[index]->GetMatrix());
+			_instanceDatas[index].curFrame = data.curFrame;
+			_instanceBuffer->Update();
+		}
 
-	Vector2 tempVector;
-	ptr = &tempVector;
-	reader.Byte(&ptr, sizeof(Vector2));
-	CAMERA->SetLeftBottom(Vector2(tempVector.x, tempVector.y - 200));
-	reader.Byte(&ptr, sizeof(Vector2));
-	CAMERA->SetRightTop(tempVector);
+		ptr = &tempVector;
+		reader.Byte(&ptr, sizeof(Vector2));
+		CAMERA->SetLeftBottom(Vector2(tempVector.x, tempVector.y - 200));
+		reader.Byte(&ptr, sizeof(Vector2));
+		CAMERA->SetRightTop(tempVector);
+	}
 
 	size = reader.UInt();
 

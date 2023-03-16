@@ -52,12 +52,13 @@ void MapEditorTestScene::PreRender()
 void MapEditorTestScene::PostRender()
 {
 	ImGui::SliderInt("EDIT MODE", &_type, EditorType::DRAW, EditorType::FLOORCOLLIDER);
-
+	ImGui::SetWindowSize({ 400, 720 });
+	ImGui::SetWindowPos({ WIN_WIDTH - 400, 0 });
 	if (ImGui::TreeNode("EditTools"))
 	{
 		if (ImGui::TreeNode("BlockType"))
 		{
-			ID3D11ShaderResourceView* textureView = SRV_ADD(L"Resources/Texture/Background/Tiles_16x10.png")->GetSRVPointer();
+			ID3D11ShaderResourceView* textureView = SRV_ADD(L"Resources/Texture/Background/Tiles_16x10.png")->GetSRVPointer().Get();
 
 			ImTextureID textureID = (ImTextureID)textureView;
 
@@ -89,28 +90,40 @@ void MapEditorTestScene::PostRender()
 		if (ImGui::Button("SAVE MAP", { 100, 30 }))
 		{
 			Save();
+			_history = "Saved!!";
 		}
 		if (ImGui::Button("LOAD MAP", { 100, 30 }))
 		{
 			Load();
+			_history = "Loaded!!";
 		}
+		ImGui::TreePop();
+	}
+
+	if (ImGui::TreeNode("History"))
+	{
+		ImGui::Text(&_history[0]);
+
 		ImGui::TreePop();
 	}
 }
 
 void MapEditorTestScene::Save()
 {
-	wstring name = L"Maps/Field2.map";
+	wstring name = L"Maps/Field3.map";
 	BinaryWriter writer = BinaryWriter(name);
 
 	vector<BlockData> data = _brick->GetBlockDatas();
 	writer.UInt(data.size());
-	writer.Byte(&data[0], sizeof(BlockData) * data.size());
-	
-	Vector2 leftBottom = _brick->GetLeftBottom();
-	Vector2 rightTop = _brick->GetRightTop();
-	writer.Byte(&leftBottom, sizeof(Vector2));
-	writer.Byte(&rightTop, sizeof(Vector2));
+	if (data.size() != 0)
+	{
+		writer.Byte(&data[0], sizeof(BlockData) * data.size());
+
+		Vector2 leftBottom = _brick->GetLeftBottom();
+		Vector2 rightTop = _brick->GetRightTop();
+		writer.Byte(&leftBottom, sizeof(Vector2));
+		writer.Byte(&rightTop, sizeof(Vector2));
+	}
 
 	vector<ColliderData> blockData = _brick->GetBlockColliderDatas();
 	int size = blockData.size();
@@ -149,14 +162,15 @@ void MapEditorTestScene::Load()
 	
 	vector<Vector2> spawnPoses = _brick->GetMonsterSpawn();
 	_monsterSpawn.clear();
-	if (spawnPoses.size() == 0)
-		return;
-	for (int i = 0; i < spawnPoses.size(); i++)
+	if (spawnPoses.size() != 0)
 	{
-		shared_ptr<Quad> monster = make_shared<Quad>(L"Resources/Texture/Slime/Dead/Dead6.png");
-		Vector2 temp = spawnPoses[i];
-		monster->GetTransform()->SetPos(temp);
-		_monsterSpawn.emplace_back(monster);
+		for (int i = 0; i < spawnPoses.size(); i++)
+		{
+			shared_ptr<Quad> monster = make_shared<Quad>(L"Resources/Texture/Slime/Dead/Dead6.png");
+			Vector2 temp = spawnPoses[i];
+			monster->GetTransform()->SetPos(temp);
+			_monsterSpawn.emplace_back(monster);
+		}
 	}
 }
 
@@ -177,7 +191,7 @@ void MapEditorTestScene::Functions()
 	else if (KEY_DOWN('7'))
 		_type = EditorType::FLOORCOLLIDER;
 
-	if (KEY_DOWN(VK_LBUTTON))
+	if (KEY_DOWN(VK_LBUTTON) && !ImGui::IsWindowHovered(4))
 	{
 		Vector2 tempPos = GetTiledPos();
 
@@ -189,7 +203,7 @@ void MapEditorTestScene::Functions()
 		{
 			for (const auto& spawn : _monsterSpawn)
 			{
-				if (spawn->GetTransform()->GetPos() == tempPos)
+				if (spawn->GetTransform()->GetPos() == tempPos) // TODO
 					return;
 			}
 			shared_ptr<Quad> monster = make_shared<Quad>(L"Resources/Texture/Slime/Dead/Dead6.png");
@@ -201,7 +215,8 @@ void MapEditorTestScene::Functions()
 			_startPos = tempPos;
 		}
 	}
-	if (KEY_PRESS(VK_LBUTTON))
+
+	if (KEY_PRESS(VK_LBUTTON) && !ImGui::IsWindowHovered(4))
 	{
 		Vector2 tempPos = GetTiledPos();
 
@@ -215,10 +230,10 @@ void MapEditorTestScene::Functions()
 		}
 		else if (_type == EditorType::DRAG)
 		{
-			if (_selectedIndex == -1)
-				return;
-
-			Drag(tempPos);
+			if (_selectedIndex != -1)
+			{
+				Drag(tempPos);
+			}
 		}
 		else if (_type == EditorType::PLAYERSPAWN)
 		{
@@ -249,9 +264,10 @@ void MapEditorTestScene::Functions()
 			_brick->DeleteFloorCollider();
 		else if (_type == EditorType::MONSTERSPAWN)
 		{
-			if (_monsterSpawn.empty())
-				return;
-			_monsterSpawn.resize(_monsterSpawn.size() - 1);
+			if (_monsterSpawn.empty() == false)
+			{
+				_monsterSpawn.resize(_monsterSpawn.size() - 1);
+			}
 		}
 	}
 }
@@ -269,6 +285,8 @@ void MapEditorTestScene::Draw(Vector2 pos)
 	_brick->GetInstanceDatas()[index].curFrame = _brick->GetCurFrame();
 	_brick->GetInstanceDatas()[index].matrix = XMMatrixTranspose(_brick->GetTransforms()[index]->GetMatrix());
 	_brick->GetInstanceBuffer()->Update();
+
+	_history = "Drawed!!";
 }
 
 void MapEditorTestScene::Erase(Vector2 pos)
@@ -280,6 +298,8 @@ void MapEditorTestScene::Erase(Vector2 pos)
 	_brick->GetTransforms()[index]->SetPos(_brick->GetOutPos());
 	_brick->GetInstanceDatas()[index].matrix = XMMatrixTranspose(_brick->GetTransforms()[index]->GetMatrix());
 	_brick->GetInstanceBuffer()->Update();
+
+	_history = "Erased!!";
 }
 
 void MapEditorTestScene::Drag(Vector2 pos)
@@ -293,6 +313,8 @@ void MapEditorTestScene::Drag(Vector2 pos)
 	_brick->GetTransforms()[_selectedIndex]->SetPos(pos);
 	_brick->GetInstanceDatas()[_selectedIndex].matrix = XMMatrixTranspose(_brick->GetTransforms()[_selectedIndex]->GetMatrix());
 	_brick->GetInstanceBuffer()->Update();
+
+	_history = "Dragged!!";
 }
 
 Vector2 MapEditorTestScene::GetTiledPos()
