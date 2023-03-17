@@ -9,6 +9,7 @@ public:
 		DRAG,
 		PLAYERSPAWN,
 		MONSTERSPAWN,
+		BOSSSPAWN,
 		BLOCKCOLLIDER,
 		FLOORCOLLIDER
 	};
@@ -22,11 +23,13 @@ public:
 	virtual void PreRender() override;
 	virtual void PostRender() override;
 
-	void Save();
-	void Load();
+	bool Save();
+	bool Load();
 
 private:
 	void Functions();
+	void Indicator();
+	void ResetIndicator();
 	void Draw(Vector2 pos);
 	void Erase(Vector2 pos);
 	void Drag(Vector2 pos);
@@ -36,13 +39,18 @@ private:
 	int _selectedIndex;
 
 	int _type = EditorType::DRAW;
+	string _curType = "DRAW";
 
 	Vector2 _startPos;
 	Vector2 _endPos;
 
-	shared_ptr<Quad> _playerSpawn;
 	vector<shared_ptr<Quad>> _monsterSpawn;
+	shared_ptr<Quad> _playerSpawn;
+	shared_ptr<Quad> _bossSpawn;
 
 	string _history = "";
+	string _curFilePath = "";
+	bool _isHovered = false;
+	bool _indicatorActive = true;
 };
 

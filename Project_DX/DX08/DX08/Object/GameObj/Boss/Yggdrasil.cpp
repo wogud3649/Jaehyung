@@ -89,15 +89,21 @@ void Yggdrasil::Update()
 			HIT_RESULT result;
 			if (_rightBranchCol->GetActive())
 			{
-				result = _rightBranchCol->TopBlock(_player.lock()->GetFootCollider());
-				if (result.dir == Direction::UP)
-					_player.lock()->Ground();
+				if (_player.lock()->GetIsBungee() == false)
+				{
+					result = _rightBranchCol->TopBlock(_player.lock()->GetFootCollider());
+					if (result.dir == Direction::UP)
+						_player.lock()->Ground();
+				}
 			}
 			if (_leftBranchCol->GetActive())
 			{
-				result = _leftBranchCol->TopBlock(_player.lock()->GetFootCollider());
-				if (result.dir == Direction::UP)
-					_player.lock()->Ground();
+				if (_player.lock()->GetIsBungee() == false)
+				{
+					result = _leftBranchCol->TopBlock(_player.lock()->GetFootCollider());
+					if (result.dir == Direction::UP)
+						_player.lock()->Ground();
+				}
 			}
 		}
 

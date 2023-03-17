@@ -37,6 +37,7 @@ void Advanced_Player::Update()
 	Move();
 	Fall();
 	Skill();
+	Bungee();
 
 	Player::Update();
 
@@ -131,6 +132,16 @@ void Advanced_Player::Update()
 				_proj->GetTransform()->MoveX(-_projSpeed * DELTA_TIME);
 		}
 	}
+
+	if (_isBungee)
+	{
+		_curBungeeCD -= DELTA_TIME;
+		if (_curBungeeCD < 0.0f)
+		{
+			_curBungeeCD = _maxBungeeCD;
+			_isBungee = false;
+		}
+	}
 }
 
 void Advanced_Player::Render()
@@ -209,7 +220,7 @@ void Advanced_Player::Move()
 
 void Advanced_Player::Jump()
 {
-	if (KEY_DOWN('C'))
+	if (KEY_DOWN('C') && KEY_PRESS(VK_DOWN) == false)
 	{
 		if (_curState == State::ATTACKA || _curState == State::ATTACKB || _curState == State::JUMPATTACK || _curState == State::SKILL || _curState == State::DASH)
 			return;
@@ -226,6 +237,14 @@ void Advanced_Player::Jump()
 		_isJump = true;
 		SetAction(State::JUMP);
 		_curJumpPower = _maxJumpPower;
+	}
+}
+
+void Advanced_Player::Bungee()
+{
+	if (KEY_PRESS(VK_DOWN) && KEY_DOWN('C'))
+	{
+		_isBungee = true;
 	}
 }
 

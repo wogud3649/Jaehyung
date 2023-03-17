@@ -10,6 +10,7 @@
 #include <windows.h>
 // C 런타임 헤더 파일입니다.
 #include <stdlib.h>
+#include <wchar.h>
 #include <malloc.h>
 #include <memory.h>
 #include <memory>
@@ -37,6 +38,7 @@
 #include "../ImGUI/imgui.h"
 #include "../ImGUI/imgui_impl_dx11.h"
 #include "../ImGUI/imgui_impl_win32.h"
+#include "../ImGUI/ImGuiFileDialog.h"
 
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")

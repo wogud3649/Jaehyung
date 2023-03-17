@@ -17,7 +17,8 @@ TestScene::~TestScene()
 
 void TestScene::Init()
 {
-	_brick->Load();
+	wstring filePath = L"Maps/BossField1.map";
+	_brick->Load(filePath);
 
 	CAMERA->SetTarget(_player->GetBodyCollider()->GetTransform());
 	CAMERA->SetOffset(CENTER);

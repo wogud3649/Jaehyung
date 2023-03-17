@@ -56,7 +56,6 @@ struct HIT_RESULT
 
 struct BlockData
 {
-	int index;
 	Vector2 pos;
 	Vector2 curFrame;
 };

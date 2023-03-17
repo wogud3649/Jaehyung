@@ -15,6 +15,7 @@ public:
 	void Flip();
 	void Move();
 	void Jump();
+	void Bungee();
 	void Dash();
 	void Fall();
 
@@ -36,6 +37,8 @@ public:
 
 	shared_ptr<CircleCollider> GetProjCol() { return _projCol; }
 	float GetProjDamage() { return (rand() % (_maxProjDamage - _minProjDamage) + _minProjDamage); }
+
+	const bool& GetIsBungee() { return _isBungee; }
 
 private:
 	void SetIdle();
@@ -69,6 +72,10 @@ private:
 	bool _isJump = false;
 	bool _isDoubleJump = false;
 	bool _isGround = false;
+
+	float _maxBungeeCD = 0.2f;
+	float _curBungeeCD = _maxBungeeCD;
+	bool _isBungee = false;
 
 	float _maxDashDistance = 200.0f;
 	float _curDashDistance = _maxDashDistance;

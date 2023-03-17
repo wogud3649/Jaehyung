@@ -28,11 +28,15 @@ void Brick::Update()
 
 		if (_player.expired() == false)
 		{
-			if (_player.lock()->GetJumpPower() > 0.0f)
-				return;
-			HIT_RESULT result = floor->TopBlock(_player.lock()->GetFootCollider());
-			if (result.dir == Direction::UP)
-				_player.lock()->Ground();
+			if (_player.lock()->GetJumpPower() <= 0.0f)
+			{
+				if (_player.lock()->GetIsBungee() == false)
+				{
+					HIT_RESULT result = floor->TopBlock(_player.lock()->GetFootCollider());
+					if (result.dir == Direction::UP)
+						_player.lock()->Ground();
+				}
+			}
 		}
 	}
 }
@@ -76,7 +80,7 @@ void Brick::DeleteFloorCollider()
 {
 	if (_floors.empty())
 		return;
-	_floors.resize(_blocks.size() - 1);
+	_floors.resize(_floors.size() - 1);
 }
 
 int Brick::SelectActiveBlock(Vector2 pos, bool activate)
@@ -96,9 +100,12 @@ int Brick::SelectActiveBlock(Vector2 pos, bool activate)
 	return -1;
 }
 
-void Brick::Load()
+bool Brick::Load(wstring filePath)
 {
-	wstring name = L"Maps/Field2.map";
+	if (filePath == L"")
+		return false;
+
+	wstring name = filePath;
 	BinaryReader reader = BinaryReader(name);
 
 	Vector2 tempVector;
@@ -112,14 +119,28 @@ void Brick::Load()
 		datas.resize(size);
 		ptr = &datas[0];
 		reader.Byte(&ptr, sizeof(BlockData) * size);
-		for (auto data : datas)
+		
+		for (int i = 0; i < _blockPoolCount; i++)
 		{
-			int index = data.index;
-			_activeBlocks[index] = true;
-			_transforms[index]->SetPos(data.pos);
-			_instanceDatas[index].matrix = XMMatrixTranspose(_transforms[index]->GetMatrix());
-			_instanceDatas[index].curFrame = data.curFrame;
-			_instanceBuffer->Update();
+			if (i < size)
+			{
+				_activeBlocks[i] = true;
+				_transforms[i]->SetPos(datas[i].pos);
+				_instanceDatas[i].matrix = XMMatrixTranspose(_transforms[i]->GetMatrix());
+				_instanceDatas[i].curFrame = datas[i].curFrame;
+				_instanceBuffer->Update();
+			}
+			else
+			{
+				if (_activeBlocks[i] == false)
+					continue;
+
+				_activeBlocks[i] = false;
+				_transforms[i]->SetPos(_outPos);
+				_instanceDatas[i].matrix = XMMatrixTranspose(_transforms[i]->GetMatrix());
+				_instanceDatas[i].curFrame = Vector2(0, 0);
+				_instanceBuffer->Update();
+			}
 		}
 
 		ptr = &tempVector;
@@ -168,6 +189,9 @@ void Brick::Load()
 	reader.Byte(&ptr, sizeof(Vector2));
 	_playerSpawn = tempVector;
 
+	reader.Byte(&ptr, sizeof(Vector2));
+	_bossSpawn = tempVector;
+
 	size = reader.UInt();
 
 	if (size != 0)
@@ -182,6 +206,8 @@ void Brick::Load()
 			_monsterSpawn.emplace_back(spawnPos);
 		}
 	}
+
+	return true;
 }
 
 vector<BlockData> Brick::GetBlockDatas()
@@ -193,7 +219,6 @@ vector<BlockData> Brick::GetBlockDatas()
 	{
 		if (_activeBlocks[i])
 		{
-			temp.index = i;
 			temp.pos = _transforms[i]->GetPos();
 			temp.curFrame = _instanceDatas[i].curFrame;
 			datas.emplace_back(temp);
@@ -244,7 +269,7 @@ vector<ColliderData> Brick::GetFloorColliderDatas()
 
 void Brick::CreateBlocks()
 {
-	_quad = make_shared<Quad>(L"Resources/Texture/Background/Tiles_16x10.png", _maxFrame);
+	_quad = make_shared<Quad>(L"Resources/Texture/Background/Tiles_4x40.png", _maxFrame);
 	_size = _quad->GetSize();
 	_quad->SetVS(ADD_VS(L"Shader/InstancingVertexShader.hlsl"));
 	_quad->SetPS(ADD_PS(L"Shader/InstancingPixelShader.hlsl"));
@@ -282,7 +307,7 @@ int Brick::GetBlockIndex()
 
 bool Brick::CheckOverlap(Vector2 pos)
 {
-	for (int i = 0; i < _activeBlocks.size(); i++)
+	for (int i = 0; i < _activeBlocks.size() - 1; i++)
 	{
 		if (_activeBlocks[i] == false)
 			continue;
@@ -293,4 +318,9 @@ bool Brick::CheckOverlap(Vector2 pos)
 		}
 	}
 	return false;
+}
+
+bool Brick::CheckActive(int index)
+{
+	return _activeBlocks[index];
 }

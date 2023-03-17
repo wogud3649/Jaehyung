@@ -6,7 +6,10 @@ MapEditorTestScene::MapEditorTestScene()
 	_brick = make_shared<Brick>();
 
 	_playerSpawn = make_shared<Quad>(L"Resources/Texture/SKUL/SkulDead.png");
-	_playerSpawn->GetTransform()->SetPos(Vector2(-50, -50));
+	_playerSpawn->GetTransform()->SetPos(_brick->GetOutPos());
+
+	_bossSpawn = make_shared<Quad>(L"Resources/Texture/Boss/Yggdrasil/yggdrasil.png");
+	_bossSpawn->GetTransform()->SetPos(_brick->GetOutPos() * 15);
 }
 
 MapEditorTestScene::~MapEditorTestScene()
@@ -25,53 +28,138 @@ void MapEditorTestScene::Update()
 {
 	_brick->Update();
 	_playerSpawn->Update();
+	_bossSpawn->Update();
 	
 	for (const auto& monsterSpawn : _monsterSpawn)
-	{
 		monsterSpawn->Update();
-	}
 
 	Functions();
 }
 
 void MapEditorTestScene::Render()
 {
+	_bossSpawn->Render();
+
 	for (const auto& monsterSpawn : _monsterSpawn)
-	{
 		monsterSpawn->Render();
-	}
 
 	_playerSpawn->Render();
+
+	_brick->Render();
 }
 
 void MapEditorTestScene::PreRender()
 {
-	_brick->Render();
 }
 
 void MapEditorTestScene::PostRender()
 {
-	ImGui::SliderInt("EDIT MODE", &_type, EditorType::DRAW, EditorType::FLOORCOLLIDER);
-	ImGui::SetWindowSize({ 400, 720 });
-	ImGui::SetWindowPos({ WIN_WIDTH - 400, 0 });
+	ImGui::SetWindowFontScale(2.0f);
+	string type = "Type : " + _curType;
+	ImGui::Text(&type[0]);
+	ImGui::SetWindowFontScale(1.0f);
+	ImGui::SetWindowPos({ WIN_WIDTH - 320, 0 });
+	ImGui::SetWindowSize({ 320, 720 });
+	ImGui::SetNextItemOpen(true);
 	if (ImGui::TreeNode("EditTools"))
 	{
+		// FirstLine
+		{
+			if (ImGui::Button("Draw", { 80, 30 }))
+			{
+				_type = EditorType::DRAW;
+				_curType = "DRAW";
+				_indicatorActive = true;
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Erase", { 80, 30 }))
+			{
+				_type = EditorType::ERASE;
+				_curType = "ERASE";
+				_indicatorActive = false;
+				ResetIndicator();
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Drag", { 80, 30 }))
+			{
+				_type = EditorType::DRAG;
+				_curType = "DRAG";
+				_indicatorActive = false;
+				ResetIndicator();
+			}
+			ImGui::SameLine();
+			ImGui::NewLine();
+		}
+		// Second Line
+		{
+			if (ImGui::Button("Player", { 80, 30 }))
+			{
+				_type = EditorType::PLAYERSPAWN;
+				_curType = "PLAYER";
+				_indicatorActive = false;
+				ResetIndicator();
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Monster", { 80, 30 }))
+			{
+				_type = EditorType::MONSTERSPAWN;
+				_curType = "MONSTER";
+				_indicatorActive = false;
+				ResetIndicator();
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Boss", { 80, 30 }))
+			{
+				_type = EditorType::BOSSSPAWN;
+				_curType = "BOSS";
+				_indicatorActive = false;
+				ResetIndicator();
+			}
+			ImGui::SameLine();
+			ImGui::NewLine();
+		}
+		// Third Line
+		{
+			if (ImGui::Button("BlockCol", { 80, 30 }))
+			{
+				_type = EditorType::BLOCKCOLLIDER;
+				_curType = "BLOCKCOL";
+				_indicatorActive = false;
+				ResetIndicator();
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("FloorCol", { 80, 30 }))
+			{
+				_type = EditorType::FLOORCOLLIDER;
+				_curType = "FLOORCOL";
+				_indicatorActive = false;
+				ResetIndicator();
+			}
+			ImGui::SameLine();
+			ImGui::NewLine();
+		}
+
+		ImGui::SetNextItemOpen(true);
 		if (ImGui::TreeNode("BlockType"))
 		{
-			ID3D11ShaderResourceView* textureView = SRV_ADD(L"Resources/Texture/Background/Tiles_16x10.png")->GetSRVPointer().Get();
+			ID3D11ShaderResourceView* textureView = SRV_ADD(L"Resources/Texture/Background/Tiles_4x40.png")->GetSRVPointer().Get();
 
 			ImTextureID textureID = (ImTextureID)textureView;
 
 			ImVec2 size = { 32, 32 };
 
-			for (int row = 0; row < 20; row++)
+			ImGui::BeginChild("scroll_bar", { 200,180 }, false, ImGuiWindowFlags_AlwaysVerticalScrollbar);
+
+			for (int row = 0; row < _brick->GetMaxFrame().y; row++)
 			{
-				for (int col = 0; col < 8; col++)
+				for (int col = 0; col < _brick->GetMaxFrame().x; col++)
 				{
-					ImGui::Image((void*)textureID, size, { 0.125f * col, 0.05f * row }, { 0.125f * (col + 1), 0.05f * (row + 1) });
+					ImGui::Image((void*)textureID, size, { float(1 / _brick->GetMaxFrame().x) * col, float(1 / _brick->GetMaxFrame().y) * row }, { float(1 / _brick->GetMaxFrame().x) * (col + 1), float(1 / _brick->GetMaxFrame().y) * (row + 1) });
 					if (ImGui::IsItemClicked())
 					{
 						_brick->SetBlockeType({ col, row });
+						_type = EditorType::DRAW;
+						_curType = "DRAW";
 					}
 
 					ImGui::SameLine();
@@ -79,6 +167,7 @@ void MapEditorTestScene::PostRender()
 				ImGui::NewLine();
 			}
 
+			ImGui::EndChild();
 			ImGui::TreePop();
 		}
 
@@ -87,31 +176,50 @@ void MapEditorTestScene::PostRender()
 
 	if (ImGui::TreeNode("Save/Load"))
 	{
+		ImGuiFileDialog* fileDialog = ImGuiFileDialog::Instance();
+
+		fileDialog->OpenDialog("ChooseFileDlgKey", "Select File", ".map", "./Maps/");
+		if (fileDialog->Display("ChooseFileDlgKey"))
+		{
+			_curFilePath = fileDialog->GetFilePathName();
+		}
 		if (ImGui::Button("SAVE MAP", { 100, 30 }))
 		{
-			Save();
-			_history = "Saved!!";
+			bool save = Save();
+			if (save == true)
+				_history = "Saved!!";
+			else
+				_history = "SaveFailed!!";
 		}
 		if (ImGui::Button("LOAD MAP", { 100, 30 }))
 		{
-			Load();
-			_history = "Loaded!!";
+			bool load = Load();
+			if (load == true)
+				_history = "Loaded!!";
+			else
+				_history = "LoadFailed!!";
 		}
 		ImGui::TreePop();
 	}
 
-	if (ImGui::TreeNode("History"))
-	{
-		ImGui::Text(&_history[0]);
+	ImGui::Begin("Log");
 
-		ImGui::TreePop();
-	}
+	string history = "Log : " + _history;
+	ImGui::Text(&history[0]);
+
+	string filePath = "FilePath : " + _curFilePath;
+	ImGui::Text(&filePath[0]);
+
+	ImGui::End();
 }
 
-void MapEditorTestScene::Save()
+bool MapEditorTestScene::Save()
 {
-	wstring name = L"Maps/Field3.map";
-	BinaryWriter writer = BinaryWriter(name);
+	if (_curFilePath == "")
+		return false;
+
+	wstring filePath = wstring(_curFilePath.begin(),_curFilePath.end());
+	BinaryWriter writer = BinaryWriter(filePath);
 
 	vector<BlockData> data = _brick->GetBlockDatas();
 	writer.UInt(data.size());
@@ -144,6 +252,9 @@ void MapEditorTestScene::Save()
 	Vector2 spawnPos = _playerSpawn->GetTransform()->GetPos();
 	writer.Byte(&spawnPos, sizeof(Vector2));
 
+	spawnPos = _bossSpawn->GetTransform()->GetPos();
+	writer.Byte(&spawnPos, sizeof(Vector2));
+
 	size = _monsterSpawn.size();
 	writer.UInt(size);
 	if (_monsterSpawn.size() != 0)
@@ -153,12 +264,16 @@ void MapEditorTestScene::Save()
 			SpawnPoses.emplace_back(monsterSpawn->GetTransform()->GetPos());
 		writer.Byte(&SpawnPoses[0], sizeof(Vector2) * size);
 	}
+
+	return true;
 }
 
-void MapEditorTestScene::Load()
+bool MapEditorTestScene::Load()
 {
-	_brick->Load();
+	wstring filePath = wstring(_curFilePath.begin(), _curFilePath.end());
+	bool load = _brick->Load(filePath);
 	_playerSpawn->GetTransform()->SetPos(_brick->GetPlayerSpawn());
+	_bossSpawn->GetTransform()->SetPos(_brick->GetBossSpawn());
 	
 	vector<Vector2> spawnPoses = _brick->GetMonsterSpawn();
 	_monsterSpawn.clear();
@@ -172,26 +287,17 @@ void MapEditorTestScene::Load()
 			_monsterSpawn.emplace_back(monster);
 		}
 	}
+
+	return load;
 }
 
 void MapEditorTestScene::Functions()
 {
-	if (KEY_DOWN('1'))
-		_type = EditorType::DRAW;
-	else if (KEY_DOWN('2'))
-		_type = EditorType::ERASE;
-	else if (KEY_DOWN('3'))
-		_type = EditorType::DRAG;
-	else if (KEY_DOWN('4'))
-		_type = EditorType::PLAYERSPAWN;
-	else if (KEY_DOWN('5'))
-		_type = EditorType::MONSTERSPAWN;
-	else if (KEY_DOWN('6'))
-		_type = EditorType::BLOCKCOLLIDER;
-	else if (KEY_DOWN('7'))
-		_type = EditorType::FLOORCOLLIDER;
+	_isHovered = ImGui::IsWindowHovered(4) || ImGui::IsAnyItemHovered();
 
-	if (KEY_DOWN(VK_LBUTTON) && !ImGui::IsWindowHovered(4))
+	Indicator();
+
+	if (KEY_DOWN(VK_LBUTTON) && _isHovered == false)
 	{
 		Vector2 tempPos = GetTiledPos();
 
@@ -203,7 +309,7 @@ void MapEditorTestScene::Functions()
 		{
 			for (const auto& spawn : _monsterSpawn)
 			{
-				if (spawn->GetTransform()->GetPos() == tempPos) // TODO
+				if (spawn->GetTransform()->GetPos() == tempPos)
 					return;
 			}
 			shared_ptr<Quad> monster = make_shared<Quad>(L"Resources/Texture/Slime/Dead/Dead6.png");
@@ -216,7 +322,7 @@ void MapEditorTestScene::Functions()
 		}
 	}
 
-	if (KEY_PRESS(VK_LBUTTON) && !ImGui::IsWindowHovered(4))
+	if (KEY_PRESS(VK_LBUTTON) && _isHovered == false)
 	{
 		Vector2 tempPos = GetTiledPos();
 
@@ -239,9 +345,13 @@ void MapEditorTestScene::Functions()
 		{
 			_playerSpawn->GetTransform()->SetPos(tempPos);
 		}
+		else if (_type == EditorType::BOSSSPAWN)
+		{
+			_bossSpawn->GetTransform()->SetPos(tempPos);
+		}
 	}
 
-	if (KEY_UP(VK_LBUTTON))
+	if (KEY_UP(VK_LBUTTON) && _isHovered == false)
 	{
 		Vector2 tempPos = GetTiledPos();
 		_endPos = tempPos;
@@ -269,7 +379,37 @@ void MapEditorTestScene::Functions()
 				_monsterSpawn.resize(_monsterSpawn.size() - 1);
 			}
 		}
+		else if (_type == EditorType::BOSSSPAWN)
+		{
+			_bossSpawn->GetTransform()->SetPos(_brick->GetOutPos() * 15);
+		}
 	}
+}
+
+void MapEditorTestScene::Indicator()
+{
+	if (_indicatorActive == false)
+		return;
+
+	int index = _brick->GetBlockPoolCount() - 1;
+	if (_brick->CheckActive(index))
+		return;
+
+	_brick->GetTransforms()[index]->SetPos(CAMERA->GetWorldMousePos());
+	_brick->GetInstanceDatas()[index].curFrame = _brick->GetCurFrame();
+	_brick->GetInstanceDatas()[index].matrix = XMMatrixTranspose(_brick->GetTransforms()[index]->GetMatrix());
+	_brick->GetInstanceBuffer()->Update();
+}
+
+void MapEditorTestScene::ResetIndicator()
+{
+	int index = _brick->GetBlockPoolCount() - 1;
+	if (_brick->CheckActive(index))
+		return;
+
+	_brick->GetTransforms()[index]->SetPos(_brick->GetOutPos());
+	_brick->GetInstanceDatas()[index].matrix = XMMatrixTranspose(_brick->GetTransforms()[index]->GetMatrix());
+	_brick->GetInstanceBuffer()->Update();
 }
 
 void MapEditorTestScene::Draw(Vector2 pos)
@@ -306,7 +446,7 @@ void MapEditorTestScene::Drag(Vector2 pos)
 {
 	if (_brick->CheckOverlap(pos) == true)
 		return;
-	
+
 	if (_selectedIndex == -1)
 		return;
 

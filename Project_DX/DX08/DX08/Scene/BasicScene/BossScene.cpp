@@ -18,9 +18,10 @@ BossScene::~BossScene()
 
 void BossScene::Init()
 {
-	_brick->Load();
+	wstring filePath = L"Maps/Dummy1.map";
+	_brick->Load(filePath);
 	_player->GetFootCollider()->GetTransform()->SetPos(_brick->GetPlayerSpawn());
-	_yggdrasil->SetOriginPos(_brick->GetMonsterSpawn()[0]);
+	_yggdrasil->SetOriginPos(_brick->GetBossSpawn());
 
 	CAMERA->SetTarget(_player->GetBodyCollider()->GetTransform());
 	CAMERA->SetOffset(CENTER);
@@ -69,6 +70,7 @@ void BossScene::PreRender()
 
 void BossScene::PostRender()
 {
+	ImGui::SetWindowSize({ 320, 320 });
 	_player->PostRender();
 	_yggdrasil->PostRender();
 }
