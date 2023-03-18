@@ -18,7 +18,7 @@ BossScene::~BossScene()
 
 void BossScene::Init()
 {
-	wstring filePath = L"Maps/Dummy1.map";
+	wstring filePath = L"Maps/BossField1.map";
 	_brick->Load(filePath);
 	_player->GetFootCollider()->GetTransform()->SetPos(_brick->GetPlayerSpawn());
 	_yggdrasil->SetOriginPos(_brick->GetBossSpawn());
