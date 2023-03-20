@@ -6,6 +6,8 @@ Yggdrasil::Yggdrasil()
 	MakeShared();
 	SetParent();
 	Adjust();
+	SetEffect();
+	SetCallBack();
 }
 
 Yggdrasil::~Yggdrasil()
@@ -29,6 +31,8 @@ void Yggdrasil::Update()
 
 	_rightHand->Update();
 	_leftHand->Update();
+
+	_spikeCol->Update();
 
 	Idle();
 
@@ -119,6 +123,9 @@ void Yggdrasil::Update()
 				{
 					_curState = State::ATTACKAFTER;
 					_curAttackDelay = _maxAttackDelay;
+
+					_spikeReady = true;
+					EFFECT->Play("FistSlamImpact_7x4", Vector2(_attackPos.x, _attackPos.y + 100));
 				}
 				break;
 			case Yggdrasil::SWEEP:
@@ -200,6 +207,34 @@ void Yggdrasil::Update()
 				break;
 			}
 		}
+
+		if (_spikeReady)
+		{
+			_curSpikeDelay -= DELTA_TIME;
+
+			if (_curSpikeDelay < 0.0f)
+			{
+				_spikePos.x = _player.lock()->GetFootCollider()->GetTransform()->GetWorldPos().x;
+				EFFECT->Play("WarnSign_10x1", { _spikePos.x, _spikePos.y - 130 });
+				_curSpikeDelay = _maxSpikeDelay;
+				_spikeReady = false;
+			}
+		}
+		if (_spikeActive)
+		{
+			if (_spikeUp)
+			{
+				if (_spikeCol->GetTransform()->GetWorldPos().y < _spikePos.y)
+					_spikeCol->GetTransform()->MoveY(1000.0f * DELTA_TIME);
+			}
+			else
+			{
+				if (_spikeCol->GetTransform()->GetWorldPos().y > _spikePos.y - 300)
+					_spikeCol->GetTransform()->MoveY(-1000.0f * DELTA_TIME);
+			}
+
+			Hit();
+		}
 	}
 }
 
@@ -224,6 +259,8 @@ void Yggdrasil::Render()
 
 void Yggdrasil::PostRender()
 {
+	_spikeCol->Render();
+
 	ImGui::SliderInt("BossHP", &_curHp, 0, _maxHp);
 }
 
@@ -272,6 +309,8 @@ void Yggdrasil::MakeShared()
 	_leftBranchCol = make_shared<RectCollider>(Vector2(125, 10));
 	_rightHandCol = make_shared<RectCollider>(Vector2(200, 210));
 	_leftHandCol = make_shared<RectCollider>(Vector2(200, 210));
+
+	_spikeCol = make_shared<RectCollider>(Vector2(30, 250));
 }
 
 void Yggdrasil::SetParent()
@@ -303,12 +342,40 @@ void Yggdrasil::Adjust()
 	_leftHandCol->DeActivate();
 }
 
+void Yggdrasil::SetEffect()
+{
+	wstring file = L"Resources/Texture/Effect/Spike_15x1.png";
+	EFFECT->AddEffect(file, Vector2(15, 1), Vector2(1500, 271), 0.05f);
+
+	file = L"Resources/Texture/Effect/WarnSign_10x1.png";
+	EFFECT->AddEffect(file, Vector2(10, 1), Vector2(1680, 73), 0.03f);
+
+	file = L"Resources/Texture/Effect/FistSlamImpact_7x4.png";
+	EFFECT->AddEffect(file, Vector2(7, 4), Vector2(5754, 2048));
+
+	file = L"Resources/Texture/Effect/Sweeping_6x1.png";
+	EFFECT->AddEffect(file, Vector2(7, 1), Vector2(1638, 88), 0.05f, Action::LOOP, 1U);
+}
+
+void Yggdrasil::SetCallBack()
+{
+	EFFECT->SetMidCallBack("Spike_15x1", std::bind(&Yggdrasil::SpikeFlipDir, this));
+	EFFECT->SetCallBack("Spike_15x1", std::bind(&Yggdrasil::SpikeStop, this));
+	EFFECT->SetCallBack("WarnSign_10x1", std::bind(&Yggdrasil::SpikeAttack, this));
+}
+
 void Yggdrasil::Hit()
 {
 	int damage = rand() % (_maxDamage - _minDamage) + _minDamage;
 	HIT_RESULT result;
 
-	if (_isRightHand)
+	if (_spikeActive)
+	{
+		result = _spikeCol->SideCollision(_player.lock()->GetBodyCollider());
+		if (result.isHit)
+			_player.lock()->Damaged(damage, result.dir);
+	}
+	else if (_isRightHand)
 	{
 		result = _rightHandCol->SideCollision(_player.lock()->GetBodyCollider());
 		if (result.isHit)
@@ -361,6 +428,24 @@ void Yggdrasil::StampAttackAfter()
 		if (result.dir == Direction::UP)
 			_player.lock()->Ground();
 	}
+}
+
+void Yggdrasil::SpikeAttack()
+{
+	_spikeActive = true;
+	_spikeUp = true;
+	_spikeCol->GetTransform()->SetPos(Vector2(_spikePos.x, _spikePos.y - 300.0f));
+	EFFECT->Play("Spike_15x1", _spikePos);
+}
+
+void Yggdrasil::SpikeFlipDir()
+{
+	_spikeUp = false;
+}
+
+void Yggdrasil::SpikeStop()
+{
+	_spikeActive = false;
 }
 
 void Yggdrasil::SweepAttackReady()

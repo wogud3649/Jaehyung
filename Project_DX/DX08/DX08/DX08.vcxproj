@@ -151,6 +151,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Scene\BasicScene\EffectScene.h" />
+    <ClInclude Include="Object\BasicObj\Effect.h" />
+    <ClInclude Include="Object\BasicObj\EffectManager.h" />
     <ClInclude Include="Scene\BasicScene\BossScene.h" />
     <ClInclude Include="Framework\Utility\BinaryWriter.h" />
     <ClInclude Include="Framework\Utility\BinaryReader.h" />
@@ -202,6 +205,9 @@
     <ClInclude Include="Scene\BasicScene\UIScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Scene\BasicScene\EffectScene.cpp" />
+    <ClCompile Include="Object\BasicObj\Effect.cpp" />
+    <ClCompile Include="Object\BasicObj\EffectManager.cpp" />
     <ClCompile Include="Scene\BasicScene\BossScene.cpp" />
     <ClCompile Include="Framework\Utility\BinaryWriter.cpp" />
     <ClCompile Include="Framework\Utility\BinaryReader.cpp" />

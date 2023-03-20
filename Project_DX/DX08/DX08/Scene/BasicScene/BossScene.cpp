@@ -59,12 +59,12 @@ void BossScene::Update()
 
 void BossScene::Render()
 {
+	_yggdrasil->Render();
 	_player->Render();
 }
 
 void BossScene::PreRender()
 {
-	_yggdrasil->Render();
 	_brick->Render();
 }
 

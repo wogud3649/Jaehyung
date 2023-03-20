@@ -98,6 +98,8 @@ using namespace DirectX;
 // Object
 #include "Object/BasicObj/Quad.h"
 #include "Object/BasicObj/Sprite.h"
+#include "Object/BasicObj/Effect.h"
+#include "Object/BasicObj/EffectManager.h"
 
 // GameObject
 #include "Object/GameObj/Player.h"

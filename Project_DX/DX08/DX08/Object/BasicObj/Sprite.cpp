@@ -2,7 +2,7 @@
 #include "Sprite.h"
 
 Sprite::Sprite(wstring file, Vector2 size)
-: _clipSize(size)
+: _imageSize(size)
 {
     _maxFrame = { 1,1 };
 
@@ -17,7 +17,7 @@ Sprite::Sprite(wstring file, Vector2 size)
 }
 
 Sprite::Sprite(wstring file, float maxFrame, Vector2 size)
-: _clipSize(size)
+: _imageSize(size)
 {
     _maxFrame = Vector2(maxFrame, 1.0f);
 
@@ -36,7 +36,7 @@ Sprite::Sprite(wstring file, float maxFrame, Vector2 size)
 
 Sprite::Sprite(wstring file, Vector2 maxFrame, Vector2 size)
 : _maxFrame(maxFrame)
-, _clipSize(size)
+, _imageSize(size)
 {
     Sprite::CreateMaterial(file);
     Sprite::CreateMesh();
@@ -73,7 +73,7 @@ void Sprite::CreateMesh()
 {
     Vertex vertex;
 
-    Vector2 halfSize = _clipSize * 0.5f;
+    Vector2 halfSize = _imageSize * 0.5f;
     halfSize.x = halfSize.x / _maxFrame.x;
     halfSize.y = halfSize.y / _maxFrame.y;
 

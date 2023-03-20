@@ -15,6 +15,7 @@ public:
 		ATTACKAFTER,
 		ATTACKEND
 	};
+
 	Yggdrasil();
 	~Yggdrasil();
 
@@ -35,12 +36,18 @@ private:
 	void MakeShared();
 	void SetParent();
 	void Adjust();
+	void SetEffect();
+	void SetCallBack();
 
 	void Hit();
 	
 	void StampAttackReady();
 	void StampAttack();
 	void StampAttackAfter();
+
+	void SpikeAttack();
+	void SpikeFlipDir();
+	void SpikeStop();
 
 	void SweepAttackReady();
 	void SweepAttack();
@@ -74,6 +81,7 @@ private:
 	bool _isAlive = true;
 
 	Vector2 _attackPos = Vector2(0, 170);
+	Vector2 _spikePos = Vector2(0, 170);
 	float _maxAttackDelay = 2.0f;
 	float _curAttackDelay = _maxAttackDelay;
 
@@ -86,4 +94,11 @@ private:
 	weak_ptr<Advanced_Player> _player;
 
 	AttackType _attackType = AttackType::STAMP;
+
+	shared_ptr<RectCollider> _spikeCol;
+	float _maxSpikeDelay = 0.5f;
+	float _curSpikeDelay = _maxSpikeDelay;
+	bool _spikeReady = false;
+	bool _spikeActive = false;
+	bool _spikeUp = true;
 };

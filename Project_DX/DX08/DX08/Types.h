@@ -35,6 +35,8 @@
 
 #define SCENE SceneManager::GetInstance()
 
+#define EFFECT EffectManager::GetInstance()
+
 enum Direction
 {
 	LEFT,

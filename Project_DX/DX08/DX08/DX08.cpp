@@ -57,6 +57,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     Timer::Create();
     SRVManager::Create();
     ShaderManager::Create();
+    EffectManager::Create();
     Camera::Create();
     SceneManager::Create();
 
@@ -84,6 +85,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     SceneManager::Delete();
     Camera::Delete();
+    EffectManager::Delete();
     ShaderManager::Delete();
     SRVManager::Delete();
     Timer::Delete();

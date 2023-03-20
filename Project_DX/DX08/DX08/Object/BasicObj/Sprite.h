@@ -20,12 +20,12 @@ public:
 	void SetCurFrame(Vector2 curFrame);
 	void SetActionClip(Action::Clip clip);
 
-	Vector2 GetClipSize() { return _clipSize; }
+	Vector2 GetClipSize() { return _imageSize; }
 
 private:
 	shared_ptr<ActionBuffer> _actionBuffer;
 	shared_ptr<ReverseBuffer> _reverseBuffer;
 	Vector2 _maxFrame;
-	Vector2 _clipSize;
+	Vector2 _imageSize;
 };
 

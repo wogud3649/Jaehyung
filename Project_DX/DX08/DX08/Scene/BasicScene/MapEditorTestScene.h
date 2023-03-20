@@ -26,6 +26,7 @@ public:
 	bool Save();
 	bool Load();
 
+	wstring GetFilePath() { return wstring(_curFilePath.begin(), _curFilePath.end()); }
 private:
 	void Functions();
 	void Indicator();

@@ -57,16 +57,16 @@ void Brick::Render()
 
 void Brick::SetBlockCollider(Vector2 start, Vector2 end)
 {
-	shared_ptr<RectCollider> rect = make_shared<RectCollider>(Vector2(abs(end.x - start.x) + _size.x, abs(end.y - start.y) + _size.y + 20));
+	shared_ptr<RectCollider> rect = make_shared<RectCollider>(Vector2(abs(end.x - start.x) + _size.x, abs(end.y - start.y) + _size.y));
 	_blocks.emplace_back(rect);
-	_blocks.back()->GetTransform()->SetPos(Vector2((end.x + start.x) * 0.5f, (end.y + start.y) * 0.5f - 10.0f));
+	_blocks.back()->GetTransform()->SetPos(Vector2((end.x + start.x) * 0.5f, (end.y + start.y) * 0.5f - 20.0f));
 }
 
 void Brick::SetFloorCollider(Vector2 start, Vector2 end)
 {
 	shared_ptr<RectCollider> rect = make_shared<RectCollider>(Vector2(abs(end.x - start.x) + _size.x, abs(end.y - start.y) + _size.y * 0.5f));
 	_floors.emplace_back(rect);
-	_floors.back()->GetTransform()->SetPos(Vector2((end.x + start.x) * 0.5f, (end.y + start.y) * 0.5f + 15.0f));
+	_floors.back()->GetTransform()->SetPos(Vector2((end.x + start.x) * 0.5f, (end.y + start.y) * 0.5f));
 }
 
 void Brick::DeleteBlockCollider()

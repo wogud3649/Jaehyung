@@ -21,6 +21,7 @@ void Program::Update()
 	CAMERA->Update();
 
 	SCENE->Update();
+	EFFECT->Update();
 }
 
 void Program::Render()
@@ -38,6 +39,7 @@ void Program::Render()
 	ALPHA->SetState();
 
 	SCENE->Render();
+	EFFECT->Render();
 
 	ImGui::Text("FPS : %d", Timer::GetInstance()->GetFPS());
 	CAMERA->PostRender();
