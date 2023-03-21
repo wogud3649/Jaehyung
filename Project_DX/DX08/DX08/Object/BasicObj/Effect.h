@@ -10,14 +10,17 @@ public:
 	void PostRender();
 
 	void Play(Vector2 pos);
+	void PlayAndMove();
 	void End();
 
-	void SetLeftRight(bool value);
+	void SetLeftRight(bool isRight);
 	void SetActive(bool active);
 	bool IsActive() { return _isActive; }
 
 	void SetMidCallBack(function<void(void)> event) { _action->SetMidCallBack(event); }
 	void SetCallBack(function<void(void)> event) { _action->SetCallBack(event); }
+
+	void SetParent(shared_ptr<Transform> parent) { _sprite->GetTransform()->SetParent(parent); }
 
 private:
 	void CreateAction(wstring file, Vector2 maxFrame, Vector2 size, float speed = 0.1f, Action::Type type = Action::Type::END);

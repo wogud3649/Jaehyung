@@ -105,6 +105,9 @@ using namespace DirectX;
 #include "Object/GameObj/Player.h"
 #include "Object/GameObj/Advanced_Player.h"
 
+// Monster
+#include "Object/GameObj/Monster/MushroomEnt.h"
+
 // Boss
 #include "Object/GameObj/Boss/Yggdrasil.h"
 

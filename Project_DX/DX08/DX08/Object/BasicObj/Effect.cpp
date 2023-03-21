@@ -20,14 +20,14 @@ void Effect::Update()
 
 void Effect::Render()
 {
-	if (_isActive == false) return;
-
-	_sprite->SetActionClip(_action->GetCurClip());
-	_sprite->Render();
 }
 
 void Effect::PostRender()
 {
+	if (_isActive == false) return;
+
+	_sprite->SetActionClip(_action->GetCurClip());
+	_sprite->Render();
 }
 
 void Effect::Play(Vector2 pos)
@@ -37,15 +37,24 @@ void Effect::Play(Vector2 pos)
 	_sprite->GetTransform()->SetPos(pos);
 }
 
+void Effect::PlayAndMove()
+{
+	_isActive = true;
+	_action->Play();
+}
+
 void Effect::End()
 {
 	_isActive = false;
 	_action->Reset();
 }
 
-void Effect::SetLeftRight(bool value)
+void Effect::SetLeftRight(bool isRight)
 {
-
+	if (isRight)
+		_sprite->SetDirection(Direction::RIGHT);
+	else
+		_sprite->SetDirection(Direction::LEFT);
 }
 
 void Effect::SetActive(bool active)

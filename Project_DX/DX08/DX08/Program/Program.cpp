@@ -39,11 +39,11 @@ void Program::Render()
 	ALPHA->SetState();
 
 	SCENE->Render();
-	EFFECT->Render();
 
 	ImGui::Text("FPS : %d", Timer::GetInstance()->GetFPS());
 	CAMERA->PostRender();
 	SCENE->PostRender();
+	EFFECT->Render();
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 

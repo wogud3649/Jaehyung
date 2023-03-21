@@ -297,6 +297,16 @@ void Advanced_Player::Ground()
 		SetAction(State::IDLE);
 }
 
+void Advanced_Player::Bounce()
+{
+	_isGround = false;
+	_isJump = false;
+	_isDoubleJump = false;
+	_curJumpPower = _maxJumpPower;
+	if (_curState == FALL || _curState == FALLREPEAT || _curState == JUMPATTACK)
+		SetAction(State::JUMP);
+}
+
 void Advanced_Player::Attack()
 {
 	if (KEY_DOWN('X'))
@@ -461,6 +471,7 @@ void Advanced_Player::SetAction(State state)
 	_sprites[_curSkul][_curState]->SetDirection(_direction);
 	_actions[_curSkul][_curState]->Play();
 	_actions[_curSkul][_oldState]->Reset();
+	_sprites[_curSkul][_oldState]->SetActionClip(_actions[_curSkul][_oldState]->GetCurClip());
 	_oldState = _curState;
 }
 
@@ -475,6 +486,7 @@ void Advanced_Player::SetSkul(SkulType skulType)
 	_sprites[_curSkul][_curState]->SetDirection(_direction);
 	_actions[_curSkul][_curState]->Play();
 	_actions[_oldSkul][_oldState]->Reset();
+	_sprites[_oldSkul][_oldState]->SetActionClip(_actions[_oldSkul][_oldState]->GetCurClip());
 	_oldState = _curState;
 	_oldSkul = _curSkul;
 }

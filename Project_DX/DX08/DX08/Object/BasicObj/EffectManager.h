@@ -25,7 +25,9 @@ public:
 	}
 
 	void AddEffect(wstring file, Vector2 maxFrame, Vector2 size, float speed = 0.1f, Action::Type type = Action::Type::END, UINT poolCount = 15);
-	void Play(string name, Vector2 pos, bool isLeftRight = false);
+	void Play(string name, Vector2 pos, bool isRight = false);
+	void PlayAndMove(string name, bool isLeftRight = false);
+	void Stop(string name);
 
 	void SetMidCallBack(string name, function<void(void)> event);
 	void SetCallBack(string name, function<void(void)> event);

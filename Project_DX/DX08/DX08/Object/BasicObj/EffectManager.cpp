@@ -27,7 +27,28 @@ void EffectManager::AddEffect(wstring file, Vector2 maxFrame, Vector2 size, floa
 	}
 }
 
-void EffectManager::Play(string name, Vector2 pos, bool isLeftRight)
+void EffectManager::Play(string name, Vector2 pos, bool isRight)
+{
+	if (_effectTable.count(name) == 0)
+		return;
+
+	vector<shared_ptr<Effect>>& v = _effectTable[name];
+	auto iter = std::find_if(v.begin(), v.end(),
+		[](const shared_ptr<Effect>& effect)-> bool
+		{
+			if (effect->IsActive() == false)
+				return true;
+			return false;
+		});
+
+	if (iter != v.end())
+	{
+		(*iter)->SetLeftRight(isRight);
+		(*iter)->Play(pos);
+	}
+}
+
+void EffectManager::PlayAndMove(string name, bool isLeftRight)
 {
 	if (_effectTable.count(name) == 0)
 		return;
@@ -44,7 +65,17 @@ void EffectManager::Play(string name, Vector2 pos, bool isLeftRight)
 	if (iter != v.end())
 	{
 		(*iter)->SetLeftRight(isLeftRight);
-		(*iter)->Play(pos);
+		(*iter)->PlayAndMove();
+	}
+}
+
+void EffectManager::Stop(string name)
+{
+	vector<shared_ptr<Effect>>& v = _effectTable[name];
+	for (auto effect : v)
+	{
+		if (effect->IsActive())
+			effect->End();
 	}
 }
 
@@ -66,6 +97,10 @@ void EffectManager::SetCallBack(string name, function<void(void)> event)
 
 void EffectManager::SetParent(string name, shared_ptr<Transform> parent)
 {
+	vector<shared_ptr<Effect>>& v = _effectTable[name];
+
+	for (auto effect : v)
+		effect->SetParent(parent);
 }
 
 void EffectManager::Update()
@@ -85,7 +120,7 @@ void EffectManager::Render()
 	{
 		for (auto effect : pair.second)
 		{
-			effect->Render();
+			effect->PostRender();
 		}
 	}
 }

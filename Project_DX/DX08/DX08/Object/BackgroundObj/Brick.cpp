@@ -152,6 +152,7 @@ bool Brick::Load(wstring filePath)
 
 	size = reader.UInt();
 
+	_blocks.clear();
 	if (size != 0)
 	{
 		vector<ColliderData> blockData;
@@ -159,7 +160,6 @@ bool Brick::Load(wstring filePath)
 		ptr = &blockData[0];
 		UINT stride = sizeof(ColliderData);
 		reader.Byte(&ptr, sizeof(ColliderData) * size);
-		_blocks.clear();
 		for (const auto& block : blockData)
 		{
 			shared_ptr<RectCollider> temp = make_shared<RectCollider>(block.size);
@@ -170,13 +170,13 @@ bool Brick::Load(wstring filePath)
 
 	size = reader.UInt();
 
+	_floors.clear();
 	if (size != 0)
 	{
 		vector<ColliderData> floorData;
 		floorData.resize(size);
 		ptr = &floorData[0];
 		reader.Byte(&ptr, sizeof(ColliderData) * size);
-		_floors.clear();
 		for (const auto& floor : floorData)
 		{
 			shared_ptr<RectCollider> temp = make_shared<RectCollider>(floor.size);
@@ -194,13 +194,13 @@ bool Brick::Load(wstring filePath)
 
 	size = reader.UInt();
 
+	_monsterSpawn.clear();
 	if (size != 0)
 	{
 		vector<Vector2> spawnPoses;
 		spawnPoses.resize(size);
 		ptr = &spawnPoses[0];
 		reader.Byte(&ptr, sizeof(Vector2) * size);
-		_monsterSpawn.clear();
 		for (const auto& spawnPos : spawnPoses)
 		{
 			_monsterSpawn.emplace_back(spawnPos);

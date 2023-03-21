@@ -125,7 +125,7 @@ void Yggdrasil::Update()
 					_curAttackDelay = _maxAttackDelay;
 
 					_spikeReady = true;
-					EFFECT->Play("FistSlamImpact_7x4", Vector2(_attackPos.x, _attackPos.y + 100));
+					EFFECT->Play("FistSlamImpact_7x4", Vector2(_attackPos.x, _attackPos.y + 130));
 				}
 				break;
 			case Yggdrasil::SWEEP:
@@ -173,11 +173,25 @@ void Yggdrasil::Update()
 				_curAttackDelay = _maxAttackDelay;
 				curX = _player.lock()->GetFootCollider()->GetTransform()->GetPos().x;
 				if (curX > _body->GetTransform()->GetWorldPos().x)
-					_isRightHand = false;
+					_isRightHand = false; 
 				else
 					_isRightHand = true;
 				break;
 			case State::ATTACKREADY:
+				if (_attackType == AttackType::SWEEP)
+				{
+					if (_isRightHand)
+					{
+						EFFECT->SetParent("Sweeping_4x1", _rightHand->GetTransform());
+						EFFECT->Play("Sweeping_4x1", Vector2(-210, -50), true);
+					}
+					else
+					{
+						EFFECT->SetParent("Sweeping_4x1", _leftHand->GetTransform());
+						EFFECT->Play("Sweeping_4x1", Vector2(210, -50), false);
+					}
+
+				}
 				_curState = State::ATTACK;
 				_attackPos.x = _player.lock()->GetFootCollider()->GetTransform()->GetPos().x;
 				if (_isRightHand)
@@ -192,6 +206,10 @@ void Yggdrasil::Update()
 				}
 				break;
 			case State::ATTACKAFTER:
+				if (_attackType = AttackType::SWEEP)
+				{
+					EFFECT->Stop("Sweeping_4x1");
+				}
 				_curState = State::ATTACKEND;
 				if (_isRightHand)
 					_rightHandCol->DeActivate();
@@ -247,6 +265,10 @@ void Yggdrasil::Render()
 
 	_body->Render();
 
+}
+
+void Yggdrasil::PostRender()
+{
 	_rightHand->Render();
 	_leftHand->Render();
 
@@ -255,10 +277,7 @@ void Yggdrasil::Render()
 	_leftBranchCol->Render();
 	_rightHandCol->Render();
 	_leftHandCol->Render();
-}
-
-void Yggdrasil::PostRender()
-{
+	
 	_spikeCol->Render();
 
 	ImGui::SliderInt("BossHP", &_curHp, 0, _maxHp);
@@ -353,8 +372,8 @@ void Yggdrasil::SetEffect()
 	file = L"Resources/Texture/Effect/FistSlamImpact_7x4.png";
 	EFFECT->AddEffect(file, Vector2(7, 4), Vector2(5754, 2048));
 
-	file = L"Resources/Texture/Effect/Sweeping_6x1.png";
-	EFFECT->AddEffect(file, Vector2(7, 1), Vector2(1638, 88), 0.05f, Action::LOOP, 1U);
+	file = L"Resources/Texture/Effect/Sweeping_4x1.png";
+	EFFECT->AddEffect(file, Vector2(4, 1), Vector2(1872, 176), 0.05f, Action::LOOP, 1U);
 }
 
 void Yggdrasil::SetCallBack()

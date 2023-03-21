@@ -20,6 +20,7 @@ public:
 	void Fall();
 
 	void Ground();
+	void Bounce();
 
 	void Attack();
 	void AttackHit();

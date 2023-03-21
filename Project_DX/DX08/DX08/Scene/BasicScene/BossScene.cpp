@@ -60,17 +60,17 @@ void BossScene::Update()
 void BossScene::Render()
 {
 	_yggdrasil->Render();
+	_brick->Render();
 	_player->Render();
 }
 
 void BossScene::PreRender()
 {
-	_brick->Render();
 }
 
 void BossScene::PostRender()
 {
 	ImGui::SetWindowSize({ 320, 320 });
-	_player->PostRender();
 	_yggdrasil->PostRender();
+	_player->PostRender();
 }
