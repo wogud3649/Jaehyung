@@ -69,11 +69,13 @@ private:
 
 	Vector2 _playerSpawn = _outPos;
 	Vector2 _bossSpawn = _outPos * 15;
-	vector<Vector2> _monsterSpawn;
 
 	vector<shared_ptr<RectCollider>> _blocks;
 	vector<shared_ptr<RectCollider>> _floors;
 
 	weak_ptr<Advanced_Player> _player;
+
+	vector<shared_ptr<MushroomEnt>> _mushroomEnts;
+	vector<Vector2> _monsterSpawn;
 };
 

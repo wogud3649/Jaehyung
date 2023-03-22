@@ -23,11 +23,11 @@ public:
 
 	virtual void CreateData() abstract;
 
-	bool IsCollision(shared_ptr<Collider> other, bool isObb = false);
+	HIT_RESULT IsCollision(shared_ptr<Collider> other, bool isObb = false);
 
-	virtual bool IsCollision(Vector2 pos) abstract;
-	virtual bool IsCollision(shared_ptr<CircleCollider> other, bool isObb = false) abstract;
-	virtual bool IsCollision(shared_ptr<RectCollider> other, bool isObb = false) abstract;
+	virtual HIT_RESULT IsCollision(Vector2 pos) abstract;
+	virtual HIT_RESULT IsCollision(shared_ptr<CircleCollider> other, bool isObb = false) abstract;
+	virtual HIT_RESULT IsCollision(shared_ptr<RectCollider> other, bool isObb = false) abstract;
 
 	void SetRed() { _colorBuffer->_data.color = { 1,0,0,1 }; }
 	void SetGreen() { _colorBuffer->_data.color = { 0,1,0,1 }; }
@@ -54,4 +54,3 @@ protected:
 
 	shared_ptr<Transform> _transform;
 };
-

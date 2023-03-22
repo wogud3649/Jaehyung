@@ -17,8 +17,8 @@ SceneManager::SceneManager()
 	_sceneTable["EffectScene"] = make_shared<EffectScene>();
 	_sceneTable["MonsterScene"] = make_shared<MonsterScene>();
 
-	_curScene = _sceneTable["MonsterScene"];
-	_curSceneName = "MonsterScene";
+	_curScene = _sceneTable["MapEditorTestScene"];
+	_curSceneName = "MapEditorTestScene";
 }
 
 SceneManager::~SceneManager()

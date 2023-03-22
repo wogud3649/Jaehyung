@@ -17,6 +17,7 @@ MushroomEnt::~MushroomEnt()
 
 void MushroomEnt::Update()
 {
+	_detectCol->Update();
 	_standBodyCol->Update();
 	_duckBodyCol->Update();
 	_headCol->Update();
@@ -25,6 +26,16 @@ void MushroomEnt::Update()
 		action->Update();
 	for (auto sprite : _sprites)
 		sprite->Update();
+
+	if (_isDuck)
+	{
+		_curDuckDuration -= DELTA_TIME;
+		if (_curDuckDuration <= 0.0f)
+		{
+			if (Stand())
+				_curDuckDuration = _maxDuckDuration;
+		}
+	}
 
 	Collision();
 	Function();
@@ -38,6 +49,8 @@ void MushroomEnt::Render()
 	_standBodyCol->Render();
 	_duckBodyCol->Render();
 	_headCol->Render();
+	
+	_detectCol->Render();
 }
 
 void MushroomEnt::Function()
@@ -45,39 +58,9 @@ void MushroomEnt::Function()
 	if (_isAction)
 		return;
 
-	Flip();
+	Walk();
 
-	if (KEY_PRESS(VK_LBUTTON))
-	{
-		if (_isDuck)
-			SetAction(State::DUCKATTACK);
-		else
-			SetAction(State::ATTACK);
-		_isAction = true;
-	}
-	else if (KEY_PRESS('S'))
-	{
-		if (_isDuck == false)
-		{
-			Duck();
-		}
-	}
-	else if (KEY_PRESS('W'))
-	{
-		if (_isDuck)
-		{
-			SetAction(State::STAND);
-			_isAction = true;
-		}
-	}
-	else if (KEY_PRESS('D') || KEY_PRESS('A'))
-	{
-		if (_isDuck)
-			SetAction(State::DUCKWALK);
-		else
-			SetAction(State::WALK);
-	}
-	else
+	if (_curState != State::WALK && _curState != State::DUCKWALK)
 	{
 		if (_isDuck)
 			SetAction(State::DUCKIDLE);
@@ -88,34 +71,38 @@ void MushroomEnt::Function()
 
 void MushroomEnt::Collision()
 {
-	if (_headCol->IsCollision(MOUSE_POS))
-		Duck();
-
 	if (_player.expired())
 		return;
 
-	if (_headCol->IsCollision(_player.lock()->GetFootCollider()) && _player.lock()->GetJumpPower() < 0.0f)
+	Detect();
+
+	if (_headCol->IsCollision(_player.lock()->GetFootCollider()).isHit && _player.lock()->GetJumpPower() < 0.0f && _headCol->GetActive())
 	{
 		_player.lock()->Bounce();
 		Duck();
 	}
 }
 
-void MushroomEnt::Flip()
+void MushroomEnt::Flip(Direction dir)
 {
-	if (KEY_PRESS('D'))
+	if (_isAction)
+		return;
+
+	if (dir == Direction::RIGHT)
 	{
 		if (_direction == Direction::RIGHT)
 			return;
 		_direction = Direction::RIGHT;
-		_sprites[_curState]->SetDirection(_direction);
+		for (auto sprite : _sprites)
+			sprite->SetDirection(_direction);
 	}
-	if (KEY_PRESS('A'))
+	else if (dir == Direction::LEFT)
 	{
 		if (_direction == Direction::LEFT)
 			return;
 		_direction = Direction::LEFT;
-		_sprites[_curState]->SetDirection(_direction);
+		for (auto sprite : _sprites)
+			sprite->SetDirection(_direction);
 	}
 }
 
@@ -140,12 +127,100 @@ void MushroomEnt::SetIdle()
 	_isAction = false;
 }
 
+void MushroomEnt::Walk()
+{
+	if (_curState == State::WALK)
+	{
+		if (_direction == Direction::RIGHT)
+			_standBodyCol->GetTransform()->MoveX(_moveSpeed * DELTA_TIME);
+		else
+			_standBodyCol->GetTransform()->MoveX(-_moveSpeed * DELTA_TIME);
+	}
+	else if (_curState == State::DUCKWALK)
+	{
+		if (_direction == Direction::RIGHT)
+			_standBodyCol->GetTransform()->MoveX(_moveSpeed * 0.5f * DELTA_TIME);
+		else
+			_standBodyCol->GetTransform()->MoveX(-_moveSpeed * 0.5f * DELTA_TIME);
+	}
+}
+
 void MushroomEnt::Duck()
 {
-	_headCol->DeActivate();
-	SetAction(State::DUCK);
+	if (_isDuck == false)
+	{
+		_headCol->DeActivate();
+		SetAction(State::DUCK);
+		_isAction = true;
+		_duckBodyCol->Activate();
+	}
+}
+
+bool MushroomEnt::Stand()
+{
+	if (_isAction)
+		return false;
+
+	if (_isDuck)
+	{
+		SetAction(State::STAND);
+		_isAction = true;
+		_duckBodyCol->DeActivate();
+	}
+
+	return true;
+}
+
+void MushroomEnt::Fall()
+{
+	_curJumpPower -= GRAVITY * GRAVITY * DELTA_TIME;
+}
+
+void MushroomEnt::Detect()
+{
+	HIT_RESULT result = _detectCol->SideCollision(_player.lock()->GetFootCollider());
+	
+	if (result.isHit)
+	{
+		Flip(result.dir);
+
+		if (abs(result.distance.x) < 200)
+			Attack();
+		else
+			Follow();
+	}
+}
+
+void MushroomEnt::Follow()
+{
+	if (_isAction)
+		return;
+
+	if (_isDuck)
+		SetAction(State::DUCKWALK);
+	else
+		SetAction(State::WALK);
+}
+
+void MushroomEnt::Attack()
+{
+	if (_isAction)
+		return;
+
+	if (_isDuck)
+		SetAction(State::DUCKATTACK);
+	else
+		SetAction(State::ATTACK);
+
 	_isAction = true;
-	_duckBodyCol->Activate();
+}
+
+void MushroomEnt::AttackMid()
+{
+	if (_direction == Direction::RIGHT)
+		_standBodyCol->GetTransform()->MoveX(150);
+	else if (_direction == Direction::LEFT)
+		_standBodyCol->GetTransform()->MoveX(-150);
 }
 
 void MushroomEnt::StandEnd()
@@ -158,6 +233,11 @@ void MushroomEnt::StandEnd()
 void MushroomEnt::DuckEnd()
 {
 	_isDuck = true;
+	SetIdle();
+}
+
+void MushroomEnt::AttackEnd()
+{
 	SetIdle();
 }
 
@@ -346,9 +426,12 @@ void MushroomEnt::SetSprites()
 
 void MushroomEnt::SetCallback()
 {
-	_actions[State::ATTACK]->SetCallBack(std::bind(&MushroomEnt::SetIdle, this));
+	_actions[State::ATTACK]->SetMidCallBack(std::bind(&MushroomEnt::AttackMid, this), 15);
+	_actions[State::DUCKATTACK]->SetMidCallBack(std::bind(&MushroomEnt::AttackMid, this), 12);
+
+	_actions[State::ATTACK]->SetCallBack(std::bind(&MushroomEnt::AttackEnd, this));
 	_actions[State::DUCK]->SetCallBack(std::bind(&MushroomEnt::DuckEnd, this));
-	_actions[State::DUCKATTACK]->SetCallBack(std::bind(&MushroomEnt::SetIdle, this));
+	_actions[State::DUCKATTACK]->SetCallBack(std::bind(&MushroomEnt::AttackEnd, this));
 	_actions[State::STAND]->SetCallBack(std::bind(&MushroomEnt::StandEnd, this));
 }
 
@@ -364,4 +447,8 @@ void MushroomEnt::SetColliders()
 	_duckBodyCol = make_shared<CircleCollider>(60);
 	_duckBodyCol->GetTransform()->SetParent(_standBodyCol->GetTransform());
 	_duckBodyCol->DeActivate();
+
+	_detectCol = make_shared<RectCollider>(Vector2(800,100));
+	_detectCol->GetTransform()->SetParent(_standBodyCol->GetTransform());
+	_detectCol->GetTransform()->MoveY(10);
 }

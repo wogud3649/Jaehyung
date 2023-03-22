@@ -36,107 +36,247 @@ void CircleCollider::CreateData()
     _transform = make_shared<Transform>();
 }
 
-bool CircleCollider::IsCollision(Vector2 pos)
+HIT_RESULT CircleCollider::IsCollision(Vector2 pos)
 {
-    float length = (pos - _transform->GetWorldPos()).Length();
+    HIT_RESULT result;
+
+    Vector2 dir = pos - _transform->GetWorldPos();
+    float length = dir.Length();
     float worldRadius = WorldRadius();
 
-    return length < worldRadius;
+    result.distance = dir;
+
+    result.isHit = length <= worldRadius;
+
+    if (result.isHit)
+    {
+        if (dir.x < 0 && dir.y >= 0)
+            result.dir = Direction::LEFTUP;
+        else if (dir.x < 0 && dir.y < 0)
+            result.dir = Direction::LEFTDOWN;
+        else if (dir.x >= 0 && dir.y >= 0)
+            result.dir = Direction::RIGHTUP;
+        else
+            result.dir = Direction::RIGHTDOWN;
+    }
+
+    return result;
 }
 
-bool CircleCollider::IsCollision(shared_ptr<CircleCollider> other, bool isObb)
+HIT_RESULT CircleCollider::IsCollision(shared_ptr<CircleCollider> other, bool isObb)
 {
-    float radiusSum = this->_radius * this->GetTransform()->GetWorldScale().x + other->_radius * other->GetTransform()->GetWorldScale().x;
-    float distance = (other->_transform->GetWorldPos() - this->_transform->GetWorldPos()).Length();
+    HIT_RESULT result;
 
-    return distance < radiusSum;
+    float radiusSum = WorldRadius() * _transform->GetWorldScale().x + other->WorldRadius() * other->GetTransform()->GetWorldScale().x;
+
+    Vector2 otherPos = other->GetTransform()->GetWorldPos();
+    Vector2 thisPos = _transform->GetWorldPos();
+    Vector2 centerToCenter = otherPos - thisPos;
+
+    result.distance = centerToCenter;
+
+    if (otherPos.x < thisPos.x && otherPos.y >= thisPos.y)
+        result.dir = Direction::LEFTUP;
+    else if (otherPos.x < thisPos.x && otherPos.y < thisPos.y)
+        result.dir = Direction::LEFTDOWN;
+    else if (otherPos.x >= thisPos.x && otherPos.y >= thisPos.y)
+        result.dir = Direction::RIGHTUP;
+    else if (otherPos.x >= thisPos.x && otherPos.y < thisPos.y)
+        result.dir = Direction::RIGHTDOWN;
+
+    result.isHit = (centerToCenter).Length() < radiusSum;
+    return result;
 }
 
-bool CircleCollider::IsCollision(shared_ptr<RectCollider> other, bool isObb)
+HIT_RESULT CircleCollider::IsCollision(shared_ptr<RectCollider> other, bool isObb)
 {
-    return other->IsCollision(shared_from_this(), isObb);
+    HIT_RESULT result;
+
+    Vector2 circlePos = _transform->GetWorldPos();
+    Vector2 rectPos = other->GetTransform()->GetWorldPos();
+
+    Vector2 centerToCenter = rectPos - circlePos;
+    result.distance = centerToCenter;
+
+    float left = other->Left();
+    float right = other->Right();
+    float top = other->Top();
+    float bottom = other->Bottom();
+
+    if (circlePos.x < right && circlePos.x > left && circlePos.y < top && circlePos.y > bottom)
+    {
+        result.isHit = true;
+
+        Vector2 closerVertex = GetCloserVertex(other);
+        Vector2 dir = circlePos - closerVertex;
+
+        if (abs(dir.x) >= abs(dir.y))
+        {
+            if (dir.y >= 0)
+            {
+                result.dir = Direction::UP;
+                dir.y += WorldRadius();
+                dir.x = 0;
+            }
+            else
+            {
+                result.dir = Direction::DOWN;
+                dir.y -= WorldRadius();
+                dir.x = 0;
+            }
+        }
+        else
+        {
+            if (dir.x >= 0)
+            {
+                result.dir = Direction::RIGHT;
+                dir.x += WorldRadius();
+                dir.y = 0;
+            }
+            else
+            {
+                result.dir = Direction::LEFT;
+                dir.x -= WorldRadius();
+                dir.y = 0;
+            }
+        }
+
+        return result;
+    }
+    else if (circlePos.x < right && circlePos.x > left)
+    {
+        float dir = rectPos.y - circlePos.y;
+
+        if (circlePos.y < top + WorldRadius() && circlePos.y > bottom - WorldRadius())
+        {
+            result.isHit = true;
+
+            if (dir >= 0)
+                result.dir = Direction::UP;
+            else
+                result.dir = Direction::DOWN;
+
+            return result;
+        }
+    }
+    else if (circlePos.y < top && circlePos.y > bottom)
+    {
+        float dir = rectPos.x - circlePos.x;
+
+        if (circlePos.x < right + WorldRadius() && circlePos.x > left - WorldRadius())
+        {
+            result.isHit = true;
+
+            if (dir >= 0)
+                result.dir = Direction::RIGHT;
+            else
+                result.dir = Direction::LEFT;
+
+            return result;
+        }
+    }
+
+    Vector2 leftTop = Vector2(left, top);
+    Vector2 leftBottom = Vector2(left, bottom);
+    Vector2 rightTop = Vector2(right, top);
+    Vector2 rightBottom = Vector2(right, bottom);
+
+    result = other->IsCollision(leftTop);
+    if (result.isHit)
+    {
+        result.distance = centerToCenter;
+        result.dir = Direction::RIGHTDOWN;
+        return result;
+    }
+
+    result = other->IsCollision(leftBottom);
+    if (result.isHit)
+    {
+        result.distance = centerToCenter;
+        result.dir = Direction::RIGHTUP;
+        return result;
+    }
+
+    result = other->IsCollision(rightTop);
+    if (result.isHit)
+    {
+        result.distance = centerToCenter;
+        result.dir = Direction::LEFTDOWN;
+        return result;
+    }
+
+    result = other->IsCollision(rightBottom);
+    if (result.isHit)
+    {
+        result.distance = centerToCenter;
+        result.dir = Direction::LEFTUP;
+        return result;
+    }
+
+    result.distance = { 0,0 };
+    return result;
 }
 
 HIT_RESULT CircleCollider::Block(shared_ptr<CircleCollider> other)
 {
-    HIT_RESULT result;
-    if (this->IsCollision(other))
-    {
-        Vector2 dir = other->GetTransform()->GetWorldPos() - _transform->GetWorldPos();
-        float radiusSum = other->WorldRadius() + WorldRadius();
-        float overlap = radiusSum - dir.Length();;
-        other->GetTransform()->Move(dir.NormalVector2() * overlap);
+    HIT_RESULT result = IsCollision(other);
 
-        result.isHit = true;
-    }
-    else
+    if (result.isHit)
     {
-        result.isHit = false;
+        float radiusSum = other->WorldRadius() + WorldRadius();
+        float overlap = radiusSum - result.distance.Length();
+        other->GetTransform()->Move(result.distance.NormalVector2() * overlap);
     }
+
     return result;
 }
 
 HIT_RESULT CircleCollider::Block(shared_ptr<RectCollider> other)
 {
-    HIT_RESULT result;
+    HIT_RESULT result  = IsCollision(other);
 
-    if (other->IsAABB(shared_from_this()))
+    if (result.isHit)
     {
-        Vector2 circlePos = _transform->GetWorldPos();
-        Vector2 rectPos = other->GetTransform()->GetWorldPos();
-        Vector2 leftTop = Vector2(other->Left(), other->Top());
-        Vector2 rightTop = Vector2(other->Right(), other->Top());
-        Vector2 leftBottom = Vector2(other->Left(), other->Bottom());
-        Vector2 rightBottom = Vector2(other->Right(), other->Bottom());
-
         Vector2 halfSize = other->GetWorldHalfSize();
 
-        if (circlePos.x > leftTop.x && circlePos.x < rightTop.x)
+        if (result.dir == Direction::UP || result.dir == Direction::DOWN)
         {
-            Vector2 dir = Vector2(0.0f, rectPos.y - circlePos.y);
-            dir.Normalize();
+            float dir = result.distance.y;
+            float distance = abs(dir);
+
+            if (dir >= 0)
+                dir = 1;
+            else
+                dir = -1;
 
             float sum = WorldRadius() + halfSize.y;
-            float distance = abs(rectPos.y - circlePos.y);
 
-            other->GetTransform()->Move(dir * (sum - distance));
+            other->GetTransform()->MoveY(dir * (sum - distance));
         }
-        else if (circlePos.y > leftBottom.y && circlePos.y < rightTop.y)
+        else if (result.dir == Direction::LEFT || result.dir == Direction::RIGHT)
         {
-            Vector2 dir = Vector2(rectPos.x - circlePos.x, 0.0f);
-            dir.Normalize();
+            float dir = result.distance.x;
+            float distance = abs(dir);
+
+            if (dir >= 0)
+                dir = 1;
+            else
+                dir = -1;
 
             float sum = WorldRadius() + halfSize.x;
-            float distance = abs(rectPos.x - circlePos.x);
 
-            other->GetTransform()->Move(dir * (sum - distance));
+            other->GetTransform()->MoveX(dir * (sum - distance));
         }
         else
         {
+            Vector2 circlePos = _transform->GetWorldPos();
             Vector2 closerVertex = GetCloserVertex(other);
-
-            Vector2 vToCircle = circlePos - closerVertex;
-
             Vector2 dir = closerVertex - circlePos;
-
-            if (dir.x < 0 && dir.y > 0)
-                result.dir == Direction::LEFTUP;
-            else if (dir.x > 0 && dir.y > 0)
-                result.dir == Direction::RIGHTUP;
-            else if (dir.x < 0 && dir.y < 0)
-                result.dir == Direction::LEFTDOWN;
-            else
-                result.dir == Direction::RIGHTDOWN;
 
             float magnitude = WorldRadius() - dir.Length();
             dir.Normalize();
             other->GetTransform()->Move(dir * magnitude);
         }
-        result.isHit = true;
-    }
-    else
-    {
-        result.isHit = false;
     }
 
     return result;

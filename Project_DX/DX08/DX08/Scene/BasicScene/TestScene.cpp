@@ -15,13 +15,24 @@ TestScene::~TestScene()
 
 void TestScene::Init()
 {
-	wstring filePath = _filePath;
 	if (_filePath == L"")
-		return;
+		_filePath = L"Maps/Field1.map";
+
+	wstring filePath = _filePath;
+
 	_brick->Load(filePath);
 
-	_player->GetFootCollider()->GetTransform()->SetPos(CENTER);
+	_player->GetFootCollider()->GetTransform()->SetPos(_brick->GetPlayerSpawn());
 	_player->GetFootCollider()->GetTransform()->UpdateSRT();
+
+	vector<Vector2> monsterSpawn = _brick->GetMonsterSpawn();
+	for (int i = 0; i < monsterSpawn.size(); i++)
+	{
+		shared_ptr<MushroomEnt> mushroomEnt = make_shared<MushroomEnt>();
+		mushroomEnt->SetPos(monsterSpawn[i]);
+		mushroomEnt->SetPlayer(_player);
+		_mushroomEnts.emplace_back(mushroomEnt);
+	}
 
 	CAMERA->SetTarget(_player->GetBodyCollider()->GetTransform());
 	CAMERA->SetOffset(CENTER);
@@ -30,30 +41,28 @@ void TestScene::Init()
 void TestScene::Fin()
 {
 	CAMERA->SetTarget(nullptr);
+	_mushroomEnts.clear();
 }
 
 void TestScene::Update()
 {
-	if (_filePath == L"")
-		return;
-
 	_player->Update();
 	_brick->Update();
+
+	for (auto monster : _mushroomEnts)
+		monster->Update();
 }
 
 void TestScene::Render()
 {
-	if (_filePath == L"")
-		return;
+	for (auto monster : _mushroomEnts)
+		monster->Render();
 
 	_player->Render();
 }
 
 void TestScene::PreRender()
 {
-	if (_filePath == L"")
-		return;
-
 	_brick->Render();
 }
 

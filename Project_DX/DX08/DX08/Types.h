@@ -52,8 +52,9 @@ enum Direction
 
 struct HIT_RESULT
 {
-	bool isHit;
+	bool isHit = false;
 	Direction dir = NONE;
+	Vector2 distance = { 0,0 };
 };
 
 struct BlockData

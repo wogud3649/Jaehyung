@@ -29,7 +29,7 @@ public:
 	void PlayAndMove(string name, bool isLeftRight = false);
 	void Stop(string name);
 
-	void SetMidCallBack(string name, function<void(void)> event);
+	void SetMidCallBack(string name, function<void(void)> event, UINT index);
 	void SetCallBack(string name, function<void(void)> event);
 
 	void SetParent(string name, shared_ptr<Transform> parent);

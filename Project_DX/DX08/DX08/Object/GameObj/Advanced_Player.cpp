@@ -198,20 +198,20 @@ void Advanced_Player::Move()
 {
 	if (KEY_PRESS(VK_RIGHT))
 	{
-		if (_curState == State::ATTACKA || _curState == State::ATTACKB || _curState == State::JUMPATTACK || _curState == State::DASH || _curState == State::SKILL)
+		if (_curState == State::ATTACKA || _curState == State::ATTACKB || _curState == State::DASH || _curState == State::SKILL)
 			return;
 		_footCol->GetTransform()->MoveX(_speed * DELTA_TIME);
-		if (_curState == State::JUMP || _curState == State::FALLREPEAT || _curState == State::FALL)
+		if (_curState == State::JUMP || _curState == State::JUMPATTACK || _curState == State::FALLREPEAT || _curState == State::FALL)
 			return;
 		_isGround = false;
 		SetAction(State::WALK);
 	}
 	if (KEY_PRESS(VK_LEFT))
 	{
-		if (_curState == State::ATTACKA || _curState == State::ATTACKB || _curState == State::JUMPATTACK || _curState == State::DASH || _curState == State::SKILL)
+		if (_curState == State::ATTACKA || _curState == State::ATTACKB || _curState == State::DASH || _curState == State::SKILL)
 			return;
 		_footCol->GetTransform()->MoveX(-_speed * DELTA_TIME);
-		if (_curState == State::JUMP || _curState == State::FALLREPEAT || _curState == State::FALL)
+		if (_curState == State::JUMP || _curState == State::JUMPATTACK || _curState == State::FALLREPEAT || _curState == State::FALL)
 			return;
 		_isGround = false;
 		SetAction(State::WALK);
@@ -226,6 +226,7 @@ void Advanced_Player::Jump()
 			return;
 		if (_isDoubleJump)
 			return;
+
 		if (_isJump)
 		{
 			_isDoubleJump = true;
@@ -447,15 +448,15 @@ void Advanced_Player::SetCallback()
 		_actions[i][State::ATTACKB]->SetCallBack(std::bind(&Advanced_Player::AttackEnd, this));
 		_actions[i][State::JUMPATTACK]->SetCallBack(std::bind(&Advanced_Player::AttackEnd, this));
 	}
-	_actions[SkulType::SKUL][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this));
-	_actions[SkulType::SKUL][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this));
-	_actions[SkulType::SKUL][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this));
+	_actions[SkulType::SKUL][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 2);
+	_actions[SkulType::SKUL][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
+	_actions[SkulType::SKUL][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
 
 	_actions[SkulType::SKUL][State::SKILL]->SetCallBack(std::bind(&Advanced_Player::SkillEnd, this));
 
-	_actions[SkulType::HEADLESS][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this));
-	_actions[SkulType::HEADLESS][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this));
-	_actions[SkulType::HEADLESS][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this));
+	_actions[SkulType::HEADLESS][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 2);
+	_actions[SkulType::HEADLESS][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
+	_actions[SkulType::HEADLESS][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
 
 	_actions[SkulType::PIKE][State::SKILL]->SetCallBack(std::bind(&Advanced_Player::SkillEnd, this));
 

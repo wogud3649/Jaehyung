@@ -40,7 +40,7 @@ void BossScene::Update()
 
 	if (_player->GetAttackCol()->GetActive())
 	{
-		if (_player->GetAttackCol()->IsCollision(_yggdrasil->GetHeadCollider()))
+		if (_player->GetAttackCol()->IsCollision(_yggdrasil->GetHeadCollider()).isHit)
 		{
 			_yggdrasil->Damaged(_player->GetAttackDamage());
 			_player->AttackHit();
@@ -49,7 +49,7 @@ void BossScene::Update()
 
 	if (_player->GetProjCol()->GetActive())
 	{
-		if (_player->GetProjCol()->IsCollision(_yggdrasil->GetHeadCollider()))
+		if (_player->GetProjCol()->IsCollision(_yggdrasil->GetHeadCollider()).isHit)
 		{
 			_yggdrasil->Damaged(_player->GetProjDamage());
 			_player->SkillHit();

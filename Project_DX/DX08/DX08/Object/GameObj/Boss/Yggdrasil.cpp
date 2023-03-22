@@ -269,6 +269,11 @@ void Yggdrasil::Render()
 
 void Yggdrasil::PostRender()
 {
+	if (_isAlive == false)
+	{
+		return;
+	}
+
 	_rightHand->Render();
 	_leftHand->Render();
 
@@ -378,7 +383,7 @@ void Yggdrasil::SetEffect()
 
 void Yggdrasil::SetCallBack()
 {
-	EFFECT->SetMidCallBack("Spike_15x1", std::bind(&Yggdrasil::SpikeFlipDir, this));
+	EFFECT->SetMidCallBack("Spike_15x1", std::bind(&Yggdrasil::SpikeFlipDir, this), 6);
 	EFFECT->SetCallBack("Spike_15x1", std::bind(&Yggdrasil::SpikeStop, this));
 	EFFECT->SetCallBack("WarnSign_10x1", std::bind(&Yggdrasil::SpikeAttack, this));
 }

@@ -39,7 +39,7 @@ private:
 
 	unordered_map<string, shared_ptr<Scene>> _sceneTable;
 	shared_ptr<Scene> _curScene;
-	int _curSceneIndex = 4;
+	int _curSceneIndex = 1;
 	int _oldSceneIndex = _curSceneIndex;
 
 	string _curSceneName = "";

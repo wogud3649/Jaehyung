@@ -38,12 +38,15 @@ void Collider::Render()
     DC->Draw(_vertices.size(), 0);
 }
 
-bool Collider::IsCollision(shared_ptr<Collider> other, bool isObb)
+HIT_RESULT Collider::IsCollision(shared_ptr<Collider> other, bool isObb)
 {
+    HIT_RESULT result;
+
     switch (other->_type)
     {
     case Collider::NONE:
-        return false;
+        result.isHit = false;
+        return result;
         break;
     case Collider::CIRCLE:
         return IsCollision(dynamic_pointer_cast<CircleCollider>(other), isObb);
@@ -55,5 +58,6 @@ bool Collider::IsCollision(shared_ptr<Collider> other, bool isObb)
         break;
     }
 
-    return false;
+    result.isHit = false;
+    return result;
 }

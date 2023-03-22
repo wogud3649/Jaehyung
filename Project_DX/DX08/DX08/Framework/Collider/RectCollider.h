@@ -27,20 +27,20 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 
-	virtual bool IsCollision(Vector2 pos) override;
-	virtual bool IsCollision(shared_ptr<CircleCollider> other, bool isObb = false) override;
-	virtual bool IsCollision(shared_ptr<RectCollider> other, bool isObb = false) override;
+	virtual HIT_RESULT IsCollision(Vector2 pos) override;
+	virtual HIT_RESULT IsCollision(shared_ptr<CircleCollider> other, bool isObb = false) override;
+	virtual HIT_RESULT IsCollision(shared_ptr<RectCollider> other, bool isObb = false) override;
 	HIT_RESULT SideCollision(shared_ptr<CircleCollider> other);
 	
 	virtual HIT_RESULT Block(shared_ptr<CircleCollider> other);
 	virtual HIT_RESULT Block(shared_ptr<RectCollider> other);
 	virtual HIT_RESULT TopBlock(shared_ptr<CircleCollider> other);
 
-	bool IsAABB(shared_ptr<RectCollider> other);
-	bool IsAABB(shared_ptr<CircleCollider> other);
+	HIT_RESULT IsAABB(shared_ptr<RectCollider> other);
+	HIT_RESULT IsAABB(shared_ptr<CircleCollider> other);
 
-	bool IsOBB(shared_ptr<RectCollider> other);
-	bool IsOBB(shared_ptr<CircleCollider> other);
+	HIT_RESULT IsOBB(shared_ptr<RectCollider> other);
+	HIT_RESULT IsOBB(shared_ptr<CircleCollider> other);
 
 	OBB_DESC GetOBB();
 

@@ -79,12 +79,12 @@ void EffectManager::Stop(string name)
 	}
 }
 
-void EffectManager::SetMidCallBack(string name, function<void(void)> event)
+void EffectManager::SetMidCallBack(string name, function<void(void)> event, UINT index)
 {
 	vector<shared_ptr<Effect>>& v = _effectTable[name];
 
 	for (auto effect : v)
-		effect->SetMidCallBack(event);
+		effect->SetMidCallBack(event, index);
 }
 
 void EffectManager::SetCallBack(string name, function<void(void)> event)

@@ -17,7 +17,7 @@ public:
 	void SetActive(bool active);
 	bool IsActive() { return _isActive; }
 
-	void SetMidCallBack(function<void(void)> event) { _action->SetMidCallBack(event); }
+	void SetMidCallBack(function<void(void)> event, UINT index) { _action->SetMidCallBack(event, index); }
 	void SetCallBack(function<void(void)> event) { _action->SetCallBack(event); }
 
 	void SetParent(shared_ptr<Transform> parent) { _sprite->GetTransform()->SetParent(parent); }
