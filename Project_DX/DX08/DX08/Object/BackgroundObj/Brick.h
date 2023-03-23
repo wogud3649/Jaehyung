@@ -25,6 +25,7 @@ public:
 	int SelectActiveBlock(Vector2 pos, bool activate = true);
 
 	bool Load(wstring filePath);
+	void SpawnMonster();
 
 	vector<BlockData> GetBlockDatas();
 	vector<ColliderData> GetBlockColliderDatas();

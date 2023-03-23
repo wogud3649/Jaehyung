@@ -10,16 +10,52 @@ Brick::~Brick()
 {
 }
 
+void Brick::SpawnMonster()
+{
+	for (int i = 0; i < _monsterSpawn.size(); i++)
+	{
+		shared_ptr<MushroomEnt> mushroomEnt = make_shared<MushroomEnt>();
+		mushroomEnt->SetPos(_monsterSpawn[i]);
+		if (_player.expired() == false)
+			mushroomEnt->SetPlayer(_player.lock());
+		_mushroomEnts.emplace_back(mushroomEnt);
+	}
+}
+
 void Brick::Update()
 {
 	for (const auto& block : _blocks)
 	{
 		block->Update();
+
+		for (auto mushroomEnt : _mushroomEnts)
+		{
+			HIT_RESULT result = block->Block(mushroomEnt->GetStandBodyCol());
+			if (result.isHit)
+			{
+				float entX = mushroomEnt->GetStandBodyCol()->GetTransform()->GetWorldPos().x;
+				float blockX = block->GetTransform()->GetWorldPos().x;
+				if (result.dir == Direction::UP)
+				{
+					if (result.distance.x + 32 > block->GetWorldHalfSize().x)
+						mushroomEnt->Flip(Direction::LEFT);
+					else if (result.distance.x - 32 < -block->GetWorldHalfSize().x)
+						mushroomEnt->Flip(Direction::RIGHT);
+					mushroomEnt->Ground();
+				}
+				else if (result.dir == Direction::LEFT || result.dir == Direction::RIGHT)
+					mushroomEnt->Flip(result.dir);
+			}
+		}
+
 		if (_player.expired() == false)
 		{
 			HIT_RESULT result = block->Block(_player.lock()->GetFootCollider());
-			if (result.dir == Direction::UP)
-				_player.lock()->Ground();
+			if (result.isHit)
+			{
+				if (result.dir == Direction::UP)
+					_player.lock()->Ground();
+			}
 		}
 	}
 	for (const auto& floor : _floors)
@@ -38,7 +74,17 @@ void Brick::Update()
 				}
 			}
 		}
+
+		for (auto mushroomEnt : _mushroomEnts)
+		{
+			HIT_RESULT result = floor->TopBlock(mushroomEnt->GetStandBodyCol());
+			if (result.dir == Direction::UP)
+				mushroomEnt->Ground();
+		}
 	}
+
+	for (auto monster : _mushroomEnts)
+		monster->Update();
 }
 
 void Brick::Render()
@@ -48,6 +94,9 @@ void Brick::Render()
 	_quad->SetRender();
 
 	DC->DrawIndexedInstanced(6, _instanceDatas.size(), 0, 0, 0);
+
+	for (auto monster : _mushroomEnts)
+		monster->Render();
 
 	for (const auto& block : _blocks)
 		block->Render();
@@ -194,6 +243,7 @@ bool Brick::Load(wstring filePath)
 
 	size = reader.UInt();
 
+	_mushroomEnts.clear();
 	_monsterSpawn.clear();
 	if (size != 0)
 	{

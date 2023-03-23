@@ -24,6 +24,9 @@ public:
 	void Update();
 	void Render();
 
+	void Ground();
+	void Flip(Direction dir);
+
 	void SetPos(Vector2 pos) { _standBodyCol->GetTransform()->SetPos(pos); }
 	void SetPlayer(shared_ptr<Advanced_Player> player) { _player = player; }
 
@@ -34,8 +37,6 @@ public:
 private:
 	void Function();
 	void Collision();
-
-	void Flip(Direction dir);
 
 	void CreateAction();
 
@@ -52,7 +53,7 @@ private:
 	void Fall();
 	
 	void Detect();
-	void Follow();
+	void Move();
 	void Attack();
 
 	void AttackMid();
@@ -77,8 +78,11 @@ private:
 
 	weak_ptr<Advanced_Player> _player;
 
-	float _curJumpPower = 0.0f;
-	float _moveSpeed = 100.0f;
+	float _maxIdleDuration = 3.0f;
+	float _curIdleDuration = _maxIdleDuration;
+
+	float _curJumpPower = 50.0f;
+	float _moveSpeed = 80.0f;
 
 	float _maxDuckDuration = 10.0f;
 	float _curDuckDuration = _maxDuckDuration;

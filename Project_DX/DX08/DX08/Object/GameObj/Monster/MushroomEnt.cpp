@@ -37,8 +37,20 @@ void MushroomEnt::Update()
 		}
 	}
 
+	Fall();
+
 	Collision();
 	Function();
+
+	if (_curState == State::IDLE || _curState == State::DUCKIDLE)
+	{
+		_curIdleDuration -= DELTA_TIME;
+		if (_curIdleDuration < 0.0f)
+		{
+			_curIdleDuration = _maxIdleDuration;
+			Move();
+		}
+	}
 }
 
 void MushroomEnt::Render()
@@ -51,6 +63,11 @@ void MushroomEnt::Render()
 	_headCol->Render();
 	
 	_detectCol->Render();
+}
+
+void MushroomEnt::Ground()
+{
+	_curJumpPower = 0.0f;
 }
 
 void MushroomEnt::Function()
@@ -174,6 +191,7 @@ bool MushroomEnt::Stand()
 void MushroomEnt::Fall()
 {
 	_curJumpPower -= GRAVITY * GRAVITY * DELTA_TIME;
+	_standBodyCol->GetTransform()->MoveY(_curJumpPower * DELTA_TIME);
 }
 
 void MushroomEnt::Detect()
@@ -187,11 +205,11 @@ void MushroomEnt::Detect()
 		if (abs(result.distance.x) < 200)
 			Attack();
 		else
-			Follow();
+			Move();
 	}
 }
 
-void MushroomEnt::Follow()
+void MushroomEnt::Move()
 {
 	if (_isAction)
 		return;
