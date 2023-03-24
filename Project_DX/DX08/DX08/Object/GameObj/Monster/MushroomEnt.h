@@ -63,6 +63,8 @@ private:
 	void DuckEnd();
 	void AttackEnd();
 
+	void AttackColEnd();
+
 	vector<shared_ptr<Sprite>> _sprites;
 	vector<shared_ptr<Action>> _actions;
 
@@ -71,6 +73,8 @@ private:
 	shared_ptr<CircleCollider> _duckBodyCol;
 
 	shared_ptr<RectCollider> _detectCol;
+
+	shared_ptr<CircleCollider> _attackCol;
 	
 	State _curState = State::IDLE;
 	State _oldState = _curState;
@@ -81,6 +85,12 @@ private:
 
 	float _maxIdleDuration = 3.0f;
 	float _curIdleDuration = _maxIdleDuration;
+
+	float _maxHp = 200.0f;
+	float _curHp = _maxHp;
+
+	int _maxDamage = 10;
+	int _minDamage = 5;
 
 	float _curJumpPower = 50.0f;
 	float _moveSpeed = 80.0f;

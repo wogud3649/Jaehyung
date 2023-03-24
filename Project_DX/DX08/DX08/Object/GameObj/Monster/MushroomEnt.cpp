@@ -22,6 +22,8 @@ void MushroomEnt::Update()
 	_duckBodyCol->Update();
 	_headCol->Update();
 
+	_attackCol->Update();
+
 	for (auto action : _actions)
 		action->Update();
 	for (auto sprite : _sprites)
@@ -63,6 +65,7 @@ void MushroomEnt::Render()
 	_headCol->Render();
 	
 	_detectCol->Render();
+	_attackCol->Render();
 }
 
 void MushroomEnt::Ground()
@@ -196,8 +199,10 @@ bool MushroomEnt::Stand()
 
 void MushroomEnt::Fall()
 {
-	_curJumpPower -= GRAVITY * GRAVITY * DELTA_TIME;
 	_standBodyCol->GetTransform()->MoveY(_curJumpPower * DELTA_TIME);
+	_curJumpPower -= GRAVITY * GRAVITY * DELTA_TIME;
+	if (_curJumpPower < -950.0f)
+		_curJumpPower = -950.0f;
 }
 
 void MushroomEnt::Detect()
@@ -241,10 +246,29 @@ void MushroomEnt::Attack()
 
 void MushroomEnt::AttackMid()
 {
+	_attackCol->GetTransform()->SetX(0);
 	if (_direction == Direction::RIGHT)
+	{
 		_standBodyCol->GetTransform()->MoveX(150);
+		_attackCol->GetTransform()->MoveX(-20);
+		_attackCol->Activate();
+	}
 	else if (_direction == Direction::LEFT)
+	{
 		_standBodyCol->GetTransform()->MoveX(-150);
+		_attackCol->GetTransform()->MoveX(20);
+		_attackCol->Activate();
+	}
+	
+	if (_player.expired() == false)
+	{
+		HIT_RESULT result = _attackCol->IsCollision(_player.lock()->GetBodyCollider());
+		if (result.isHit)
+		{
+			int damage = rand() % (_maxDamage - _minDamage) + _minDamage;
+			_player.lock()->Damaged(damage, _direction);
+		}
+	}
 }
 
 void MushroomEnt::StandEnd()
@@ -263,6 +287,11 @@ void MushroomEnt::DuckEnd()
 void MushroomEnt::AttackEnd()
 {
 	SetIdle();
+}
+
+void MushroomEnt::AttackColEnd()
+{
+	_attackCol->DeActivate();
 }
 
 void MushroomEnt::CreateAction()
@@ -451,7 +480,10 @@ void MushroomEnt::SetSprites()
 void MushroomEnt::SetCallback()
 {
 	_actions[State::ATTACK]->SetMidCallBack(std::bind(&MushroomEnt::AttackMid, this), 15);
+	_actions[State::ATTACK]->SetMidCallBack(std::bind(&MushroomEnt::AttackColEnd, this), 16);
+
 	_actions[State::DUCKATTACK]->SetMidCallBack(std::bind(&MushroomEnt::AttackMid, this), 12);
+	_actions[State::DUCKATTACK]->SetMidCallBack(std::bind(&MushroomEnt::AttackColEnd, this), 13);
 
 	_actions[State::ATTACK]->SetCallBack(std::bind(&MushroomEnt::AttackEnd, this));
 	_actions[State::DUCK]->SetCallBack(std::bind(&MushroomEnt::DuckEnd, this));
@@ -475,4 +507,8 @@ void MushroomEnt::SetColliders()
 	_detectCol = make_shared<RectCollider>(Vector2(800,100));
 	_detectCol->GetTransform()->SetParent(_standBodyCol->GetTransform());
 	_detectCol->GetTransform()->MoveY(10);
+
+	_attackCol = make_shared<CircleCollider>(90);
+	_attackCol->GetTransform()->SetParent(_standBodyCol->GetTransform());
+	_attackCol->DeActivate();
 }

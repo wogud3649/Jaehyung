@@ -31,9 +31,13 @@ void Action::Update()
 			_curClipIndex++;
 			if (_curClipIndex >= _clips.size())
 				Stop();
-			else if (_curClipIndex == _eventIndex)
-				if (_midEvent != nullptr)
-					_midEvent();
+			for (auto pair : _midEvents)
+			{
+				if (pair.first != _curClipIndex)
+					continue;
+				if (pair.second != nullptr)
+					pair.second();
+			}
 			break;
 		}
 		case Action::LOOP:
