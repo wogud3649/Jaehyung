@@ -162,6 +162,7 @@ void Advanced_Player::Render()
 void Advanced_Player::PostRender()
 {
 	ImGui::SliderFloat("PLAYER HP", &_curHp, 0, _maxHp);
+	ImGui::SliderFloat("jumpPower", &_curJumpPower, 0, _maxJumpPower);
 }
 
 void Advanced_Player::EnAble()
@@ -276,6 +277,8 @@ void Advanced_Player::Fall()
 
 	_footCol->GetTransform()->MoveY(_curJumpPower * DELTA_TIME);
 	_curJumpPower -= GRAVITY * GRAVITY * DELTA_TIME;
+	if (_curJumpPower < -950.0f)
+		_curJumpPower = -950.0f;
 	
 	if (_curJumpPower <= 0 && _curState != State::FALLREPEAT && _curState != State::JUMPATTACK && _curState != State::SKILL)
 	{

@@ -28,6 +28,7 @@ public:
 	void Flip(Direction dir);
 
 	void SetPos(Vector2 pos) { _standBodyCol->GetTransform()->SetPos(pos); }
+	void SetEdge(Direction dir);
 	void SetPlayer(shared_ptr<Advanced_Player> player) { _player = player; }
 
 	const shared_ptr<CircleCollider>& GetStandBodyCol() { return _standBodyCol; }
@@ -88,4 +89,7 @@ private:
 	float _curDuckDuration = _maxDuckDuration;
 	bool _isDuck = false;
 	bool _isAction = false;
+	
+	bool _isRightEdge = false;
+	bool _isLeftEdge = false;
 };

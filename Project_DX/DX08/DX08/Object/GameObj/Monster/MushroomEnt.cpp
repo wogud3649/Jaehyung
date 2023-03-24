@@ -123,6 +123,12 @@ void MushroomEnt::Flip(Direction dir)
 	}
 }
 
+void MushroomEnt::SetEdge(Direction dir)
+{
+	if (dir == Direction::RIGHT) _isRightEdge = true;
+	else if (dir == Direction::LEFT) _isLeftEdge = true;
+}
+
 void MushroomEnt::SetAction(State state)
 {
 	_curState = state;
@@ -148,9 +154,9 @@ void MushroomEnt::Walk()
 {
 	if (_curState == State::WALK)
 	{
-		if (_direction == Direction::RIGHT)
+		if (_direction == Direction::RIGHT && _isRightEdge == false)
 			_standBodyCol->GetTransform()->MoveX(_moveSpeed * DELTA_TIME);
-		else
+		else if (_direction == Direction::LEFT && _isLeftEdge == false)
 			_standBodyCol->GetTransform()->MoveX(-_moveSpeed * DELTA_TIME);
 	}
 	else if (_curState == State::DUCKWALK)
