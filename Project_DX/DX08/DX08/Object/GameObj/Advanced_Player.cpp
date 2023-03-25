@@ -112,9 +112,6 @@ void Advanced_Player::Update()
 			_isKnockBacked = false;
 	}
 
-	if (_curState != State::ATTACKA && _curState != State::ATTACKB && _curState != State::JUMPATTACK)
-		_attackCol->DeActivate();
-
 	if (_isProjFired)
 	{
 		_curProjCD -= DELTA_TIME;
@@ -336,11 +333,6 @@ void Advanced_Player::Attack()
 	}
 }
 
-void Advanced_Player::AttackHit()
-{
-	_attackCol->DeActivate();
-}
-
 void Advanced_Player::Skill()
 {
 	if (KEY_DOWN('A'))
@@ -423,6 +415,11 @@ void Advanced_Player::AttackEnd()
 		SetAction(State::FALL);
 }
 
+void Advanced_Player::AttackColEnd()
+{
+	_attackCol->DeActivate();
+}
+
 void Advanced_Player::FallEnd()
 {
 	SetAction(State::FALLREPEAT);
@@ -452,14 +449,20 @@ void Advanced_Player::SetCallback()
 		_actions[i][State::JUMPATTACK]->SetCallBack(std::bind(&Advanced_Player::AttackEnd, this));
 	}
 	_actions[SkulType::SKUL][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 2);
+	_actions[SkulType::SKUL][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 3);
 	_actions[SkulType::SKUL][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
+	_actions[SkulType::SKUL][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
 	_actions[SkulType::SKUL][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
+	_actions[SkulType::SKUL][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
 
 	_actions[SkulType::SKUL][State::SKILL]->SetCallBack(std::bind(&Advanced_Player::SkillEnd, this));
 
 	_actions[SkulType::HEADLESS][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 2);
+	_actions[SkulType::HEADLESS][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 3);
 	_actions[SkulType::HEADLESS][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
+	_actions[SkulType::HEADLESS][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
 	_actions[SkulType::HEADLESS][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
+	_actions[SkulType::HEADLESS][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
 
 	_actions[SkulType::PIKE][State::SKILL]->SetCallBack(std::bind(&Advanced_Player::SkillEnd, this));
 

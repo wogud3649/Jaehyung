@@ -23,7 +23,6 @@ public:
 	void Bounce();
 
 	void Attack();
-	void AttackHit();
 	void Skill();
 	void SkillHit();
 	void Damaged(int damage, Direction dir);
@@ -46,6 +45,7 @@ private:
 	void DashEnd();
 	void AttackMid();
 	void AttackEnd();
+	void AttackColEnd();
 	void FallEnd();
 	void SkillEnd();
 	void SetCallback();
