@@ -54,4 +54,5 @@ void TestScene::PreRender()
 void TestScene::PostRender()
 {
 	_player->PostRender();
+	_brick->PostRender();
 }

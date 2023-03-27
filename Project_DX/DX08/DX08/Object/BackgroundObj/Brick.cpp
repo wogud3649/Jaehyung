@@ -28,6 +28,16 @@ void Brick::Update()
 	{
 		block->Update();
 
+		if (_player.expired() == false)
+		{
+			HIT_RESULT result = block->Block(_player.lock()->GetFootCollider());
+			if (result.isHit)
+			{
+				if (result.dir == Direction::UP)
+					_player.lock()->Ground();
+			}
+		}
+
 		for (auto mushroomEnt : _mushroomEnts)
 		{
 			HIT_RESULT result = block->Block(mushroomEnt->GetStandBodyCol());
@@ -45,16 +55,6 @@ void Brick::Update()
 				}
 				else if (result.dir == Direction::LEFT || result.dir == Direction::RIGHT)
 					mushroomEnt->Flip(result.dir);
-			}
-		}
-
-		if (_player.expired() == false)
-		{
-			HIT_RESULT result = block->Block(_player.lock()->GetFootCollider());
-			if (result.isHit)
-			{
-				if (result.dir == Direction::UP)
-					_player.lock()->Ground();
 			}
 		}
 	}
@@ -78,13 +78,51 @@ void Brick::Update()
 		for (auto mushroomEnt : _mushroomEnts)
 		{
 			HIT_RESULT result = floor->TopBlock(mushroomEnt->GetStandBodyCol());
-			if (result.dir == Direction::UP)
-				mushroomEnt->Ground();
+			if (result.isHit)
+			{
+				float entX = mushroomEnt->GetStandBodyCol()->GetTransform()->GetWorldPos().x;
+				float blockX = floor->GetTransform()->GetWorldPos().x;
+				if (result.dir == Direction::UP)
+				{
+					if (result.distance.x + 32 > floor->GetWorldHalfSize().x)
+						mushroomEnt->Flip(Direction::LEFT);
+					else if (result.distance.x - 32 < -floor->GetWorldHalfSize().x)
+						mushroomEnt->Flip(Direction::RIGHT);
+					mushroomEnt->Ground();
+				}
+				else if (result.dir == Direction::LEFT || result.dir == Direction::RIGHT)
+					mushroomEnt->Flip(result.dir);
+			}
 		}
 	}
 
-	for (auto monster : _mushroomEnts)
-		monster->Update();
+	for (auto mushroomEnt : _mushroomEnts)
+	{
+		mushroomEnt->Update();
+
+		if (_player.expired() == false && mushroomEnt->GetDuckBodyCol()->GetActive())
+		{
+			if (_player.lock()->GetAttackCol()->GetActive())
+			{
+				HIT_RESULT result = mushroomEnt->GetDuckBodyCol()->IsCollision(_player.lock()->GetAttackCol());
+				if (result.isHit)
+				{
+					mushroomEnt->Damaged(_player.lock()->GetAttackDamage());
+					_player.lock()->AttackHit();
+				}
+			}
+
+			if (_player.lock()->GetProjCol()->GetActive())
+			{
+				HIT_RESULT result = mushroomEnt->GetDuckBodyCol()->IsCollision(_player.lock()->GetProjCol());
+				if (result.isHit)
+				{
+					mushroomEnt->Damaged(_player.lock()->GetProjDamage());
+					_player.lock()->SkillHit();
+				}
+			}
+		}
+	}
 }
 
 void Brick::Render()
@@ -102,6 +140,12 @@ void Brick::Render()
 		block->Render();
 	for (const auto& floor : _floors)
 		floor->Render();
+}
+
+void Brick::PostRender()
+{
+	for (const auto& mushroomEnt : _mushroomEnts)
+		mushroomEnt->PostRender();
 }
 
 void Brick::SetBlockCollider(Vector2 start, Vector2 end)

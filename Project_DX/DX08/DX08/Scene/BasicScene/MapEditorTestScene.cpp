@@ -179,6 +179,7 @@ void MapEditorTestScene::PostRender()
 		ImGuiFileDialog* fileDialog = ImGuiFileDialog::Instance();
 
 		fileDialog->OpenDialog("ChooseFileDlgKey", "Select File", ".map", "./Maps/");
+		ImGui::SetNextItemOpen(true);
 		if (fileDialog->Display("ChooseFileDlgKey"))
 		{
 			_curFilePath = fileDialog->GetFilePathName();

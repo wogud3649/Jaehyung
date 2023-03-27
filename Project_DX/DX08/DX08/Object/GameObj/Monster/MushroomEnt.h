@@ -23,8 +23,11 @@ public:
 
 	void Update();
 	void Render();
+	void PostRender();
 
 	void Ground();
+	void Damaged(int damage);
+	void Dead();
 	void Flip(Direction dir);
 
 	void SetPos(Vector2 pos) { _standBodyCol->GetTransform()->SetPos(pos); }
@@ -86,8 +89,10 @@ private:
 	float _maxIdleDuration = 3.0f;
 	float _curIdleDuration = _maxIdleDuration;
 
-	float _maxHp = 200.0f;
+	float _maxHp = 500.0f;
 	float _curHp = _maxHp;
+
+	bool _isAlive = true;
 
 	int _maxDamage = 10;
 	int _minDamage = 5;

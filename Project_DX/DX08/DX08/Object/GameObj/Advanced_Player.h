@@ -23,6 +23,7 @@ public:
 	void Bounce();
 
 	void Attack();
+	void AttackHit();
 	void Skill();
 	void SkillHit();
 	void Damaged(int damage, Direction dir);

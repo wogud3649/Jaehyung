@@ -17,6 +17,9 @@ MushroomEnt::~MushroomEnt()
 
 void MushroomEnt::Update()
 {
+	if (_isAlive == false)
+		return;
+
 	_detectCol->Update();
 	_standBodyCol->Update();
 	_duckBodyCol->Update();
@@ -57,6 +60,9 @@ void MushroomEnt::Update()
 
 void MushroomEnt::Render()
 {
+	if (_isAlive == false)
+		return;
+
 	_sprites[_curState]->SetActionClip(_actions[_curState]->GetCurClip());
 	_sprites[_curState]->Render();
 
@@ -68,9 +74,33 @@ void MushroomEnt::Render()
 	_attackCol->Render();
 }
 
+void MushroomEnt::PostRender()
+{
+	if (_isAlive == false)
+		return;
+
+	ImGui::SliderFloat("MushroomEntHp", &_curHp, 0, _maxHp);
+}
+
 void MushroomEnt::Ground()
 {
 	_curJumpPower = 0.0f;
+}
+
+void MushroomEnt::Damaged(int damage)
+{
+	_curHp -= damage;
+
+	if (_curHp < 0.0f)
+	{
+		Dead();
+		_curHp = 0;
+	}
+}
+
+void MushroomEnt::Dead()
+{
+	_isAlive = false;
 }
 
 void MushroomEnt::Function()

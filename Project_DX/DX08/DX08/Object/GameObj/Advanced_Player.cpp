@@ -7,12 +7,14 @@ Advanced_Player::Advanced_Player()
 	_attackCol->GetTransform()->SetParent(_footCol->GetTransform());
 	_attackCol->GetTransform()->MoveX(5);
 	_attackCol->GetTransform()->MoveY(25);
+	_attackCol->DeActivate();
 
 	_proj = make_shared<Quad>(L"Resources/Texture/SKUL/Head.png", Vector2(1,1));
 	_proj->SetPS(ADD_PS(L"Shader/LRTexturePixelShader.hlsl"));
 	_proj->Update();
 	_projCol = make_shared<CircleCollider>(_proj->GetSize().y * 0.7f);
 	_projCol->GetTransform()->SetParent(_proj->GetTransform());
+	_projCol->DeActivate();
 
 	_reverseBuffer = make_shared<ReverseBuffer>();
 
@@ -211,6 +213,7 @@ void Advanced_Player::Move()
 		_footCol->GetTransform()->MoveX(-_speed * DELTA_TIME);
 		if (_curState == State::JUMP || _curState == State::JUMPATTACK || _curState == State::FALLREPEAT || _curState == State::FALL)
 			return;
+
 		_isGround = false;
 		SetAction(State::WALK);
 	}
@@ -331,6 +334,11 @@ void Advanced_Player::Attack()
 			SetAction(State::ATTACKA);
 		}
 	}
+}
+
+void Advanced_Player::AttackHit()
+{
+	_attackCol->DeActivate();
 }
 
 void Advanced_Player::Skill()
