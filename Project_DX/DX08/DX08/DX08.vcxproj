@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Object\GameObj\Monster\MushroomEnt.h" />
+    <ClInclude Include="Pannel.h" />
     <ClInclude Include="Scene\BasicScene\MonsterScene.h" />
     <ClInclude Include="Scene\BasicScene\EffectScene.h" />
     <ClInclude Include="Object\BasicObj\Effect.h" />
@@ -208,6 +209,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Object\GameObj\Monster\MushroomEnt.cpp" />
+    <ClCompile Include="Pannel.cpp" />
     <ClCompile Include="Scene\BasicScene\MonsterScene.cpp" />
     <ClCompile Include="Scene\BasicScene\EffectScene.cpp" />
     <ClCompile Include="Object\BasicObj\Effect.cpp" />

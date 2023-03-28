@@ -13,9 +13,7 @@ SceneManager::SceneManager()
 {
 	_sceneTable["TestScene"] = make_shared<TestScene>();
 	_sceneTable["MapEditorTestScene"] = make_shared<MapEditorTestScene>();
-	_sceneTable["BossScene"] = make_shared<BossScene>();
-	_sceneTable["EffectScene"] = make_shared<EffectScene>();
-	_sceneTable["MonsterScene"] = make_shared<MonsterScene>();
+	_sceneTable["UIScene"] = make_shared<UIScene>();
 
 	_curScene = _sceneTable["MapEditorTestScene"];
 	_curSceneName = "MapEditorTestScene";
@@ -56,16 +54,8 @@ void SceneManager::Update()
 			_curSceneName = "MapEditorTestScene";
 			break;
 		case 2:
-			SetScene("BossScene");
-			_curSceneName = "BossScene";
-			break;
-		case 3:
-			SetScene("EffectScene");
-			_curSceneName = "EffectScene";
-			break;
-		case 4:
-			SetScene("MonsterScene");
-			_curSceneName = "MonsterScene";
+			SetScene("UIScene");
+			_curSceneName = "UIScene";
 			break;
 		default:
 			break;

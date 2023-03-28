@@ -3,6 +3,7 @@
 
 UIScene::UIScene()
 {
+	_circle = make_shared<CircleCollider>(20);
 }
 
 UIScene::~UIScene()
@@ -11,8 +12,10 @@ UIScene::~UIScene()
 
 void UIScene::Update()
 {
+	_circle->Update();
 }
 
 void UIScene::Render()
 {
+	_circle->Render();
 }
