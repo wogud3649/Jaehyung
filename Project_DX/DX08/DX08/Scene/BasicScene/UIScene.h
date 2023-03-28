@@ -9,6 +9,5 @@ public:
 	virtual void Render() override;
 
 private:
-	shared_ptr<CircleCollider> _circle;
+	shared_ptr<Quad> _pannel;
 };
-

@@ -3,7 +3,8 @@
 
 UIScene::UIScene()
 {
-	_circle = make_shared<CircleCollider>(20);
+	_pannel = make_shared<Quad>(L"Resources/Texture/UI/InventoryPannel.png");
+	_pannel->GetTransform()->SetPos(CENTER);
 }
 
 UIScene::~UIScene()
@@ -12,10 +13,10 @@ UIScene::~UIScene()
 
 void UIScene::Update()
 {
-	_circle->Update();
+	_pannel->Update();
 }
 
 void UIScene::Render()
 {
-	_circle->Render();
+	_pannel->Render();
 }

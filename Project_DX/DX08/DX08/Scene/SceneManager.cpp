@@ -15,8 +15,8 @@ SceneManager::SceneManager()
 	_sceneTable["MapEditorTestScene"] = make_shared<MapEditorTestScene>();
 	_sceneTable["UIScene"] = make_shared<UIScene>();
 
-	_curScene = _sceneTable["MapEditorTestScene"];
-	_curSceneName = "MapEditorTestScene";
+	_curScene = _sceneTable["UIScene"];
+	_curSceneName = "UIScene";
 }
 
 SceneManager::~SceneManager()
