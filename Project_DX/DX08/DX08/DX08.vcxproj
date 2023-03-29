@@ -151,8 +151,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Framework\Utility\DataManager.h" />
+    <ClInclude Include="Object\UI\Inventory.h" />
     <ClInclude Include="Object\GameObj\Monster\MushroomEnt.h" />
-    <ClInclude Include="Pannel.h" />
     <ClInclude Include="Scene\BasicScene\MonsterScene.h" />
     <ClInclude Include="Scene\BasicScene\EffectScene.h" />
     <ClInclude Include="Object\BasicObj\Effect.h" />
@@ -197,6 +198,7 @@
     <ClInclude Include="Object\BasicObj\Sprite.h" />
     <ClInclude Include="Framework\Render\Shader.h" />
     <ClInclude Include="Framework\Render\ShaderManager.h" />
+    <ClInclude Include="Object\UI\Slot.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Framework\Render\VertexBuffer.h" />
     <ClInclude Include="Framework\Render\VertexShader.h" />
@@ -208,8 +210,9 @@
     <ClInclude Include="Scene\BasicScene\UIScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Framework\Utility\DataManager.cpp" />
+    <ClCompile Include="Object\UI\Inventory.cpp" />
     <ClCompile Include="Object\GameObj\Monster\MushroomEnt.cpp" />
-    <ClCompile Include="Pannel.cpp" />
     <ClCompile Include="Scene\BasicScene\MonsterScene.cpp" />
     <ClCompile Include="Scene\BasicScene\EffectScene.cpp" />
     <ClCompile Include="Object\BasicObj\Effect.cpp" />
@@ -267,6 +270,7 @@
     <ClCompile Include="Scene\BasicScene\TestScene.cpp" />
     <ClCompile Include="Object\GameObj\Boss\Yggdrasil.cpp" />
     <ClCompile Include="Scene\BasicScene\UIScene.cpp" />
+    <ClCompile Include="Object\UI\Slot.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX08.rc" />

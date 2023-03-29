@@ -16,7 +16,6 @@ SceneManager::SceneManager()
 	_sceneTable["UIScene"] = make_shared<UIScene>();
 
 	_curScene = _sceneTable["UIScene"];
-	_curSceneName = "UIScene";
 }
 
 SceneManager::~SceneManager()
@@ -37,25 +36,22 @@ void SceneManager::Update()
 
 	if (_curSceneIndex != _oldSceneIndex)
 	{
-		if (_curSceneIndex > 4)
+		if (_curSceneIndex > 2)
 			_curSceneIndex = 0;
 		else if (_curSceneIndex < 0)
-			_curSceneIndex = 4;
+			_curSceneIndex = 2;
 
 		switch (_curSceneIndex)
 		{
 		case 0:
 			dynamic_pointer_cast<TestScene>(_sceneTable["TestScene"])->SetScene(dynamic_pointer_cast<MapEditorTestScene>(_sceneTable["MapEditorTestScene"])->GetFilePath());
 			SetScene("TestScene");
-			_curSceneName = "TestScene";
 			break;
 		case 1:
 			SetScene("MapEditorTestScene");
-			_curSceneName = "MapEditorTestScene";
 			break;
 		case 2:
 			SetScene("UIScene");
-			_curSceneName = "UIScene";
 			break;
 		default:
 			break;
@@ -81,7 +77,6 @@ void SceneManager::PreRender()
 
 void SceneManager::PostRender()
 {
-	ImGui::Text(&_curSceneName[0]);
 	if (_curScene == nullptr) return;
 
 	_curScene->PostRender();

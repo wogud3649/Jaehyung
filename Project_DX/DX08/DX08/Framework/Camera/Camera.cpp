@@ -13,6 +13,8 @@ Camera::Camera()
 	XMMATRIX projMatrix = XMMatrixOrthographicOffCenterLH(0, WIN_WIDTH, 0, WIN_HEIGHT, 0.0f, 1.0f);
 	_projection->SetData(projMatrix);
 	_projection->Update();
+
+	_uiCameraBuffer->Update();
 }
 
 Camera::~Camera()

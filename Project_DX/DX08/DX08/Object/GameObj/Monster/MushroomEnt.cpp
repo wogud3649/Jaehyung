@@ -125,12 +125,6 @@ void MushroomEnt::Collision()
 		return;
 
 	Detect();
-
-	if (_headCol->IsCollision(_player.lock()->GetFootCollider()).isHit && _player.lock()->GetJumpPower() < 0.0f && _headCol->GetActive())
-	{
-		_player.lock()->Bounce();
-		Duck();
-	}
 }
 
 void MushroomEnt::Flip(Direction dir)

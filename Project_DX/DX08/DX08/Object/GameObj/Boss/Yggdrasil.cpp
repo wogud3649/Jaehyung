@@ -265,9 +265,12 @@ void Yggdrasil::Render()
 
 	_body->Render();
 
+	_headCol->Render();
+	_rightBranchCol->Render();
+	_leftBranchCol->Render();
 }
 
-void Yggdrasil::PostRender()
+void Yggdrasil::HandRender()
 {
 	if (_isAlive == false)
 	{
@@ -277,9 +280,6 @@ void Yggdrasil::PostRender()
 	_rightHand->Render();
 	_leftHand->Render();
 
-	_headCol->Render();
-	_rightBranchCol->Render();
-	_leftBranchCol->Render();
 	_rightHandCol->Render();
 	_leftHandCol->Render();
 	

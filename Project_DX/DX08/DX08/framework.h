@@ -80,6 +80,7 @@ using namespace DirectX;
 #include "Framework/Utility/tinyxml2.h"
 #include "Framework/Utility/BinaryWriter.h"
 #include "Framework/Utility/BinaryReader.h"
+#include "Framework/Utility/DataManager.h"
 
 // Camera
 #include "Framework/Camera/Camera.h"
@@ -104,17 +105,17 @@ using namespace DirectX;
 // GameObject
 #include "Object/GameObj/Player.h"
 #include "Object/GameObj/Advanced_Player.h"
-
-// Monster
 #include "Object/GameObj/Monster/MushroomEnt.h"
-
-// Boss
 #include "Object/GameObj/Boss/Yggdrasil.h"
 
 // BackGroundObject
 #include "Object/BackgroundObj/Floor.h"
 #include "Object/BackgroundObj/Background.h"
 #include "Object/BackgroundObj/Brick.h"
+
+// UI
+#include "Object/UI/Slot.h"
+#include "Object/UI/Inventory.h"
 
 // Scene
 #include "Scene/Scene.h"

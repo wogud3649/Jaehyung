@@ -28,22 +28,23 @@ void Program::Render()
 {
 	Device::GetInstance()->Clear();
 
-	CAMERA->SetCameraWorldBuffer();
 	CAMERA->SetProjectBuffer();
+	CAMERA->SetCameraWorldBuffer();
 	SCENE->PreRender();
 
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
+	ImGui::Text("FPS : %d", Timer::GetInstance()->GetFPS());
 
 	ALPHA->SetState();
 
 	SCENE->Render();
-
-	ImGui::Text("FPS : %d", Timer::GetInstance()->GetFPS());
-	CAMERA->PostRender();
-	SCENE->PostRender();
 	EFFECT->Render();
+
+	CAMERA->PostRender();
+	CAMERA->UICameraBuffer();
+	SCENE->PostRender();
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 

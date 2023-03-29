@@ -5,6 +5,7 @@ public:
 	Vector2();
 	Vector2(float x, float y);
 	Vector2(int x, int y);
+	Vector2(UINT x, UINT y);
 	~Vector2();
 
 	Vector2 operator-() const;

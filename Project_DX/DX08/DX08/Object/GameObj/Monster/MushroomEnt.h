@@ -28,6 +28,7 @@ public:
 	void Ground();
 	void Damaged(int damage);
 	void Dead();
+	void Duck();
 	void Flip(Direction dir);
 
 	void SetPos(Vector2 pos) { _standBodyCol->GetTransform()->SetPos(pos); }
@@ -51,7 +52,6 @@ private:
 
 	void SetIdle();
 	void Walk();
-	void Duck();
 	bool Stand();
 
 	void Fall();

@@ -16,6 +16,11 @@ Vector2::Vector2(int x, int y)
 {
 }
 
+Vector2::Vector2(UINT x, UINT y)
+: XMFLOAT2((float)x, (float)y)
+{
+}
+
 Vector2::~Vector2()
 {
 }

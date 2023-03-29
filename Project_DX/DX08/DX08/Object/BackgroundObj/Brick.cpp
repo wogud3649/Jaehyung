@@ -96,9 +96,19 @@ void Brick::Update()
 		}
 	}
 
+	bool headHit = false;
+	bool attackHit = false;
+	bool skillHit = false;
+
 	for (auto mushroomEnt : _mushroomEnts)
 	{
 		mushroomEnt->Update();
+		// TODO :
+		if (mushroomEnt->GetHeadCol()->IsCollision(_player.lock()->GetFootCollider()).isHit && _player.lock()->GetJumpPower() < 0.0f && mushroomEnt->GetHeadCol()->GetActive())
+		{
+			headHit = true;
+			mushroomEnt->Duck();
+		}
 
 		if (_player.expired() == false && mushroomEnt->GetDuckBodyCol()->GetActive())
 		{
@@ -107,8 +117,8 @@ void Brick::Update()
 				HIT_RESULT result = mushroomEnt->GetDuckBodyCol()->IsCollision(_player.lock()->GetAttackCol());
 				if (result.isHit)
 				{
+					attackHit = true;
 					mushroomEnt->Damaged(_player.lock()->GetAttackDamage());
-					_player.lock()->AttackHit();
 				}
 			}
 
@@ -117,11 +127,21 @@ void Brick::Update()
 				HIT_RESULT result = mushroomEnt->GetDuckBodyCol()->IsCollision(_player.lock()->GetProjCol());
 				if (result.isHit)
 				{
+					skillHit = true;
 					mushroomEnt->Damaged(_player.lock()->GetProjDamage());
-					_player.lock()->SkillHit();
 				}
 			}
 		}
+	}
+
+	if (_player.expired() == false)
+	{
+		if (headHit)
+			_player.lock()->Bounce();
+		if (attackHit)
+			_player.lock()->AttackHit();
+		if (skillHit)
+			_player.lock()->SkillHit();
 	}
 }
 

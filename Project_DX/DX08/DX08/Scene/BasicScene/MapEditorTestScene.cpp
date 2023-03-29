@@ -54,6 +54,7 @@ void MapEditorTestScene::PreRender()
 
 void MapEditorTestScene::PostRender()
 {
+	ImGui::Begin("MapEditorScene", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove);
 	ImGui::SetWindowFontScale(2.0f);
 	string type = "Type : " + _curType;
 	ImGui::Text(&type[0]);
@@ -202,6 +203,7 @@ void MapEditorTestScene::PostRender()
 		}
 		ImGui::TreePop();
 	}
+	ImGui::End();
 
 	ImGui::Begin("Log");
 

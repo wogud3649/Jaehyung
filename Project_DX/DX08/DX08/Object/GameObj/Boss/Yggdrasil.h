@@ -21,7 +21,7 @@ public:
 
 	void Update();
 	void Render();
-	void PostRender();
+	void HandRender();
 
 	void Damaged(int damage);
 	void Dead();

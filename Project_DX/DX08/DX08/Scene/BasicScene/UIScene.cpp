@@ -3,20 +3,31 @@
 
 UIScene::UIScene()
 {
-	_pannel = make_shared<Quad>(L"Resources/Texture/UI/InventoryPannel.png");
-	_pannel->GetTransform()->SetPos(CENTER);
+	_inventory = make_shared<Inventory>();
 }
 
 UIScene::~UIScene()
 {
 }
 
+void UIScene::Init()
+{
+}
+
+void UIScene::Fin()
+{
+}
+
 void UIScene::Update()
 {
-	_pannel->Update();
+	_inventory->Update();
 }
 
 void UIScene::Render()
 {
-	_pannel->Render();
+}
+
+void UIScene::PostRender()
+{
+	_inventory->PostRender();
 }

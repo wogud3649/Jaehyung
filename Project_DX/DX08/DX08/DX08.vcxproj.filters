@@ -177,7 +177,13 @@
     <ClInclude Include="Object\GameObj\Monster\MushroomEnt.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Pannel.h">
+    <ClInclude Include="Object\UI\Inventory.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\UI\Slot.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Utility\DataManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -329,7 +335,13 @@
     <ClCompile Include="Object\GameObj\Monster\MushroomEnt.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Pannel.cpp">
+    <ClCompile Include="Object\UI\Inventory.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\UI\Slot.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Utility\DataManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

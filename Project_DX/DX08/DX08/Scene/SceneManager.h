@@ -41,7 +41,5 @@ private:
 	shared_ptr<Scene> _curScene;
 	int _curSceneIndex = 2;
 	int _oldSceneIndex = _curSceneIndex;
-
-	string _curSceneName = "";
 };
 

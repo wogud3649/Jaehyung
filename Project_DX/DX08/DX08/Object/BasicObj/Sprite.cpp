@@ -149,8 +149,8 @@ void Sprite::SetDirection(Direction direction)
 
 void Sprite::SetCurFrame(Vector2 curFrame)
 {
-    _actionBuffer->_data.startPos.x = _actionBuffer->_data.size.x / curFrame.x;
-    _actionBuffer->_data.startPos.y = _actionBuffer->_data.size.y / curFrame.y;
+    _actionBuffer->_data.startPos.x = _actionBuffer->_data.imageSize.x * curFrame.x / (_actionBuffer->_data.imageSize.x / _actionBuffer->_data.size.x);
+    _actionBuffer->_data.startPos.y = _actionBuffer->_data.imageSize.y * curFrame.y / (_actionBuffer->_data.imageSize.y / _actionBuffer->_data.size.y);
 }
 
 void Sprite::SetActionClip(Action::Clip clip)
