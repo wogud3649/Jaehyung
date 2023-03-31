@@ -15,12 +15,13 @@ Inventory::Inventory()
 	_inventoryPannels->SetCurFrame(Vector2(2, 2));
 
 	_itemDatas.resize(43);
-	
-	// TODO : 아이템 아이콘으로 바꾸기
-	_itemInfoIcons = make_shared<Sprite>(L"Resources/Texture/Background/Tiles_4x40.png", Vector2(4, 40), Vector2(128, 1280));
-	_itemInfoIcons->GetTransform()->SetPos(Vector2(865, 625));
+
+	_itemInfoIcons = make_shared<Sprite>(L"Resources/Texture/Item/ItemInfoIcons_10x3.png", Vector2(10, 3), Vector2(3300, 1560));
+	_itemInfoIcons->GetTransform()->SetPos(Vector2(867, 626));
+	_itemInfoIcons->SetCurFrame(Vector2(0, 0));
 
 	CreateSlots();
+	TakeItem(8);
 }
 
 Inventory::~Inventory()
@@ -35,6 +36,15 @@ void Inventory::Update()
 	
 	if (KEY_DOWN('A'))
 		_activeExtraInventory = !_activeExtraInventory;
+
+	if (KEY_DOWN(VK_RBUTTON))
+	{
+		_itemInfoIcons->SetCurFrame(Vector2(2, 8));
+	}
+	if (KEY_UP(VK_RBUTTON))
+	{
+		_itemInfoIcons->SetCurFrame(Vector2(0, 0));
+	}
 
 	if (KEY_DOWN(VK_RBUTTON))
 	{
@@ -86,6 +96,8 @@ void Inventory::Update()
 			if (_slots[i]->IsCollision(MOUSE_POS))
 			{
 				_selected = i;
+				if (KEY_DOWN(VK_LBUTTON))
+					EquipItem(i);
 			}
 		}
 	}
@@ -97,13 +109,16 @@ void Inventory::Update()
 			if (_slots[i]->IsCollision(MOUSE_POS))
 			{
 				_selected = i;
+				if (KEY_DOWN(VK_LBUTTON))
+					TakeOffItem(i);
 			}
 		}
 	}
 
 	if (_selected != -1)
 	{
-		int itemCode = _itemDatas[_selected].itemCode;
+		ItemInfo itemCode = _itemDatas[_selected];
+		_itemInfoIcons->SetCurFrame(Vector2(itemCode.frameX, itemCode.frameY));
 	}
 }
 
@@ -138,14 +153,76 @@ void Inventory::PostRender()
 	}
 }
 
+void Inventory::EquipItem(int index)
+{
+	if (index == -1)
+		return;
+
+	ItemInfo info = _itemDatas[index]; // TODO :
+	if (info.itemCode == 0)
+		return;
+
+	switch (info.itemType)
+	{
+	case ItemType::HEAD:
+		for (int i = 0; i < 2; i++)
+		{
+			if (_itemDatas[i].itemCode == 0)
+			{
+				_itemDatas[i] = _itemDatas[index];
+				_instanceDatas[i].curFrame = { _itemDatas[i].frameX, _itemDatas[i].frameY };
+				_instanceBuffer->Update();
+				break;
+			}
+		}
+		break;
+	case ItemType::EQUIPMENT:
+		for (int i = 3; i < 12; i++)
+		{
+			if (_itemDatas[i].itemCode == 0)
+			{
+				_itemDatas[i] = _itemDatas[index];
+				_instanceDatas[i].curFrame = { _itemDatas[i].frameX, _itemDatas[i].frameY };
+				_instanceBuffer->Update();
+				break;
+			}
+		}
+		break;
+	default:
+		break;
+	}
+
+	_itemDatas[index].SetEmpty();
+	_instanceDatas[index].curFrame = Vector2(_itemDatas[index].frameX, _itemDatas[index].frameY);
+}
+
+void Inventory::TakeOffItem(int index)
+{
+	if (index == -1)
+		return;
+
+	ItemInfo info = _itemDatas[index];
+	if (info.itemCode == 0)
+		return;
+
+	for (int i = 16; i < _itemIconPoolCount; i++)
+	{
+		if (_itemDatas[i].itemCode == 0)
+		{
+			_itemDatas[i] = _itemDatas[index];
+		}
+	}
+}
+
 void Inventory::TakeItem(int itemCode)
 {
-	for (int i = 0; i < _itemIconPoolCount; i++)
+	for (int i = 16; i < _itemIconPoolCount; i++)
 	{
 		if (_itemDatas[i].itemCode == 0)
 		{
 			_itemDatas[i] = DATA_M->GetItemByItemCode(itemCode);
 			_instanceDatas[i].curFrame = { _itemDatas[i].frameX, _itemDatas[i].frameY };
+			_instanceBuffer->Update();
 			break;
 		}
 	}
@@ -229,8 +306,7 @@ void Inventory::CreateSlots()
 
 void Inventory::InstancingIcons()
 {
-	// TODO : 아이템 이미지로 변경하기
-	_itemIcons = make_shared<Quad>(L"Resources/Texture/Background/Tiles_4x40.png", _maxFrame);
+	_itemIcons = make_shared<Quad>(L"Resources/Texture/Item/ItemIcons_10x3.png", _maxFrame);
 	_itemIcons->SetVS(ADD_VS(L"Shader/InstancingVertexShader.hlsl"));
 	_itemIcons->SetPS(ADD_PS(L"Shader/InstancingPixelShader.hlsl"));
 
@@ -241,7 +317,7 @@ void Inventory::InstancingIcons()
 		shared_ptr<Transform> transform = make_shared<Transform>();
 
 		instanceData.maxFrame = _maxFrame;
-		instanceData.curFrame = { 0,0 };
+		instanceData.curFrame = {0, 0};
 		instanceData.matrix = XMMatrixTranspose(transform->GetMatrix());
 
 		_instanceDatas.emplace_back(instanceData);

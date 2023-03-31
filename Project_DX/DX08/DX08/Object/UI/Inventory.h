@@ -28,6 +28,8 @@ public:
 	void Update();
 	void PostRender();
 
+	void EquipItem(int index);
+	void TakeOffItem(int index);
 	void TakeItem(int itemCode);
 
 private:
@@ -45,7 +47,7 @@ private:
 	vector<ItemInfo> _itemDatas;
 	shared_ptr<Quad> _itemIcons;
 	shared_ptr<Sprite> _itemInfoIcons;
-	Vector2 _maxFrame = Vector2(4, 40);
+	Vector2 _maxFrame = Vector2(10, 3);
 	UINT _itemIconPoolCount = 43;
 	vector<InstanceData> _instanceDatas;
 	shared_ptr<VertexBuffer> _instanceBuffer;
