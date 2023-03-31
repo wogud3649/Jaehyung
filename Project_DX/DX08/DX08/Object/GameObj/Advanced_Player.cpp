@@ -394,6 +394,30 @@ void Advanced_Player::Revive()
 {
 }
 
+float Advanced_Player::GetAttackDamage()
+{
+	int ad = (rand() % (_maxAttackDamage - _minAttackDamage) + _minAttackDamage);
+	ad += _statAttributes.ad;
+
+	int temp = rand() % 100;
+	if (temp < _critPercent + _statAttributes.crp)
+		ad *= 2;
+
+	return ad;
+}
+
+float Advanced_Player::GetProjDamage()
+{
+	int ap = (rand() % (_maxProjDamage - _minProjDamage) + _minProjDamage);
+	ap += _statAttributes.ap;
+
+	int temp = rand() % 100;
+	if (temp < _critPercent + _statAttributes.crp)
+		ap *= 2;
+
+	return ap;
+}
+
 void Advanced_Player::SetIdle()
 {
 	if (_curState == State::JUMP || _curState == State::ATTACKA || _curState == State::ATTACKB || _curState == State::JUMPATTACK || _curState == State::DASH || _curState == State::FALLREPEAT || _curState == State::FALL || _curState == State::SKILL)

@@ -14,6 +14,7 @@ SceneManager::SceneManager()
 	_sceneTable["TestScene"] = make_shared<TestScene>();
 	_sceneTable["MapEditorTestScene"] = make_shared<MapEditorTestScene>();
 	_sceneTable["UIScene"] = make_shared<UIScene>();
+	_sceneTable["BossScene"] = make_shared<BossScene>();
 
 	_curScene = _sceneTable["UIScene"];
 }
@@ -36,10 +37,10 @@ void SceneManager::Update()
 
 	if (_curSceneIndex != _oldSceneIndex)
 	{
-		if (_curSceneIndex > 2)
+		if (_curSceneIndex > 3)
 			_curSceneIndex = 0;
 		else if (_curSceneIndex < 0)
-			_curSceneIndex = 2;
+			_curSceneIndex = 3;
 
 		switch (_curSceneIndex)
 		{
@@ -52,6 +53,9 @@ void SceneManager::Update()
 			break;
 		case 2:
 			SetScene("UIScene");
+			break;
+		case 3:
+			SetScene("BossScene");
 			break;
 		default:
 			break;

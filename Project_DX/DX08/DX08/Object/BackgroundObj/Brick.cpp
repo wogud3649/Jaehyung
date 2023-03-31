@@ -106,31 +106,34 @@ void Brick::Update()
 		
 		if (_player.expired() == false)
 		{
-			if (mushroomEnt->GetHeadCol()->IsCollision(_player.lock()->GetFootCollider()).isHit && _player.lock()->GetJumpPower() < 0.0f && mushroomEnt->GetHeadCol()->GetActive())
+			if (mushroomEnt->GetAlive())
 			{
-				headHit = true;
-				mushroomEnt->Duck();
-			}
-
-			if (mushroomEnt->GetDuckBodyCol()->GetActive())
-			{
-				if (_player.lock()->GetAttackCol()->GetActive())
+				if (mushroomEnt->GetHeadCol()->IsCollision(_player.lock()->GetFootCollider()).isHit && _player.lock()->GetJumpPower() < 0.0f && mushroomEnt->GetHeadCol()->GetActive())
 				{
-					HIT_RESULT result = mushroomEnt->GetDuckBodyCol()->IsCollision(_player.lock()->GetAttackCol());
-					if (result.isHit)
-					{
-						attackHit = true;
-						mushroomEnt->Damaged(_player.lock()->GetAttackDamage());
-					}
+					headHit = true;
+					mushroomEnt->Duck();
 				}
 
-				if (_player.lock()->GetProjCol()->GetActive())
+				if (mushroomEnt->GetDuckBodyCol()->GetActive())
 				{
-					HIT_RESULT result = mushroomEnt->GetDuckBodyCol()->IsCollision(_player.lock()->GetProjCol());
-					if (result.isHit)
+					if (_player.lock()->GetAttackCol()->GetActive())
 					{
-						skillHit = true;
-						mushroomEnt->Damaged(_player.lock()->GetProjDamage());
+						HIT_RESULT result = mushroomEnt->GetDuckBodyCol()->IsCollision(_player.lock()->GetAttackCol());
+						if (result.isHit)
+						{
+							attackHit = true;
+							mushroomEnt->Damaged(_player.lock()->GetAttackDamage());
+						}
+					}
+
+					if (_player.lock()->GetProjCol()->GetActive())
+					{
+						HIT_RESULT result = mushroomEnt->GetDuckBodyCol()->IsCollision(_player.lock()->GetProjCol());
+						if (result.isHit)
+						{
+							skillHit = true;
+							mushroomEnt->Damaged(_player.lock()->GetProjDamage());
+						}
 					}
 				}
 			}

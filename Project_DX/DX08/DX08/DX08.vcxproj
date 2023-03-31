@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Utility\DataManager.h" />
+    <ClInclude Include="Object\UI\GameManager.h" />
     <ClInclude Include="Object\UI\Inventory.h" />
     <ClInclude Include="Object\GameObj\Monster\MushroomEnt.h" />
     <ClInclude Include="Scene\BasicScene\MonsterScene.h" />
@@ -211,6 +212,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Framework\Utility\DataManager.cpp" />
+    <ClCompile Include="Object\UI\GameManager.cpp" />
     <ClCompile Include="Object\UI\Inventory.cpp" />
     <ClCompile Include="Object\GameObj\Monster\MushroomEnt.cpp" />
     <ClCompile Include="Scene\BasicScene\MonsterScene.cpp" />

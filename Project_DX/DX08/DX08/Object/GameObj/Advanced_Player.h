@@ -34,12 +34,14 @@ public:
 	const float& GetJumpPower() { return _curJumpPower; }
 
 	shared_ptr<CircleCollider> GetAttackCol() { return _attackCol; }
-	float GetAttackDamage() { return (rand() % (_maxAttackDamage - _minAttackDamage) + _minAttackDamage); }
+	float GetAttackDamage();
 
 	shared_ptr<CircleCollider> GetProjCol() { return _projCol; }
-	float GetProjDamage() { return (rand() % (_maxProjDamage - _minProjDamage) + _minProjDamage); }
+	float GetProjDamage();
 
 	const bool& GetIsBungee() { return _isBungee; }
+
+	void GetStat(StatAttributes attribute) { _statAttributes = attribute; }
 
 private:
 	void SetIdle();
@@ -55,6 +57,11 @@ private:
 	void SetSkul(SkulType skulType);
 
 	shared_ptr<CircleCollider> _attackCol;
+
+	float _maxHp = 100.0f;
+	float _curHp = _maxHp;
+
+	int _def = 0;
 
 	float _headDelay = 5.0f;
 	bool _isHeadOn = true;
@@ -90,8 +97,9 @@ private:
 	float _curComboDuration = _maxComboDuration;
 	bool _isAttackB = false;
 
-	int _maxAttackDamage = 15.0f;
-	int _minAttackDamage = 5.0f;
+	int _maxAttackDamage = 15;
+	int _minAttackDamage = 10;
+	int _critPercent = 10;
 
 	shared_ptr<Quad> _proj;
 	shared_ptr<CircleCollider> _projCol;
@@ -100,10 +108,15 @@ private:
 	float _curProjCD = _maxProjCD;
 	bool _isProjRight = true;
 	bool _isProjFired = false;
+	int _maxProjDamage = 50;
+	int _minProjDamage = 25;
 
-	int _maxProjDamage = 50.0f;
-	int _minProjDamage = 25.0;
+	float _maxChangeCD = 10.0f;
+	float _curChangeCD = _maxChangeCD;
 	
+	ATTRIBUTE _attribute = 0;
+
+	StatAttributes _statAttributes;
+
 	shared_ptr<ReverseBuffer> _reverseBuffer;
 };
-

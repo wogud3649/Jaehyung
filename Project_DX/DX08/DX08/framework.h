@@ -116,6 +116,7 @@ using namespace DirectX;
 // UI
 #include "Object/UI/Slot.h"
 #include "Object/UI/Inventory.h"
+#include "Object/UI/GameManager.h"
 
 // Scene
 #include "Scene/Scene.h"

@@ -21,7 +21,23 @@ Inventory::Inventory()
 	_itemInfoIcons->SetCurFrame(Vector2(0, 0));
 
 	CreateSlots();
-	TakeItem(8);
+	RootItem(-1);
+	RootItem(19);
+	RootItem(19);
+	RootItem(19);
+	RootItem(19);
+	RootItem(19);
+	RootItem(19);
+	RootItem(19);
+	RootItem(19);
+	RootItem(19);
+	RootItem(19);
+	RootItem(19);
+	RootItem(19);
+	RootItem(1);
+	RootItem(2);
+	RootItem(19);
+	RootItem(19);
 }
 
 Inventory::~Inventory()
@@ -30,6 +46,12 @@ Inventory::~Inventory()
 
 void Inventory::Update()
 {
+	if (KEY_DOWN('I'))
+		_inventoryOpen = !_inventoryOpen;
+
+	if (_inventoryOpen == false)
+		return;
+
 	_inventory->Update();
 	_inventoryPannels->Update();
 	_itemInfoIcons->Update();
@@ -124,6 +146,9 @@ void Inventory::Update()
 
 void Inventory::PostRender()
 {
+	if (_inventoryOpen == false)
+		return;
+
 	ImGui::SliderInt("Selected", &_selected, -1, 43);
 	_inventory->Render();
 	_inventoryPannels->Render();
@@ -158,9 +183,11 @@ void Inventory::EquipItem(int index)
 	if (index == -1)
 		return;
 
-	ItemInfo info = _itemDatas[index]; // TODO :
+	ItemInfo info = _itemDatas[index];
 	if (info.itemCode == 0)
 		return;
+
+	bool success = false;
 
 	switch (info.itemType)
 	{
@@ -169,9 +196,10 @@ void Inventory::EquipItem(int index)
 		{
 			if (_itemDatas[i].itemCode == 0)
 			{
-				_itemDatas[i] = _itemDatas[index];
-				_instanceDatas[i].curFrame = { _itemDatas[i].frameX, _itemDatas[i].frameY };
+				_itemDatas[i] = info;
+				_instanceDatas[i].curFrame = { info.frameX, info.frameY };
 				_instanceBuffer->Update();
+				success = true;
 				break;
 			}
 		}
@@ -181,9 +209,10 @@ void Inventory::EquipItem(int index)
 		{
 			if (_itemDatas[i].itemCode == 0)
 			{
-				_itemDatas[i] = _itemDatas[index];
-				_instanceDatas[i].curFrame = { _itemDatas[i].frameX, _itemDatas[i].frameY };
+				_itemDatas[i] = info;
+				_instanceDatas[i].curFrame = { info.frameX, info.frameY };
 				_instanceBuffer->Update();
+				success = true;
 				break;
 			}
 		}
@@ -191,9 +220,13 @@ void Inventory::EquipItem(int index)
 	default:
 		break;
 	}
-
-	_itemDatas[index].SetEmpty();
-	_instanceDatas[index].curFrame = Vector2(_itemDatas[index].frameX, _itemDatas[index].frameY);
+	
+	if (success)
+	{
+		_itemDatas[index].SetEmpty();
+		_instanceDatas[index].curFrame = Vector2(0, 0);
+		_instanceBuffer->Update();
+	}
 }
 
 void Inventory::TakeOffItem(int index)
@@ -205,27 +238,147 @@ void Inventory::TakeOffItem(int index)
 	if (info.itemCode == 0)
 		return;
 
+	bool success = false;
 	for (int i = 16; i < _itemIconPoolCount; i++)
 	{
 		if (_itemDatas[i].itemCode == 0)
 		{
-			_itemDatas[i] = _itemDatas[index];
-		}
-	}
-}
-
-void Inventory::TakeItem(int itemCode)
-{
-	for (int i = 16; i < _itemIconPoolCount; i++)
-	{
-		if (_itemDatas[i].itemCode == 0)
-		{
-			_itemDatas[i] = DATA_M->GetItemByItemCode(itemCode);
-			_instanceDatas[i].curFrame = { _itemDatas[i].frameX, _itemDatas[i].frameY };
-			_instanceBuffer->Update();
+			_itemDatas[i] = info;
+			_instanceDatas[i].curFrame = { info.frameX, info.frameY };
+			success = true;
 			break;
 		}
 	}
+
+	if (success)
+		RemoveItem(index);
+}
+
+void Inventory::RemoveItem(int index)
+{
+	_itemDatas[index].SetEmpty();
+	_instanceDatas[index].curFrame = Vector2(0, 0);
+	_instanceBuffer->Update();
+}
+
+void Inventory::SellItem(int index)
+{
+	if (index == -1)
+		return;
+
+	ItemInfo info = _itemDatas[index];
+	if (info.itemCode == 0)
+		return;
+
+	if (info.itemType == ItemType::HEAD)
+		_boneFrag += info.price;
+	else
+		_money += info.price;
+
+	RemoveItem(index);
+}
+
+void Inventory::BuyItem(int itemCode, int price)
+{
+	if (price < 0)
+		return;
+	if (itemCode == 0)
+		return;
+	if (_money < price)
+		return;
+
+	bool success = RootItem(itemCode);
+	if (success)
+		_money -= price;
+}
+
+bool Inventory::RootItem(int itemCode)
+{
+	ItemInfo info = DATA_M->GetItemByItemCode(itemCode);
+	if (info.itemCode == 0)
+		return false;
+
+	bool success = false;
+	switch (info.itemType)
+	{
+	case ItemType::HEAD:
+		for (int i = 0; i < 2; i++)
+		{
+			if (_itemDatas[i].itemCode == 0)
+			{
+				_itemDatas[i] = info;
+				_instanceDatas[i].curFrame = { info.frameX, info.frameY };
+				success = true;
+				break;
+			}
+		}
+		break;
+	case ItemType::EQUIPMENT:
+		for (int i = 3; i < 12; i++)
+		{
+			if (_itemDatas[i].itemCode == 0)
+			{
+				// TODO :
+				_itemDatas[i] = info;
+				_instanceDatas[i].curFrame = { info.frameX, info.frameY };
+				success = true;
+				break;
+			}
+		}
+		break;
+	default:
+		break;
+	}
+
+	if (success == false)
+	{
+		for (int i = 16; i < _itemIconPoolCount; i++)
+		{
+			if (_itemDatas[i].itemCode == 0)
+			{
+				_itemDatas[i] = info;
+				_instanceDatas[i].curFrame = { info.frameX, info.frameY };
+				success = true;
+				break;
+			}
+		}
+	}
+
+	if (success == false)
+		return false;
+	
+	_instanceBuffer->Update();
+	return true;
+}
+
+vector<ItemInfo> Inventory::GetEquipedSkulInfo()
+{
+	vector<ItemInfo> data;
+	
+	for (int i = 0; i < 2; i++)
+	{
+		if (_itemDatas[i].itemCode == 0)
+			data.emplace_back(ItemInfo());
+		else
+			data.emplace_back(_itemDatas[i]);
+	}
+
+	return data;
+}
+
+vector<ItemInfo> Inventory::GetEquipedItemInfo()
+{
+	vector<ItemInfo> data;
+
+	for (int i = 3; i < 12; i++)
+	{
+		if (_itemDatas[i].itemCode == 0)
+			data.emplace_back(ItemInfo());
+		else
+			data.emplace_back(_itemDatas[i]);
+	}
+
+	return data;
 }
 
 void Inventory::CreateSlots()

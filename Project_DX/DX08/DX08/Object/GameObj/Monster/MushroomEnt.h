@@ -26,7 +26,7 @@ public:
 	void PostRender();
 
 	void Ground();
-	void Damaged(int damage);
+	void Damaged(int damage, ATTRIBUTE attribute = 0);
 	void Dead();
 	void Duck();
 	void Flip(Direction dir);
@@ -39,6 +39,7 @@ public:
 	const shared_ptr<CircleCollider>& GetDuckBodyCol() { return _duckBodyCol; }
 	const shared_ptr<RectCollider>& GetHeadCol() { return _headCol; }
 
+	bool GetAlive() { return _isAlive; }
 private:
 	void Function();
 	void Collision();

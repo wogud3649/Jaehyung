@@ -28,13 +28,24 @@ public:
 	void Update();
 	void PostRender();
 
-	void EquipItem(int index);
-	void TakeOffItem(int index);
-	void TakeItem(int itemCode);
+	void SetPlayer(shared_ptr<Advanced_Player> player) { _player = player; }
+
+	void SellItem(int index);
+	void BuyItem(int itemCode, int price);
+	bool RootItem(int itemCode);
+
+	vector<ItemInfo> GetEquipedSkulInfo();
+	vector<ItemInfo> GetEquipedItemInfo();
+
+	bool IsOpen() { return _inventoryOpen; }
 
 private:
 	void CreateSlots();
 	void InstancingIcons();
+
+	void EquipItem(int index);
+	void TakeOffItem(int index);
+	void RemoveItem(int index);
 
 	shared_ptr<Quad> _inventory;
 	shared_ptr<Quad> _extraInventory;
@@ -54,5 +65,12 @@ private:
 
 	Pannel _curPannel = Pannel::EMPTY;
 	bool _activeExtraInventory = false;
+
+	UINT _boneFrag = 0;
+	UINT _money = 0;
+
+	bool _inventoryOpen = false;
+
+	weak_ptr<Player> _player;
 };
 

@@ -9,15 +9,15 @@
 #define PI 3.141592
 #define GRAVITY 40
 
-using CONDITION = unsigned char;
-#define SCAR CONDITION(1)
-#define POISON CONDITION(1<<1)
-#define BURN CONDITION(1<<2)
-#define FREEZE CONDITION(1<<3)
-#define STUN CONDITION(1<<4)
-#define REVENGE CONDITION(1<<5)
-#define MIRAGE CONDITION(1<<6)
-#define FATALITY CONDITION(1<<7)
+using ATTRIBUTE = unsigned char;
+#define SCAR ATTRIBUTE(1)
+#define POISON ATTRIBUTE(1<<1)
+#define BURN ATTRIBUTE(1<<2)
+#define FREEZE ATTRIBUTE(1<<3)
+#define STUN ATTRIBUTE(1<<4)
+#define REVENGE ATTRIBUTE(1<<5)
+#define MIRAGE ATTRIBUTE(1<<6)
+#define FATALITY ATTRIBUTE(1<<7)
 
 #define LERP(s, e, t) s + (e - s) * t
 
@@ -48,6 +48,8 @@ using CONDITION = unsigned char;
 #define EFFECT EffectManager::GetInstance()
 
 #define DATA_M DataManager::GetInstance()
+
+#define INVENTORY GameManager::GetInstance()->GetInventory()
 
 enum Direction
 {
@@ -90,18 +92,54 @@ struct ColliderData
 	Vector2 pos;
 };
 
+struct StatAttributes
+{
+	UINT ad = 0;						// AttackDamage
+	UINT ap = 0;						// AbilityPower
+	UINT hp = 0;						// HP
+	UINT def = 0;						// Defense
+	UINT ccd = 0;						// ChangeCooldown
+	UINT scd = 0;						// SkillCooldown
+	UINT crp = 0;						// CriticalPercent
+	ATTRIBUTE attribute = 0;			// Attribute BitFlag
+};
+
 struct ItemInfo
 {
 	ItemInfo() {}
 
 	ItemInfo(UINT itemCode, ItemType itemType, UINT rare, string name, UINT price, UINT ad, UINT ap, UINT hp,
-		UINT def, UINT ccd, UINT scd, UINT crp, CONDITION condition, UINT frameX = 0, UINT frameY = 0)
-		: itemCode(itemCode), itemType(itemType), rare(rare), name(name), price(price), ad(ad), ap(ap), hp(hp),
-		def(def), ccd(ccd), scd(scd), crp(crp), condition(condition), frameX(frameX), frameY(frameY)
-	{}
+		UINT def, UINT ccd, UINT scd, UINT crp, ATTRIBUTE attribute, UINT frameX = 0, UINT frameY = 0)
+		: itemCode(itemCode), itemType(itemType), rare(rare), name(name), price(price), frameX(frameX), frameY(frameY)
+	{
+		statAttributes.ad = ad;
+		statAttributes.ap = ap;
+		statAttributes.hp = hp;
+		statAttributes.def = def;
+		statAttributes.ccd = ccd;
+		statAttributes.scd = scd;
+		statAttributes.crp = crp;
+		statAttributes.attribute = attribute;
+	}
 
-	void SetEmpty() { itemCode = 0, itemType = ItemType::NONE, rare = 0, name = "", price = 0, ad = 0, ap = 0,
-		hp = 0, def = 0, ccd = 0, scd = 0, crp = 0, condition = 0, frameX = 0, frameY = 0; }
+	void SetEmpty() {
+		itemCode = 0;
+		itemType = ItemType::NONE;
+		rare = 0;
+		name = "";
+		price = 0;
+		statAttributes.ad = 0;
+		statAttributes.ap = 0;
+		statAttributes.hp = 0;
+		statAttributes.def = 0;
+		statAttributes.ccd = 0;
+		statAttributes.scd = 0;
+		statAttributes.crp = 0;
+		statAttributes.attribute = 0;
+		frameX = 0;
+		frameY = 0;
+	}
+
 	bool operator==(const ItemInfo& other)
 	{
 		if (itemCode != other.itemCode)
@@ -114,14 +152,7 @@ struct ItemInfo
 	ItemType itemType = ItemType::NONE;	// ItemType
 	UINT rare = 0;						// Rarity
 	UINT price = 0;						// Price
-	UINT ad = 0;						// AttackDamage
-	UINT ap = 0;						// AbilityPower
-	UINT hp = 0;						// HP
-	UINT def = 0;						// Defense
-	UINT ccd = 0;						// ChangeCooldown
-	UINT scd = 0;						// SkillCooldown
-	UINT crp = 0;						// CriticalPercent
-	CONDITION condition = 0;			// Conditions BitFlag
+	StatAttributes statAttributes;		// StatAttributes
 	UINT frameX = 0;					// FrameX
 	UINT frameY = 0;					// FrameY
 };

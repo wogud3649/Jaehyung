@@ -87,7 +87,7 @@ void MushroomEnt::Ground()
 	_curJumpPower = 0.0f;
 }
 
-void MushroomEnt::Damaged(int damage)
+void MushroomEnt::Damaged(int damage, ATTRIBUTE attribute)
 {
 	_curHp -= damage;
 

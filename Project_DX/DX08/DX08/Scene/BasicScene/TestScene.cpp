@@ -5,6 +5,8 @@ TestScene::TestScene()
 {
 	_player = make_shared<Advanced_Player>();
 
+	INVENTORY->SetPlayer(_player);
+
 	_brick = make_shared<Brick>();
 	_brick->SetPlayer(_player);
 }
@@ -37,6 +39,9 @@ void TestScene::Fin()
 
 void TestScene::Update()
 {
+	INVENTORY->Update();
+	if (INVENTORY->IsOpen())
+		return;
 	_player->Update();
 	_brick->Update();
 }
@@ -53,6 +58,7 @@ void TestScene::PreRender()
 
 void TestScene::PostRender()
 {
+	INVENTORY->PostRender();
 	_player->PostRender();
 	_brick->PostRender();
 }
