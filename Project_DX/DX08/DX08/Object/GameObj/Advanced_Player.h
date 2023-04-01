@@ -41,7 +41,7 @@ public:
 
 	const bool& GetIsBungee() { return _isBungee; }
 
-	void GetStat(StatAttributes attribute) { _statAttributes = attribute; }
+	void SetEquipStats(StatAttributes stats);
 
 private:
 	void SetIdle();
@@ -58,12 +58,16 @@ private:
 
 	shared_ptr<CircleCollider> _attackCol;
 
-	float _maxHp = 100.0f;
-	float _curHp = _maxHp;
+	float _baseMaxHp = 100.0f;
+	float _maxHp = _baseMaxHp;
+	float _curHp = _baseMaxHp;
 
-	int _def = 0;
+	UINT _baseDef = 0;
+	UINT _def = _baseDef;
 
-	float _headDelay = 5.0f;
+	float _baseScd = 5.0f;
+	float _maxHeadDelay = _baseScd;
+	float _headDelay = _baseScd;
 	bool _isHeadOn = true;
 
 	float _speed = 500.0f;
@@ -97,22 +101,25 @@ private:
 	float _curComboDuration = _maxComboDuration;
 	bool _isAttackB = false;
 
-	int _maxAttackDamage = 15;
-	int _minAttackDamage = 10;
-	int _critPercent = 10;
+	UINT _maxAttackDamage = 15;
+	UINT _minAttackDamage = 10;
+	
+	UINT _baseCrp = 10;
+	UINT _critPercent = _baseCrp;
 
 	shared_ptr<Quad> _proj;
 	shared_ptr<CircleCollider> _projCol;
 	float _projSpeed = 800.0f;
-	float _maxProjCD = 3.0f;
-	float _curProjCD = _maxProjCD;
+	float _maxProjCD = _baseScd;
+	float _curProjCD = _baseScd;
 	bool _isProjRight = true;
 	bool _isProjFired = false;
 	int _maxProjDamage = 50;
 	int _minProjDamage = 25;
 
-	float _maxChangeCD = 10.0f;
-	float _curChangeCD = _maxChangeCD;
+	float _baseCcd = 15.0f;
+	float _maxChangeCD = _baseCcd;
+	float _curChangeCD = _baseCcd;
 	
 	ATTRIBUTE _attribute = 0;
 

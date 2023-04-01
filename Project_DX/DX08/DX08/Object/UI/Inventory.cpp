@@ -22,18 +22,16 @@ Inventory::Inventory()
 
 	CreateSlots();
 	RootItem(-1);
-	RootItem(19);
-	RootItem(19);
-	RootItem(19);
-	RootItem(19);
-	RootItem(19);
-	RootItem(19);
-	RootItem(19);
-	RootItem(19);
-	RootItem(19);
-	RootItem(19);
-	RootItem(19);
-	RootItem(19);
+	RootItem(23);
+	RootItem(23);
+	RootItem(23);
+	RootItem(23);
+	RootItem(23);
+	RootItem(23);
+	RootItem(23);
+	RootItem(23);
+	RootItem(23);
+	RootItem(22);
 	RootItem(1);
 	RootItem(2);
 	RootItem(19);
@@ -178,6 +176,13 @@ void Inventory::PostRender()
 	}
 }
 
+void Inventory::SetPlayer(shared_ptr<Advanced_Player> player)
+{
+	_player = player;
+	if (_player.expired() == false)
+		_player.lock()->SetEquipStats(this->GetEquipStats());
+}
+
 void Inventory::EquipItem(int index)
 {
 	if (index == -1)
@@ -223,6 +228,9 @@ void Inventory::EquipItem(int index)
 	
 	if (success)
 	{
+		if (_player.expired() == false)
+			_player.lock()->SetEquipStats(this->GetEquipStats());
+
 		_itemDatas[index].SetEmpty();
 		_instanceDatas[index].curFrame = Vector2(0, 0);
 		_instanceBuffer->Update();
@@ -259,6 +267,9 @@ void Inventory::RemoveItem(int index)
 	_itemDatas[index].SetEmpty();
 	_instanceDatas[index].curFrame = Vector2(0, 0);
 	_instanceBuffer->Update();
+
+	if (_player.expired() == false)
+		_player.lock()->SetEquipStats(this->GetEquipStats());
 }
 
 void Inventory::SellItem(int index)
@@ -318,7 +329,6 @@ bool Inventory::RootItem(int itemCode)
 		{
 			if (_itemDatas[i].itemCode == 0)
 			{
-				// TODO :
 				_itemDatas[i] = info;
 				_instanceDatas[i].curFrame = { info.frameX, info.frameY };
 				success = true;
@@ -346,6 +356,9 @@ bool Inventory::RootItem(int itemCode)
 
 	if (success == false)
 		return false;
+
+	if (_player.expired() == false)
+		_player.lock()->SetEquipStats(this->GetEquipStats());
 	
 	_instanceBuffer->Update();
 	return true;
@@ -379,6 +392,18 @@ vector<ItemInfo> Inventory::GetEquipedItemInfo()
 	}
 
 	return data;
+}
+
+StatAttributes Inventory::GetEquipStats()
+{
+	StatAttributes stats;
+
+	for (int i = 0; i < 12; i++)
+	{
+		stats += _itemDatas[i].statAttributes;
+	}
+
+	return stats;
 }
 
 void Inventory::CreateSlots()

@@ -32,6 +32,7 @@ void DataManager::LoadItemInfo()
 		tinyxml2::XMLElement* data = cell->FirstChildElement();
 
 		ItemInfo info;
+		StatAttributes stats;
 
 		info.name = data->GetText();
 		cell = cell->NextSiblingElement();
@@ -51,14 +52,15 @@ void DataManager::LoadItemInfo()
 		info.itemType = static_cast<ItemType>(temp[1]);
 		info.rare = temp[2];
 		info.price = temp[3];
-		info.ad = temp[4];
-		info.ap = temp[5];
-		info.hp = temp[6];
-		info.def = temp[7];
-		info.ccd = temp[8];
-		info.scd = temp[9];
-		info.crp = temp[10];
-		info.condition = temp[11];
+		stats.ad = temp[4];
+		stats.ap = temp[5];
+		stats.hp = temp[6];
+		stats.def = temp[7];
+		stats.ccd = temp[8];
+		stats.scd = temp[9];
+		stats.crp = temp[10];
+		stats.attribute = temp[11];
+		info.statAttributes = stats;
 		info.frameX = temp[12];
 		info.frameY = temp[13];
 

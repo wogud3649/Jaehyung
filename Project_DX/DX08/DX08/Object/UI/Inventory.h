@@ -28,7 +28,7 @@ public:
 	void Update();
 	void PostRender();
 
-	void SetPlayer(shared_ptr<Advanced_Player> player) { _player = player; }
+	void SetPlayer(shared_ptr<Advanced_Player> player);
 
 	void SellItem(int index);
 	void BuyItem(int itemCode, int price);
@@ -36,6 +36,7 @@ public:
 
 	vector<ItemInfo> GetEquipedSkulInfo();
 	vector<ItemInfo> GetEquipedItemInfo();
+	StatAttributes GetEquipStats();
 
 	bool IsOpen() { return _inventoryOpen; }
 
@@ -71,6 +72,6 @@ private:
 
 	bool _inventoryOpen = false;
 
-	weak_ptr<Player> _player;
+	weak_ptr<Advanced_Player> _player;
 };
 

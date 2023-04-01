@@ -51,7 +51,7 @@ void Advanced_Player::Update()
 		}
 		if (_headDelay <= 0.0f)
 		{
-			_headDelay = 5.0f;
+			_headDelay = _maxHeadDelay;
 			_isHeadOn = true;
 			SetSkul(SkulType::SKUL);
 		}
@@ -362,7 +362,7 @@ void Advanced_Player::Skill()
 
 void Advanced_Player::SkillHit()
 {
-	_headDelay = 5.0f;
+	_headDelay = _maxHeadDelay;
 	_isHeadOn = true;
 	SetSkul(SkulType::SKUL);
 	_projCol->DeActivate();
@@ -414,8 +414,20 @@ float Advanced_Player::GetProjDamage()
 	int temp = rand() % 100;
 	if (temp < _critPercent + _statAttributes.crp)
 		ap *= 2;
-
+	
 	return ap;
+}
+
+void Advanced_Player::SetEquipStats(StatAttributes stats)
+{
+	_statAttributes = stats;
+
+	_maxHp = _baseMaxHp + _statAttributes.hp;
+	_def = _baseDef + _statAttributes.def;
+	_critPercent = _baseCrp + _statAttributes.crp;
+	_maxHeadDelay = _baseScd * ((float)(361 - _statAttributes.scd) / 100);
+	_maxProjCD = _baseScd * (
+	_maxChangeCD = _baseCcd * ((float)(100 - _statAttributes.ccd) / 100);
 }
 
 void Advanced_Player::SetIdle()

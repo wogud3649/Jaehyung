@@ -94,6 +94,20 @@ struct ColliderData
 
 struct StatAttributes
 {
+	StatAttributes& operator+=(const StatAttributes& other)
+	{
+		this->ad = this->ad + other.ad;
+		this->ap = this->ap + other.ap;
+		this->hp = this->hp + other.hp;
+		this->def = this->def + other.def;
+		this->ccd = this->ccd + other.ccd;
+		this->scd = this->scd + other.scd;
+		this->crp = this->crp + other.crp;
+		this->attribute = this->attribute | other.attribute;
+		
+		return (*this);
+	}
+
 	UINT ad = 0;						// AttackDamage
 	UINT ap = 0;						// AbilityPower
 	UINT hp = 0;						// HP
