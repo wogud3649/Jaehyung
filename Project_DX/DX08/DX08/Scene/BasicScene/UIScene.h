@@ -12,5 +12,4 @@ public:
 	virtual void PostRender() override;
 
 private:
-	shared_ptr<Inventory> _inventory;
 };

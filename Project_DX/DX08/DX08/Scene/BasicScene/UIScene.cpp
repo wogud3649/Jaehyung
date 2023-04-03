@@ -3,7 +3,7 @@
 
 UIScene::UIScene()
 {
-	_inventory = make_shared<Inventory>();
+
 }
 
 UIScene::~UIScene()
@@ -20,7 +20,8 @@ void UIScene::Fin()
 
 void UIScene::Update()
 {
-	_inventory->Update();
+	INVENTORY->Update();
+	UI->Update();
 }
 
 void UIScene::Render()
@@ -29,5 +30,6 @@ void UIScene::Render()
 
 void UIScene::PostRender()
 {
-	_inventory->PostRender();
+	INVENTORY->PostRender();
+	UI->PostRender();
 }

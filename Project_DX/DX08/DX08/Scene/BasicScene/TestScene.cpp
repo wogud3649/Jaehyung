@@ -40,6 +40,7 @@ void TestScene::Fin()
 void TestScene::Update()
 {
 	INVENTORY->Update();
+	UI->Update();
 	if (INVENTORY->IsOpen())
 		return;
 	_player->Update();
@@ -59,6 +60,7 @@ void TestScene::PreRender()
 void TestScene::PostRender()
 {
 	INVENTORY->PostRender();
+	UI->PostRender();
 	_player->PostRender();
 	_brick->PostRender();
 }

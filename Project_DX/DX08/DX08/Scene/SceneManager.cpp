@@ -16,7 +16,7 @@ SceneManager::SceneManager()
 	_sceneTable["UIScene"] = make_shared<UIScene>();
 	_sceneTable["BossScene"] = make_shared<BossScene>();
 
-	_curScene = _sceneTable["UIScene"];
+	_curScene = _sceneTable["TestScene"];
 }
 
 SceneManager::~SceneManager()

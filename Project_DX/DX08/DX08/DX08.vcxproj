@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Object\UI\CharacterUI.h" />
     <ClInclude Include="Framework\Utility\DataManager.h" />
     <ClInclude Include="Object\UI\GameManager.h" />
     <ClInclude Include="Object\UI\Inventory.h" />
@@ -211,6 +212,7 @@
     <ClInclude Include="Scene\BasicScene\UIScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Object\UI\CharacterUI.cpp" />
     <ClCompile Include="Framework\Utility\DataManager.cpp" />
     <ClCompile Include="Object\UI\GameManager.cpp" />
     <ClCompile Include="Object\UI\Inventory.cpp" />

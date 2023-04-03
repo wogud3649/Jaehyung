@@ -74,7 +74,7 @@ private:
 	UINT _boneFrag = 0;
 	UINT _money = 0;
 
-	bool _inventoryOpen = true;
+	bool _inventoryOpen = false;
 
 	weak_ptr<Advanced_Player> _player;
 };

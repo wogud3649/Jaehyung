@@ -49,6 +49,7 @@ using ATTRIBUTE = unsigned char;
 
 #define DATA_M DataManager::GetInstance()
 
+#define UI GameManager::GetInstance()->GetCharacterUI()
 #define INVENTORY GameManager::GetInstance()->GetInventory()
 
 enum Direction
