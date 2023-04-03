@@ -62,7 +62,7 @@ void Inventory::Update()
 	if (KEY_DOWN('A'))
 		_activeExtraInventory = !_activeExtraInventory;
 
-	if (KEY_DOWN('S'))
+	if (KEY_DOWN(VK_LBUTTON))
 	{
 		_detailedInfo = !_detailedInfo;
 		SetInfoPannels();
@@ -76,13 +76,6 @@ void Inventory::Update()
 		_curSelected -= 1;
 	if (KEY_DOWN(VK_RIGHT))
 		_curSelected += 1;
-
-	if (KEY_DOWN(VK_RBUTTON))
-		_itemInfoIcons->SetCurFrame(Vector2(2, 8));
-
-	if (KEY_UP(VK_RBUTTON))
-		_itemInfoIcons->SetCurFrame(Vector2(0, 0));
-
 
 	if (_activeExtraInventory)
 	{
