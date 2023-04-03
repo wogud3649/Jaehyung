@@ -22,19 +22,24 @@ Inventory::Inventory()
 
 	CreateSlots();
 	RootItem(-1);
-	RootItem(23);
-	RootItem(23);
-	RootItem(23);
-	RootItem(23);
-	RootItem(23);
-	RootItem(23);
-	RootItem(23);
-	RootItem(23);
-	RootItem(23);
-	RootItem(22);
 	RootItem(1);
 	RootItem(2);
-	RootItem(19);
+	RootItem(3);
+	RootItem(4);
+	RootItem(5);
+	RootItem(6);
+	RootItem(7);
+	RootItem(8);
+	RootItem(9);
+	RootItem(10);
+	RootItem(11);
+	RootItem(12);
+	RootItem(13);
+	RootItem(14);
+	RootItem(15);
+	RootItem(16);
+	RootItem(17);
+	RootItem(18);
 	RootItem(19);
 }
 
@@ -57,54 +62,27 @@ void Inventory::Update()
 	if (KEY_DOWN('A'))
 		_activeExtraInventory = !_activeExtraInventory;
 
-	if (KEY_DOWN(VK_RBUTTON))
+	if (KEY_DOWN('S'))
 	{
+		_detailedInfo = !_detailedInfo;
+		SetInfoPannels();
+	}
+
+	if (KEY_DOWN(VK_UP))
+		_curSelected -= 3;
+	if (KEY_DOWN(VK_DOWN))
+		_curSelected += 3;
+	if (KEY_DOWN(VK_LEFT))
+		_curSelected -= 1;
+	if (KEY_DOWN(VK_RIGHT))
+		_curSelected += 1;
+
+	if (KEY_DOWN(VK_RBUTTON))
 		_itemInfoIcons->SetCurFrame(Vector2(2, 8));
-	}
+
 	if (KEY_UP(VK_RBUTTON))
-	{
 		_itemInfoIcons->SetCurFrame(Vector2(0, 0));
-	}
 
-	if (KEY_DOWN(VK_RBUTTON))
-	{
-		_curPannel = static_cast<Pannel>(_curPannel + 1);
-		if (_curPannel > Pannel::STATUS)
-			_curPannel = Pannel::EMPTY;
-
-		switch (_curPannel)
-		{
-		case Inventory::EMPTY:
-			_inventoryPannels->SetCurFrame(Vector2(2, 2));
-			break;
-		case Inventory::SINGLE_SKUL_SLOT_SHORT:
-			_inventoryPannels->SetCurFrame(Vector2(3, 3));
-			break;
-		case Inventory::SINGLE_SKUL_SLOT_LONG:
-			_inventoryPannels->SetCurFrame(Vector2(1, 3));
-			break;
-		case Inventory::DOUBLE_SKUL_SLOT_SHORT:
-			_inventoryPannels->SetCurFrame(Vector2(2, 3));
-			break;
-		case Inventory::DOUBLE_SKUL_SLOT_LONG:
-			_inventoryPannels->SetCurFrame(Vector2(3, 1));
-			break;
-		case Inventory::DOUBLE_ITEM_SLOT_SHORT:
-			_inventoryPannels->SetCurFrame(Vector2(1, 1));
-			break;
-		case Inventory::DOUBLE_ITEM_SLOT_LONG:
-			_inventoryPannels->SetCurFrame(Vector2(2, 1));
-			break;
-		case Inventory::ORB_SLOT:
-			_inventoryPannels->SetCurFrame(Vector2(3, 2));
-			break;
-		case Inventory::STATUS:
-			_inventoryPannels->SetCurFrame(Vector2(1, 2));
-			break;
-		default:
-			break;
-		}
-	}
 
 	if (_activeExtraInventory)
 	{
@@ -115,7 +93,7 @@ void Inventory::Update()
 			_slots[i]->Update();
 			if (_slots[i]->IsCollision(MOUSE_POS))
 			{
-				_selected = i;
+				_curSelected = i;
 				if (KEY_DOWN(VK_LBUTTON))
 					EquipItem(i);
 			}
@@ -128,18 +106,15 @@ void Inventory::Update()
 			_slots[i]->Update();
 			if (_slots[i]->IsCollision(MOUSE_POS))
 			{
-				_selected = i;
+				_curSelected = i;
 				if (KEY_DOWN(VK_LBUTTON))
 					TakeOffItem(i);
 			}
 		}
 	}
 
-	if (_selected != -1)
-	{
-		ItemInfo itemCode = _itemDatas[_selected];
-		_itemInfoIcons->SetCurFrame(Vector2(itemCode.frameX, itemCode.frameY));
-	}
+	if (_curSelected != _oldSelected)
+		SetInfoPannels();
 }
 
 void Inventory::PostRender()
@@ -147,7 +122,7 @@ void Inventory::PostRender()
 	if (_inventoryOpen == false)
 		return;
 
-	ImGui::SliderInt("Selected", &_selected, -1, 43);
+	ImGui::SliderInt("Selected", &_curSelected, -1, 43);
 	_inventory->Render();
 	_inventoryPannels->Render();
 	_itemInfoIcons->Render();
@@ -160,9 +135,7 @@ void Inventory::PostRender()
 		DC->DrawIndexedInstanced(6, 27, 0, 0, 16);
 
 		for (int i = 16; i < _maxSlot; i++)
-		{
 			_slots[i]->Render();
-		}
 	}
 	else
 	{
@@ -170,9 +143,7 @@ void Inventory::PostRender()
 		_itemIcons->SetRender();
 		DC->DrawIndexedInstanced(6, 16, 0, 0, 0);
 		for (int i = 0; i < 16; i++)
-		{
 			_slots[i]->Render();
-		}
 	}
 }
 
@@ -181,6 +152,82 @@ void Inventory::SetPlayer(shared_ptr<Advanced_Player> player)
 	_player = player;
 	if (_player.expired() == false)
 		_player.lock()->SetEquipStats(this->GetEquipStats());
+}
+
+void Inventory::SetInfoPannels()
+{
+	if (_curSelected > 42)
+		_curSelected = 0;
+	else if (_curSelected < 0)
+		_curSelected = 42;
+
+	ItemInfo info = _itemDatas[_curSelected];
+	_itemInfoIcons->SetCurFrame(Vector2(info.frameX, info.frameY));
+	_oldSelected = _curSelected;
+	
+	if (_statusOpen)
+		_curPannel = Inventory::STATUS;
+	else if (info.itemType == ItemType::HEAD)
+	{
+		if (info.rare < 2)
+		{
+			if (_detailedInfo)
+				_curPannel = Inventory::SINGLE_SKUL_SLOT_LONG;
+			else
+				_curPannel = Inventory::SINGLE_SKUL_SLOT_SHORT;
+		}
+		else
+		{
+			if (_detailedInfo)
+				_curPannel = Inventory::DOUBLE_SKUL_SLOT_LONG;
+			else
+				_curPannel = Inventory::DOUBLE_SKUL_SLOT_SHORT;
+		}
+	}
+	else if (info.itemType == ItemType::EQUIPMENT)
+	{
+		if (_detailedInfo)
+			_curPannel = Inventory::DOUBLE_ITEM_SLOT_LONG;
+		else
+			_curPannel = Inventory::DOUBLE_ITEM_SLOT_SHORT;
+	}
+	else if (info.itemType == ItemType::ORB)
+		_curPannel = Inventory::ORB_SLOT;
+	else
+		_curPannel = Inventory::EMPTY;
+
+	switch (_curPannel)
+	{
+	case Inventory::EMPTY:
+		_inventoryPannels->SetCurFrame(Vector2(2, 2));
+		break;
+	case Inventory::SINGLE_SKUL_SLOT_SHORT:
+		_inventoryPannels->SetCurFrame(Vector2(3, 3));
+		break;
+	case Inventory::SINGLE_SKUL_SLOT_LONG:
+		_inventoryPannels->SetCurFrame(Vector2(1, 3));
+		break;
+	case Inventory::DOUBLE_SKUL_SLOT_SHORT:
+		_inventoryPannels->SetCurFrame(Vector2(2, 3));
+		break;
+	case Inventory::DOUBLE_SKUL_SLOT_LONG:
+		_inventoryPannels->SetCurFrame(Vector2(3, 1));
+		break;
+	case Inventory::DOUBLE_ITEM_SLOT_SHORT:
+		_inventoryPannels->SetCurFrame(Vector2(1, 1));
+		break;
+	case Inventory::DOUBLE_ITEM_SLOT_LONG:
+		_inventoryPannels->SetCurFrame(Vector2(2, 1));
+		break;
+	case Inventory::ORB_SLOT:
+		_inventoryPannels->SetCurFrame(Vector2(3, 2));
+		break;
+	case Inventory::STATUS:
+		_inventoryPannels->SetCurFrame(Vector2(1, 2));
+		break;
+	default:
+		break;
+	}
 }
 
 void Inventory::EquipItem(int index)

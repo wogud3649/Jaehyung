@@ -44,6 +44,7 @@ private:
 	void CreateSlots();
 	void InstancingIcons();
 
+	void SetInfoPannels();
 	void EquipItem(int index);
 	void TakeOffItem(int index);
 	void RemoveItem(int index);
@@ -54,7 +55,10 @@ private:
 
 	vector<shared_ptr<Slot>> _slots;
 	UINT _maxSlot = 43;
-	int _selected = -1;
+	int _curSelected = -1;
+	int _oldSelected = _curSelected;
+	bool _detailedInfo = false;
+	bool _statusOpen = false;
 
 	vector<ItemInfo> _itemDatas;
 	shared_ptr<Quad> _itemIcons;
@@ -70,7 +74,7 @@ private:
 	UINT _boneFrag = 0;
 	UINT _money = 0;
 
-	bool _inventoryOpen = false;
+	bool _inventoryOpen = true;
 
 	weak_ptr<Advanced_Player> _player;
 };
