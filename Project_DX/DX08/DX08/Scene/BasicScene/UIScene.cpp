@@ -12,6 +12,7 @@ UIScene::~UIScene()
 
 void UIScene::Init()
 {
+	UI->Init();
 }
 
 void UIScene::Fin()

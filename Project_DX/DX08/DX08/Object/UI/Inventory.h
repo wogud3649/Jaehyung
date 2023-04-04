@@ -78,4 +78,3 @@ private:
 
 	weak_ptr<Advanced_Player> _player;
 };
-

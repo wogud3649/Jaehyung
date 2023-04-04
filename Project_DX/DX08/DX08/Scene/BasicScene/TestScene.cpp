@@ -30,6 +30,8 @@ void TestScene::Init()
 
 	CAMERA->SetTarget(_player->GetBodyCollider()->GetTransform());
 	CAMERA->SetOffset(CENTER);
+
+	UI->Init();
 }
 
 void TestScene::Fin()

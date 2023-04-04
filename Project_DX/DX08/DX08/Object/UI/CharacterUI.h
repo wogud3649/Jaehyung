@@ -5,6 +5,7 @@ public:
 	CharacterUI();
 	~CharacterUI();
 
+	void Init();
 	void Update();
 	void PostRender();
 

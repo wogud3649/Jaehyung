@@ -16,11 +16,18 @@ CharacterUI::CharacterUI()
 	_skullIcon->GetTransform()->SetParent(_characterUI->GetTransform());
 	_skullIcon->GetTransform()->Move(Vector2(-145, 19));
 	_skullIcon->GetTransform()->SetScale(Vector2(0.7f, 0.7f));
-	_skullIcon->SetCurFrame(Vector2(9, 0));
 }
 
 CharacterUI::~CharacterUI()
 {
+}
+
+void CharacterUI::Init()
+{
+	Vector2 initFrame;
+	initFrame.x = INVENTORY->GetEquipedItemInfo()[0].frameX + 1;
+	initFrame.y = INVENTORY->GetEquipedItemInfo()[0].frameY;
+	_skullIcon->SetCurFrame(initFrame);
 }
 
 void CharacterUI::Update()
