@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created with Free texture packer v0.6.7 http://free-tex-packer.com
+Format:
+n  => name
+x  => x pos
+y  => y pos
+w  => width
+h  => height
+pX => x pos of the pivot point
+pY => y pos of the pivot point
+oX => x-corner offset
+oY => y-corner offset
+oW => original width
+oH => original height
+r => 'y' if sprite is rotated-->
+<TextureAtlas imagePath="JumpAttack.png" width="880" height="109" scale="1" format="RGBA8888">
+  <sprite n="JumpAttack_4 #1119864.png" x="20" y="20" w="85" h="58" pX="0.5" pY="0.5"/>
+  <sprite n="JumpAttack_5 #1121691.png" x="145" y="20" w="85" h="58" pX="0.5" pY="0.5"/>
+  <sprite n="JumpAttack_6 #1119312.png" x="270" y="20" w="84" h="58" pX="0.5" pY="0.5"/>
+  <sprite n="JumpAttack_2 #1121830.png" x="394" y="20" w="103" h="62" pX="0.5" pY="0.5"/>
+  <sprite n="JumpAttack_3 #1119619.png" x="537" y="20" w="103" h="63" pX="0.5" pY="0.5"/>
+  <sprite n="JumpAttack_0 #1120158.png" x="680" y="20" w="75" h="68" pX="0.5" pY="0.5"/>
+  <sprite n="JumpAttack_1 #1118331.png" x="795" y="20" w="65" h="69" pX="0.5" pY="0.5"/>
+</TextureAtlas>

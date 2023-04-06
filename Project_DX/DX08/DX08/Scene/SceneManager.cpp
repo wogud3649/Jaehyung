@@ -7,6 +7,7 @@
 #include "../Scene/BasicScene/UIScene.h"
 #include "../Scene/BasicScene/EffectScene.h"
 #include "../Scene/BasicScene/MonsterScene.h"
+#include "../Scene/BasicScene/ObjectScene.h"
 
 SceneManager* SceneManager::_instance = nullptr;
 SceneManager::SceneManager()
@@ -15,8 +16,9 @@ SceneManager::SceneManager()
 	_sceneTable["MapEditorTestScene"] = make_shared<MapEditorTestScene>();
 	_sceneTable["UIScene"] = make_shared<UIScene>();
 	_sceneTable["BossScene"] = make_shared<BossScene>();
+	_sceneTable["ObjectScene"] = make_shared<ObjectScene>();
 
-	_curScene = _sceneTable["TestScene"];
+	_curScene = _sceneTable["ObjectScene"];
 }
 
 SceneManager::~SceneManager()
@@ -37,10 +39,10 @@ void SceneManager::Update()
 
 	if (_curSceneIndex != _oldSceneIndex)
 	{
-		if (_curSceneIndex > 3)
+		if (_curSceneIndex > 4)
 			_curSceneIndex = 0;
 		else if (_curSceneIndex < 0)
-			_curSceneIndex = 3;
+			_curSceneIndex = 4;
 
 		switch (_curSceneIndex)
 		{
@@ -56,6 +58,9 @@ void SceneManager::Update()
 			break;
 		case 3:
 			SetScene("BossScene");
+			break;
+		case 4:
+			SetScene("ObjectScene");
 			break;
 		default:
 			break;

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created with Free texture packer v0.6.7 http://free-tex-packer.com
+Format:
+n  => name
+x  => x pos
+y  => y pos
+w  => width
+h  => height
+pX => x pos of the pivot point
+pY => y pos of the pivot point
+oX => x-corner offset
+oY => y-corner offset
+oW => original width
+oH => original height
+r => 'y' if sprite is rotated-->
+<TextureAtlas imagePath="StoreDoorLoop.png" width="1760" height="173" scale="1" format="RGBA8888">
+  <sprite n="1.png" x="20" y="20" w="180" h="133" pX="0.5" pY="0.5"/>
+  <sprite n="2.png" x="240" y="20" w="180" h="133" pX="0.5" pY="0.5"/>
+  <sprite n="3.png" x="460" y="20" w="180" h="133" pX="0.5" pY="0.5"/>
+  <sprite n="4.png" x="680" y="20" w="180" h="133" pX="0.5" pY="0.5"/>
+  <sprite n="5.png" x="900" y="20" w="180" h="133" pX="0.5" pY="0.5"/>
+  <sprite n="6.png" x="1120" y="20" w="180" h="133" pX="0.5" pY="0.5"/>
+  <sprite n="7.png" x="1340" y="20" w="180" h="133" pX="0.5" pY="0.5"/>
+  <sprite n="8.png" x="1560" y="20" w="180" h="133" pX="0.5" pY="0.5"/>
+</TextureAtlas>

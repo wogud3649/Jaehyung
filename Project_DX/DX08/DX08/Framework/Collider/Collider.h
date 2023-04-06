@@ -14,7 +14,7 @@ protected:
 
 public:
 	Collider();
-	~Collider();
+	virtual ~Collider();
 
 	virtual void Update();
 	virtual void Render();

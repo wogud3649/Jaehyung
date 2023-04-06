@@ -50,7 +50,7 @@ void DataManager::LoadItemInfo()
 
 		info.itemCode = temp[0];
 		info.itemType = static_cast<ItemType>(temp[1]);
-		info.rare = temp[2];
+		info.rarity = static_cast<Rarity>(temp[2]);
 		info.price = temp[3];
 		stats.ad = temp[4];
 		stats.ap = temp[5];

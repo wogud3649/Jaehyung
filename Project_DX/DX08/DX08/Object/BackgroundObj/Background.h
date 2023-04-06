@@ -6,7 +6,7 @@ public:
 	~Background();
 
 	void Update();
-	void Render();
+	void BackgroundRender();
 
 	void SetPlayer(shared_ptr<Advanced_Player> player) { _player = player; }
 	shared_ptr<Transform> GetTransform() { return _background->GetTransform(); }

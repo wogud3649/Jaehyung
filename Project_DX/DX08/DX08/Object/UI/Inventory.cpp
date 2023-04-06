@@ -162,7 +162,7 @@ void Inventory::SetInfoPannels()
 		_curPannel = Inventory::STATUS;
 	else if (info.itemType == ItemType::HEAD)
 	{
-		if (info.rare < 2)
+		if (info.rarity < Rarity::RARE)
 		{
 			if (_detailedInfo)
 				_curPannel = Inventory::SINGLE_SKUL_SLOT_LONG;

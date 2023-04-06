@@ -43,6 +43,8 @@ public:
 
 	void SetEquipStats(StatAttributes stats);
 
+	void Switch();
+
 private:
 	void SetIdle();
 	void DashEnd();

@@ -74,6 +74,15 @@ enum class ItemType
 	POTION
 };
 
+enum class Rarity
+{
+	NONE,
+	NORMAL,
+	RARE,
+	UNIQUE,
+	LEGENDARY
+};
+
 struct HIT_RESULT
 {
 	bool isHit = false;
@@ -123,9 +132,9 @@ struct ItemInfo
 {
 	ItemInfo() {}
 
-	ItemInfo(UINT itemCode, ItemType itemType, UINT rare, string name, UINT price, UINT ad, UINT ap, UINT hp,
+	ItemInfo(UINT itemCode, ItemType itemType, Rarity rarity, string name, UINT price, UINT ad, UINT ap, UINT hp,
 		UINT def, UINT ccd, UINT scd, UINT crp, ATTRIBUTE attribute, UINT frameX = 0, UINT frameY = 0)
-		: itemCode(itemCode), itemType(itemType), rare(rare), name(name), price(price), frameX(frameX), frameY(frameY)
+		: itemCode(itemCode), itemType(itemType), rarity(rarity), name(name), price(price), frameX(frameX), frameY(frameY)
 	{
 		statAttributes.ad = ad;
 		statAttributes.ap = ap;
@@ -140,7 +149,7 @@ struct ItemInfo
 	void SetEmpty() {
 		itemCode = 0;
 		itemType = ItemType::NONE;
-		rare = 0;
+		rarity = Rarity::NONE;
 		name = "";
 		price = 0;
 		statAttributes.ad = 0;
@@ -165,7 +174,7 @@ struct ItemInfo
 	UINT itemCode = 0;					// ItemCode
 	string name = "";					// Name
 	ItemType itemType = ItemType::NONE;	// ItemType
-	UINT rare = 0;						// Rarity
+	Rarity rarity = Rarity::NONE;						// Rarity
 	UINT price = 0;						// Price
 	StatAttributes statAttributes;		// StatAttributes
 	UINT frameX = 0;					// FrameX

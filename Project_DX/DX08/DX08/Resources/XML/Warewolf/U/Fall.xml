@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created with Free texture packer v0.6.7 http://free-tex-packer.com
+Format:
+n  => name
+x  => x pos
+y  => y pos
+w  => width
+h  => height
+pX => x pos of the pivot point
+pY => y pos of the pivot point
+oX => x-corner offset
+oY => y-corner offset
+oW => original width
+oH => original height
+r => 'y' if sprite is rotated-->
+<TextureAtlas imagePath="Fall.png" width="235" height="107" scale="1" format="RGBA8888">
+  <sprite n="Fall_0 #1122126.png" x="20" y="20" w="74" h="65" pX="0.5" pY="0.5"/>
+  <sprite n="Fall_1 #1118268.png" x="134" y="20" w="81" h="67" pX="0.5" pY="0.5"/>
+</TextureAtlas>

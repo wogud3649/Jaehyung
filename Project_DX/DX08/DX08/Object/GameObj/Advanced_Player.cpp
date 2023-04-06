@@ -425,9 +425,19 @@ void Advanced_Player::SetEquipStats(StatAttributes stats)
 	_maxHp = _baseMaxHp + _statAttributes.hp;
 	_def = _baseDef + _statAttributes.def;
 	_critPercent = _baseCrp + _statAttributes.crp;
-	_maxHeadDelay = _baseScd * ((float)(361 - _statAttributes.scd) / 100);
+	_maxHeadDelay = _baseScd * ((float)(361 - _statAttributes.scd) / 100); // TODO :
 	//_maxProjCD = _baseScd * (
 	_maxChangeCD = _baseCcd * ((float)(100 - _statAttributes.ccd) / 100);
+}
+
+void Advanced_Player::Switch()
+{
+	vector<ItemInfo> data = INVENTORY->GetEquipedSkulInfo();
+
+	if (data.size() > 1)
+	{
+
+	}
 }
 
 void Advanced_Player::SetIdle()

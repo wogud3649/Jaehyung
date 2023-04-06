@@ -3,12 +3,10 @@
 
 Background::Background()
 {
-	_background = make_shared<Quad>(L"Resources/Texture/BackGround/GrayBackground.png");
-	Vector2 size = _background->GetSize();
-	Vector2 tempPos = Vector2(size.x * 0.5f, -size.y * 0.5f + WIN_HEIGHT);
+	_background = make_shared<Quad>(L"Resources/Texture/BackGround/BlueSky.png");
+	_backgroundSize = _background->GetSize();
 
-	_background->GetTransform()->SetPos(tempPos);
-	_backgroundSize = size;
+	_background->GetTransform()->SetPos(CENTER);
 
 }
 
@@ -21,7 +19,7 @@ void Background::Update()
 	_background->Update();
 }
 
-void Background::Render()
+void Background::BackgroundRender()
 {
 	_background->Render();
 }

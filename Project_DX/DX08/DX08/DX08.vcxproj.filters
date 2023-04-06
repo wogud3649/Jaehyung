@@ -192,6 +192,18 @@
     <ClInclude Include="Object\UI\CharacterUI.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Object\GameObj\InteractiveObj\InteractObj.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\BasicScene\ObjectScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\GameObj\InteractiveObj\Chest.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\GameObj\InteractiveObj\Door.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DX08.cpp">
@@ -354,6 +366,18 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Object\UI\CharacterUI.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\GameObj\InteractiveObj\InteractObj.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\BasicScene\ObjectScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\GameObj\InteractiveObj\Chest.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\GameObj\InteractiveObj\Door.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created with Free texture packer v0.6.7 http://free-tex-packer.com
+Format:
+n  => name
+x  => x pos
+y  => y pos
+w  => width
+h  => height
+pX => x pos of the pivot point
+pY => y pos of the pivot point
+oX => x-corner offset
+oY => y-corner offset
+oW => original width
+oH => original height
+r => 'y' if sprite is rotated-->
+<TextureAtlas imagePath="UTomb.png" width="2139" height="169" scale="1" format="RGBA8888">
+  <sprite n="10.png" x="20" y="20" w="164" h="79" pX="0.5" pY="0.5"/>
+  <sprite n="05.png" x="224" y="20" w="148" h="97" pX="0.5" pY="0.5"/>
+  <sprite n="07.png" x="412" y="20" w="132" h="97" pX="0.5" pY="0.5"/>
+  <sprite n="04.png" x="584" y="20" w="154" h="100" pX="0.5" pY="0.5"/>
+  <sprite n="06.png" x="778" y="20" w="140" h="101" pX="0.5" pY="0.5"/>
+  <sprite n="09.png" x="958" y="20" w="160" h="102" pX="0.5" pY="0.5"/>
+  <sprite n="11.png" x="1158" y="20" w="81" h="104" pX="0.5" pY="0.5"/>
+  <sprite n="03.png" x="1279" y="20" w="132" h="109" pX="0.5" pY="0.5"/>
+  <sprite n="02.png" x="1451" y="20" w="130" h="111" pX="0.5" pY="0.5"/>
+  <sprite n="08.png" x="1621" y="20" w="162" h="112" pX="0.5" pY="0.5"/>
+  <sprite n="01.png" x="1823" y="20" w="129" h="121" pX="0.5" pY="0.5"/>
+  <sprite n="00.png" x="1992" y="20" w="127" h="129" pX="0.5" pY="0.5"/>
+</TextureAtlas>
