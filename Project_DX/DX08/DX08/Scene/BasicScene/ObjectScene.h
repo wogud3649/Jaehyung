@@ -14,4 +14,3 @@ private:
 	bool _chestSpawn = false;
 	bool _doorSpawn = false;
 };
-

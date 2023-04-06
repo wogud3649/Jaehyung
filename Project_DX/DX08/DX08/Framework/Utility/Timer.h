@@ -27,7 +27,7 @@ public:
 	void SetLockFPS(double value) { _lockFPS = value; }
 
 	int GetFPS() { return _frameRate; }
-	double GetDeltaTime() { return _deltaTime; }
+	double& GetDeltaTime() { return _deltaTime; }
 	double GetRunTime() { return _runTime; }
 
 private:

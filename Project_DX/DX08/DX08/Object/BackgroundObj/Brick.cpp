@@ -327,6 +327,7 @@ bool Brick::Load(wstring filePath)
 		}
 	}
 
+	DELTA_TIME = 0;
 	return true;
 }
 
@@ -334,7 +335,9 @@ vector<BlockData> Brick::GetBlockDatas()
 {
 	vector<BlockData> datas;
 	BlockData temp;
-
+	datas.clear();
+	_leftBottom = { INT_MAX, INT_MAX };
+	_rightTop = { INT_MIN, INT_MIN };
 	for (int i = 0; i < _activeBlocks.size(); i++)
 	{
 		if (_activeBlocks[i])

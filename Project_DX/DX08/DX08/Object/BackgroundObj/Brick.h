@@ -67,7 +67,7 @@ private:
 
 	Vector2 _outPos = Vector2(-32, -32);
 	Vector2 _leftBottom = { INT_MAX, INT_MAX };
-	Vector2 _rightTop = { 0, INT_MIN };
+	Vector2 _rightTop = { INT_MIN, INT_MIN };
 
 	Vector2 _playerSpawn = _outPos;
 	Vector2 _bossSpawn = _outPos * 15;

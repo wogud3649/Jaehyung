@@ -6,6 +6,7 @@ GameManager::GameManager()
 {
 	_characterUI = make_shared<CharacterUI>();
 	_inventory = make_shared<Inventory>();
+	_bg = make_shared<Background>();
 }
 
 GameManager::~GameManager()

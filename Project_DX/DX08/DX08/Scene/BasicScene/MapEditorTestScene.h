@@ -39,6 +39,8 @@ private:
 	shared_ptr<Brick> _brick;
 	int _selectedIndex;
 
+	shared_ptr<Sprite> _indicator;
+
 	int _type = EditorType::DRAW;
 	string _curType = "DRAW";
 

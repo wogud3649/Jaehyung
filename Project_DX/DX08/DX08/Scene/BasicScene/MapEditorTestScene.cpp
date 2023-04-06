@@ -5,6 +5,8 @@ MapEditorTestScene::MapEditorTestScene()
 {
 	_brick = make_shared<Brick>();
 
+	_indicator = make_shared<Sprite>(L"Resources/Texture/Background/Tiles_4x40.png",Vector2(4,40),Vector2(128, 1280));
+
 	_playerSpawn = make_shared<Quad>(L"Resources/Texture/SKUL/SkulDead.png");
 	_playerSpawn->GetTransform()->SetPos(_brick->GetOutPos());
 
@@ -26,6 +28,7 @@ void MapEditorTestScene::Fin()
 
 void MapEditorTestScene::Update()
 {
+	_indicator->Update();
 	_brick->Update();
 	_playerSpawn->Update();
 	_bossSpawn->Update();
@@ -46,6 +49,7 @@ void MapEditorTestScene::Render()
 	_playerSpawn->Render();
 
 	_brick->Render();
+	_indicator->Render();
 }
 
 void MapEditorTestScene::PreRender()
@@ -159,6 +163,7 @@ void MapEditorTestScene::PostRender()
 					if (ImGui::IsItemClicked())
 					{
 						_brick->SetBlockeType({ col, row });
+						_indicatorActive = true;
 						_type = EditorType::DRAW;
 						_curType = "DRAW";
 					}
@@ -394,25 +399,13 @@ void MapEditorTestScene::Indicator()
 	if (_indicatorActive == false)
 		return;
 
-	int index = _brick->GetBlockPoolCount() - 1;
-	if (_brick->CheckActive(index))
-		return;
-
-	_brick->GetTransforms()[index]->SetPos(CAMERA->GetWorldMousePos());
-	_brick->GetInstanceDatas()[index].curFrame = _brick->GetCurFrame();
-	_brick->GetInstanceDatas()[index].matrix = XMMatrixTranspose(_brick->GetTransforms()[index]->GetMatrix());
-	_brick->GetInstanceBuffer()->Update();
+	_indicator->GetTransform()->SetPos(CAMERA->GetWorldMousePos());
+	_indicator->SetCurFrame(_brick->GetCurFrame());
 }
 
 void MapEditorTestScene::ResetIndicator()
 {
-	int index = _brick->GetBlockPoolCount() - 1;
-	if (_brick->CheckActive(index))
-		return;
-
-	_brick->GetTransforms()[index]->SetPos(_brick->GetOutPos());
-	_brick->GetInstanceDatas()[index].matrix = XMMatrixTranspose(_brick->GetTransforms()[index]->GetMatrix());
-	_brick->GetInstanceBuffer()->Update();
+	_indicator->GetTransform()->SetPos(_brick->GetOutPos());
 }
 
 void MapEditorTestScene::Draw(Vector2 pos)

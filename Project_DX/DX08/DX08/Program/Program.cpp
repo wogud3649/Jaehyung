@@ -28,6 +28,7 @@ void Program::Render()
 {
 	Device::GetInstance()->Clear();
 
+	BACKGROUND->BackgroundRender();
 	CAMERA->SetProjectBuffer();
 	CAMERA->SetCameraWorldBuffer();
 	SCENE->PreRender();

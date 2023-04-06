@@ -51,6 +51,7 @@ using ATTRIBUTE = unsigned char;
 
 #define UI GameManager::GetInstance()->GetCharacterUI()
 #define INVENTORY GameManager::GetInstance()->GetInventory()
+#define BACKGROUND GameManager::GetInstance()->GetBackground()
 
 enum Direction
 {
