@@ -55,5 +55,8 @@ private:
 	string _curFilePath = "";
 	bool _isHovered = false;
 	bool _indicatorActive = true;
+
+	shared_ptr<Quad> _doorSpawn;
+	shared_ptr<Quad> _chestSpawn;
 };
 

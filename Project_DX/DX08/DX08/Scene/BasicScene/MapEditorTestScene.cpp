@@ -12,6 +12,9 @@ MapEditorTestScene::MapEditorTestScene()
 
 	_bossSpawn = make_shared<Quad>(L"Resources/Texture/Boss/Yggdrasil/yggdrasil.png");
 	_bossSpawn->GetTransform()->SetPos(_brick->GetOutPos() * 15);
+
+	_doorSpawn = make_shared<Quad>(L"Resources/Texture/InteractObj/Door/NormalDeactivate.png");
+	_chestSpawn = make_shared<Quad>(L"Resources/Texture/InteractObj/Chest/LIdle.png");
 }
 
 MapEditorTestScene::~MapEditorTestScene()
@@ -32,6 +35,8 @@ void MapEditorTestScene::Update()
 	_brick->Update();
 	_playerSpawn->Update();
 	_bossSpawn->Update();
+	_doorSpawn->Update();
+	_chestSpawn->Update();
 	
 	for (const auto& monsterSpawn : _monsterSpawn)
 		monsterSpawn->Update();
@@ -49,6 +54,8 @@ void MapEditorTestScene::Render()
 	_playerSpawn->Render();
 
 	_brick->Render();
+	_doorSpawn->Render();
+	_chestSpawn->Render();
 	_indicator->Render();
 }
 

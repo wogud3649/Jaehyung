@@ -9,5 +9,6 @@ public:
 	void BackgroundRender();
 
 private:
-	shared_ptr<Quad> _background;
+	shared_ptr<Quad> _sky;
+	shared_ptr<Quad> _trees;
 };
