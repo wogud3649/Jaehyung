@@ -11,7 +11,9 @@ public:
 		MONSTERSPAWN,
 		BOSSSPAWN,
 		BLOCKCOLLIDER,
-		FLOORCOLLIDER
+		FLOORCOLLIDER,
+		DOOR,
+		CHEST
 	};
 	MapEditorTestScene();
 	virtual ~MapEditorTestScene();

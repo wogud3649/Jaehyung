@@ -110,6 +110,7 @@ using namespace DirectX;
 #include "Object/GameObj/InteractiveObj/InteractObj.h"
 #include "Object/GameObj/InteractiveObj/Chest.h"
 #include "Object/GameObj/InteractiveObj/Door.h"
+#include "Object/GameObj/InteractiveObj/InteractObjManager.h"
 
 // BackGroundObject
 #include "Object/BackgroundObj/Floor.h"

@@ -30,4 +30,3 @@ private:
 	shared_ptr<Sprite> _sprite;
 	shared_ptr<Action> _action;
 };
-

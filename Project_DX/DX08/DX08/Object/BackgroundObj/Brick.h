@@ -31,26 +31,29 @@ public:
 	vector<BlockData> GetBlockDatas();
 	vector<ColliderData> GetBlockColliderDatas();
 	vector<ColliderData> GetFloorColliderDatas();
-	vector<shared_ptr<Transform>> GetTransforms() { return _transforms; }
+	const vector<shared_ptr<Transform>>& GetTransforms() { return _transforms; }
 	vector<InstanceData>& GetInstanceDatas() { return _instanceDatas; }
 	shared_ptr<VertexBuffer> GetInstanceBuffer() { return _instanceBuffer; }
-	Vector2 GetSize() { return _size; }
-	Vector2 GetOutPos() { return _outPos; }
-	Vector2 GetMaxFrame() { return _maxFrame; }
-	Vector2 GetCurFrame() { return _curFrame; }
-	Vector2 GetLeftBottom() { return _leftBottom; }
-	Vector2 GetRightTop() { return _rightTop; }
-	Vector2 GetPlayerSpawn() { return _playerSpawn; }
-	Vector2 GetBossSpawn() { return _bossSpawn; }
-	vector<Vector2> GetMonsterSpawn() { return _monsterSpawn; }
+	const Vector2& GetSize() { return _size; }
+	const Vector2& GetOutPos() { return _outPos; }
+	const Vector2& GetMaxFrame() { return _maxFrame; }
+	const Vector2& GetCurFrame() { return _curFrame; }
+	const Vector2& GetLeftBottom() { return _leftBottom; }
+	const Vector2& GetRightTop() { return _rightTop; }
+	const Vector2& GetPlayerSpawn() { return _playerSpawn; }
+	const Vector2& GetBossSpawn() { return _bossSpawn; }
+	const Vector2& GetDoorSpawn() { return _doorSpawn; }
+	const Vector2& GetChestSpawn() { return _chestSpawn; }
+	const vector<Vector2>& GetMonsterSpawn() { return _monsterSpawn; }
 
 	void SetBlockeType(Vector2 curFrame) { _curFrame = curFrame; }
-	
-	int GetBlockPoolCount() { return _blockPoolCount; }
-	int GetBlockIndex();
-	bool CheckOverlap(Vector2 pos);
-	bool CheckActive(int index);
 
+	const float& GetActiveMonsters() { return _activeMonsters; }
+	
+	const int& GetBlockPoolCount() { return _blockPoolCount; }
+	const int& GetBlockIndex();
+	const bool& CheckOverlap(Vector2 pos);
+	const bool& CheckActive(int index);
 private:
 	void CreateBlocks();
 
@@ -79,5 +82,9 @@ private:
 
 	vector<shared_ptr<MushroomEnt>> _mushroomEnts;
 	vector<Vector2> _monsterSpawn;
-};
 
+	Vector2 _doorSpawn = _outPos * 2;
+	Vector2 _chestSpawn = _outPos * 2;
+
+	float _activeMonsters = 0;
+};

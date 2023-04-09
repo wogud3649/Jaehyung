@@ -151,6 +151,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Scene\FieldScene\FieldScene1.h" />
+    <ClInclude Include="Object\GameObj\InteractiveObj\InteractObjManager.h" />
     <ClInclude Include="Object\GameObj\InteractiveObj\Door.h" />
     <ClInclude Include="Object\GameObj\InteractiveObj\Chest.h" />
     <ClInclude Include="Scene\BasicScene\ObjectScene.h" />
@@ -164,7 +166,7 @@
     <ClInclude Include="Scene\BasicScene\EffectScene.h" />
     <ClInclude Include="Object\BasicObj\Effect.h" />
     <ClInclude Include="Object\BasicObj\EffectManager.h" />
-    <ClInclude Include="Scene\BasicScene\BossScene.h" />
+    <ClInclude Include="Scene\FieldScene\BossScene.h" />
     <ClInclude Include="Framework\Utility\BinaryWriter.h" />
     <ClInclude Include="Framework\Utility\BinaryReader.h" />
     <ClInclude Include="Object\BackgroundObj\Brick.h" />
@@ -216,6 +218,8 @@
     <ClInclude Include="Scene\BasicScene\UIScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Scene\FieldScene\FieldScene1.cpp" />
+    <ClCompile Include="Object\GameObj\InteractiveObj\InteractObjManager.cpp" />
     <ClCompile Include="Object\GameObj\InteractiveObj\Door.cpp" />
     <ClCompile Include="Object\GameObj\InteractiveObj\Chest.cpp" />
     <ClCompile Include="Scene\BasicScene\ObjectScene.cpp" />
@@ -229,7 +233,7 @@
     <ClCompile Include="Scene\BasicScene\EffectScene.cpp" />
     <ClCompile Include="Object\BasicObj\Effect.cpp" />
     <ClCompile Include="Object\BasicObj\EffectManager.cpp" />
-    <ClCompile Include="Scene\BasicScene\BossScene.cpp" />
+    <ClCompile Include="Scene\FieldScene\BossScene.cpp" />
     <ClCompile Include="Framework\Utility\BinaryWriter.cpp" />
     <ClCompile Include="Framework\Utility\BinaryReader.cpp" />
     <ClCompile Include="Object\BackgroundObj\Brick.cpp" />

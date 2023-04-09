@@ -53,6 +53,8 @@ using ATTRIBUTE = unsigned char;
 #define INVENTORY GameManager::GetInstance()->GetInventory()
 #define BACKGROUND GameManager::GetInstance()->GetBackground()
 
+#define INTERACTOBJ InteractObjManager::GetInstance()
+
 enum Direction
 {
 	LEFT,

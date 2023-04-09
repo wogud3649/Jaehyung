@@ -90,7 +90,7 @@ private:
 	float _maxIdleDuration = 3.0f;
 	float _curIdleDuration = _maxIdleDuration;
 
-	float _maxHp = 500.0f;
+	float _maxHp = 100.0f;
 	float _curHp = _maxHp;
 
 	bool _isAlive = true;

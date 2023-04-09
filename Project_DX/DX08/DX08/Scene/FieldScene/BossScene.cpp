@@ -23,6 +23,15 @@ void BossScene::Init()
 	_player->GetFootCollider()->GetTransform()->SetPos(_brick->GetPlayerSpawn());
 	_yggdrasil->SetOriginPos(_brick->GetBossSpawn());
 
+	Vector2 temp = _brick->GetDoorSpawn();
+	INTERACTOBJ->CreateRandomDoor();
+	INTERACTOBJ->GetDoor()->GetTransform()->SetPos(Vector2(temp.x, temp.y + 16));
+
+	temp = _brick->GetChestSpawn();
+	INTERACTOBJ->CreateRandomChest();
+	INTERACTOBJ->GetChest()->GetTransform()->SetPos(Vector2(temp.x, temp.y + 16));
+	INTERACTOBJ->SetPlayer(_player);
+
 	CAMERA->SetTarget(_player->GetBodyCollider()->GetTransform());
 	CAMERA->SetOffset(CENTER);
 }
@@ -37,6 +46,11 @@ void BossScene::Update()
 	_player->Update();
 	_yggdrasil->Update();
 	_brick->Update();
+	if (_yggdrasil->GetAlive() == false)
+	{
+		INTERACTOBJ->GetDoor()->Update();
+		INTERACTOBJ->GetChest()->Update();
+	}
 
 	if (_player->GetAttackCol()->GetActive())
 	{
@@ -62,6 +76,11 @@ void BossScene::Render()
 	_yggdrasil->Render();
 	_brick->Render();
 	_yggdrasil->HandRender();
+	if (_yggdrasil->GetAlive() == false)
+	{
+		INTERACTOBJ->GetDoor()->Render();
+		INTERACTOBJ->GetChest()->Render();
+	}
 	_player->Render();
 }
 

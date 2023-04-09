@@ -32,6 +32,8 @@ public:
 	shared_ptr<CircleCollider> GetHeadCollider() { return _headCol; }
 	shared_ptr<Transform> GetTransform() { return _body->GetTransform(); }
 
+	const bool& GetAlive() { return _isAlive; }
+
 private:
 	void MakeShared();
 	void SetParent();

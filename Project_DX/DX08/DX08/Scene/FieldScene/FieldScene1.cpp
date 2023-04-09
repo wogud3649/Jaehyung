@@ -1,7 +1,7 @@
 #include "framework.h"
-#include "TestScene.h"
+#include "FieldScene1.h"
 
-TestScene::TestScene()
+FieldScene1::FieldScene1()
 {
 	_player = make_shared<Advanced_Player>();
 
@@ -11,27 +11,37 @@ TestScene::TestScene()
 	_brick->SetPlayer(_player);
 }
 
-TestScene::~TestScene()
+FieldScene1::~FieldScene1()
 {
 }
 
-void TestScene::Init()
+void FieldScene1::Init()
 {
-	if (_filePath == L"")
+	int randInt = rand() % 2;
+
+	switch (randInt)
+	{
+	case 0:
 		_filePath = L"Maps/Field1.map";
+		break;
+	case 1:
+		_filePath = L"Maps/Field2.map";
+		break;
+	default:
+		break;
+	}
 
-	wstring filePath = _filePath;
-
-	_brick->Load(filePath);
+	_brick->Load(_filePath);
 	_brick->SpawnMonster();
+
 	Vector2 temp = _brick->GetDoorSpawn();
 	INTERACTOBJ->CreateRandomDoor();
 	INTERACTOBJ->GetDoor()->GetTransform()->SetPos(Vector2(temp.x, temp.y + 16));
+	INTERACTOBJ->SpawnDoor();
 
 	temp = _brick->GetChestSpawn();
 	INTERACTOBJ->CreateRandomChest();
 	INTERACTOBJ->GetChest()->GetTransform()->SetPos(Vector2(temp.x, temp.y + 16));
-	_brick->Update();
 	INTERACTOBJ->SetPlayer(_player);
 
 	_player->GetFootCollider()->GetTransform()->SetPos(_brick->GetPlayerSpawn());
@@ -42,12 +52,14 @@ void TestScene::Init()
 	UI->Init();
 }
 
-void TestScene::Fin()
+void FieldScene1::Fin()
 {
 	CAMERA->SetTarget(nullptr);
+	INTERACTOBJ->ExtinctChest();
+	INTERACTOBJ->ExtinctDoor();
 }
 
-void TestScene::Update()
+void FieldScene1::Update()
 {
 	INVENTORY->Update();
 	UI->Update();
@@ -57,21 +69,27 @@ void TestScene::Update()
 	_brick->Update();
 	INTERACTOBJ->GetDoor()->Update();
 	INTERACTOBJ->GetChest()->Update();
+
+	if (_brick->GetActiveMonsters() == 0)
+	{
+		INTERACTOBJ->SpawnChest();
+		INTERACTOBJ->ActivateDoor();
+	}
 }
 
-void TestScene::Render()
+void FieldScene1::Render()
 {
 	INTERACTOBJ->GetDoor()->Render();
 	INTERACTOBJ->GetChest()->Render();
 	_player->Render();
 }
 
-void TestScene::PreRender()
+void FieldScene1::PreRender()
 {
 	_brick->Render();
 }
 
-void TestScene::PostRender()
+void FieldScene1::PostRender()
 {
 	INVENTORY->PostRender();
 	UI->PostRender();

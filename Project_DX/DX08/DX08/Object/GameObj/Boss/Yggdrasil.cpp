@@ -302,6 +302,8 @@ void Yggdrasil::Damaged(int damage)
 void Yggdrasil::Dead()
 {
 	DeActivate();
+	INTERACTOBJ->GetDoor()->Activate();
+	INTERACTOBJ->GetChest()->Spawn();
 }
 
 void Yggdrasil::SetOriginPos(Vector2 pos)
@@ -459,6 +461,7 @@ void Yggdrasil::SpikeAttack()
 	_spikeActive = true;
 	_spikeUp = true;
 	_spikeCol->GetTransform()->SetPos(Vector2(_spikePos.x, _spikePos.y - 300.0f));
+	EFFECT->Stop("WarnSign_10x1");
 	EFFECT->Play("Spike_15x1", _spikePos);
 }
 
@@ -470,6 +473,7 @@ void Yggdrasil::SpikeFlipDir()
 void Yggdrasil::SpikeStop()
 {
 	_spikeActive = false;
+	EFFECT->Stop("Spike_15x1");
 }
 
 void Yggdrasil::SweepAttackReady()

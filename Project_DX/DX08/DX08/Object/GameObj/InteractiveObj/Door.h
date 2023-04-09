@@ -17,10 +17,15 @@ public:
 
 	virtual void Update();
 	virtual void Render();
+
+	const shared_ptr<Transform>& GetTransform() { return _sprites[0]->GetTransform(); }
+
+	virtual void Activate();
+
 private:
 	virtual void CreateAction();
 
-	virtual void SetActive();
+	void Enter();
 
 	DoorType _doorType;
 };

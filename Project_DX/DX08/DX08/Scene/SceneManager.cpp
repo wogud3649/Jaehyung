@@ -3,22 +3,22 @@
 
 #include "../Scene/BasicScene/TestScene.h"
 #include "../Scene/BasicScene/MapEditorTestScene.h"
-#include "../Scene/BasicScene/BossScene.h"
 #include "../Scene/BasicScene/UIScene.h"
 #include "../Scene/BasicScene/EffectScene.h"
 #include "../Scene/BasicScene/MonsterScene.h"
 #include "../Scene/BasicScene/ObjectScene.h"
+#include "../Scene/FieldScene/FieldScene1.h"
+#include "../Scene/FieldScene/BossScene.h"
 
 SceneManager* SceneManager::_instance = nullptr;
 SceneManager::SceneManager()
 {
-	_sceneTable["TestScene"] = make_shared<TestScene>();
 	_sceneTable["MapEditorTestScene"] = make_shared<MapEditorTestScene>();
-	_sceneTable["UIScene"] = make_shared<UIScene>();
+	_sceneTable["TestScene"] = make_shared<TestScene>();
+	_sceneTable["FieldScene1"] = make_shared<FieldScene1>();
 	_sceneTable["BossScene"] = make_shared<BossScene>();
-	_sceneTable["ObjectScene"] = make_shared<ObjectScene>();
 
-	_curScene = _sceneTable["ObjectScene"];
+	_curScene = _sceneTable["MapEditorTestScene"];
 }
 
 SceneManager::~SceneManager()
@@ -39,28 +39,25 @@ void SceneManager::Update()
 
 	if (_curSceneIndex != _oldSceneIndex)
 	{
-		if (_curSceneIndex > 4)
+		if (_curSceneIndex > 3)
 			_curSceneIndex = 0;
 		else if (_curSceneIndex < 0)
-			_curSceneIndex = 4;
+			_curSceneIndex = 3;
 
 		switch (_curSceneIndex)
 		{
 		case 0:
+			SetScene("MapEditorTestScene");
+			break;
+		case 1:
 			dynamic_pointer_cast<TestScene>(_sceneTable["TestScene"])->SetScene(dynamic_pointer_cast<MapEditorTestScene>(_sceneTable["MapEditorTestScene"])->GetFilePath());
 			SetScene("TestScene");
 			break;
-		case 1:
-			SetScene("MapEditorTestScene");
-			break;
 		case 2:
-			SetScene("UIScene");
+			SetScene("FieldScene1");
 			break;
 		case 3:
 			SetScene("BossScene");
-			break;
-		case 4:
-			SetScene("ObjectScene");
 			break;
 		default:
 			break;
@@ -102,9 +99,8 @@ void SceneManager::SetScene(string name)
 		return;
 
 	if (_curScene != nullptr)
-	{
 		_curScene->Fin();
-	}
+
 	_curScene = _sceneTable[name];
 	_curScene->Init();
 }

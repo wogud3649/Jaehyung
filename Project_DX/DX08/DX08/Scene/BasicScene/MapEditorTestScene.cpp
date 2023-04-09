@@ -14,7 +14,12 @@ MapEditorTestScene::MapEditorTestScene()
 	_bossSpawn->GetTransform()->SetPos(_brick->GetOutPos() * 15);
 
 	_doorSpawn = make_shared<Quad>(L"Resources/Texture/InteractObj/Door/NormalDeactivate.png");
+	_doorSpawn->GetTransform()->SetScale(Vector2(2, 2));
+	_doorSpawn->GetTransform()->SetPos(_brick->GetOutPos() * 5);
+
 	_chestSpawn = make_shared<Quad>(L"Resources/Texture/InteractObj/Chest/LIdle.png");
+	_chestSpawn->GetTransform()->SetScale(Vector2(2, 2));
+	_chestSpawn->GetTransform()->SetPos(_brick->GetOutPos() * 5);
 }
 
 MapEditorTestScene::~MapEditorTestScene()
@@ -144,6 +149,26 @@ void MapEditorTestScene::PostRender()
 			{
 				_type = EditorType::FLOORCOLLIDER;
 				_curType = "FLOORCOL";
+				_indicatorActive = false;
+				ResetIndicator();
+			}
+			ImGui::SameLine();
+			ImGui::NewLine();
+		}
+		//FourthLine
+		{
+			if (ImGui::Button("Door", { 80, 30 }))
+			{
+				_type = EditorType::DOOR;
+				_curType = "DOOR";
+				_indicatorActive = false;
+				ResetIndicator();
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Chest", { 80, 30 }))
+			{
+				_type = EditorType::CHEST;
+				_curType = "CHEST";
 				_indicatorActive = false;
 				ResetIndicator();
 			}
@@ -280,6 +305,12 @@ bool MapEditorTestScene::Save()
 		writer.Byte(&SpawnPoses[0], sizeof(Vector2) * size);
 	}
 
+	spawnPos = _doorSpawn->GetTransform()->GetPos();
+	writer.Byte(&spawnPos, sizeof(Vector2));
+
+	spawnPos = _chestSpawn->GetTransform()->GetPos();
+	writer.Byte(&spawnPos, sizeof(Vector2));
+
 	return true;
 }
 
@@ -302,6 +333,9 @@ bool MapEditorTestScene::Load()
 			_monsterSpawn.emplace_back(monster);
 		}
 	}
+
+	_doorSpawn->GetTransform()->SetPos(_brick->GetDoorSpawn());
+	_chestSpawn->GetTransform()->SetPos(_brick->GetChestSpawn());
 
 	return load;
 }
@@ -363,6 +397,16 @@ void MapEditorTestScene::Functions()
 		else if (_type == EditorType::BOSSSPAWN)
 		{
 			_bossSpawn->GetTransform()->SetPos(tempPos);
+		}
+		else if (_type == EditorType::DOOR)
+		{
+			Vector2 temp = Vector2(tempPos.x, tempPos.y + 8);
+			_doorSpawn->GetTransform()->SetPos(temp);
+		}
+		else if (_type == EditorType::CHEST)
+		{
+			Vector2 temp = Vector2(tempPos.x, tempPos.y - 16);
+			_chestSpawn->GetTransform()->SetPos(temp);
 		}
 	}
 

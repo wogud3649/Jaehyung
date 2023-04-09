@@ -99,6 +99,7 @@ void Brick::Update()
 	bool headHit = false;
 	bool attackHit = false;
 	bool skillHit = false;
+	int activeMonsters = 0;
 
 	for (auto mushroomEnt : _mushroomEnts)
 	{
@@ -138,7 +139,12 @@ void Brick::Update()
 				}
 			}
 		}
+
+		if (mushroomEnt->GetAlive())
+			activeMonsters++;
 	}
+
+	_activeMonsters = activeMonsters;
 
 	if (_player.expired() == false)
 	{
@@ -327,6 +333,14 @@ bool Brick::Load(wstring filePath)
 		}
 	}
 
+	ptr = &tempVector;
+	reader.Byte(&ptr, sizeof(Vector2));
+	_doorSpawn = tempVector;
+
+	ptr = &tempVector;
+	reader.Byte(&ptr, sizeof(Vector2));
+	_chestSpawn = tempVector;
+
 	DELTA_TIME = 0;
 	return true;
 }
@@ -415,7 +429,7 @@ void Brick::CreateBlocks()
 	_instanceBuffer = make_shared<VertexBuffer>(_instanceDatas.data(), sizeof(InstanceData), _instanceDatas.size(), 0, true);
 }
 
-int Brick::GetBlockIndex()
+const int& Brick::GetBlockIndex()
 {
 	for (int i = 0; i < _blockPoolCount; i++)
 	{
@@ -428,7 +442,7 @@ int Brick::GetBlockIndex()
 	return -1;
 }
 
-bool Brick::CheckOverlap(Vector2 pos)
+const bool& Brick::CheckOverlap(Vector2 pos)
 {
 	for (int i = 0; i < _activeBlocks.size() - 1; i++)
 	{
@@ -443,7 +457,7 @@ bool Brick::CheckOverlap(Vector2 pos)
 	return false;
 }
 
-bool Brick::CheckActive(int index)
+const bool& Brick::CheckActive(int index)
 {
 	return _activeBlocks[index];
 }

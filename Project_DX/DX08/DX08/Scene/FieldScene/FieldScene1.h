@@ -1,9 +1,9 @@
 #pragma once
-class TestScene : public Scene
+class FieldScene1 : public Scene
 {
 public:
-	TestScene();
-	virtual ~TestScene();
+	FieldScene1();
+	virtual ~FieldScene1();
 
 	virtual void Init() override;
 	virtual void Fin() override;

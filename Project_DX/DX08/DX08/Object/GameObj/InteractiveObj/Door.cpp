@@ -9,6 +9,10 @@ Door::Door()
 	_sprites[0]->GetTransform()->SetPos(CENTER);
 	_sprites[1]->GetTransform()->SetParent(_sprites[0]->GetTransform());
 
+	_col = make_shared<RectCollider>(_sprites[0]->GetSize());
+	_col->GetTransform()->SetParent(_sprites[0]->GetTransform());
+	_col->GetTransform()->AddScale(Vector2(-0.2f, 0.3f));
+
 	_actions[_isActive]->Play();
 }
 
@@ -18,14 +22,19 @@ Door::~Door()
 
 void Door::Update()
 {
+	if (_isSpawn == false)
+		return;
+
 	InteractObj::Update();
 
-	if (KEY_DOWN(VK_RBUTTON))
-		SetActive();
+	Enter();
 }
 
 void Door::Render()
 {
+	if (_isSpawn == false)
+		return;
+
 	InteractObj::Render();
 }
 
@@ -104,7 +113,46 @@ void Door::CreateAction()
 	}
 }
 
-void Door::SetActive()
+void Door::Enter()
 {
-	InteractObj::SetActive();
+	if (_player.expired())
+		return;
+	if (_isActive == false)
+		return;
+	
+	HIT_RESULT result = _col->IsCollision(_player.lock()->GetBodyCollider());
+	
+	if (result.isHit == false)
+		return;
+	
+	if (KEY_DOWN('X'))
+	{
+		switch (_doorType)
+		{
+		case Door::NORMAL:
+			SCENE->SetScene("FieldScene1");
+			break;
+		case Door::ITEM:
+			SCENE->SetScene("FieldScene1");
+			break;
+		case Door::SKULL:
+			SCENE->SetScene("FieldScene1");
+			break;
+		case Door::STORE:
+			break;
+		case Door::ADVANTURER:
+			SCENE->SetScene("FieldScene1");
+			break;
+		case Door::BOSS:
+			SCENE->SetScene("BossScene");
+			break;
+		default:
+			break;
+		}
+	}
+}
+
+void Door::Activate()
+{
+	InteractObj::Activate();
 }
