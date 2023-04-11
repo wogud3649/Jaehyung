@@ -302,8 +302,7 @@ void Yggdrasil::Damaged(int damage)
 void Yggdrasil::Dead()
 {
 	DeActivate();
-	INTERACTOBJ->GetDoor()->Activate();
-	INTERACTOBJ->GetChest()->Spawn();
+	EFFECT->Stop("Sweeping_4x1");
 }
 
 void Yggdrasil::SetOriginPos(Vector2 pos)
@@ -320,6 +319,18 @@ void Yggdrasil::SetOriginPos(Vector2 pos)
 	_leftHand->GetTransform()->MoveX(350);
 	_leftHand->GetTransform()->MoveY(-120);
 	_originLeftHandPos = _leftHand->GetTransform()->GetWorldPos();
+}
+
+void Yggdrasil::Activate()
+{
+	_isAlive = true;
+	_curState = State::IDLE;
+	_curAttackDelay = _maxAttackDelay;
+	_body->GetTransform()->SetAngle(0);
+	_rightBranchCol->Activate();
+	_leftBranchCol->Activate();
+	_headCol->Activate();
+	_curHp = _maxHp;
 }
 
 void Yggdrasil::MakeShared()

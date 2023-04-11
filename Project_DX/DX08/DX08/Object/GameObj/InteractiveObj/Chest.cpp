@@ -12,13 +12,21 @@ Chest::Chest()
 
 	_col = make_shared<RectCollider>(_sprites[0]->GetSize());
 	_col->GetTransform()->SetParent(_sprites[0]->GetTransform());
+	_col->DeActivate();
 
+	_isActive = false;
+	_isSpawn = false;
 	_actions[_isActive]->Play();
 
 	_item = make_shared<Sprite>(L"Resources/Texture/Item/ItemIcons_10x3.png", Vector2(10, 3), Vector2(825, 390));
 	_item->SetCurFrame(Vector2(0, 0));
 	_item->GetTransform()->SetParent(_sprites[0]->GetTransform());
 	_item->GetTransform()->SetScale(Vector2(2, 2));
+
+	_itemCol = make_shared<CircleCollider>(15);
+	_itemCol->GetTransform()->SetParent(_item->GetTransform());
+	
+	_itemActivateDelay = 1.5f;
 }
 
 Chest::~Chest()
@@ -36,8 +44,13 @@ void Chest::Update()
 
 	if (_isOpen)
 	{
+		_itemCol->Update();
 		_item->Update();
 		ItemPop();
+
+		_itemActivateDelay -= DELTA_TIME;
+		if (_itemActivateDelay <= 0.0f)
+			TakeItem();
 	}
 }
 
@@ -49,7 +62,19 @@ void Chest::Render()
 	InteractObj::Render();
 
 	if (_isOpen)
+	{
 		_item->Render();
+		_itemCol->Render();
+	}
+}
+
+void Chest::Spawn()
+{
+	if (_isSpawn)
+		return;
+
+	_isSpawn = true;
+	_col->Activate();
 }
 
 void Chest::CreateAction()
@@ -133,7 +158,9 @@ void Chest::OpenChest()
 	{
 		if (KEY_DOWN('X'))
 		{
+			INTERACTOBJ->GetDoor()->Activate();
 			Activate();
+			_col->DeActivate();
 			_isOpen = true;
 
 			switch (_rarity)
@@ -166,39 +193,52 @@ void Chest::ItemPop()
 	_popSpeed -= (GRAVITY * GRAVITY * DELTA_TIME);
 }
 
+void Chest::TakeItem()
+{
+	if (_player.expired())
+		return;
+
+	HIT_RESULT result = _itemCol->IsCollision(_player.lock()->GetBodyCollider());
+	if (result.isHit == false)
+		return;
+
+	if (KEY_DOWN('X'))
+	{
+		_item->SetCurFrame(Vector2(0, 0));
+		_itemCol->DeActivate();
+		INVENTORY->RootItem(_itemInfo.itemCode);
+		_itemInfo.SetEmpty();
+	}
+}
+
 void Chest::RandomNormal()
 {
 	int temp = rand() % 7 + 10;
-	ItemInfo itemInfo = DATA_M->GetItemByItemCode(temp);
+	_itemInfo = DATA_M->GetItemByItemCode(temp);
 
-	_item->SetCurFrame(Vector2(itemInfo.frameX, itemInfo.frameY));
+	_item->SetCurFrame(Vector2(_itemInfo.frameX, _itemInfo.frameY));
 }
 
 void Chest::RandomRare()
 {
-	int temp = rand() % 4 + 18;
-	ItemInfo itemInfo = DATA_M->GetItemByItemCode(temp);
+	int temp = rand() % 4 + 17;
+	_itemInfo = DATA_M->GetItemByItemCode(temp);
 
-	_item->SetCurFrame(Vector2(itemInfo.frameX, itemInfo.frameY));
+	_item->SetCurFrame(Vector2(_itemInfo.frameX, _itemInfo.frameY));
 }
 
 void Chest::RandomUnique()
 {
-	int temp = rand() % 4 + 22;
-	ItemInfo itemInfo = DATA_M->GetItemByItemCode(temp);
+	int temp = rand() % 4 + 21;
+	_itemInfo = DATA_M->GetItemByItemCode(temp);
 
-	_item->SetCurFrame(Vector2(itemInfo.frameX, itemInfo.frameY));
+	_item->SetCurFrame(Vector2(_itemInfo.frameX, _itemInfo.frameY));
 }
 
 void Chest::RandomLegendary()
 {
-	int temp = rand() % 3 + 26;
-	ItemInfo itemInfo = DATA_M->GetItemByItemCode(temp);
+	int temp = rand() % 3 + 25;
+	_itemInfo = DATA_M->GetItemByItemCode(temp);
 
-	_item->SetCurFrame(Vector2(itemInfo.frameX, itemInfo.frameY));
-}
-
-void Chest::Activate()
-{
-	InteractObj::Activate();
+	_item->SetCurFrame(Vector2(_itemInfo.frameX, _itemInfo.frameY));
 }

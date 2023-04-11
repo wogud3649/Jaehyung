@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Framework\Utility\DirectWrite.h" />
     <ClInclude Include="Scene\FieldScene\FieldScene1.h" />
     <ClInclude Include="Object\GameObj\InteractiveObj\InteractObjManager.h" />
     <ClInclude Include="Object\GameObj\InteractiveObj\Door.h" />
@@ -207,6 +208,7 @@
     <ClInclude Include="Framework\Render\Shader.h" />
     <ClInclude Include="Framework\Render\ShaderManager.h" />
     <ClInclude Include="Object\UI\Slot.h" />
+    <ClInclude Include="Scene\FieldScene\StoreScene.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Framework\Render\VertexBuffer.h" />
     <ClInclude Include="Framework\Render\VertexShader.h" />
@@ -218,6 +220,7 @@
     <ClInclude Include="Scene\BasicScene\UIScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Framework\Utility\DirectWrite.cpp" />
     <ClCompile Include="Scene\FieldScene\FieldScene1.cpp" />
     <ClCompile Include="Object\GameObj\InteractiveObj\InteractObjManager.cpp" />
     <ClCompile Include="Object\GameObj\InteractiveObj\Door.cpp" />
@@ -287,6 +290,7 @@
     <ClCompile Include="Object\GameObj\Boss\Yggdrasil.cpp" />
     <ClCompile Include="Scene\BasicScene\UIScene.cpp" />
     <ClCompile Include="Object\UI\Slot.cpp" />
+    <ClCompile Include="Scene\FieldScene\StoreScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX08.rc" />

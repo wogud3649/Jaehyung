@@ -18,27 +18,25 @@ BossScene::~BossScene()
 
 void BossScene::Init()
 {
+	_yggdrasil->Activate();
 	wstring filePath = L"Maps/BossField1.map";
 	_brick->Load(filePath);
+
+	CreateInteractObj();
+
 	_player->GetFootCollider()->GetTransform()->SetPos(_brick->GetPlayerSpawn());
 	_yggdrasil->SetOriginPos(_brick->GetBossSpawn());
 
-	Vector2 temp = _brick->GetDoorSpawn();
-	INTERACTOBJ->CreateRandomDoor();
-	INTERACTOBJ->GetDoor()->GetTransform()->SetPos(Vector2(temp.x, temp.y + 16));
-
-	temp = _brick->GetChestSpawn();
-	INTERACTOBJ->CreateRandomChest();
-	INTERACTOBJ->GetChest()->GetTransform()->SetPos(Vector2(temp.x, temp.y + 16));
-	INTERACTOBJ->SetPlayer(_player);
-
 	CAMERA->SetTarget(_player->GetBodyCollider()->GetTransform());
-	CAMERA->SetOffset(CENTER);
+
+	SCENE->Init();
+
+	_isClear = false;
 }
 
 void BossScene::Fin()
 {
-	CAMERA->SetTarget(nullptr);
+	SCENE->Fin();
 }
 
 void BossScene::Update()
@@ -46,7 +44,8 @@ void BossScene::Update()
 	_player->Update();
 	_yggdrasil->Update();
 	_brick->Update();
-	if (_yggdrasil->GetAlive() == false)
+
+	if (_isClear)
 	{
 		INTERACTOBJ->GetDoor()->Update();
 		INTERACTOBJ->GetChest()->Update();
@@ -69,6 +68,8 @@ void BossScene::Update()
 			_player->SkillHit();
 		}
 	}
+
+	SceneClear();
 }
 
 void BossScene::Render()
@@ -76,11 +77,13 @@ void BossScene::Render()
 	_yggdrasil->Render();
 	_brick->Render();
 	_yggdrasil->HandRender();
-	if (_yggdrasil->GetAlive() == false)
+
+	if (_isClear)
 	{
 		INTERACTOBJ->GetDoor()->Render();
 		INTERACTOBJ->GetChest()->Render();
 	}
+
 	_player->Render();
 }
 
@@ -92,4 +95,29 @@ void BossScene::PostRender()
 {
 	ImGui::SetWindowSize({ 320, 320 });
 	_player->PostRender();
+}
+
+void BossScene::SceneClear()
+{
+	if (_isClear)
+		return;
+
+	if (_yggdrasil->GetAlive() == false)
+	{
+		INTERACTOBJ->GetDoor()->Spawn();
+		INTERACTOBJ->GetChest()->Spawn();
+		_isClear = true;
+	}
+}
+
+void BossScene::CreateInteractObj()
+{
+	Vector2 temp = _brick->GetDoorSpawn();
+	INTERACTOBJ->CreateRandomDoor();
+	INTERACTOBJ->GetDoor()->GetTransform()->SetPos(Vector2(temp.x, temp.y + 16));
+
+	temp = _brick->GetChestSpawn();
+	INTERACTOBJ->CreateRandomChest();
+	INTERACTOBJ->GetChest()->GetTransform()->SetPos(Vector2(temp.x, temp.y + 16));
+	INTERACTOBJ->SetPlayer(_player);
 }

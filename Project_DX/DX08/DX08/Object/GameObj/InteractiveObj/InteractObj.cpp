@@ -31,25 +31,39 @@ void InteractObj::CreateAction()
 
 void InteractObj::Spawn()
 {
+	if (_isSpawn)
+		return;
+
 	_isSpawn = true;
 }
 
 void InteractObj::Extinct()
 {
+	if (_isSpawn == false)
+		return;
+
 	_isSpawn = false;
+	_col->DeActivate();
 }
 
 void InteractObj::Activate()
 {
-	_actions[true]->Play();
-	_sprites[true]->SetActionClip(_actions[true]->GetCurClip());
+	if (_isActive)
+		return;
+
 	_isActive = true;
+	_actions[false]->Reset();
+	_sprites[_isActive]->SetActionClip(_actions[_isActive]->GetCurClip());
+	_actions[_isActive]->Play();
 }
 
 void InteractObj::DeActivate()
 {
-	_actions[true]->Stop();
-	_actions[false]->Play();
-	_sprites[false]->SetActionClip(_actions[false]->GetCurClip());
+	if (_isActive == false)
+		return;
+
 	_isActive = false;
+	_actions[true]->Stop();
+	_sprites[_isActive]->SetActionClip(_actions[_isActive]->GetCurClip());
+	_actions[_isActive]->Play();
 }

@@ -31,6 +31,7 @@ public:
 	void PostRender();
 
 	void Init();
+	void Fin();
 
 	void SetScene(string name);
 

@@ -10,10 +10,10 @@ public:
 
 	void SetPlayer(shared_ptr<Advanced_Player> player) { _player = player; }
 
-	void Spawn();
+	virtual void Spawn();
 	void Extinct();
 	virtual void Activate();
-	virtual void DeActivate();
+	void DeActivate();
 
 protected:
 	virtual void CreateAction();

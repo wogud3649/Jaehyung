@@ -34,6 +34,7 @@ public:
 
 	const bool& GetAlive() { return _isAlive; }
 
+	void Activate();
 private:
 	void MakeShared();
 	void SetParent();

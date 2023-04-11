@@ -7,8 +7,8 @@ public:
 		NORMAL,
 		ITEM,
 		SKULL,
-		STORE,
 		ADVANTURER,
+		STORE,
 		BOSS
 	};
 
@@ -18,9 +18,9 @@ public:
 	virtual void Update();
 	virtual void Render();
 
-	const shared_ptr<Transform>& GetTransform() { return _sprites[0]->GetTransform(); }
-
 	virtual void Activate();
+
+	const shared_ptr<Transform>& GetTransform() { return _sprites[0]->GetTransform(); }
 
 private:
 	virtual void CreateAction();

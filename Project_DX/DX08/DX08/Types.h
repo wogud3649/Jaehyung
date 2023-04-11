@@ -45,6 +45,8 @@ using ATTRIBUTE = unsigned char;
 
 #define SCENE SceneManager::GetInstance()
 
+#define ASSERT(hr) assert(SUCCEEDED(hr))
+
 #define EFFECT EffectManager::GetInstance()
 
 #define DATA_M DataManager::GetInstance()

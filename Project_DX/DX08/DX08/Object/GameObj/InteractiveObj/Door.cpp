@@ -3,7 +3,13 @@
 
 Door::Door()
 {
-	_doorType = static_cast<DoorType>(rand() % 6);
+	int temp = INTERACTOBJ->GetStageLevel();
+	if (temp % 6 == 0)
+		_doorType = DoorType::BOSS;
+	else if (temp % 3 == 0)
+		_doorType = DoorType::STORE;
+	else
+		_doorType = static_cast<DoorType>(rand() % 4);
 
 	CreateAction();
 	_sprites[0]->GetTransform()->SetPos(CENTER);
@@ -12,7 +18,10 @@ Door::Door()
 	_col = make_shared<RectCollider>(_sprites[0]->GetSize());
 	_col->GetTransform()->SetParent(_sprites[0]->GetTransform());
 	_col->GetTransform()->AddScale(Vector2(-0.2f, 0.3f));
+	_col->DeActivate();
 
+	_isActive = false;
+	_isSpawn = false;
 	_actions[_isActive]->Play();
 }
 
@@ -38,6 +47,19 @@ void Door::Render()
 	InteractObj::Render();
 }
 
+void Door::Activate()
+{
+	if (_isActive)
+		return;
+
+	_isActive = true;
+	_actions[false]->Reset();
+	_sprites[_isActive]->SetActionClip(_actions[_isActive]->GetCurClip());
+	_actions[_isActive]->Play();
+
+	_col->Activate();
+}
+
 void Door::CreateAction()
 {
 	MyXML::Sort sortX;
@@ -55,11 +77,11 @@ void Door::CreateAction()
 	case DoorType::SKULL:
 		doorType = "Skull";
 		break;
-	case DoorType::STORE:
-		doorType = "Store";
-		break;
 	case DoorType::ADVANTURER:
 		doorType = "Advanturer";
+		break;
+	case DoorType::STORE:
+		doorType = "Store";
 		break;
 	case DoorType::BOSS:
 		doorType = "Boss";
@@ -127,6 +149,8 @@ void Door::Enter()
 	
 	if (KEY_DOWN('X'))
 	{
+		INTERACTOBJ->AddStageLevel();
+
 		switch (_doorType)
 		{
 		case Door::NORMAL:
@@ -138,10 +162,11 @@ void Door::Enter()
 		case Door::SKULL:
 			SCENE->SetScene("FieldScene1");
 			break;
-		case Door::STORE:
-			break;
 		case Door::ADVANTURER:
 			SCENE->SetScene("FieldScene1");
+			break;
+		case Door::STORE:
+			SCENE->SetScene("StoreScene");
 			break;
 		case Door::BOSS:
 			SCENE->SetScene("BossScene");
@@ -150,9 +175,4 @@ void Door::Enter()
 			break;
 		}
 	}
-}
-
-void Door::Activate()
-{
-	InteractObj::Activate();
 }

@@ -25,6 +25,8 @@ public:
 		return nullptr;
 	}
 
+	void PostRender();
+
 	void CreateRandomDoor();
 	void CreateRandomChest();
 
@@ -40,9 +42,16 @@ public:
 	const shared_ptr<Door>& GetDoor() { return _door; }
 	const shared_ptr<Chest>& GetChest() { return _chest; }
 
+	const UINT& GetStageLevel() { return _stageLevel; }
+	void AddStageLevel() { _stageLevel++; }
+
 private:
 	static InteractObjManager* _instance;
 
+	UINT _stageLevel = 1;
+
 	shared_ptr<Door> _door;
 	shared_ptr<Chest> _chest;
+
+	bool _doorActive = false;
 };

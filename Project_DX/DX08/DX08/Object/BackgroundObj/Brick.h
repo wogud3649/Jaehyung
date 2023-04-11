@@ -45,10 +45,9 @@ public:
 	const Vector2& GetDoorSpawn() { return _doorSpawn; }
 	const Vector2& GetChestSpawn() { return _chestSpawn; }
 	const vector<Vector2>& GetMonsterSpawn() { return _monsterSpawn; }
+	const UINT& GetACtiveMonsters() { return _activeMonsters; }
 
 	void SetBlockeType(Vector2 curFrame) { _curFrame = curFrame; }
-
-	const float& GetActiveMonsters() { return _activeMonsters; }
 	
 	const int& GetBlockPoolCount() { return _blockPoolCount; }
 	const int& GetBlockIndex();
@@ -86,5 +85,5 @@ private:
 	Vector2 _doorSpawn = _outPos * 2;
 	Vector2 _chestSpawn = _outPos * 2;
 
-	float _activeMonsters = 0;
+	UINT _activeMonsters = 0;
 };

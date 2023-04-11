@@ -160,8 +160,6 @@ void Advanced_Player::Render()
 
 void Advanced_Player::PostRender()
 {
-	ImGui::SliderFloat("PLAYER HP", &_curHp, 0, _maxHp);
-	ImGui::SliderFloat("jumpPower", &_curJumpPower, 0, _maxJumpPower);
 }
 
 void Advanced_Player::EnAble()

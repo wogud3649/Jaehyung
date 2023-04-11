@@ -50,4 +50,15 @@ void CharacterUI::PostRender()
 		_extraSkillSlot->Render();
 	if (_activeOrbSlot)
 		_orbSlot->Render();
+	
+	wstring money = L"Money : " + to_wstring(INVENTORY->GetMoney());
+	RECT rect;
+	rect.left = WIN_WIDTH - 200;
+	rect.right = WIN_WIDTH;
+	rect.top = WIN_HEIGHT - 60;
+	rect.bottom = WIN_HEIGHT;
+	DirectWrite::GetInstance()->RenderText(money, rect);
+	wstring boneFrag = L"BoneFrag : " + to_wstring(INVENTORY->GetBoneFrag());
+	rect.top = WIN_HEIGHT - 30;
+	DirectWrite::GetInstance()->RenderText(boneFrag, rect);
 }

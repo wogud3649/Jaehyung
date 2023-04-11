@@ -37,6 +37,8 @@ public:
 	vector<ItemInfo> GetEquipedSkulInfo();
 	vector<ItemInfo> GetEquipedItemInfo();
 	StatAttributes GetEquipStats();
+	const UINT& GetMoney() { return _money; }
+	const UINT& GetBoneFrag() { return _boneFrag; }
 
 	bool IsOpen() { return _inventoryOpen; }
 

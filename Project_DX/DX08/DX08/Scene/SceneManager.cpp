@@ -9,6 +9,7 @@
 #include "../Scene/BasicScene/ObjectScene.h"
 #include "../Scene/FieldScene/FieldScene1.h"
 #include "../Scene/FieldScene/BossScene.h"
+#include "../Scene/FieldScene/StoreScene.h"
 
 SceneManager* SceneManager::_instance = nullptr;
 SceneManager::SceneManager()
@@ -16,6 +17,7 @@ SceneManager::SceneManager()
 	_sceneTable["MapEditorTestScene"] = make_shared<MapEditorTestScene>();
 	_sceneTable["TestScene"] = make_shared<TestScene>();
 	_sceneTable["FieldScene1"] = make_shared<FieldScene1>();
+	_sceneTable["StoreScene"] = make_shared<StoreScene>();
 	_sceneTable["BossScene"] = make_shared<BossScene>();
 
 	_curScene = _sceneTable["MapEditorTestScene"];
@@ -30,7 +32,13 @@ void SceneManager::Update()
 {
 	if (_curScene == nullptr) return;
 
-	_curScene->Update();
+	UI->Update();
+	INVENTORY->Update();
+
+	if (INVENTORY->IsOpen() == false)
+	{
+		_curScene->Update();
+	}
 	
 	if (KEY_DOWN(VK_F3))
 		_curSceneIndex++;
@@ -39,10 +47,10 @@ void SceneManager::Update()
 
 	if (_curSceneIndex != _oldSceneIndex)
 	{
-		if (_curSceneIndex > 3)
+		if (_curSceneIndex > 4)
 			_curSceneIndex = 0;
 		else if (_curSceneIndex < 0)
-			_curSceneIndex = 3;
+			_curSceneIndex = 4;
 
 		switch (_curSceneIndex)
 		{
@@ -57,6 +65,9 @@ void SceneManager::Update()
 			SetScene("FieldScene1");
 			break;
 		case 3:
+			SetScene("StoreScene");
+			break;
+		case 4:
 			SetScene("BossScene");
 			break;
 		default:
@@ -78,6 +89,7 @@ void SceneManager::PreRender()
 {
 	if (_curScene == nullptr) return;
 
+	BACKGROUND->BackgroundRender();
 	_curScene->PreRender();
 }
 
@@ -86,11 +98,21 @@ void SceneManager::PostRender()
 	if (_curScene == nullptr) return;
 
 	_curScene->PostRender();
+	INVENTORY->PostRender();
+	UI->PostRender();
+	INTERACTOBJ->PostRender();
 }
 
 void SceneManager::Init()
 {
-	_curScene->Init();
+	CAMERA->SetOffset(CENTER);
+	UI->Init();
+	DELTA_TIME = 0;
+}
+
+void SceneManager::Fin()
+{
+	CAMERA->SetTarget(nullptr);
 }
 
 void SceneManager::SetScene(string name)

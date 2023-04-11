@@ -5,8 +5,6 @@ TestScene::TestScene()
 {
 	_player = make_shared<Advanced_Player>();
 
-	INVENTORY->SetPlayer(_player);
-
 	_brick = make_shared<Brick>();
 	_brick->SetPlayer(_player);
 }
@@ -24,57 +22,85 @@ void TestScene::Init()
 
 	_brick->Load(filePath);
 	_brick->SpawnMonster();
-	Vector2 temp = _brick->GetDoorSpawn();
-	INTERACTOBJ->CreateRandomDoor();
-	INTERACTOBJ->GetDoor()->GetTransform()->SetPos(Vector2(temp.x, temp.y + 16));
 
-	temp = _brick->GetChestSpawn();
-	INTERACTOBJ->CreateRandomChest();
-	INTERACTOBJ->GetChest()->GetTransform()->SetPos(Vector2(temp.x, temp.y + 16));
-	_brick->Update();
-	INTERACTOBJ->SetPlayer(_player);
+	CreateInteractObj();
 
 	_player->GetFootCollider()->GetTransform()->SetPos(_brick->GetPlayerSpawn());
 
 	CAMERA->SetTarget(_player->GetBodyCollider()->GetTransform());
-	CAMERA->SetOffset(CENTER);
 
-	UI->Init();
+	INVENTORY->SetPlayer(_player);
+
+	SCENE->Init();
+
+	_isClear = false;
 }
 
 void TestScene::Fin()
 {
-	CAMERA->SetTarget(nullptr);
+	SCENE->Fin();
 }
 
 void TestScene::Update()
 {
-	INVENTORY->Update();
-	UI->Update();
-	if (INVENTORY->IsOpen())
-		return;
 	_player->Update();
 	_brick->Update();
+
 	INTERACTOBJ->GetDoor()->Update();
-	INTERACTOBJ->GetChest()->Update();
+	if (_isClear)
+		INTERACTOBJ->GetChest()->Update();
+
+	SceneClear();
 }
 
 void TestScene::Render()
 {
+	_brick->Render();
+
 	INTERACTOBJ->GetDoor()->Render();
-	INTERACTOBJ->GetChest()->Render();
+	
+	if (_isClear)
+		INTERACTOBJ->GetChest()->Render();
+	
 	_player->Render();
 }
 
 void TestScene::PreRender()
 {
-	_brick->Render();
 }
 
 void TestScene::PostRender()
 {
-	INVENTORY->PostRender();
-	UI->PostRender();
 	_player->PostRender();
 	_brick->PostRender();
+}
+
+void TestScene::SceneClear()
+{
+	UINT activeMonsters = _brick->GetACtiveMonsters();
+	if (activeMonsters == 0)
+	{
+		_isClear = true;
+		INTERACTOBJ->GetChest()->Spawn();
+		INTERACTOBJ->GetDoor()->Activate();
+	}
+	else
+	{
+		_isClear = false;
+		INTERACTOBJ->GetChest()->Extinct();
+		INTERACTOBJ->GetDoor()->DeActivate();
+	}
+}
+
+void TestScene::CreateInteractObj()
+{
+	Vector2 temp = _brick->GetDoorSpawn();
+	INTERACTOBJ->CreateRandomDoor();
+	INTERACTOBJ->GetDoor()->GetTransform()->SetPos(Vector2(temp.x, temp.y + 16));
+	INTERACTOBJ->GetDoor()->Spawn();
+
+	temp = _brick->GetChestSpawn();
+	INTERACTOBJ->CreateRandomChest();
+	INTERACTOBJ->GetChest()->GetTransform()->SetPos(Vector2(temp.x, temp.y + 16));
+	INTERACTOBJ->SetPlayer(_player);
 }

@@ -10,6 +10,12 @@ InteractObjManager::~InteractObjManager()
 {
 }
 
+void InteractObjManager::PostRender()
+{
+	int temp = _stageLevel;
+	ImGui::SliderInt("Stage", &temp, 0, 10);
+}
+
 void InteractObjManager::CreateRandomDoor()
 {
 	_door = make_shared<Door>();

@@ -12,12 +12,11 @@ public:
 	virtual void PreRender() override;
 	virtual void PostRender() override;
 
-	void SetScene(wstring filePath) { _filePath = filePath; }
-
 private:
+	virtual void SceneClear();
+	void CreateInteractObj();
+
 	shared_ptr<Advanced_Player> _player;
 	shared_ptr<Brick> _brick;
-
-	wstring _filePath = L"";
 };
 

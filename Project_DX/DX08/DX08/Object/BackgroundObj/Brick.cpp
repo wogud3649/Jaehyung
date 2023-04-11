@@ -99,7 +99,7 @@ void Brick::Update()
 	bool headHit = false;
 	bool attackHit = false;
 	bool skillHit = false;
-	int activeMonsters = 0;
+	UINT activeMonsters = 0;
 
 	for (auto mushroomEnt : _mushroomEnts)
 	{
@@ -145,6 +145,7 @@ void Brick::Update()
 	}
 
 	_activeMonsters = activeMonsters;
+
 
 	if (_player.expired() == false)
 	{
@@ -341,7 +342,6 @@ bool Brick::Load(wstring filePath)
 	reader.Byte(&ptr, sizeof(Vector2));
 	_chestSpawn = tempVector;
 
-	DELTA_TIME = 0;
 	return true;
 }
 

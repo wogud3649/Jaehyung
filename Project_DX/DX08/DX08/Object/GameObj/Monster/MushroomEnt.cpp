@@ -76,10 +76,6 @@ void MushroomEnt::Render()
 
 void MushroomEnt::PostRender()
 {
-	if (_isAlive == false)
-		return;
-
-	ImGui::SliderFloat("MushroomEntHp", &_curHp, 0, _maxHp);
 }
 
 void MushroomEnt::Ground()
