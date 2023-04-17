@@ -3,6 +3,8 @@
 
 StoreScene::StoreScene()
 {
+	_store = make_shared<Store>();
+
 	_player = make_shared<Advanced_Player>();
 
 	_brick = make_shared<Brick>();
@@ -25,6 +27,7 @@ void StoreScene::Init()
 	
 	CAMERA->SetTarget(_player->GetBodyCollider()->GetTransform());
 
+	_store->SetPlayer(_player);
 	INVENTORY->SetPlayer(_player);
 
 	SCENE->Init();
@@ -40,6 +43,7 @@ void StoreScene::Fin()
 void StoreScene::Update()
 {
 	_player->Update();
+	_store->Update();
 	_brick->Update();
 
 	INTERACTOBJ->GetDoor()->Update();
@@ -50,6 +54,7 @@ void StoreScene::Render()
 	_brick->Render();
 	INTERACTOBJ->GetDoor()->Render();
 
+	_store->Render();
 	_player->Render();
 }
 
@@ -66,7 +71,6 @@ void StoreScene::PostRender()
 void StoreScene::CreateInteractObj()
 {
 	Vector2 temp = _brick->GetDoorSpawn();
-	INTERACTOBJ->CreateRandomDoor();
 	INTERACTOBJ->GetDoor()->GetTransform()->SetPos(Vector2(temp.x, temp.y + 16));
 	INTERACTOBJ->GetDoor()->Spawn();
 	INTERACTOBJ->GetDoor()->Activate();

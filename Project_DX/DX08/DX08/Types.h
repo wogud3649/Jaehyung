@@ -85,7 +85,8 @@ enum class Rarity
 	NORMAL,
 	RARE,
 	UNIQUE,
-	LEGENDARY
+	LEGENDARY,
+	RARITYSIZE
 };
 
 struct HIT_RESULT
@@ -109,6 +110,7 @@ struct ColliderData
 
 struct StatAttributes
 {
+	StatAttributes() {}
 	StatAttributes& operator+=(const StatAttributes& other)
 	{
 		this->ad = this->ad + other.ad;
@@ -181,7 +183,7 @@ struct ItemInfo
 	ItemType itemType = ItemType::NONE;	// ItemType
 	Rarity rarity = Rarity::NONE;						// Rarity
 	UINT price = 0;						// Price
-	StatAttributes statAttributes;		// StatAttributes
+	StatAttributes statAttributes = StatAttributes();		// StatAttributes
 	UINT frameX = 0;					// FrameX
 	UINT frameY = 0;					// FrameY
 };

@@ -4,6 +4,9 @@
 InteractObjManager* InteractObjManager::_instance = nullptr;
 InteractObjManager::InteractObjManager()
 {
+	_stageLevel = 1;
+	_door = make_shared<Door>();
+	_chest = make_shared<Chest>();
 }
 
 InteractObjManager::~InteractObjManager()
@@ -16,41 +19,10 @@ void InteractObjManager::PostRender()
 	ImGui::SliderInt("Stage", &temp, 0, 10);
 }
 
-void InteractObjManager::CreateRandomDoor()
-{
-	_door = make_shared<Door>();
-}
-
-void InteractObjManager::CreateRandomChest()
-{
-	_chest = make_shared<Chest>();
-}
-
 void InteractObjManager::SetPlayer(shared_ptr<Advanced_Player> player)
 {
 	_door->SetPlayer(player);
 	_chest->SetPlayer(player);
-}
-
-void InteractObjManager::SpawnDoor()
-{
-	_door->Spawn();
-}
-
-void InteractObjManager::ExtinctDoor()
-{
-	_door->DeActivate();
-	_door->Extinct();
-}
-
-void InteractObjManager::ActivateDoor()
-{
-	_door->Activate();
-}
-
-void InteractObjManager::SpawnChest()
-{
-	_chest->Spawn();
 }
 
 void InteractObjManager::ExtinctChest()

@@ -15,6 +15,8 @@ public:
 private:
 	void CreateInteractObj();
 
+	shared_ptr<Store> _store;
+
 	shared_ptr<Advanced_Player> _player;
 	shared_ptr<Brick> _brick;
 };

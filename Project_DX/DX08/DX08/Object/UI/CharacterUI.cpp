@@ -24,16 +24,26 @@ CharacterUI::~CharacterUI()
 
 void CharacterUI::Init()
 {
-	Vector2 initFrame;
-	initFrame.x = INVENTORY->GetEquipedItemInfo()[0].frameX + 1;
-	initFrame.y = INVENTORY->GetEquipedItemInfo()[0].frameY;
-	_skullIcon->SetCurFrame(initFrame);
 }
 
 void CharacterUI::Update()
 {
 	_characterUI->Update();
 	_skullIcon->Update();
+
+	Vector2 curFrame;
+	if (_isFirstSkul)
+	{
+		curFrame.x = INVENTORY->GetEquipedSkulInfo()[0].frameX;
+		curFrame.y = INVENTORY->GetEquipedSkulInfo()[0].frameY;
+	}
+	else
+	{
+		curFrame.x = INVENTORY->GetEquipedSkulInfo()[1].frameX;
+		curFrame.y = INVENTORY->GetEquipedSkulInfo()[1].frameY;
+	}
+
+	_skullIcon->SetCurFrame(curFrame);
 
 	if (_activeExtraSkillSlot)
 		_extraSkillSlot->Update();
@@ -61,4 +71,20 @@ void CharacterUI::PostRender()
 	wstring boneFrag = L"BoneFrag : " + to_wstring(INVENTORY->GetBoneFrag());
 	rect.top = WIN_HEIGHT - 30;
 	DirectWrite::GetInstance()->RenderText(boneFrag, rect);
+}
+
+void CharacterUI::SwapSkul()
+{
+	if (_isFirstSkul)
+	{
+		if (INVENTORY->GetEquipedSkulInfo()[1].itemCode == 0)
+			return;
+		_isFirstSkul = false;
+	}
+	else
+	{
+		if (INVENTORY->GetEquipedSkulInfo()[0].itemCode == 0)
+			return;
+		_isFirstSkul = true;
+	}
 }

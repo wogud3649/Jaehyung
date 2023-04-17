@@ -12,16 +12,16 @@ InteractObj::~InteractObj()
 void InteractObj::Update()
 {
 	_col->Update();
-	for (auto sprite : _sprites)
+	for (auto sprite : _sprites[_selected])
 		sprite->Update();
-	for (auto action : _actions)
+	for (auto action : _actions[_selected])
 		action->Update();
 }
 
 void InteractObj::Render()
 {
-	_sprites[_isActive]->SetActionClip(_actions[_isActive]->GetCurClip());
-	_sprites[_isActive]->Render();
+	_sprites[_selected][_isActive]->SetActionClip(_actions[_selected][_isActive]->GetCurClip());
+	_sprites[_selected][_isActive]->Render();
 	_col->Render();
 }
 
@@ -39,6 +39,8 @@ void InteractObj::Spawn()
 
 void InteractObj::Extinct()
 {
+	DeActivate();
+
 	if (_isSpawn == false)
 		return;
 
@@ -52,9 +54,9 @@ void InteractObj::Activate()
 		return;
 
 	_isActive = true;
-	_actions[false]->Reset();
-	_sprites[_isActive]->SetActionClip(_actions[_isActive]->GetCurClip());
-	_actions[_isActive]->Play();
+	_actions[_selected][false]->Reset();
+	_sprites[_selected][_isActive]->SetActionClip(_actions[_selected][_isActive]->GetCurClip());
+	_actions[_selected][_isActive]->Play();
 }
 
 void InteractObj::DeActivate()
@@ -63,7 +65,7 @@ void InteractObj::DeActivate()
 		return;
 
 	_isActive = false;
-	_actions[true]->Stop();
-	_sprites[_isActive]->SetActionClip(_actions[_isActive]->GetCurClip());
-	_actions[_isActive]->Play();
+	_actions[_selected][true]->Stop();
+	_sprites[_selected][_isActive]->SetActionClip(_actions[_selected][_isActive]->GetCurClip());
+	_actions[_selected][_isActive]->Play();
 }

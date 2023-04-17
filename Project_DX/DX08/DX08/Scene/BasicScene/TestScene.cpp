@@ -82,25 +82,22 @@ void TestScene::SceneClear()
 	{
 		_isClear = true;
 		INTERACTOBJ->GetChest()->Spawn();
-		INTERACTOBJ->GetDoor()->Activate();
 	}
 	else
 	{
 		_isClear = false;
-		INTERACTOBJ->GetChest()->Extinct();
 		INTERACTOBJ->GetDoor()->DeActivate();
+		INTERACTOBJ->GetChest()->Extinct();
 	}
 }
 
 void TestScene::CreateInteractObj()
 {
 	Vector2 temp = _brick->GetDoorSpawn();
-	INTERACTOBJ->CreateRandomDoor();
 	INTERACTOBJ->GetDoor()->GetTransform()->SetPos(Vector2(temp.x, temp.y + 16));
 	INTERACTOBJ->GetDoor()->Spawn();
 
 	temp = _brick->GetChestSpawn();
-	INTERACTOBJ->CreateRandomChest();
 	INTERACTOBJ->GetChest()->GetTransform()->SetPos(Vector2(temp.x, temp.y + 16));
 	INTERACTOBJ->SetPlayer(_player);
 }

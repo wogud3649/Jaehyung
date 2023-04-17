@@ -8,9 +8,10 @@ public:
 	virtual void Update();
 	virtual void Render();
 
-	const shared_ptr<Transform>& GetTransform() { return _sprites[0]->GetTransform(); }
+	const shared_ptr<Transform>& GetTransform() { return _sprites[0][0]->GetTransform(); }
 
 	virtual void Spawn();
+	void SetRandom();
 private:
 	virtual void CreateAction();
 
@@ -19,19 +20,14 @@ private:
 
 	void TakeItem();
 
-	void RandomNormal();
-	void RandomRare();
-	void RandomUnique();
-	void RandomLegendary();
-
 	shared_ptr<Sprite> _item;
 	ItemInfo _itemInfo;
 	shared_ptr<CircleCollider> _itemCol;
 
-	Rarity _rarity;
+	Rarity _rarity = Rarity::NONE;
 
 	float _popSpeed = 700.0f;
 	bool _isOpen = false;
 
-	float _itemActivateDelay;
+	float _itemActivateDelay = 1.2f;
 };

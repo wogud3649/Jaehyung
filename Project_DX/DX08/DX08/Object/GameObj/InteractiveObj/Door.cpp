@@ -3,26 +3,13 @@
 
 Door::Door()
 {
-	int temp = INTERACTOBJ->GetStageLevel();
-	if (temp % 6 == 0)
-		_doorType = DoorType::BOSS;
-	else if (temp % 3 == 0)
-		_doorType = DoorType::STORE;
-	else
-		_doorType = static_cast<DoorType>(rand() % 4);
-
 	CreateAction();
-	_sprites[0]->GetTransform()->SetPos(CENTER);
-	_sprites[1]->GetTransform()->SetParent(_sprites[0]->GetTransform());
+	_sprites[0][0]->GetTransform()->SetPos(CENTER);
 
-	_col = make_shared<RectCollider>(_sprites[0]->GetSize());
-	_col->GetTransform()->SetParent(_sprites[0]->GetTransform());
+	_col = make_shared<RectCollider>(_sprites[0][0]->GetSize());
+	_col->GetTransform()->SetParent(_sprites[0][0]->GetTransform());
 	_col->GetTransform()->AddScale(Vector2(-0.2f, 0.3f));
 	_col->DeActivate();
-
-	_isActive = false;
-	_isSpawn = false;
-	_actions[_isActive]->Play();
 }
 
 Door::~Door()
@@ -53,11 +40,51 @@ void Door::Activate()
 		return;
 
 	_isActive = true;
-	_actions[false]->Reset();
-	_sprites[_isActive]->SetActionClip(_actions[_isActive]->GetCurClip());
-	_actions[_isActive]->Play();
+	_actions[_selected][false]->Reset();
+	_sprites[_selected][_isActive]->SetActionClip(_actions[_selected][_isActive]->GetCurClip());
+	_actions[_selected][_isActive]->Play();
 
 	_col->Activate();
+}
+
+void Door::SetRandom()
+{
+	int temp = INTERACTOBJ->GetStageLevel();
+
+	if (temp % 6 == 0)
+		_doorType = DoorType::BOSS;
+	else if (temp % 3 == 0)
+		_doorType = DoorType::STORE;
+	else
+		_doorType = static_cast<DoorType>(rand() % 4);
+
+	_actions[_selected][true]->Reset();
+
+	switch (_doorType)
+	{
+	case Door::NORMAL:
+		_selected = 0;
+		break;
+	case Door::ITEM:
+		_selected = 1;
+		break;
+	case Door::SKULL:
+		_selected = 2;
+		break;
+	case Door::ADVANTURER:
+		_selected = 3;
+		break;
+	case Door::STORE:
+		_selected = 4;
+		break;
+	case Door::BOSS:
+		_selected = 5;
+		break;
+	case Door::DOORTYPESIZE:
+		break;
+	default:
+		break;
+	}
 }
 
 void Door::CreateAction()
@@ -66,73 +93,87 @@ void Door::CreateAction()
 	MyXML::Sort sortY;
 
 	string doorType;
-	switch (_doorType)
-	{
-	case DoorType::NORMAL:
-		doorType = "Normal";
-		break;
-	case DoorType::ITEM:
-		doorType = "Item";
-		break;
-	case DoorType::SKULL:
-		doorType = "Skull";
-		break;
-	case DoorType::ADVANTURER:
-		doorType = "Advanturer";
-		break;
-	case DoorType::STORE:
-		doorType = "Store";
-		break;
-	case DoorType::BOSS:
-		doorType = "Boss";
-		break;
-	default:
-		break;
-	}
 
-	wstring doorTypeW(doorType.begin(), doorType.end());
-	string state;
-	string name;
-	Action::Type type;
-	float speed;
+	_sprites.resize(6);
+	_actions.resize(6);
 
-	for (int i = 0; i < 2; i++)
+	for (int i = static_cast<int>(DoorType::NORMAL); i < static_cast<int>(DoorType::DOORTYPESIZE); i++)
 	{
 		switch (i)
 		{
-		case 0:
-			state = "Deactivate";
-			type = Action::Type::END;
-			speed = 0.1f;
-			sortX = MyXML::Sort::MIDDLE;
-			sortY = MyXML::Sort::BOTTOM;
+		case DoorType::NORMAL:
+			doorType = "Normal";
 			break;
-		case 1:
-			state = "Loop";
-			type = Action::Type::LOOP;
-			speed = 0.1f;
-			sortX = MyXML::Sort::MIDDLE;
-			sortY = MyXML::Sort::BOTTOM;
+		case DoorType::ITEM:
+			doorType = "Item";
+			break;
+		case DoorType::SKULL:
+			doorType = "Skull";
+			break;
+		case DoorType::ADVANTURER:
+			doorType = "Advanturer";
+			break;
+		case DoorType::STORE:
+			doorType = "Store";
+			break;
+		case DoorType::BOSS:
+			doorType = "Boss";
 			break;
 		default:
 			break;
 		}
 
-		wstring stateW(state.begin(), state.end());
+		wstring doorTypeW(doorType.begin(), doorType.end());
+		string state;
+		string name;
+		Action::Type type;
+		float speed;
 
-		wstring srvPath = L"Resources/Texture/InteractObj/Door/" + doorTypeW + stateW + L".png";
-		string xmlPath = "Resources/XML/InteractObj/Door/" + doorType + state + ".xml";
+		_sprites[i].resize(2);
+		_actions[i].resize(2);
+		for (int j = 0; j < 2; j++)
+		{
+			switch (j)
+			{
+			case 0:
+				state = "Deactivate";
+				type = Action::Type::END;
+				speed = 0.1f;
+				sortX = MyXML::Sort::MIDDLE;
+				sortY = MyXML::Sort::BOTTOM;
+				break;
+			case 1:
+				state = "Loop";
+				type = Action::Type::LOOP;
+				speed = 0.1f;
+				sortX = MyXML::Sort::MIDDLE;
+				sortY = MyXML::Sort::BOTTOM;
+				break;
+			default:
+				break;
+			}
 
-		MyXML xml = MyXML(xmlPath, srvPath);
+			wstring stateW(state.begin(), state.end());
 
-		name = doorType + state;
+			wstring srvPath = L"Resources/Texture/InteractObj/Door/" + doorTypeW + stateW + L".png";
+			string xmlPath = "Resources/XML/InteractObj/Door/" + doorType + state + ".xml";
 
-		_actions.emplace_back(make_shared<Action>(xml.GetClips(sortX, sortY), name, type, speed));
+			MyXML xml = MyXML(xmlPath, srvPath);
 
-		Vector2 maxSize = xml.MaxSize() * 2.0f;
-		shared_ptr<Sprite> sprite = make_shared<Sprite>(srvPath, maxSize);
-		_sprites.emplace_back(sprite);
+			name = doorType + state;
+
+			_actions[i][j] = make_shared<Action>(xml.GetClips(sortX, sortY), name, type, speed);
+
+			Vector2 maxSize = xml.MaxSize() * 2.0f;
+			shared_ptr<Sprite> sprite = make_shared<Sprite>(srvPath, maxSize);
+			_sprites[i][j] = sprite;
+		}
 	}
+
+	for (auto row : _sprites)
+		for (auto sprite : row)
+			sprite->GetTransform()->SetParent(_sprites[0][0]->GetTransform());
+	_sprites[0][0]->GetTransform()->SetParent(nullptr);
 }
 
 void Door::Enter()
@@ -150,6 +191,7 @@ void Door::Enter()
 	if (KEY_DOWN('X'))
 	{
 		INTERACTOBJ->AddStageLevel();
+		INTERACTOBJ->ExtinctChest();
 
 		switch (_doorType)
 		{
@@ -167,6 +209,8 @@ void Door::Enter()
 			break;
 		case Door::STORE:
 			SCENE->SetScene("StoreScene");
+			if (_endEvent != nullptr)
+				_endEvent();
 			break;
 		case Door::BOSS:
 			SCENE->SetScene("BossScene");

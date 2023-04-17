@@ -113,11 +113,10 @@ void BossScene::SceneClear()
 void BossScene::CreateInteractObj()
 {
 	Vector2 temp = _brick->GetDoorSpawn();
-	INTERACTOBJ->CreateRandomDoor();
 	INTERACTOBJ->GetDoor()->GetTransform()->SetPos(Vector2(temp.x, temp.y + 16));
+	INTERACTOBJ->GetDoor()->DeActivate();
 
 	temp = _brick->GetChestSpawn();
-	INTERACTOBJ->CreateRandomChest();
 	INTERACTOBJ->GetChest()->GetTransform()->SetPos(Vector2(temp.x, temp.y + 16));
 	INTERACTOBJ->SetPlayer(_player);
 }

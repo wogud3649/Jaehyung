@@ -9,6 +9,8 @@ public:
 	void Update();
 	void PostRender();
 
+	void SwapSkul();
+
 private:
 	shared_ptr<Quad> _characterUI;
 
@@ -19,4 +21,6 @@ private:
 	bool _activeOrbSlot = false;
 
 	shared_ptr<Sprite> _skullIcon;
+
+	bool _isFirstSkul = true;
 };

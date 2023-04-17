@@ -9,7 +9,8 @@ public:
 		SKULL,
 		ADVANTURER,
 		STORE,
-		BOSS
+		BOSS,
+		DOORTYPESIZE
 	};
 
 	Door();
@@ -19,8 +20,10 @@ public:
 	virtual void Render();
 
 	virtual void Activate();
+	void SetRandom();
 
-	const shared_ptr<Transform>& GetTransform() { return _sprites[0]->GetTransform(); }
+	const shared_ptr<Transform>& GetTransform() { return _sprites[0][0]->GetTransform(); }
+	void SetCallBack(function<void(void)> event) { _endEvent = event; }
 
 private:
 	virtual void CreateAction();
@@ -28,4 +31,6 @@ private:
 	void Enter();
 
 	DoorType _doorType;
+
+	function<void(void)> _endEvent = nullptr;
 };

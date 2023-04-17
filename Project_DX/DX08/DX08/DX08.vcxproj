@@ -209,6 +209,7 @@
     <ClInclude Include="Framework\Render\ShaderManager.h" />
     <ClInclude Include="Object\UI\Slot.h" />
     <ClInclude Include="Scene\FieldScene\StoreScene.h" />
+    <ClInclude Include="Object\UI\Store.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Framework\Render\VertexBuffer.h" />
     <ClInclude Include="Framework\Render\VertexShader.h" />
@@ -291,6 +292,7 @@
     <ClCompile Include="Scene\BasicScene\UIScene.cpp" />
     <ClCompile Include="Object\UI\Slot.cpp" />
     <ClCompile Include="Scene\FieldScene\StoreScene.cpp" />
+    <ClCompile Include="Object\UI\Store.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX08.rc" />

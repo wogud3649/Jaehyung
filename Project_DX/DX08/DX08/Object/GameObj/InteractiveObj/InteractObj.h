@@ -18,10 +18,12 @@ public:
 protected:
 	virtual void CreateAction();
 
-	vector<shared_ptr<Sprite>> _sprites;
-	vector<shared_ptr<Action>> _actions;
+	vector<vector<shared_ptr<Sprite>>> _sprites;
+	vector<vector<shared_ptr<Action>>> _actions;
 
 	shared_ptr<RectCollider> _col;
+
+	UINT _selected = 0;
 
 	bool _isSpawn = false;
 	bool _isActive = false;

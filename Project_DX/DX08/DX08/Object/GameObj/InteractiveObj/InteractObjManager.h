@@ -27,16 +27,8 @@ public:
 
 	void PostRender();
 
-	void CreateRandomDoor();
-	void CreateRandomChest();
-
 	void SetPlayer(shared_ptr<Advanced_Player> player);
 
-	void SpawnDoor();
-	void ExtinctDoor();
-	void ActivateDoor();
-
-	void SpawnChest();
 	void ExtinctChest();
 
 	const shared_ptr<Door>& GetDoor() { return _door; }

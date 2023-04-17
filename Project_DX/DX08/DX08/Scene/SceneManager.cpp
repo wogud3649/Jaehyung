@@ -98,13 +98,19 @@ void SceneManager::PostRender()
 	if (_curScene == nullptr) return;
 
 	_curScene->PostRender();
-	INVENTORY->PostRender();
-	UI->PostRender();
-	INTERACTOBJ->PostRender();
+
+	if (_curSceneIndex != 0)
+	{
+		INVENTORY->PostRender();
+		UI->PostRender();
+		INTERACTOBJ->PostRender();
+	}
 }
 
 void SceneManager::Init()
 {
+	INTERACTOBJ->GetChest()->SetRandom();
+	INTERACTOBJ->GetDoor()->SetRandom();
 	CAMERA->SetOffset(CENTER);
 	UI->Init();
 	DELTA_TIME = 0;

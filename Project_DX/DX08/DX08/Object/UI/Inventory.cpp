@@ -21,26 +21,8 @@ Inventory::Inventory()
 	_itemInfoIcons->SetCurFrame(Vector2(0, 0));
 
 	CreateSlots();
-	RootItem(-1);
 	RootItem(1);
-	RootItem(2);
-	RootItem(3);
-	RootItem(4);
-	RootItem(5);
-	RootItem(6);
-	RootItem(7);
-	RootItem(8);
-	RootItem(9);
-	RootItem(10);
-	RootItem(11);
-	RootItem(12);
-	RootItem(13);
-	RootItem(14);
-	RootItem(15);
-	RootItem(16);
-	RootItem(17);
-	RootItem(18);
-	RootItem(19);
+	DATA_M->SetDuplicate(1);
 }
 
 Inventory::~Inventory()
@@ -312,14 +294,14 @@ void Inventory::RemoveItem(int index)
 		_player.lock()->SetEquipStats(this->GetEquipStats());
 }
 
-void Inventory::SellItem(int index)
+bool Inventory::SellItem(int index)
 {
 	if (index == -1)
-		return;
+		return false;
 
 	ItemInfo info = _itemDatas[index];
 	if (info.itemCode == 0)
-		return;
+		return false;
 
 	if (info.itemType == ItemType::HEAD)
 		_boneFrag += info.price;
@@ -327,20 +309,25 @@ void Inventory::SellItem(int index)
 		_money += info.price;
 
 	RemoveItem(index);
+
+	return true;
 }
 
-void Inventory::BuyItem(int itemCode, int price)
+bool Inventory::BuyItem(int itemCode)
 {
-	if (price < 0)
-		return;
 	if (itemCode == 0)
-		return;
+		return false;
+
+	int price = DATA_M->GetItemByItemCode(itemCode).price;
+
 	if (_money < price)
-		return;
+		return false;
 
 	bool success = RootItem(itemCode);
 	if (success)
 		_money -= price;
+
+	return true;
 }
 
 bool Inventory::RootItem(int itemCode)

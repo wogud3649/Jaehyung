@@ -30,8 +30,8 @@ public:
 
 	void SetPlayer(shared_ptr<Advanced_Player> player);
 
-	void SellItem(int index);
-	void BuyItem(int itemCode, int price);
+	bool SellItem(int index);
+	bool BuyItem(int itemCode);
 	bool RootItem(int itemCode);
 
 	vector<ItemInfo> GetEquipedSkulInfo();
@@ -73,8 +73,8 @@ private:
 	Pannel _curPannel = Pannel::EMPTY;
 	bool _activeExtraInventory = false;
 
-	UINT _boneFrag = 0;
-	UINT _money = 0;
+	UINT _boneFrag = 15;
+	UINT _money = 1500;
 
 	bool _inventoryOpen = false;
 
