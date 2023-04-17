@@ -122,6 +122,7 @@ private:
 	float _baseCcd = 15.0f;
 	float _maxChangeCD = _baseCcd;
 	float _curChangeCD = _baseCcd;
+
 	
 	ATTRIBUTE _attribute = 0;
 

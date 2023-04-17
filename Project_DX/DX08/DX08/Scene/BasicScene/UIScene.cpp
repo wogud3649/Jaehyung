@@ -3,7 +3,7 @@
 
 UIScene::UIScene()
 {
-
+	_slider = make_shared<Slider>();
 }
 
 UIScene::~UIScene()
@@ -21,6 +21,7 @@ void UIScene::Fin()
 
 void UIScene::Update()
 {
+	_slider->Update();
 	INVENTORY->Update();
 	UI->Update();
 }
@@ -33,4 +34,5 @@ void UIScene::PostRender()
 {
 	INVENTORY->PostRender();
 	UI->PostRender();
+	_slider->PostRender();
 }

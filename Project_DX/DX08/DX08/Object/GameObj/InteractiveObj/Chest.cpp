@@ -66,7 +66,15 @@ void Chest::Spawn()
 		return;
 
 	_isSpawn = true;
+	_popSpeed = 700.0f;
+	_itemActivateDelay = 1.2f;
 	_col->Activate();
+}
+
+void Chest::Extinct()
+{
+	InteractObj::Extinct();
+	_isOpen = false;
 }
 
 void Chest::SetRandom()
@@ -113,6 +121,7 @@ void Chest::SetRandom()
 	_itemInfo = DATA_M->GetItemByItemCode(temp);
 
 	_item->SetCurFrame(Vector2(_itemInfo.frameX, _itemInfo.frameY));
+	_item->GetTransform()->SetPos(Vector2(0, 0));
 }
 
 void Chest::CreateAction()
@@ -226,6 +235,8 @@ void Chest::ItemPop()
 {
 	if (_item->GetTransform()->GetWorldPos().y < _sprites[_selected][0]->GetTransform()->GetWorldPos().y)
 		return;
+
+	_itemCol->Activate();
 
 	_item->GetTransform()->MoveY(_popSpeed * DELTA_TIME);
 	_popSpeed -= (GRAVITY * GRAVITY * DELTA_TIME);

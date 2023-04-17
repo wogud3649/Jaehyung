@@ -11,7 +11,7 @@ public:
 	void SetPlayer(shared_ptr<Advanced_Player> player) { _player = player; }
 
 	virtual void Spawn();
-	void Extinct();
+	virtual void Extinct();
 	virtual void Activate();
 	void DeActivate();
 

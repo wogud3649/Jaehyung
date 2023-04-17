@@ -3,6 +3,7 @@ class Quad
 {
 public:
 	Quad();
+	Quad(Vector2 size);
 	Quad(wstring file);
 	Quad(wstring file, Vector2 maxFrame);
 	~Quad();

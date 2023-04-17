@@ -424,7 +424,7 @@ void Advanced_Player::SetEquipStats(StatAttributes stats)
 	_def = _baseDef + _statAttributes.def;
 	_critPercent = _baseCrp + _statAttributes.crp;
 	_maxHeadDelay = _baseScd * ((float)(361 - _statAttributes.scd) / 100); // TODO :
-	//_maxProjCD = _baseScd * (
+	_maxProjCD = _baseScd * ((float)(361 - _statAttributes.scd) / 100);
 	_maxChangeCD = _baseCcd * ((float)(100 - _statAttributes.ccd) / 100);
 }
 

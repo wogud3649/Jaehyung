@@ -19,8 +19,9 @@ SceneManager::SceneManager()
 	_sceneTable["FieldScene1"] = make_shared<FieldScene1>();
 	_sceneTable["StoreScene"] = make_shared<StoreScene>();
 	_sceneTable["BossScene"] = make_shared<BossScene>();
+	_sceneTable["UIScene"] = make_shared<UIScene>();
 
-	_curScene = _sceneTable["MapEditorTestScene"];
+	_curScene = _sceneTable["UIScene"];
 }
 
 SceneManager::~SceneManager()
@@ -47,10 +48,10 @@ void SceneManager::Update()
 
 	if (_curSceneIndex != _oldSceneIndex)
 	{
-		if (_curSceneIndex > 4)
+		if (_curSceneIndex > 5)
 			_curSceneIndex = 0;
 		else if (_curSceneIndex < 0)
-			_curSceneIndex = 4;
+			_curSceneIndex = 5;
 
 		switch (_curSceneIndex)
 		{
@@ -69,6 +70,9 @@ void SceneManager::Update()
 			break;
 		case 4:
 			SetScene("BossScene");
+			break;
+		case 5:
+			SetScene("UIScene");
 			break;
 		default:
 			break;
@@ -103,14 +107,11 @@ void SceneManager::PostRender()
 	{
 		INVENTORY->PostRender();
 		UI->PostRender();
-		INTERACTOBJ->PostRender();
 	}
 }
 
 void SceneManager::Init()
 {
-	INTERACTOBJ->GetChest()->SetRandom();
-	INTERACTOBJ->GetDoor()->SetRandom();
 	CAMERA->SetOffset(CENTER);
 	UI->Init();
 	DELTA_TIME = 0;

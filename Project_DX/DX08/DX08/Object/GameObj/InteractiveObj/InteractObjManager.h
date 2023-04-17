@@ -25,8 +25,6 @@ public:
 		return nullptr;
 	}
 
-	void PostRender();
-
 	void SetPlayer(shared_ptr<Advanced_Player> player);
 
 	void ExtinctChest();

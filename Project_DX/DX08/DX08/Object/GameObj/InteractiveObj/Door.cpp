@@ -191,7 +191,6 @@ void Door::Enter()
 	if (KEY_DOWN('X'))
 	{
 		INTERACTOBJ->AddStageLevel();
-		INTERACTOBJ->ExtinctChest();
 
 		switch (_doorType)
 		{

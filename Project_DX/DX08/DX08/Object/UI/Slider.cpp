@@ -1,0 +1,42 @@
+#include "framework.h"
+#include "Slider.h"
+
+Slider::Slider(Vector2 size)
+{
+	_quad = make_shared<Quad>(L"Resources/Texture/UI/", size);
+	_quad->SetPS(ADD_PS(L"Shader/UI/SliderPixelShader.hlsl"));
+
+	_buffer = make_shared<SliderBuffer>();
+	_buffer->_data.ratio = 0.6f;
+}
+
+Slider::~Slider()
+{
+}
+
+void Slider::SetForward(wstring file, Vector2 size)
+{
+	_quad = make_shared<Quad>(file, size);
+	_quad->SetPS(ADD_PS(L"Shader/UI/SliderPixelShader.hlsl"));
+}
+
+void Slider::Update()
+{
+	_quad->Update();
+	_buffer->Update();
+}
+
+void Slider::PostRender()
+{
+	_buffer->SetPSBuffer(1);
+	_quad->Render();
+}
+
+void Slider::SetPos(Vector2 pos)
+{
+	_quad->GetTransform()->SetPos(pos);
+}
+
+void Slider::SetScale(Vector2 scale)
+{
+}

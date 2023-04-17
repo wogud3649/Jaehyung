@@ -40,7 +40,7 @@ private:
 
 	unordered_map<string, shared_ptr<Scene>> _sceneTable;
 	shared_ptr<Scene> _curScene;
-	int _curSceneIndex = 0;
+	int _curSceneIndex = 5;
 	int _oldSceneIndex = _curSceneIndex;
 };
 

@@ -126,6 +126,7 @@ using namespace DirectX;
 #include "Object/BackgroundObj/Brick.h"
 
 // UI
+#include "Object/UI/Slider.h"
 #include "Object/UI/Slot.h"
 #include "Object/UI/Inventory.h"
 #include "Object/UI/CharacterUI.h"

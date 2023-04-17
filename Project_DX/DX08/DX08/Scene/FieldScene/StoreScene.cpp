@@ -52,6 +52,7 @@ void StoreScene::Update()
 void StoreScene::Render()
 {
 	_brick->Render();
+
 	INTERACTOBJ->GetDoor()->Render();
 
 	_store->Render();
@@ -72,7 +73,11 @@ void StoreScene::CreateInteractObj()
 {
 	Vector2 temp = _brick->GetDoorSpawn();
 	INTERACTOBJ->GetDoor()->GetTransform()->SetPos(Vector2(temp.x, temp.y + 16));
+	INTERACTOBJ->GetDoor()->Extinct();
 	INTERACTOBJ->GetDoor()->Spawn();
+	INTERACTOBJ->GetDoor()->SetRandom();
 	INTERACTOBJ->GetDoor()->Activate();
+
+	INTERACTOBJ->GetChest()->Extinct();
 	INTERACTOBJ->SetPlayer(_player);
 }

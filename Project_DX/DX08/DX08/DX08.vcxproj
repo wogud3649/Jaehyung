@@ -210,6 +210,7 @@
     <ClInclude Include="Object\UI\Slot.h" />
     <ClInclude Include="Scene\FieldScene\StoreScene.h" />
     <ClInclude Include="Object\UI\Store.h" />
+    <ClInclude Include="Object\UI\Slider.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Framework\Render\VertexBuffer.h" />
     <ClInclude Include="Framework\Render\VertexShader.h" />
@@ -293,6 +294,7 @@
     <ClCompile Include="Object\UI\Slot.cpp" />
     <ClCompile Include="Scene\FieldScene\StoreScene.cpp" />
     <ClCompile Include="Object\UI\Store.cpp" />
+    <ClCompile Include="Object\UI\Slider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX08.rc" />
@@ -399,6 +401,12 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">PS</EntryPointName>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Shader\SliderPixelShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="Shader\SpritePixelShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>

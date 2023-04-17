@@ -11,6 +11,7 @@ public:
 	const shared_ptr<Transform>& GetTransform() { return _sprites[0][0]->GetTransform(); }
 
 	virtual void Spawn();
+	virtual void Extinct();
 	void SetRandom();
 private:
 	virtual void CreateAction();

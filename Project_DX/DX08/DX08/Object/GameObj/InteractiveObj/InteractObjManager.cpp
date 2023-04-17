@@ -13,12 +13,6 @@ InteractObjManager::~InteractObjManager()
 {
 }
 
-void InteractObjManager::PostRender()
-{
-	int temp = _stageLevel;
-	ImGui::SliderInt("Stage", &temp, 0, 10);
-}
-
 void InteractObjManager::SetPlayer(shared_ptr<Advanced_Player> player)
 {
 	_door->SetPlayer(player);
@@ -27,6 +21,5 @@ void InteractObjManager::SetPlayer(shared_ptr<Advanced_Player> player)
 
 void InteractObjManager::ExtinctChest()
 {
-	_chest->DeActivate();
 	_chest->Extinct();
 }

@@ -12,4 +12,5 @@ public:
 	virtual void PostRender() override;
 
 private:
+	shared_ptr<Slider> _slider;
 };
