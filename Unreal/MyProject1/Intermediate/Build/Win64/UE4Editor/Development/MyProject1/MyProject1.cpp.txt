@@ -1,2 +1,0 @@
-C:\Unreal\MyProject1\Intermediate\Build\Win64\UE4Editor\Development\MyProject1\Definitions.MyProject1.h
-C:\Unreal\MyProject1\Source\MyProject1\MyProject1.h
