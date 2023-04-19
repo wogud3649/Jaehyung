@@ -20,8 +20,11 @@ Inventory::Inventory()
 	_itemInfoIcons->GetTransform()->SetPos(Vector2(867, 626));
 	_itemInfoIcons->SetCurFrame(Vector2(0, 0));
 
+	_selectedFrame = make_shared<Quad>(L"Resources/Texture/UI/SelectedFrame.png");
+
 	CreateSlots();
 	RootItem(1);
+	RootItem(2);
 	DATA_M->SetDuplicate(1);
 }
 
@@ -42,7 +45,13 @@ void Inventory::Update()
 	_itemInfoIcons->Update();
 	
 	if (KEY_DOWN('A'))
+	{
 		_activeExtraInventory = !_activeExtraInventory;
+		if (_activeExtraInventory)
+			_curSelected = 16;
+		else
+			_curSelected = 0;
+	}
 
 	if (KEY_DOWN(VK_LBUTTON))
 	{
@@ -61,6 +70,10 @@ void Inventory::Update()
 
 	if (_activeExtraInventory)
 	{
+		if (_curSelected < 16)
+			_curSelected = _maxSlot - 1;
+		else if (_curSelected > _maxSlot - 1)
+			_curSelected = 16;
 		_extraInventory->Update();
 
 		for (int i = 16; i < _maxSlot; i++)
@@ -76,6 +89,10 @@ void Inventory::Update()
 	}
 	else
 	{
+		if (_curSelected > 15)
+			_curSelected = 0;
+		else if (_curSelected < 0)
+			_curSelected = 15;
 		for (int i = 0; i < 16; i++)
 		{
 			_slots[i]->Update();
@@ -90,6 +107,12 @@ void Inventory::Update()
 
 	if (_curSelected != _oldSelected)
 		SetInfoPannels();
+
+	if (_itemChanged)
+		SetPlayerStats();
+
+	if (_curSelected != -1)
+		_selectedFrame->Update();
 }
 
 void Inventory::PostRender()
@@ -97,7 +120,6 @@ void Inventory::PostRender()
 	if (_inventoryOpen == false)
 		return;
 
-	ImGui::SliderInt("Selected", &_curSelected, -1, 43);
 	_inventory->Render();
 	_inventoryPannels->Render();
 	_itemInfoIcons->Render();
@@ -111,6 +133,9 @@ void Inventory::PostRender()
 
 		for (int i = 16; i < _maxSlot; i++)
 			_slots[i]->Render();
+
+		if (_curSelected != -1 && _curSelected > 15)
+			_selectedFrame->Render();
 	}
 	else
 	{
@@ -119,14 +144,11 @@ void Inventory::PostRender()
 		DC->DrawIndexedInstanced(6, 16, 0, 0, 0);
 		for (int i = 0; i < 16; i++)
 			_slots[i]->Render();
-	}
-}
 
-void Inventory::SetPlayer(shared_ptr<Advanced_Player> player)
-{
-	_player = player;
-	if (_player.expired() == false)
-		_player.lock()->SetEquipStats(this->GetEquipStats());
+		if (_curSelected != -1 && _curSelected < 16)
+			_selectedFrame->Render();
+	}
+
 }
 
 void Inventory::SetInfoPannels()
@@ -138,6 +160,7 @@ void Inventory::SetInfoPannels()
 
 	ItemInfo info = _itemDatas[_curSelected];
 	_itemInfoIcons->SetCurFrame(Vector2(info.frameX, info.frameY));
+	_selectedFrame->GetTransform()->SetPos(_slots[_curSelected]->GetCollider()->GetTransform()->GetWorldPos());
 	_oldSelected = _curSelected;
 	
 	if (_statusOpen)
@@ -250,8 +273,7 @@ void Inventory::EquipItem(int index)
 	
 	if (success)
 	{
-		if (_player.expired() == false)
-			_player.lock()->SetEquipStats(this->GetEquipStats());
+		_itemChanged = true;
 
 		_itemDatas[index].SetEmpty();
 		_instanceDatas[index].curFrame = Vector2(0, 0);
@@ -290,8 +312,7 @@ void Inventory::RemoveItem(int index)
 	_instanceDatas[index].curFrame = Vector2(0, 0);
 	_instanceBuffer->Update();
 
-	if (_player.expired() == false)
-		_player.lock()->SetEquipStats(this->GetEquipStats());
+	_itemChanged = true;
 }
 
 bool Inventory::SellItem(int index)
@@ -384,11 +405,15 @@ bool Inventory::RootItem(int itemCode)
 	if (success == false)
 		return false;
 
-	if (_player.expired() == false)
-		_player.lock()->SetEquipStats(this->GetEquipStats());
+	_itemChanged = true;
 	
 	_instanceBuffer->Update();
 	return true;
+}
+
+void Inventory::SetPlayerStats()
+{
+	PLAYER->SetEquipStats(this->GetEquipStats());
 }
 
 vector<ItemInfo> Inventory::GetEquipedSkulInfo()

@@ -1,22 +1,22 @@
 #include "framework.h"
 #include "Slider.h"
 
-Slider::Slider(Vector2 size)
+Slider::Slider()
 {
-	_quad = make_shared<Quad>(L"Resources/Texture/UI/", size);
+	_quad = make_shared<Quad>(L"Resources/Texture/UI/HealthBar.png");
 	_quad->SetPS(ADD_PS(L"Shader/UI/SliderPixelShader.hlsl"));
 
 	_buffer = make_shared<SliderBuffer>();
-	_buffer->_data.ratio = 0.6f;
+	_buffer->_data.ratio = 1.0f;
 }
 
 Slider::~Slider()
 {
 }
 
-void Slider::SetForward(wstring file, Vector2 size)
+void Slider::SetSlider(wstring file)
 {
-	_quad = make_shared<Quad>(file, size);
+	_quad = make_shared<Quad>(file);
 	_quad->SetPS(ADD_PS(L"Shader/UI/SliderPixelShader.hlsl"));
 }
 

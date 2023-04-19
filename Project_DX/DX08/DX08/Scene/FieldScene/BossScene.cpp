@@ -3,13 +3,16 @@
 
 BossScene::BossScene()
 {
-	_player = make_shared<Advanced_Player>();
-	
 	_brick = make_shared<Brick>();
-	_brick->SetPlayer(_player);
+	_brick->SetPlayer(PLAYER);
 
-	_yggdrasil = make_shared<Yggdrasil>();
-	_yggdrasil->SetTarget(_player);
+	YGGDRASIL->SetTarget(PLAYER);
+
+	_healthBar = make_shared<Slider>();
+	_healthBar->SetSlider(L"Resources/Texture/UI/BossHealthBar.png");
+	_healthBar->SetOpaque(0.9f);
+	Vector2 tempPos = Vector2(CENTER.x, CENTER.y + 300.0f);
+	_healthBar->SetPos(tempPos);
 }
 
 BossScene::~BossScene()
@@ -18,16 +21,16 @@ BossScene::~BossScene()
 
 void BossScene::Init()
 {
-	_yggdrasil->Activate();
+	YGGDRASIL->Activate();
 	wstring filePath = L"Maps/BossField1.map";
 	_brick->Load(filePath);
 
 	CreateInteractObj();
 
-	_player->GetFootCollider()->GetTransform()->SetPos(_brick->GetPlayerSpawn());
-	_yggdrasil->SetOriginPos(_brick->GetBossSpawn());
+	PLAYER->GetFootCollider()->GetTransform()->SetPos(_brick->GetPlayerSpawn());
+	YGGDRASIL->SetOriginPos(_brick->GetBossSpawn());
 
-	CAMERA->SetTarget(_player->GetBodyCollider()->GetTransform());
+	CAMERA->SetTarget(PLAYER->GetBodyCollider()->GetTransform());
 
 	SCENE->Init();
 
@@ -41,8 +44,12 @@ void BossScene::Fin()
 
 void BossScene::Update()
 {
-	_player->Update();
-	_yggdrasil->Update();
+	PLAYER->Update();
+	YGGDRASIL->Update();
+
+	float ratio = YGGDRASIL->GetHpRatio();
+	_healthBar->SetRatio(ratio);
+	_healthBar->Update();
 	_brick->Update();
 
 	if (_isClear)
@@ -51,21 +58,21 @@ void BossScene::Update()
 		INTERACTOBJ->GetChest()->Update();
 	}
 
-	if (_player->GetAttackCol()->GetActive())
+	if (PLAYER->GetAttackCol()->GetActive())
 	{
-		if (_player->GetAttackCol()->IsCollision(_yggdrasil->GetHeadCollider()).isHit)
+		if (PLAYER->GetAttackCol()->IsCollision(YGGDRASIL->GetHeadCollider()).isHit)
 		{
-			_yggdrasil->Damaged(_player->GetAttackDamage());
-			_player->AttackHit();
+			YGGDRASIL->Damaged(PLAYER->GetAttackDamage());
+			PLAYER->AttackHit();
 		}
 	}
 
-	if (_player->GetProjCol()->GetActive())
+	if (PLAYER->GetProjCol()->GetActive())
 	{
-		if (_player->GetProjCol()->IsCollision(_yggdrasil->GetHeadCollider()).isHit)
+		if (PLAYER->GetProjCol()->IsCollision(YGGDRASIL->GetHeadCollider()).isHit)
 		{
-			_yggdrasil->Damaged(_player->GetProjDamage());
-			_player->SkillHit();
+			YGGDRASIL->Damaged(PLAYER->GetProjDamage());
+			PLAYER->SkillHit();
 		}
 	}
 
@@ -74,9 +81,9 @@ void BossScene::Update()
 
 void BossScene::Render()
 {
-	_yggdrasil->Render();
+	YGGDRASIL->Render();
 	_brick->Render();
-	_yggdrasil->HandRender();
+	YGGDRASIL->HandRender();
 
 	if (_isClear)
 	{
@@ -84,7 +91,7 @@ void BossScene::Render()
 		INTERACTOBJ->GetChest()->Render();
 	}
 
-	_player->Render();
+	PLAYER->Render();
 }
 
 void BossScene::PreRender()
@@ -93,8 +100,8 @@ void BossScene::PreRender()
 
 void BossScene::PostRender()
 {
-	ImGui::SetWindowSize({ 320, 320 });
-	_player->PostRender();
+	PLAYER->PostRender();
+	_healthBar->PostRender();
 }
 
 void BossScene::SceneClear()
@@ -102,7 +109,7 @@ void BossScene::SceneClear()
 	if (_isClear)
 		return;
 
-	if (_yggdrasil->GetAlive() == false)
+	if (YGGDRASIL->GetAlive() == false)
 	{
 		INTERACTOBJ->GetDoor()->Spawn();
 		INTERACTOBJ->GetChest()->Spawn();
@@ -121,5 +128,5 @@ void BossScene::CreateInteractObj()
 	INTERACTOBJ->GetChest()->GetTransform()->SetPos(Vector2(temp.x, temp.y + 16));
 	INTERACTOBJ->GetChest()->Extinct();
 	INTERACTOBJ->GetChest()->SetRandom();
-	INTERACTOBJ->SetPlayer(_player);
+	INTERACTOBJ->SetPlayer(PLAYER);
 }

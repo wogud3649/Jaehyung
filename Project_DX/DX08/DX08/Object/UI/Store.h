@@ -8,6 +8,7 @@ public:
 	void Update();
 	void Render();
 
+	void SetCallBack();
 	void SetPlayer(shared_ptr<Advanced_Player> player) { _player = player; }
 
 private:

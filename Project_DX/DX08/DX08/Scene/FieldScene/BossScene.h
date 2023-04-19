@@ -16,8 +16,7 @@ private:
 	void SceneClear();
 	void CreateInteractObj();
 
-	shared_ptr<Yggdrasil> _yggdrasil;
 	shared_ptr<Brick> _brick;
-	shared_ptr<Advanced_Player> _player;
+	shared_ptr<Slider> _healthBar;
 };
 

@@ -6,6 +6,7 @@ Program::Program()
 	srand(time(NULL));
 	Timer::GetInstance()->SetLockFPS(60);
 	SCENE->Init();
+	STORE->SetCallBack();
 }
 
 Program::~Program()

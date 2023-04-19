@@ -130,8 +130,8 @@ using namespace DirectX;
 #include "Object/UI/Slot.h"
 #include "Object/UI/Inventory.h"
 #include "Object/UI/CharacterUI.h"
-#include "Object/UI/GameManager.h"
 #include "Object/UI/Store.h"
+#include "Object/UI/GameManager.h"
 
 // Scene
 #include "Scene/Scene.h"

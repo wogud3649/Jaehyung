@@ -31,6 +31,7 @@ public:
 	
 	shared_ptr<CircleCollider> GetHeadCollider() { return _headCol; }
 	shared_ptr<Transform> GetTransform() { return _body->GetTransform(); }
+	float GetHpRatio() { return static_cast<float>(_curHp) / static_cast<float>(_maxHp); }
 
 	const bool& GetAlive() { return _isAlive; }
 

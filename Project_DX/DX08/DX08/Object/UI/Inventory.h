@@ -28,11 +28,10 @@ public:
 	void Update();
 	void PostRender();
 
-	void SetPlayer(shared_ptr<Advanced_Player> player);
-
 	bool SellItem(int index);
 	bool BuyItem(int itemCode);
 	bool RootItem(int itemCode);
+	void SetPlayerStats();
 
 	vector<ItemInfo> GetEquipedSkulInfo();
 	vector<ItemInfo> GetEquipedItemInfo();
@@ -57,8 +56,11 @@ private:
 
 	vector<shared_ptr<Slot>> _slots;
 	UINT _maxSlot = 43;
+
+	shared_ptr<Quad> _selectedFrame;
 	int _curSelected = -1;
 	int _oldSelected = _curSelected;
+
 	bool _detailedInfo = false;
 	bool _statusOpen = false;
 
@@ -77,6 +79,5 @@ private:
 	UINT _money = 1500;
 
 	bool _inventoryOpen = false;
-
-	weak_ptr<Advanced_Player> _player;
+	bool _itemChanged = false;
 };

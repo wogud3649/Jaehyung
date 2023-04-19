@@ -6,8 +6,8 @@ public:
 	{
 		SKUL,
 		HEADLESS,
-		PIKE,
-		SWORD,
+		WAREWOLF,
+		//WIZARD,
 
 		SkulTypeSize
 	};

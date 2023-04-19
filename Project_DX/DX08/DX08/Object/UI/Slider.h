@@ -2,11 +2,10 @@
 class Slider
 {
 public:
-	Slider(Vector2 size);
+	Slider();
 	~Slider();
 
-	void SetBack(wstring file, Vector2 size);
-	void SetForward(wstring file, Vector2 size);
+	void SetSlider(wstring file);
 
 	void Update();
 	void PostRender();
@@ -15,6 +14,7 @@ public:
 	void SetScale(Vector2 scale);
 
 	void SetRatio(float value) { _buffer->_data.ratio = value; }
+	void SetOpaque(float value) { _buffer->_data.opaque = value; }
 
 private:
 	shared_ptr<Quad> _quad;

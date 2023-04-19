@@ -129,7 +129,8 @@ public:
 	struct Data
 	{
 		float ratio = 1.0f;
-		int padding[3];
+		float opaque = 0.0f;
+		int padding[2];
 	};
 
 	SliderBuffer()

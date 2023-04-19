@@ -4,7 +4,8 @@ SamplerState samp :register(s0);
 cbuffer SliderInfo : register(b1)
 {
 	float ratio;
-	int padding[3];
+	float opaque;
+	int padding[2];
 }
 
 struct PixelInput
@@ -16,9 +17,13 @@ struct PixelInput
 // SV : SystemValue
 float4 PS(PixelInput input) : SV_TARGET
 {
-	if (input.uv.x > ratio)
-		return float4(0.0f,0.0f,0.0f,0.0f);
 	float4 result = map.Sample(samp,input.uv);
-
+	if (input.uv.x > ratio)
+	{
+		result.x -= 0.7f;
+		result.y -= 0.7f;
+		result.z -= 0.7f;
+		result.w = opaque;
+	}
 	return result;
 }

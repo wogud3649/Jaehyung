@@ -8,7 +8,7 @@ public:
 		ITEM,
 		SKULL,
 		ADVANTURER,
-		STORE,
+		STOREDOOR,
 		BOSS,
 		DOORTYPESIZE
 	};

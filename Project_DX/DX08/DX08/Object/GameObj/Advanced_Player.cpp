@@ -40,8 +40,12 @@ void Advanced_Player::Update()
 	Fall();
 	Skill();
 	Bungee();
+	SwapSkul();
 
 	Player::Update();
+
+	float ratio = _curHp / _maxHp;
+	UI->SetHpRatio(ratio);
 
 	if (!_isHeadOn)
 	{
@@ -346,15 +350,19 @@ void Advanced_Player::Skill()
 		if (_isProjFired)
 			return;
 		SetAction(State::SKILL);
-		_isProjFired = true;
-		_proj->GetTransform()->SetPos(_bodyCol->GetTransform()->GetWorldPos());
-		_projCol->GetTransform()->UpdateSRT();
-		_projCol->Activate();
+		if (_curSkul == SkulType::SKUL)
+		{
+			_isProjFired = true;
+			_proj->GetTransform()->SetPos(_bodyCol->GetTransform()->GetWorldPos());
+			_projCol->GetTransform()->UpdateSRT();
+			_projCol->Activate();
 
-		if (_direction == Direction::RIGHT)
-			_reverseBuffer->_data.reverse = 0;
-		else
-			_reverseBuffer->_data.reverse = 1;
+			if (_direction == Direction::RIGHT)
+				_reverseBuffer->_data.reverse = 0;
+			else
+				_reverseBuffer->_data.reverse = 1;
+		}
+
 	}
 }
 
@@ -428,13 +436,51 @@ void Advanced_Player::SetEquipStats(StatAttributes stats)
 	_maxChangeCD = _baseCcd * ((float)(100 - _statAttributes.ccd) / 100);
 }
 
-void Advanced_Player::Switch()
+void Advanced_Player::SwapSkul()
 {
 	vector<ItemInfo> data = INVENTORY->GetEquipedSkulInfo();
 
-	if (data.size() > 1)
+	if (_isFirstSkul)
 	{
+		if (data[1].itemCode == 0)
+			return;
 
+		if (KEY_DOWN(VK_SPACE))
+		{
+			_isFirstSkul = false;
+			UI->SwapSkul(_isFirstSkul);
+			switch (data[1].itemCode)
+			{
+			case 1:
+				SetSkul(SkulType::SKUL);
+				break;
+			case 2:
+				SetSkul(SkulType::WAREWOLF);
+			default:
+				break;
+			}
+		}
+	}
+	else
+	{
+		if (data[0].itemCode == 0)
+			return;
+
+		if (KEY_DOWN(VK_SPACE))
+		{
+			_isFirstSkul = true;
+			UI->SwapSkul(_isFirstSkul);
+			switch (data[0].itemCode)
+			{
+			case 1:
+				SetSkul(SkulType::SKUL);
+				break;
+			case 2:
+				SetSkul(SkulType::WAREWOLF);
+			default:
+				break;
+			}
+		}
 	}
 }
 
@@ -506,7 +552,6 @@ void Advanced_Player::SetCallback()
 	_actions[SkulType::SKUL][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
 	_actions[SkulType::SKUL][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
 	_actions[SkulType::SKUL][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
-
 	_actions[SkulType::SKUL][State::SKILL]->SetCallBack(std::bind(&Advanced_Player::SkillEnd, this));
 
 	_actions[SkulType::HEADLESS][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 2);
@@ -516,9 +561,13 @@ void Advanced_Player::SetCallback()
 	_actions[SkulType::HEADLESS][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
 	_actions[SkulType::HEADLESS][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
 
-	_actions[SkulType::PIKE][State::SKILL]->SetCallBack(std::bind(&Advanced_Player::SkillEnd, this));
-
-	_actions[SkulType::SWORD][State::SKILL]->SetCallBack(std::bind(&Advanced_Player::SkillEnd, this));
+	_actions[SkulType::WAREWOLF][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 2);
+	_actions[SkulType::WAREWOLF][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 3);
+	_actions[SkulType::WAREWOLF][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
+	_actions[SkulType::WAREWOLF][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
+	_actions[SkulType::WAREWOLF][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
+	_actions[SkulType::WAREWOLF][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
+	_actions[SkulType::WAREWOLF][State::SKILL]->SetCallBack(std::bind(&Advanced_Player::SkillEnd, this));
 }
 
 void Advanced_Player::SetAction(State state)

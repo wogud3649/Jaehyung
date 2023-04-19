@@ -54,6 +54,9 @@ using ATTRIBUTE = unsigned char;
 #define UI GameManager::GetInstance()->GetCharacterUI()
 #define INVENTORY GameManager::GetInstance()->GetInventory()
 #define BACKGROUND GameManager::GetInstance()->GetBackground()
+#define PLAYER GameManager::GetInstance()->GetPlayer()
+#define STORE GameManager::GetInstance()->GetStore()
+#define YGGDRASIL GameManager::GetInstance()->GetYggdrasil()
 
 #define INTERACTOBJ InteractObjManager::GetInstance()
 

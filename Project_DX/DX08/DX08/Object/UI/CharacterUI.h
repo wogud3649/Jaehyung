@@ -9,10 +9,13 @@ public:
 	void Update();
 	void PostRender();
 
-	void SwapSkul();
+	void SetHpRatio(float ratio);
+	void SwapSkul(bool isFirstSkul) { _isFirstSkul = isFirstSkul; }
 
 private:
 	shared_ptr<Quad> _characterUI;
+
+	shared_ptr<Sprite> _skillIcon;
 
 	shared_ptr<Quad> _extraSkillSlot;
 	bool _activeExtraSkillSlot = false;
@@ -21,6 +24,8 @@ private:
 	bool _activeOrbSlot = false;
 
 	shared_ptr<Sprite> _skullIcon;
+
+	shared_ptr<Slider> _sliderHp;
 
 	bool _isFirstSkul = true;
 };

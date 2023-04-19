@@ -121,6 +121,7 @@ void Yggdrasil::Update()
 			case Yggdrasil::STAMP:
 				if ((_isRightHand && _rightHandCol->GetTransform()->GetWorldPos().y <= _attackPos.y + 10.0f) || (!_isRightHand && _leftHandCol->GetTransform()->GetWorldPos().y <= _attackPos.y + 10.0f))
 				{
+					CAMERA->ShakeStart(10, 1);
 					_curState = State::ATTACKAFTER;
 					_curAttackDelay = _maxAttackDelay;
 
@@ -190,7 +191,7 @@ void Yggdrasil::Update()
 						EFFECT->SetParent("Sweeping_4x1", _leftHand->GetTransform());
 						EFFECT->Play("Sweeping_4x1", Vector2(210, -50), false);
 					}
-
+					CAMERA->ShakeStart(5, 2);
 				}
 				_curState = State::ATTACK;
 				_attackPos.x = _player.lock()->GetFootCollider()->GetTransform()->GetPos().x;
@@ -259,9 +260,7 @@ void Yggdrasil::Update()
 void Yggdrasil::Render()
 {
 	if (_isAlive == false)
-	{
 		return;
-	}
 
 	_body->Render();
 
@@ -273,9 +272,7 @@ void Yggdrasil::Render()
 void Yggdrasil::HandRender()
 {
 	if (_isAlive == false)
-	{
 		return;
-	}
 
 	_rightHand->Render();
 	_leftHand->Render();
@@ -284,8 +281,6 @@ void Yggdrasil::HandRender()
 	_leftHandCol->Render();
 	
 	_spikeCol->Render();
-
-	ImGui::SliderInt("BossHP", &_curHp, 0, _maxHp);
 }
 
 void Yggdrasil::Damaged(int damage)

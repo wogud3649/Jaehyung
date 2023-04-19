@@ -43,7 +43,7 @@ public:
 
 	void SetEquipStats(StatAttributes stats);
 
-	void Switch();
+	void SwapSkul();
 
 private:
 	void SetIdle();
@@ -103,8 +103,8 @@ private:
 	float _curComboDuration = _maxComboDuration;
 	bool _isAttackB = false;
 
-	UINT _maxAttackDamage = 15;
-	UINT _minAttackDamage = 10;
+	UINT _maxAttackDamage = 30;
+	UINT _minAttackDamage = 20;
 	
 	UINT _baseCrp = 10;
 	UINT _critPercent = _baseCrp;
@@ -116,13 +116,13 @@ private:
 	float _curProjCD = _baseScd;
 	bool _isProjRight = true;
 	bool _isProjFired = false;
-	int _maxProjDamage = 50;
-	int _minProjDamage = 25;
+	int _maxProjDamage = 70;
+	int _minProjDamage = 50;
 
 	float _baseCcd = 15.0f;
 	float _maxChangeCD = _baseCcd;
 	float _curChangeCD = _baseCcd;
-
+	bool _isFirstSkul = true;
 	
 	ATTRIBUTE _attribute = 0;
 

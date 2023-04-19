@@ -3,10 +3,8 @@
 
 FieldScene1::FieldScene1()
 {
-	_player = make_shared<Advanced_Player>();
-
 	_brick = make_shared<Brick>();
-	_brick->SetPlayer(_player);
+	_brick->SetPlayer(PLAYER);
 }
 
 FieldScene1::~FieldScene1()
@@ -36,11 +34,9 @@ void FieldScene1::Init()
 
 	CreateInteractObj();
 
-	_player->GetFootCollider()->GetTransform()->SetPos(_brick->GetPlayerSpawn());
+	PLAYER->GetFootCollider()->GetTransform()->SetPos(_brick->GetPlayerSpawn());
 
-	CAMERA->SetTarget(_player->GetBodyCollider()->GetTransform());
-
-	INVENTORY->SetPlayer(_player);
+	CAMERA->SetTarget(PLAYER->GetBodyCollider()->GetTransform());
 
 	SCENE->Init();
 
@@ -54,7 +50,7 @@ void FieldScene1::Fin()
 
 void FieldScene1::Update()
 {
-	_player->Update();
+	PLAYER->Update();
 	_brick->Update();
 
 	INTERACTOBJ->GetDoor()->Update();
@@ -72,7 +68,7 @@ void FieldScene1::Render()
 	if (_isClear)
 		INTERACTOBJ->GetChest()->Render();
 
-	_player->Render();
+	PLAYER->Render();
 }
 
 void FieldScene1::PreRender()
@@ -81,7 +77,7 @@ void FieldScene1::PreRender()
 
 void FieldScene1::PostRender()
 {
-	_player->PostRender();
+	PLAYER->PostRender();
 	_brick->PostRender();
 }
 
@@ -110,5 +106,5 @@ void FieldScene1::CreateInteractObj()
 	INTERACTOBJ->GetChest()->GetTransform()->SetPos(Vector2(temp.x, temp.y + 16));
 	INTERACTOBJ->GetChest()->Extinct();
 	INTERACTOBJ->GetChest()->SetRandom();
-	INTERACTOBJ->SetPlayer(_player);
+	INTERACTOBJ->SetPlayer(PLAYER);
 }

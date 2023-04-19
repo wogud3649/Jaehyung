@@ -45,8 +45,6 @@ void Camera::ShakeStart(float magnitude, float duration, float reduceDamping)
 	_magnitude = magnitude;
 	_duration = duration;
 	_reduceDamping = reduceDamping;
-
-	_originPos = _transform->GetPos();
 }
 
 void Camera::SetViewPort(UINT width, UINT height)
@@ -92,14 +90,9 @@ void Camera::Shake()
 	}
 
 	Vector2 randomPos;
-	randomPos.x = _originPos.x + MathUtility::RandomFloat(-_magnitude, _magnitude);
-	randomPos.y = _originPos.y + MathUtility::RandomFloat(-_magnitude, _magnitude);
-	_transform->SetPos(randomPos);
-
-	if (_duration <= 0.0f)
-	{
-		_transform->SetPos(_originPos);
-	}
+	randomPos.x = MathUtility::RandomFloat(-_magnitude, _magnitude);
+	randomPos.y = MathUtility::RandomFloat(-_magnitude, _magnitude);
+	_transform->Move(randomPos);
 }
 
 void Camera::FreeMode()

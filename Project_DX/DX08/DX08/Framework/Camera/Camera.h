@@ -68,8 +68,6 @@ private:
 	float _magnitude = 0.0f;
 	float _reduceDamping = 0.0f;
 
-	Vector2 _originPos = { 0.0f,0.0f };
-
 	Vector2 win_size;
 
 	static Camera* _instance;

@@ -441,6 +441,7 @@
     <FxCompile Include="Shader\FilterPixelShader.hlsl" />
     <FxCompile Include="Shader\InstancingVertexShader.hlsl" />
     <FxCompile Include="Shader\InstancingPixelShader.hlsl" />
-    <FxCompile Include="Shader\SliderPixelShader.hlsl" />
+    <FxCompile Include="Shader\UI\SliderPixelShader.hlsl" />
+    <FxCompile Include="Shader\UI\SliderSpritePixelShader.hlsl" />
   </ItemGroup>
 </Project>

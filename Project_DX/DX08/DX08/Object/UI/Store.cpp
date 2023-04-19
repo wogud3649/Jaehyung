@@ -8,8 +8,6 @@ Store::Store()
 	_quad->GetTransform()->SetScale(Vector2(2, 2));
 
 	StoreSettings();
-
-	INTERACTOBJ->GetDoor()->SetCallBack(std::bind(&Store::SetRandomItems, this));
 }
 
 Store::~Store()
@@ -53,6 +51,11 @@ void Store::Render()
 	{
 		item->Render();
 	}
+}
+
+void Store::SetCallBack()
+{
+	INTERACTOBJ->GetDoor()->SetCallBack(std::bind(&Store::SetRandomItems, this));
 }
 
 void Store::Collision()

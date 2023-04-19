@@ -54,7 +54,7 @@ void Door::SetRandom()
 	if (temp % 6 == 0)
 		_doorType = DoorType::BOSS;
 	else if (temp % 3 == 0)
-		_doorType = DoorType::STORE;
+		_doorType = DoorType::STOREDOOR;
 	else
 		_doorType = static_cast<DoorType>(rand() % 4);
 
@@ -74,7 +74,7 @@ void Door::SetRandom()
 	case Door::ADVANTURER:
 		_selected = 3;
 		break;
-	case Door::STORE:
+	case Door::STOREDOOR:
 		_selected = 4;
 		break;
 	case Door::BOSS:
@@ -113,7 +113,7 @@ void Door::CreateAction()
 		case DoorType::ADVANTURER:
 			doorType = "Advanturer";
 			break;
-		case DoorType::STORE:
+		case DoorType::STOREDOOR:
 			doorType = "Store";
 			break;
 		case DoorType::BOSS:
@@ -206,7 +206,7 @@ void Door::Enter()
 		case Door::ADVANTURER:
 			SCENE->SetScene("FieldScene1");
 			break;
-		case Door::STORE:
+		case Door::STOREDOOR:
 			SCENE->SetScene("StoreScene");
 			if (_endEvent != nullptr)
 				_endEvent();

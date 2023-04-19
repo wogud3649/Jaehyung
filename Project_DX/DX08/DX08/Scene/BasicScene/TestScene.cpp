@@ -3,10 +3,8 @@
 
 TestScene::TestScene()
 {
-	_player = make_shared<Advanced_Player>();
-
 	_brick = make_shared<Brick>();
-	_brick->SetPlayer(_player);
+	_brick->SetPlayer(PLAYER);
 }
 
 TestScene::~TestScene()
@@ -26,11 +24,9 @@ void TestScene::Init()
 
 	CreateInteractObj();
 
-	_player->GetFootCollider()->GetTransform()->SetPos(_brick->GetPlayerSpawn());
+	PLAYER->GetFootCollider()->GetTransform()->SetPos(_brick->GetPlayerSpawn());
 
-	CAMERA->SetTarget(_player->GetBodyCollider()->GetTransform());
-
-	INVENTORY->SetPlayer(_player);
+	CAMERA->SetTarget(PLAYER->GetBodyCollider()->GetTransform());
 
 	SCENE->Init();
 
@@ -48,7 +44,7 @@ void TestScene::Update()
 	if (_isClear)
 		INTERACTOBJ->GetChest()->Update();
 
-	_player->Update();
+	PLAYER->Update();
 	_brick->Update();
 
 	SceneClear();
@@ -62,7 +58,7 @@ void TestScene::Render()
 	if (_isClear)
 		INTERACTOBJ->GetChest()->Render();
 
-	_player->Render();
+	PLAYER->Render();
 }
 
 void TestScene::PreRender()
@@ -71,7 +67,7 @@ void TestScene::PreRender()
 
 void TestScene::PostRender()
 {
-	_player->PostRender();
+	PLAYER->PostRender();
 	_brick->PostRender();
 }
 
@@ -100,5 +96,5 @@ void TestScene::CreateInteractObj()
 	INTERACTOBJ->GetChest()->GetTransform()->SetPos(Vector2(temp.x, temp.y + 16));
 	INTERACTOBJ->GetChest()->Extinct();
 	INTERACTOBJ->GetChest()->SetRandom();
-	INTERACTOBJ->SetPlayer(_player);
+	INTERACTOBJ->SetPlayer(PLAYER);
 }

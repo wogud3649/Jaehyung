@@ -7,8 +7,8 @@ Player::Player()
 	_actions.resize(SkulType::SkulTypeSize);
 	CreateAction(SkulType::SKUL);
 	CreateAction(SkulType::HEADLESS);
-	CreateAction(SkulType::PIKE);
-	CreateAction(SkulType::SWORD);
+	CreateAction(SkulType::WAREWOLF);
+	//CreateAction(SkulType::WIZARD);
 
 	_footCol = make_shared<CircleCollider>(15);
 
@@ -52,6 +52,7 @@ void Player::CreateAction(SkulType _skulType)
 	MyXML::Sort sortX;
 	MyXML::Sort sortY;
 	string skulType;
+	string rarity = "";
 	switch (_skulType)
 	{
 	case Player::SKUL:
@@ -60,12 +61,12 @@ void Player::CreateAction(SkulType _skulType)
 	case Player::HEADLESS:
 		skulType = "HEADLESS";
 		break;
-	case Player::PIKE:
-		skulType = "PIKE";
+	case Player::WAREWOLF:
+		skulType = "WAREWOLF";
 		break;
-	case Player::SWORD:
-		skulType = "SWORD";
-		break;
+	//case Player::WIZARD:
+	//	skulType = "WIZARD";
+	//	break;
 	default:
 		break;
 	}
@@ -76,98 +77,222 @@ void Player::CreateAction(SkulType _skulType)
 	Action::Type type;
 	float speed;
 
-	for (int i = 0; i < State::StateSize; i++)
+	if (skulType == "SKUL" || skulType == "HEADLESS")
 	{
-		switch (i)
+		for (int i = 0; i < State::StateSize; i++)
 		{
-		case 0:
-			state = "IDLE";
-			type = Action::Type::LOOP;
-			speed = 0.1f;
-			sortX = MyXML::Sort::RIGHT;
-			sortY = MyXML::Sort::BOTTOM;
-			break;
-		case 1:
-			state = "WALK";
-			type = Action::Type::LOOP;
-			speed = 0.1f;
-			sortX = MyXML::Sort::RIGHT;
-			sortY = MyXML::Sort::BOTTOM;
-			break;
-		case 2:
-			state = "JUMP";
-			type = Action::Type::END;
-			speed = 0.1f;
-			sortX = MyXML::Sort::RIGHT;
-			sortY = MyXML::Sort::BOTTOM;
-			break;
-		case 3:
-			state = "DASH";
-			type = Action::Type::END;
-			speed = 0.3f;
-			sortX = MyXML::Sort::RIGHT;
-			sortY = MyXML::Sort::BOTTOM;
-			break;
-		case 4:
-			state = "FALL";
-			type = Action::Type::END;
-			speed = 0.1f;
-			sortX = MyXML::Sort::MIDDLE;
-			sortY = MyXML::Sort::MIDDLE;
-			break;
-		case 5:
-			state = "FALLREPEAT";
-			type = Action::Type::LOOP;
-			speed = 0.1f;
-			sortX = MyXML::Sort::MIDDLE;
-			sortY = MyXML::Sort::MIDDLE;
-			break;
-		case 6:
-			state = "ATTACKA";
-			type = Action::Type::END;
-			speed = _attackSpeed;
-			sortX = MyXML::Sort::MIDDLE;
-			sortY = MyXML::Sort::MIDDLE;
-			break;
-		case 7:
-			state = "ATTACKB";
-			type = Action::Type::END;
-			speed = _attackSpeed;
-			sortX = MyXML::Sort::MIDDLE;
-			sortY = MyXML::Sort::MIDDLE;
-			break;
-		case 8:
-			state = "JUMPATTACK";
-			type = Action::Type::END;
-			speed = _attackSpeed;
-			sortX = MyXML::Sort::MIDDLE;
-			sortY = MyXML::Sort::MIDDLE;
-			break;
-		case 9:
-			if (_skulType == SkulType::HEADLESS)
+			switch (i)
+			{
+			case 0:
+				state = "IDLE";
+				type = Action::Type::LOOP;
+				speed = 0.1f;
+				sortX = MyXML::Sort::RIGHT;
+				sortY = MyXML::Sort::BOTTOM;
 				break;
-			state = "SKILL";
-			type = Action::Type::END;
-			speed = 0.1f;
-			sortX = MyXML::Sort::MIDDLE;
-			sortY = MyXML::Sort::MIDDLE;
-			break;
-		default:
-			break;
+			case 1:
+				state = "WALK";
+				type = Action::Type::LOOP;
+				speed = 0.1f;
+				sortX = MyXML::Sort::RIGHT;
+				sortY = MyXML::Sort::BOTTOM;
+				break;
+			case 2:
+				state = "JUMP";
+				type = Action::Type::END;
+				speed = 0.1f;
+				sortX = MyXML::Sort::RIGHT;
+				sortY = MyXML::Sort::BOTTOM;
+				break;
+			case 3:
+				state = "DASH";
+				type = Action::Type::END;
+				speed = 0.3f;
+				sortX = MyXML::Sort::RIGHT;
+				sortY = MyXML::Sort::BOTTOM;
+				break;
+			case 4:
+				state = "FALL";
+				type = Action::Type::END;
+				speed = 0.1f;
+				sortX = MyXML::Sort::MIDDLE;
+				sortY = MyXML::Sort::MIDDLE;
+				break;
+			case 5:
+				state = "FALLREPEAT";
+				type = Action::Type::LOOP;
+				speed = 0.1f;
+				sortX = MyXML::Sort::MIDDLE;
+				sortY = MyXML::Sort::MIDDLE;
+				break;
+			case 6:
+				state = "ATTACKA";
+				type = Action::Type::END;
+				speed = _attackSpeed;
+				sortX = MyXML::Sort::MIDDLE;
+				sortY = MyXML::Sort::MIDDLE;
+				break;
+			case 7:
+				state = "ATTACKB";
+				type = Action::Type::END;
+				speed = _attackSpeed;
+				sortX = MyXML::Sort::MIDDLE;
+				sortY = MyXML::Sort::MIDDLE;
+				break;
+			case 8:
+				state = "JUMPATTACK";
+				type = Action::Type::END;
+				speed = _attackSpeed;
+				sortX = MyXML::Sort::MIDDLE;
+				sortY = MyXML::Sort::MIDDLE;
+				break;
+			case 9:
+				if (_skulType == SkulType::HEADLESS)
+					break;
+				state = "SKILL";
+				type = Action::Type::END;
+				speed = 0.1f;
+				sortX = MyXML::Sort::MIDDLE;
+				sortY = MyXML::Sort::MIDDLE;
+				break;
+			default:
+				break;
+			}
+
+			wstring stateW(state.begin(), state.end());
+
+			wstring srvPath = L"Resources/Texture/" + skulTypeW + L"/" + stateW + L".png";
+			string xmlPath = "Resources/XML/" + skulType + "/" + state + ".xml";
+
+			MyXML xml = MyXML(xmlPath, srvPath);
+
+			name = skulType + "_" + state;
+
+			_actions[_skulType].emplace_back(make_shared<Action>(xml.GetClips(sortX, sortY), name, type, speed));
+
+			Vector2 maxSize = xml.MaxSize() * 2.0f;
+			shared_ptr<Sprite> sprite = make_shared<Sprite>(srvPath, maxSize);
+			_sprites[_skulType].emplace_back(sprite);
 		}
-		wstring stateW(state.begin(), state.end());
+	}
+	else
+	{
+		for (int j = 1; j < static_cast<int>(Rarity::RARITYSIZE); j++)
+		{
+			switch (j)
+			{
+			case static_cast<int>(Rarity::NORMAL):
+				rarity = "N";
+				break;
+			case static_cast<int>(Rarity::RARE):
+				rarity = "R";
+				break;
+			case static_cast<int>(Rarity::UNIQUE):
+				rarity = "U";
+				break;
+			case static_cast<int>(Rarity::LEGENDARY):
+				rarity = "L";
+				break;
+			default:
+				break;
+			}
 
-		wstring srvPath = L"Resources/Texture/" + skulTypeW + L"/" + stateW + L".png";
-		string xmlPath = "Resources/XML/" + skulType + "/" + state + ".xml";
+			for (int i = 0; i < State::StateSize; i++)
+			{
+				switch (i)
+				{
+				case 0:
+					state = "IDLE";
+					type = Action::Type::LOOP;
+					speed = 0.1f;
+					sortX = MyXML::Sort::RIGHT;
+					sortY = MyXML::Sort::BOTTOM;
+					break;
+				case 1:
+					state = "WALK";
+					type = Action::Type::LOOP;
+					speed = 0.1f;
+					sortX = MyXML::Sort::RIGHT;
+					sortY = MyXML::Sort::BOTTOM;
+					break;
+				case 2:
+					state = "JUMP";
+					type = Action::Type::END;
+					speed = 0.1f;
+					sortX = MyXML::Sort::RIGHT;
+					sortY = MyXML::Sort::BOTTOM;
+					break;
+				case 3:
+					state = "DASH";
+					type = Action::Type::END;
+					speed = 0.1f;
+					sortX = MyXML::Sort::RIGHT;
+					sortY = MyXML::Sort::BOTTOM;
+					break;
+				case 4:
+					state = "FALL";
+					type = Action::Type::END;
+					speed = 0.1f;
+					sortX = MyXML::Sort::MIDDLE;
+					sortY = MyXML::Sort::MIDDLE;
+					break;
+				case 5:
+					state = "FALLREPEAT";
+					type = Action::Type::LOOP;
+					speed = 0.1f;
+					sortX = MyXML::Sort::MIDDLE;
+					sortY = MyXML::Sort::MIDDLE;
+					break;
+				case 6:
+					state = "ATTACKA";
+					type = Action::Type::END;
+					speed = _attackSpeed;
+					sortX = MyXML::Sort::MIDDLE;
+					sortY = MyXML::Sort::MIDDLE;
+					break;
+				case 7:
+					state = "ATTACKB";
+					type = Action::Type::END;
+					speed = _attackSpeed;
+					sortX = MyXML::Sort::MIDDLE;
+					sortY = MyXML::Sort::MIDDLE;
+					break;
+				case 8:
+					state = "JUMPATTACK";
+					type = Action::Type::END;
+					speed = _attackSpeed;
+					sortX = MyXML::Sort::MIDDLE;
+					sortY = MyXML::Sort::MIDDLE;
+					break;
+				case 9:
+					if (_skulType == SkulType::HEADLESS)
+						break;
+					state = "SKILL";
+					type = Action::Type::END;
+					speed = 0.1f;
+					sortX = MyXML::Sort::MIDDLE;
+					sortY = MyXML::Sort::MIDDLE;
+					break;
+				default:
+					break;
+				}
 
-		MyXML xml = MyXML(xmlPath, srvPath);
+				wstring stateW(state.begin(), state.end());
+				wstring rarityW(rarity.begin(), rarity.end());
 
-		name = skulType + "_" + state;
+				wstring srvPath = L"Resources/Texture/" + skulTypeW + L"/" + rarityW + L"/" + stateW + L".png";
+				string xmlPath = "Resources/XML/" + skulType + "/" + rarity + "/" + state + ".xml";
 
-		_actions[_skulType].emplace_back(make_shared<Action>(xml.GetClips(sortX, sortY), name, type, speed));
+				MyXML xml = MyXML(xmlPath, srvPath);
 
-		Vector2 maxSize = xml.MaxSize() * 2.0f;
-		shared_ptr<Sprite> sprite = make_shared<Sprite>(srvPath, maxSize);
-		_sprites[_skulType].emplace_back(sprite);
+				name = skulType + "_" + state;
+
+				_actions[_skulType].emplace_back(make_shared<Action>(xml.GetClips(sortX, sortY), name, type, speed));
+
+				Vector2 maxSize = xml.MaxSize() * 2.0f;
+				shared_ptr<Sprite> sprite = make_shared<Sprite>(srvPath, maxSize);
+				_sprites[_skulType].emplace_back(sprite);
+			}
+		}
 	}
 }
