@@ -3,15 +3,13 @@ class Slider
 {
 public:
 	Slider();
+	Slider(wstring file);
 	~Slider();
-
-	void SetSlider(wstring file);
 
 	void Update();
 	void PostRender();
 
 	void SetPos(Vector2 pos);
-	void SetScale(Vector2 scale);
 
 	void SetRatio(float value) { _buffer->_data.ratio = value; }
 	void SetOpaque(float value) { _buffer->_data.opaque = value; }

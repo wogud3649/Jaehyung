@@ -125,22 +125,8 @@ void Sprite::SetDirection(Direction direction)
     case LEFT:
         _reverseBuffer->_data.reverse = 1;
         break;
-    case UP:
-        break;
     case RIGHT:
         _reverseBuffer->_data.reverse = 0;
-        break;
-    case DOWN:
-        break;
-    case LEFTUP:
-        break;
-    case RIGHTUP:
-        break;
-    case LEFTDOWN:
-        break;
-    case RIGHTDOWN:
-        break;
-    case NONE:
         break;
     default:
         break;
@@ -149,8 +135,8 @@ void Sprite::SetDirection(Direction direction)
 
 void Sprite::SetCurFrame(Vector2 curFrame)
 {
-    _actionBuffer->_data.startPos.x = _actionBuffer->_data.imageSize.x * curFrame.x / (_actionBuffer->_data.imageSize.x / _actionBuffer->_data.size.x);
-    _actionBuffer->_data.startPos.y = _actionBuffer->_data.imageSize.y * curFrame.y / (_actionBuffer->_data.imageSize.y / _actionBuffer->_data.size.y);
+    _actionBuffer->_data.startPos.x = curFrame.x * _actionBuffer->_data.size.x;
+    _actionBuffer->_data.startPos.y = curFrame.y * _actionBuffer->_data.size.y;
 }
 
 void Sprite::SetActionClip(Action::Clip clip)

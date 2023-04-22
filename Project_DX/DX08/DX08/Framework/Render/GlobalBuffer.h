@@ -28,7 +28,7 @@ class ColorBuffer : public ConstantBuffer
 public:
 	struct Data
 	{
-		XMFLOAT4 color = { 0,1,0,1 };
+		XMFLOAT4 color = { 0,0,0,0 };
 	};
 
 	ColorBuffer()

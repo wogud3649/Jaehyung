@@ -31,6 +31,8 @@ public:
 	void Dead();
 	void Revive();
 
+	const float& GetCurHp() { return _curHp; }
+	const float& GetMaxHp() { return _maxHp; }
 	const float& GetJumpPower() { return _curJumpPower; }
 
 	shared_ptr<CircleCollider> GetAttackCol() { return _attackCol; }

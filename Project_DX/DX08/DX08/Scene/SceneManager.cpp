@@ -19,9 +19,8 @@ SceneManager::SceneManager()
 	_sceneTable["FieldScene1"] = make_shared<FieldScene1>();
 	_sceneTable["StoreScene"] = make_shared<StoreScene>();
 	_sceneTable["BossScene"] = make_shared<BossScene>();
-	_sceneTable["UIScene"] = make_shared<UIScene>();
 
-	_curScene = _sceneTable["UIScene"];
+	_curScene = _sceneTable["MapEditorTestScene"];
 }
 
 SceneManager::~SceneManager()
@@ -33,8 +32,8 @@ void SceneManager::Update()
 {
 	if (_curScene == nullptr) return;
 
-	UI->Update();
 	INVENTORY->Update();
+	UI->Update();
 
 	if (INVENTORY->IsOpen() == false)
 	{
@@ -48,10 +47,10 @@ void SceneManager::Update()
 
 	if (_curSceneIndex != _oldSceneIndex)
 	{
-		if (_curSceneIndex > 5)
+		if (_curSceneIndex > _maxSceneIndex)
 			_curSceneIndex = 0;
 		else if (_curSceneIndex < 0)
-			_curSceneIndex = 5;
+			_curSceneIndex = _maxSceneIndex;
 
 		switch (_curSceneIndex)
 		{
@@ -70,9 +69,6 @@ void SceneManager::Update()
 			break;
 		case 4:
 			SetScene("BossScene");
-			break;
-		case 5:
-			SetScene("UIScene");
 			break;
 		default:
 			break;
@@ -105,8 +101,9 @@ void SceneManager::PostRender()
 
 	if (_curSceneIndex != 0)
 	{
-		INVENTORY->PostRender();
 		UI->PostRender();
+		INVENTORY->PostRender();
+		FADEPANEL->PostRender();
 	}
 }
 

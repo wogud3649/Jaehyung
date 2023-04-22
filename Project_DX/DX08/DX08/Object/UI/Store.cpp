@@ -8,6 +8,7 @@ Store::Store()
 	_quad->GetTransform()->SetScale(Vector2(2, 2));
 
 	StoreSettings();
+	SetRandomItems();
 }
 
 Store::~Store()
@@ -48,9 +49,16 @@ void Store::Render()
 		itemCol->Render();
 
 	for (auto item : _items)
-	{
 		item->Render();
-	}
+
+	wstring price = to_wstring(_itemInfos[0].price);
+	Vector2 tempPos = _itemCols[0]->GetTransform()->GetWorldPos();
+	RECT rect;
+	rect.left = tempPos.x - 50;
+	rect.right = tempPos.x + 50;
+	rect.top = tempPos.y - 50;
+	rect.bottom = tempPos.y - 50;
+	DirectWrite::GetInstance()->RenderText(price, rect);
 }
 
 void Store::SetCallBack()

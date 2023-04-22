@@ -38,7 +38,7 @@ public:
 private:
 	static InteractObjManager* _instance;
 
-	UINT _stageLevel = 1;
+	UINT _stageLevel = 3;
 
 	shared_ptr<Door> _door;
 	shared_ptr<Chest> _chest;

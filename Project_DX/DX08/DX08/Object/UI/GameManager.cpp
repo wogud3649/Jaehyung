@@ -10,6 +10,7 @@ GameManager::GameManager()
 	_store = make_shared<Store>();
 	_yggdrasil = make_shared<Yggdrasil>();
 	_characterUI = make_shared<CharacterUI>();
+	_fadePanel = make_shared<FadePanel>();
 }
 
 GameManager::~GameManager()

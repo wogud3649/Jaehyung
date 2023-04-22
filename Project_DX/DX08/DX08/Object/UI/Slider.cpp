@@ -10,14 +10,17 @@ Slider::Slider()
 	_buffer->_data.ratio = 1.0f;
 }
 
-Slider::~Slider()
-{
-}
-
-void Slider::SetSlider(wstring file)
+Slider::Slider(wstring file)
 {
 	_quad = make_shared<Quad>(file);
 	_quad->SetPS(ADD_PS(L"Shader/UI/SliderPixelShader.hlsl"));
+
+	_buffer = make_shared<SliderBuffer>();
+	_buffer->_data.ratio = 1.0f;
+}
+
+Slider::~Slider()
+{
 }
 
 void Slider::Update()
@@ -35,8 +38,4 @@ void Slider::PostRender()
 void Slider::SetPos(Vector2 pos)
 {
 	_quad->GetTransform()->SetPos(pos);
-}
-
-void Slider::SetScale(Vector2 scale)
-{
 }

@@ -32,11 +32,13 @@ public:
 	bool BuyItem(int itemCode);
 	bool RootItem(int itemCode);
 	void SetPlayerStats();
+	void AddMoney(int money);
+	void ReduceMoney(int money);
 
 	vector<ItemInfo> GetEquipedSkulInfo();
 	vector<ItemInfo> GetEquipedItemInfo();
 	StatAttributes GetEquipStats();
-	const UINT& GetMoney() { return _money; }
+	const UINT& GetMoney() { return _curMoney; }
 	const UINT& GetBoneFrag() { return _boneFrag; }
 
 	bool IsOpen() { return _inventoryOpen; }
@@ -57,7 +59,7 @@ private:
 	vector<shared_ptr<Slot>> _slots;
 	UINT _maxSlot = 43;
 
-	shared_ptr<Quad> _selectedFrame;
+	shared_ptr<Slider> _selectedFrame;
 	int _curSelected = -1;
 	int _oldSelected = _curSelected;
 
@@ -75,9 +77,15 @@ private:
 	Pannel _curPannel = Pannel::EMPTY;
 	bool _activeExtraInventory = false;
 
-	UINT _boneFrag = 15;
-	UINT _money = 1500;
+	int _boneFrag = 15;
+	int _goalMoney = 1500;
+	int _curMoney = 0;
 
 	bool _inventoryOpen = false;
 	bool _itemChanged = false;
+
+	float _maxItemSellDelay = 2.0f;
+	float _curItemSellDelay = _maxItemSellDelay;
+
+	vector<shared_ptr<Sprite>> _skillIcons;
 };

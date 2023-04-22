@@ -31,6 +31,7 @@ public:
 	const shared_ptr<Store>& GetStore() { return _store; }
 	const shared_ptr<Yggdrasil>& GetYggdrasil() { return _yggdrasil; }
 	const shared_ptr<CharacterUI>& GetCharacterUI() { return _characterUI; }
+	const shared_ptr<FadePanel>& GetFadePanel() { return _fadePanel; }
 
 private:
 	static GameManager* _instance;
@@ -41,4 +42,5 @@ private:
 	shared_ptr<Store> _store;
 	shared_ptr<Yggdrasil> _yggdrasil;
 	shared_ptr<CharacterUI> _characterUI;
+	shared_ptr<FadePanel> _fadePanel;
 };

@@ -122,6 +122,9 @@ void Advanced_Player::Update()
 	{
 		_curProjCD -= DELTA_TIME;
 		_proj->Update();
+
+		UI->SetSkillRatio(0, _curProjCD / _maxProjCD);
+
 		if (_curProjCD < 0.0f)
 		{
 			_isProjFired = false;
@@ -362,7 +365,6 @@ void Advanced_Player::Skill()
 			else
 				_reverseBuffer->_data.reverse = 1;
 		}
-
 	}
 }
 
@@ -431,7 +433,7 @@ void Advanced_Player::SetEquipStats(StatAttributes stats)
 	_maxHp = _baseMaxHp + _statAttributes.hp;
 	_def = _baseDef + _statAttributes.def;
 	_critPercent = _baseCrp + _statAttributes.crp;
-	_maxHeadDelay = _baseScd * ((float)(361 - _statAttributes.scd) / 100); // TODO :
+	_maxHeadDelay = _baseScd * ((float)(361 - _statAttributes.scd) / 100);
 	_maxProjCD = _baseScd * ((float)(361 - _statAttributes.scd) / 100);
 	_maxChangeCD = _baseCcd * ((float)(100 - _statAttributes.ccd) / 100);
 }
@@ -440,46 +442,44 @@ void Advanced_Player::SwapSkul()
 {
 	vector<ItemInfo> data = INVENTORY->GetEquipedSkulInfo();
 
-	if (_isFirstSkul)
-	{
-		if (data[1].itemCode == 0)
-			return;
+	if (data[_isFirstSkul].itemCode == 0)
+		return;
 
-		if (KEY_DOWN(VK_SPACE))
-		{
-			_isFirstSkul = false;
-			UI->SwapSkul(_isFirstSkul);
-			switch (data[1].itemCode)
-			{
-			case 1:
-				SetSkul(SkulType::SKUL);
-				break;
-			case 2:
-				SetSkul(SkulType::WAREWOLF);
-			default:
-				break;
-			}
-		}
-	}
-	else
+	if (KEY_DOWN(VK_SPACE))
 	{
-		if (data[0].itemCode == 0)
-			return;
-
-		if (KEY_DOWN(VK_SPACE))
+		_isFirstSkul = !_isFirstSkul;
+		UI->SwapSkul(_isFirstSkul);
+		switch (data[1].itemCode)
 		{
-			_isFirstSkul = true;
-			UI->SwapSkul(_isFirstSkul);
-			switch (data[0].itemCode)
-			{
-			case 1:
-				SetSkul(SkulType::SKUL);
-				break;
-			case 2:
-				SetSkul(SkulType::WAREWOLF);
-			default:
-				break;
-			}
+		case 1:
+			SetSkul(SkulType::SKUL);
+			break;
+		case 2:
+			SetSkul(SkulType::WAREWOLFN);
+			break;
+		case 3:
+			SetSkul(SkulType::WIZARDN);
+			break;
+		case 4:
+			SetSkul(SkulType::WAREWOLFR);
+			break;
+		case 5:
+			SetSkul(SkulType::WIZARDR);
+			break;
+		case 6:
+			SetSkul(SkulType::WAREWOLFU);
+			break;
+		case 7:
+			SetSkul(SkulType::WIZARDU);
+			break;
+		case 8:
+			SetSkul(SkulType::WAREWOLFL);
+			break;
+		case 9:
+			SetSkul(SkulType::WIZARDL);
+			break;
+		default:
+			break;
 		}
 	}
 }
@@ -561,13 +561,13 @@ void Advanced_Player::SetCallback()
 	_actions[SkulType::HEADLESS][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
 	_actions[SkulType::HEADLESS][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
 
-	_actions[SkulType::WAREWOLF][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 2);
-	_actions[SkulType::WAREWOLF][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 3);
-	_actions[SkulType::WAREWOLF][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
-	_actions[SkulType::WAREWOLF][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
-	_actions[SkulType::WAREWOLF][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
-	_actions[SkulType::WAREWOLF][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
-	_actions[SkulType::WAREWOLF][State::SKILL]->SetCallBack(std::bind(&Advanced_Player::SkillEnd, this));
+	_actions[SkulType::WAREWOLFN][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 2);
+	_actions[SkulType::WAREWOLFN][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 3);
+	_actions[SkulType::WAREWOLFN][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
+	_actions[SkulType::WAREWOLFN][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
+	_actions[SkulType::WAREWOLFN][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
+	_actions[SkulType::WAREWOLFN][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
+	_actions[SkulType::WAREWOLFN][State::SKILL]->SetCallBack(std::bind(&Advanced_Player::SkillEnd, this));
 }
 
 void Advanced_Player::SetAction(State state)

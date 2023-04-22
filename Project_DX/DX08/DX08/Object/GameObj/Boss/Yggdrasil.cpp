@@ -18,16 +18,29 @@ void Yggdrasil::Update()
 {
 	if (_isAlive == false)
 	{
+		if (_deadDelay < 0)
+			return;
+
+		_filterBuffer->Update();
+		_colorBuffer->Update();
+
+		_deadDelay -= DELTA_TIME;
+		float tempValue = _deadDelay / 3.0f;
+		_filterBuffer->_data.value1 = LERP(_filterBuffer->_data.value1, 0, 0.02f);
+		_colorBuffer->_data.color = { 1 - tempValue, 0.0f, 1 - tempValue, 0.0f };
+
+		CAMERA->ShakeStart((1 - tempValue) * 20, DELTA_TIME);
+
 		return;
 	}
+
+	_body->Update();
 
 	_headCol->Update();
 	_rightBranchCol->Update();
 	_leftBranchCol->Update();
 	_rightHandCol->Update();
 	_leftHandCol->Update();
-
-	_body->Update();
 
 	_rightHand->Update();
 	_leftHand->Update();
@@ -260,8 +273,17 @@ void Yggdrasil::Update()
 void Yggdrasil::Render()
 {
 	if (_isAlive == false)
-		return;
+	{
+		if (_deadDelay < 0)
+			return;
 
+		_filterBuffer->SetPSBuffer(1);
+		_colorBuffer->SetPSBuffer(2);
+
+		_body->Render();
+
+		return;
+	}
 	_body->Render();
 
 	_headCol->Render();
@@ -272,7 +294,15 @@ void Yggdrasil::Render()
 void Yggdrasil::HandRender()
 {
 	if (_isAlive == false)
+	{
+		if (_deadDelay < 0)
+			return;
+
+		_rightHand->Render();
+		_leftHand->Render();
+
 		return;
+	}
 
 	_rightHand->Render();
 	_leftHand->Render();
@@ -296,6 +326,16 @@ void Yggdrasil::Damaged(int damage)
 
 void Yggdrasil::Dead()
 {
+	if (_isAlive == false)
+		return;
+
+	FADEPANEL->SetColor({ 1.0f, 1.0f, 1.0f });
+	FADEPANEL->StartFadeIn();
+	_body->SetPS(ADD_PS(L"Shader/ColorFilterPixelShader.hlsl"));
+	_leftHand->SetPS(ADD_PS(L"Shader/ColorFilterPixelShader.hlsl"));
+	_rightHand->SetPS(ADD_PS(L"Shader/ColorFilterPixelShader.hlsl"));
+	_filterBuffer->_data.selected = 1;
+	_filterBuffer->_data.value1 = 1000.0f;
 	DeActivate();
 	EFFECT->Stop("Sweeping_4x1");
 }
@@ -326,6 +366,10 @@ void Yggdrasil::Activate()
 	_leftBranchCol->Activate();
 	_headCol->Activate();
 	_curHp = _maxHp;
+	_deadDelay = 3.0f;
+	_body->SetPS(ADD_PS(L"Shader/TexturePixelShader.hlsl"));
+	_leftHand->SetPS(ADD_PS(L"Shader/TexturePixelShader.hlsl"));
+	_rightHand->SetPS(ADD_PS(L"Shader/TexturePixelShader.hlsl"));
 }
 
 void Yggdrasil::MakeShared()
@@ -335,6 +379,9 @@ void Yggdrasil::MakeShared()
 	_rightHand = make_shared<Quad>(L"Resources/Texture/Boss/Yggdrasil/rightHand.png");
 	
 	_leftHand = make_shared<Quad>(L"Resources/Texture/Boss/Yggdrasil/leftHand.png");
+
+	_filterBuffer = make_shared<FilterBuffer>();
+	_colorBuffer = make_shared<ColorBuffer>();
 
 	_headCol = make_shared<CircleCollider>(125);
 	_rightBranchCol = make_shared<RectCollider>(Vector2(130, 10));

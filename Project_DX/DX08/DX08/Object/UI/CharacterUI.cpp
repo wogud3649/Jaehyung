@@ -6,11 +6,19 @@ CharacterUI::CharacterUI()
 	_characterUI = make_shared<Quad>(L"Resources/Texture/UI/CharacterUI.png");
 	_characterUI->GetTransform()->SetPos(Vector2(203.5f, 66.0f));
 
-	_skillIcon = make_shared<Sprite>(L"Resources/Texture/SkillIcon/SkillIcons.png", Vector2(2,3), Vector2(48,72));
-	_skillIcon->GetTransform()->SetParent(_characterUI->GetTransform());
-	_skillIcon->SetCurFrame(Vector2(0, 0));
-	_skillIcon->GetTransform()->SetScale(Vector2(2.0f, 2.0f));
-	_skillIcon->GetTransform()->Move(Vector2(-63, 12));
+	shared_ptr<SpriteSlider> skillIcon = make_shared<SpriteSlider>(L"Resources/Texture/SkillIcon/SkillIcons.png", Vector2(2,3));
+	skillIcon->GetTransform()->SetParent(_characterUI->GetTransform());
+	skillIcon->SetCurFrame(Vector2(0, 0));
+	skillIcon->GetTransform()->SetScale(Vector2(2.0f, 2.0f));
+	skillIcon->GetTransform()->Move(Vector2(-63, 12));
+	_skillIcons.emplace_back(skillIcon);
+
+	skillIcon = make_shared<SpriteSlider>(L"Resources/Texture/SkillIcon/SkillIcons.png", Vector2(2, 3));
+	skillIcon->GetTransform()->SetParent(_characterUI->GetTransform());
+	skillIcon->SetCurFrame(Vector2(0, 0));
+	skillIcon->GetTransform()->SetScale(Vector2(2.0f, 2.0f));
+	skillIcon->GetTransform()->Move(Vector2(-13, 12));
+	_skillIcons.emplace_back(skillIcon);
 
 	_extraSkillSlot = make_shared<Quad>(L"Resources/Texture/UI/ExtraSkillSlot.png");
 	_extraSkillSlot->GetTransform()->SetParent(_characterUI->GetTransform());
@@ -41,44 +49,33 @@ void CharacterUI::Update()
 {
 	_sliderHp->Update();
 	_characterUI->Update();
-	_skillIcon->Update();
+	for (auto skillIcon : _skillIcons)
+		skillIcon->Update();
 	_skullIcon->Update();
 
 	Vector2 curFrame;
 	vector<ItemInfo> info = INVENTORY->GetEquipedSkulInfo();
-	if (_isFirstSkul)
-	{
-		curFrame.x = info[0].frameX;
-		curFrame.y = info[0].frameY;
 
-		switch (info[0].itemCode)
-		{
-		case 1:
-			_skillIcon->SetCurFrame(Vector2(0, 0));
-			break;
-		case 2:
-			_skillIcon->SetCurFrame(Vector2(0, 1));
-			break;
-		default:
-			break;
-		}
-	}
+	if (info[0].rarity == Rarity::NONE || info[0].rarity == Rarity::NORMAL)
+		_activeExtraSkillSlot = false;
 	else
-	{
-		curFrame.x = info[1].frameX;
-		curFrame.y = info[1].frameY;
+		_activeExtraSkillSlot = true;
 
-		switch (info[1].itemCode)
-		{
-		case 1:
-			_skillIcon->SetCurFrame(Vector2(0, 0));
-			break;
-		case 2:
-			_skillIcon->SetCurFrame(Vector2(0, 1));
-			break;
-		default:
-			break;
-		}
+	curFrame.x = info[!_isFirstSkul].frameX;
+	curFrame.y = info[!_isFirstSkul].frameY;
+
+	switch (info[!_isFirstSkul].itemCode)
+	{
+	case 1:
+		_skillIcons[0]->SetCurFrame(Vector2(0, 0));
+		_skillIcons[1]->SetCurFrame(Vector2(1, 0));
+		break;
+	case 2:
+		_skillIcons[0]->SetCurFrame(Vector2(0, 1));
+		_skillIcons[1]->SetCurFrame(Vector2(1, 1));
+		break;
+	default:
+		break;
 	}
 
 	_skullIcon->SetCurFrame(curFrame);
@@ -93,7 +90,8 @@ void CharacterUI::PostRender()
 {
 	_characterUI->Render();
 	_skullIcon->Render();
-	_skillIcon->Render();
+	for (auto skillIcon : _skillIcons)
+		skillIcon->PostRender();
 
 	if (_activeExtraSkillSlot)
 		_extraSkillSlot->Render();
@@ -111,10 +109,24 @@ void CharacterUI::PostRender()
 	rect.top = WIN_HEIGHT - 30;
 	DirectWrite::GetInstance()->RenderText(boneFrag, rect);
 
+	wstring maxHp = to_wstring(static_cast<int>(PLAYER->GetMaxHp()));
+	wstring curHp = to_wstring(static_cast<int>(PLAYER->GetCurHp()));
+	wstring hpBar = curHp + L" / " + maxHp;
+	rect.left = 165;
+	rect.right = 265;
+	rect.top = WIN_HEIGHT - 50;
+	rect.bottom = WIN_HEIGHT;
+	DirectWrite::GetInstance()->RenderText(hpBar, rect);
+
 	_sliderHp->PostRender();
 }
 
 void CharacterUI::SetHpRatio(float ratio)
 {
 	_sliderHp->SetRatio(ratio);
+}
+
+void CharacterUI::SetSkillRatio(int index, float ratio)
+{
+	_skillIcons[index]->SetRatio(ratio);
 }

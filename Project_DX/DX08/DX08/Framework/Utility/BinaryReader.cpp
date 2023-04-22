@@ -14,7 +14,7 @@ BinaryReader::~BinaryReader()
 
 bool BinaryReader::Bool()
 {
-	int temp;
+	int temp = 0;
 	assert(ReadFile(_file, OUT & temp, sizeof(bool), OUT & _size, nullptr));
 
 	return temp;
@@ -22,7 +22,7 @@ bool BinaryReader::Bool()
 
 int BinaryReader::Int()
 {
-	int temp;
+	int temp = 0;
 	assert(ReadFile(_file, OUT & temp, sizeof(int), OUT & _size, nullptr));
 
 	return temp;
@@ -30,7 +30,7 @@ int BinaryReader::Int()
 
 UINT BinaryReader::UInt()
 {
-	UINT temp;
+	UINT temp = 0;
 	assert(ReadFile(_file, OUT & temp, sizeof(UINT), OUT & _size, nullptr));
 
 	return temp;
@@ -38,7 +38,7 @@ UINT BinaryReader::UInt()
 
 float BinaryReader::Float()
 {
-	float temp;
+	float temp = 0;
 	assert(ReadFile(_file, OUT & temp, sizeof(float), OUT & _size, nullptr));
 
 	return temp;

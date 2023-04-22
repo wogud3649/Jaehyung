@@ -34,6 +34,7 @@ public:
 	float GetHpRatio() { return static_cast<float>(_curHp) / static_cast<float>(_maxHp); }
 
 	const bool& GetAlive() { return _isAlive; }
+	const float& GetDeadDelay() { return _deadDelay; }
 
 	void Activate();
 private:
@@ -69,6 +70,9 @@ private:
 	Vector2 _originBodyPos;
 	bool _up = true;
 
+	shared_ptr<FilterBuffer> _filterBuffer;
+	shared_ptr<ColorBuffer> _colorBuffer;
+
 	shared_ptr<Quad> _rightHand;
 	Vector2 _originRightHandPos;
 	shared_ptr<Quad> _leftHand;
@@ -80,7 +84,7 @@ private:
 	shared_ptr<RectCollider> _rightHandCol;
 	shared_ptr<RectCollider> _leftHandCol;
 
-	int _maxHp = 500;
+	int _maxHp = 50;
 	int _curHp = _maxHp;
 	bool _isAlive = true;
 
@@ -105,4 +109,6 @@ private:
 	bool _spikeReady = false;
 	bool _spikeActive = false;
 	bool _spikeUp = true;
+
+	float _deadDelay = 3.0f;
 };

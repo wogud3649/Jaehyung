@@ -25,13 +25,13 @@ struct PixelInput
 // SV : SystemValue
 float4 PS(PixelInput input) : SV_TARGET
 {
-	//float2 spriteUV;
-	//spriteUV.x = input.uv.x * (size.x / imageSize.x) + (startPos.x / imageSize.x);
-	//spriteUV.y = input.uv.y * (size.y / imageSize.y) + (startPos.y / imageSize.y);
+	float2 spriteUV;
+	spriteUV.x = input.uv.x * (size.x / imageSize.x) + (startPos.x / imageSize.x);
+	spriteUV.y = input.uv.y * (size.y / imageSize.y) + (startPos.y / imageSize.y);
 
-	float4 result = map.Sample(samp,input.uv);
+	float4 result = map.Sample(samp, spriteUV);
 
-	if (result.x > ratio)
+	if (input.uv.y < ratio)
 	{
 		result.x -= 0.7f;
 		result.y -= 0.7f;

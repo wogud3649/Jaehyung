@@ -22,6 +22,7 @@ void Program::Update()
 	Timer::GetInstance()->Update();
 	CAMERA->Update();
 
+	FADEPANEL->Update();
 	SCENE->Update();
 	EFFECT->Update();
 }

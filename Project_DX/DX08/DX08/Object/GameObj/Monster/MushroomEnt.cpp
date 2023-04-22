@@ -97,6 +97,7 @@ void MushroomEnt::Damaged(int damage, ATTRIBUTE attribute)
 void MushroomEnt::Dead()
 {
 	_isAlive = false;
+	INVENTORY->AddMoney(50);
 }
 
 void MushroomEnt::Function()

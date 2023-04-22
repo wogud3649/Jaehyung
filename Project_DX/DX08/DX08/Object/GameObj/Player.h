@@ -6,8 +6,14 @@ public:
 	{
 		SKUL,
 		HEADLESS,
-		WAREWOLF,
-		//WIZARD,
+		WAREWOLFN,
+		WIZARDN,
+		WAREWOLFR,
+		WIZARDR,
+		WAREWOLFU,
+		WIZARDU,
+		WAREWOLFL,
+		WIZARDL,
 
 		SkulTypeSize
 	};

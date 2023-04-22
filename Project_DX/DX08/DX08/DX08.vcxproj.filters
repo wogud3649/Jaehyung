@@ -222,6 +222,12 @@
     <ClInclude Include="Object\UI\Slider.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Object\UI\SpriteSlider.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\UI\FadePanel.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DX08.cpp">
@@ -416,6 +422,12 @@
     <ClCompile Include="Object\UI\Slider.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Object\UI\SpriteSlider.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\UI\FadePanel.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX08.rc">
@@ -443,5 +455,7 @@
     <FxCompile Include="Shader\InstancingPixelShader.hlsl" />
     <FxCompile Include="Shader\UI\SliderPixelShader.hlsl" />
     <FxCompile Include="Shader\UI\SliderSpritePixelShader.hlsl" />
+    <FxCompile Include="Shader\ColorFilterPixelShader.hlsl" />
+    <FxCompile Include="Shader\ColorPixelShader.hlsl" />
   </ItemGroup>
 </Project>

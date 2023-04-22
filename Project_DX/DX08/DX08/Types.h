@@ -57,6 +57,7 @@ using ATTRIBUTE = unsigned char;
 #define PLAYER GameManager::GetInstance()->GetPlayer()
 #define STORE GameManager::GetInstance()->GetStore()
 #define YGGDRASIL GameManager::GetInstance()->GetYggdrasil()
+#define FADEPANEL GameManager::GetInstance()->GetFadePanel()
 
 #define INTERACTOBJ InteractObjManager::GetInstance()
 

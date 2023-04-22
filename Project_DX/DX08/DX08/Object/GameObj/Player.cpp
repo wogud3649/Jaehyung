@@ -7,8 +7,49 @@ Player::Player()
 	_actions.resize(SkulType::SkulTypeSize);
 	CreateAction(SkulType::SKUL);
 	CreateAction(SkulType::HEADLESS);
-	CreateAction(SkulType::WAREWOLF);
-	//CreateAction(SkulType::WIZARD);
+	CreateAction(SkulType::WAREWOLFN);
+	CreateAction(SkulType::WIZARDN);
+
+	for (int i = 10; i < 20; i++)
+	{
+		_sprites[4].emplace_back(_sprites[2][i]);
+		_actions[4].emplace_back(_actions[2][i]);
+	}
+
+	for (int i = 10; i < 20; i++)
+	{
+		_sprites[5].emplace_back(_sprites[3][i]);
+		_actions[5].emplace_back(_actions[3][i]);
+	}
+
+	for (int i = 20; i < 30; i++)
+	{
+		_sprites[6].emplace_back(_sprites[2][i]);
+		_actions[6].emplace_back(_actions[2][i]);
+	}
+
+	for (int i = 20; i < 30; i++)
+	{
+		_sprites[7].emplace_back(_sprites[3][i]);
+		_actions[7].emplace_back(_actions[3][i]);
+	}
+
+	for (int i = 30; i < 40; i++)
+	{
+		_sprites[8].emplace_back(_sprites[2][i]);
+		_actions[8].emplace_back(_actions[2][i]);
+	}
+
+	for (int i = 30; i < 40; i++)
+	{
+		_sprites[9].emplace_back(_sprites[3][i]);
+		_actions[9].emplace_back(_actions[3][i]);
+	}
+
+	_sprites[2].resize(10);
+	_sprites[3].resize(10);
+	_actions[2].resize(10);
+	_actions[3].resize(10);
 
 	_footCol = make_shared<CircleCollider>(15);
 
@@ -61,12 +102,12 @@ void Player::CreateAction(SkulType _skulType)
 	case Player::HEADLESS:
 		skulType = "HEADLESS";
 		break;
-	case Player::WAREWOLF:
+	case Player::WAREWOLFN:
 		skulType = "WAREWOLF";
 		break;
-	//case Player::WIZARD:
-	//	skulType = "WIZARD";
-	//	break;
+	case Player::WIZARDN:
+		skulType = "WIZARD";
+		break;
 	default:
 		break;
 	}

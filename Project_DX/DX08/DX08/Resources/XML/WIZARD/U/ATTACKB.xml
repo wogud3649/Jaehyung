@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created with Free texture packer v0.6.7 http://free-tex-packer.com
+Format:
+n  => name
+x  => x pos
+y  => y pos
+w  => width
+h  => height
+pX => x pos of the pivot point
+pY => y pos of the pivot point
+oX => x-corner offset
+oY => y-corner offset
+oW => original width
+oH => original height
+r => 'y' if sprite is rotated-->
+<TextureAtlas imagePath="ATTACKB.png" width="664" height="114" scale="1" format="RGBA8888">
+  <sprite n="Attack B_0 #2186927.png" x="20" y="20" w="71" h="53" pX="0.5" pY="0.5"/>
+  <sprite n="Attack B_1 #2182725.png" x="131" y="20" w="65" h="56" pX="0.5" pY="0.5"/>
+  <sprite n="Attack B_4 #2182641.png" x="236" y="20" w="64" h="59" pX="0.5" pY="0.5"/>
+  <sprite n="Attack B_5.png" x="340" y="20" w="64" h="59" pX="0.5" pY="0.5"/>
+  <sprite n="Attack B_3 #2183369.png" x="444" y="20" w="67" h="72" pX="0.5" pY="0.5"/>
+  <sprite n="Attack B_2 #2187021.png" x="551" y="20" w="93" h="74" pX="0.5" pY="0.5"/>
+</TextureAtlas>

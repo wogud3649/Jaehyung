@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created with Free texture packer v0.6.7 http://free-tex-packer.com
+Format:
+n  => name
+x  => x pos
+y  => y pos
+w  => width
+h  => height
+pX => x pos of the pivot point
+pY => y pos of the pivot point
+oX => x-corner offset
+oY => y-corner offset
+oW => original width
+oH => original height
+r => 'y' if sprite is rotated-->
+<TextureAtlas imagePath="WALK.png" width="665" height="100" scale="1" format="RGBA8888">
+  <sprite n="Walk_0 #2185833.png" x="20" y="20" w="55" h="57" pX="0.5" pY="0.5"/>
+  <sprite n="Walk_4 #2184809.png" x="115" y="20" w="55" h="57" pX="0.5" pY="0.5"/>
+  <sprite n="Walk_1 #2185627.png" x="210" y="20" w="55" h="58" pX="0.5" pY="0.5"/>
+  <sprite n="Walk_5 #2183967.png" x="305" y="20" w="55" h="58" pX="0.5" pY="0.5"/>
+  <sprite n="Walk_2 #2183422.png" x="400" y="20" w="55" h="60" pX="0.5" pY="0.5"/>
+  <sprite n="Walk_3 #2183410.png" x="495" y="20" w="55" h="60" pX="0.5" pY="0.5"/>
+  <sprite n="Walk_6 #2182535.png" x="590" y="20" w="55" h="60" pX="0.5" pY="0.5"/>
+</TextureAtlas>

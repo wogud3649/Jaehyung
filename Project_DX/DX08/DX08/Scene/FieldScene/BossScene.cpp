@@ -8,8 +8,7 @@ BossScene::BossScene()
 
 	YGGDRASIL->SetTarget(PLAYER);
 
-	_healthBar = make_shared<Slider>();
-	_healthBar->SetSlider(L"Resources/Texture/UI/BossHealthBar.png");
+	_healthBar = make_shared<Slider>(L"Resources/Texture/UI/BossHealthBar.png");
 	_healthBar->SetOpaque(0.9f);
 	Vector2 tempPos = Vector2(CENTER.x, CENTER.y + 300.0f);
 	_healthBar->SetPos(tempPos);
@@ -101,7 +100,12 @@ void BossScene::PreRender()
 void BossScene::PostRender()
 {
 	PLAYER->PostRender();
-	_healthBar->PostRender();
+
+	if (YGGDRASIL->GetDeadDelay() > 0.0f)
+	{
+		_healthBar->PostRender();
+		float ratio = YGGDRASIL->GetDeadDelay() / 3.0f;
+	}
 }
 
 void BossScene::SceneClear()
@@ -109,7 +113,7 @@ void BossScene::SceneClear()
 	if (_isClear)
 		return;
 
-	if (YGGDRASIL->GetAlive() == false)
+	if (YGGDRASIL->GetDeadDelay() < 0.0f)
 	{
 		INTERACTOBJ->GetDoor()->Spawn();
 		INTERACTOBJ->GetChest()->Spawn();

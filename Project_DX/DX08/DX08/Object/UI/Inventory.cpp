@@ -20,12 +20,24 @@ Inventory::Inventory()
 	_itemInfoIcons->GetTransform()->SetPos(Vector2(867, 626));
 	_itemInfoIcons->SetCurFrame(Vector2(0, 0));
 
-	_selectedFrame = make_shared<Quad>(L"Resources/Texture/UI/SelectedFrame.png");
+	_selectedFrame = make_shared<Slider>(L"Resources/Texture/UI/SelectedFrame.png");
 
 	CreateSlots();
 	RootItem(1);
-	RootItem(2);
+	RootItem(4);
 	DATA_M->SetDuplicate(1);
+
+	shared_ptr<Sprite> skillIcon1= make_shared<Sprite>(L"Resources/Texture/SkillIcon/SkillIcons.png",Vector2(2,3), Vector2(48,72));
+	shared_ptr<Sprite> skillIcon2 = make_shared<Sprite>(L"Resources/Texture/SkillIcon/SkillIcons.png",Vector2(2,3), Vector2(48,72));
+
+	_skillIcons.emplace_back(skillIcon1);
+	_skillIcons.emplace_back(skillIcon2);
+
+	for (auto skillIcon : _skillIcons)
+	{
+		skillIcon->GetTransform()->SetScale(Vector2(2, 2));
+		skillIcon->GetTransform()->SetPos(Vector2(-50, -50));
+	}
 }
 
 Inventory::~Inventory()
@@ -37,13 +49,31 @@ void Inventory::Update()
 	if (KEY_DOWN('I'))
 		_inventoryOpen = !_inventoryOpen;
 
+	if (_curMoney < _goalMoney)
+	{
+		if (_curMoney > _goalMoney - 100)
+			_curMoney++;
+		else
+			_curMoney = LERP(_curMoney, _goalMoney, 0.02f);
+	}
+	if (_curMoney > _goalMoney)
+	{
+		if (_curMoney < _goalMoney + 100)
+			_curMoney--;
+		else
+			_curMoney = LERP(_curMoney, _goalMoney, 0.02f);
+	}
+
 	if (_inventoryOpen == false)
 		return;
 
 	_inventory->Update();
 	_inventoryPannels->Update();
 	_itemInfoIcons->Update();
-	
+
+	for (auto skillIcon : _skillIcons)
+		skillIcon->Update();
+
 	if (KEY_DOWN('A'))
 	{
 		_activeExtraInventory = !_activeExtraInventory;
@@ -53,7 +83,7 @@ void Inventory::Update()
 			_curSelected = 0;
 	}
 
-	if (KEY_DOWN(VK_LBUTTON))
+	if (KEY_DOWN(VK_RBUTTON))
 	{
 		_detailedInfo = !_detailedInfo;
 		SetInfoPannels();
@@ -112,7 +142,33 @@ void Inventory::Update()
 		SetPlayerStats();
 
 	if (_curSelected != -1)
+	{
 		_selectedFrame->Update();
+		if (_itemDatas[_curSelected].itemCode != 0)
+		{
+			if (KEY_PRESS('X'))
+			{
+				_curItemSellDelay -= DELTA_TIME;
+
+				if (_curItemSellDelay < 0)
+				{
+					_curItemSellDelay = _maxItemSellDelay;
+
+					SellItem(_curSelected);
+				}
+			}
+			else
+			{
+				_curItemSellDelay = _maxItemSellDelay;
+			}
+		}
+		else
+		{
+			_curItemSellDelay = _maxItemSellDelay;
+		}
+
+		_selectedFrame->SetRatio(_curItemSellDelay / _maxItemSellDelay);
+	}
 }
 
 void Inventory::PostRender()
@@ -123,6 +179,9 @@ void Inventory::PostRender()
 	_inventory->Render();
 	_inventoryPannels->Render();
 	_itemInfoIcons->Render();
+
+	for (auto skillIcon : _skillIcons)
+		skillIcon->Render();
 	
 	if (_activeExtraInventory)
 	{
@@ -135,7 +194,7 @@ void Inventory::PostRender()
 			_slots[i]->Render();
 
 		if (_curSelected != -1 && _curSelected > 15)
-			_selectedFrame->Render();
+			_selectedFrame->PostRender();
 	}
 	else
 	{
@@ -146,7 +205,7 @@ void Inventory::PostRender()
 			_slots[i]->Render();
 
 		if (_curSelected != -1 && _curSelected < 16)
-			_selectedFrame->Render();
+			_selectedFrame->PostRender();
 	}
 
 }
@@ -160,26 +219,55 @@ void Inventory::SetInfoPannels()
 
 	ItemInfo info = _itemDatas[_curSelected];
 	_itemInfoIcons->SetCurFrame(Vector2(info.frameX, info.frameY));
-	_selectedFrame->GetTransform()->SetPos(_slots[_curSelected]->GetCollider()->GetTransform()->GetWorldPos());
+	_selectedFrame->SetPos(_slots[_curSelected]->GetCollider()->GetTransform()->GetWorldPos());
 	_oldSelected = _curSelected;
 	
 	if (_statusOpen)
 		_curPannel = Inventory::STATUS;
 	else if (info.itemType == ItemType::HEAD)
 	{
+		if (_itemDatas[_curSelected].itemCode == 1)
+			_skillIcons[0]->SetCurFrame(Vector2(0, 0));
+		else if (_itemDatas[_curSelected].itemCode == 2 || _itemDatas[_curSelected].itemCode == 4 || _itemDatas[_curSelected].itemCode == 6 || _itemDatas[_curSelected].itemCode == 8)
+		{
+			_skillIcons[0]->SetCurFrame(Vector2(0, 1));
+			_skillIcons[1]->SetCurFrame(Vector2(1, 1));
+		}
+		else if (_itemDatas[_curSelected].itemCode == 3 || _itemDatas[_curSelected].itemCode == 5 || _itemDatas[_curSelected].itemCode == 7 || _itemDatas[_curSelected].itemCode == 9)
+		{
+			_skillIcons[0]->SetCurFrame(Vector2(0, 2));
+			_skillIcons[1]->SetCurFrame(Vector2(1, 2));
+		}
+
 		if (info.rarity < Rarity::RARE)
 		{
 			if (_detailedInfo)
+			{
 				_curPannel = Inventory::SINGLE_SKUL_SLOT_LONG;
+				_skillIcons[0]->GetTransform()->SetPos(Vector2(866, 350));
+				_skillIcons[1]->GetTransform()->SetPos(Vector2(-50, -50));
+			}
 			else
+			{
 				_curPannel = Inventory::SINGLE_SKUL_SLOT_SHORT;
+				_skillIcons[0]->GetTransform()->SetPos(Vector2(866, 150));
+				_skillIcons[1]->GetTransform()->SetPos(Vector2(-50, -50));
+			}
 		}
 		else
 		{
 			if (_detailedInfo)
+			{
 				_curPannel = Inventory::DOUBLE_SKUL_SLOT_LONG;
+				_skillIcons[0]->GetTransform()->SetPos(Vector2(705, 350));
+				_skillIcons[1]->GetTransform()->SetPos(Vector2(1027, 350));
+			}
 			else
+			{
 				_curPannel = Inventory::DOUBLE_SKUL_SLOT_SHORT;
+				_skillIcons[0]->GetTransform()->SetPos(Vector2(705, 150));
+				_skillIcons[1]->GetTransform()->SetPos(Vector2(1027, 150));
+			}
 		}
 	}
 	else if (info.itemType == ItemType::EQUIPMENT)
@@ -192,7 +280,11 @@ void Inventory::SetInfoPannels()
 	else if (info.itemType == ItemType::ORB)
 		_curPannel = Inventory::ORB_SLOT;
 	else
+	{
 		_curPannel = Inventory::EMPTY;
+		_skillIcons[0]->GetTransform()->SetPos(Vector2(-50, -50));
+		_skillIcons[1]->GetTransform()->SetPos(Vector2(-50, -50));
+	}
 
 	switch (_curPannel)
 	{
@@ -327,7 +419,7 @@ bool Inventory::SellItem(int index)
 	if (info.itemType == ItemType::HEAD)
 		_boneFrag += info.price;
 	else
-		_money += info.price;
+		AddMoney(info.price);
 
 	RemoveItem(index);
 
@@ -341,12 +433,12 @@ bool Inventory::BuyItem(int itemCode)
 
 	int price = DATA_M->GetItemByItemCode(itemCode).price;
 
-	if (_money < price)
+	if (_goalMoney < price)
 		return false;
 
 	bool success = RootItem(itemCode);
 	if (success)
-		_money -= price;
+		ReduceMoney(price);
 
 	return true;
 }
@@ -414,6 +506,22 @@ bool Inventory::RootItem(int itemCode)
 void Inventory::SetPlayerStats()
 {
 	PLAYER->SetEquipStats(this->GetEquipStats());
+}
+
+void Inventory::AddMoney(int money)
+{
+	if (money < 0)
+		return;
+
+	_goalMoney += money;
+}
+
+void Inventory::ReduceMoney(int money)
+{
+	if (money < 0)
+		return;
+	
+	_goalMoney -= money;
 }
 
 vector<ItemInfo> Inventory::GetEquipedSkulInfo()

@@ -17,7 +17,7 @@ r => 'y' if sprite is rotated-->
 <TextureAtlas imagePath="AttackB.png" width="542" height="113" scale="1" format="RGBA8888">
   <sprite n="AttackB_0 #1120872.png" x="20" y="20" w="53" h="47" pX="0.5" pY="0.5"/>
   <sprite n="AttackB_1 #1121041.png" x="113" y="20" w="58" h="50" pX="0.5" pY="0.5"/>
-  <sprite n="AttackB_4 #1118709.png" x="211" y="20" w="56" h="58" pX="0.5" pY="0.5"/>
   <sprite n="AttackB_2 #1122302.png" x="307" y="20" w="97" h="73" pX="0.5" pY="0.5"/>
   <sprite n="AttackB_3 #1122408.png" x="444" y="20" w="78" h="73" pX="0.5" pY="0.5"/>
+  <sprite n="AttackB_4 #1118709.png" x="211" y="20" w="56" h="58" pX="0.5" pY="0.5"/>
 </TextureAtlas>

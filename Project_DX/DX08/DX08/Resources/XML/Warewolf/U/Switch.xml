@@ -15,12 +15,12 @@ oW => original width
 oH => original height
 r => 'y' if sprite is rotated-->
 <TextureAtlas imagePath="Switch.png" width="981" height="94" scale="1" format="RGBA8888">
-  <sprite n="Switch_7 #1121689.png" x="20" y="20" w="72" h="49" pX="0.5" pY="0.5"/>
-  <sprite n="Switch_6 #1119144.png" x="132" y="20" w="72" h="50" pX="0.5" pY="0.5"/>
-  <sprite n="Switch_5 #1120074.png" x="244" y="20" w="72" h="52" pX="0.5" pY="0.5"/>
   <sprite n="Switch_0 #1119350.png" x="356" y="20" w="101" h="54" pX="0.5" pY="0.5"/>
   <sprite n="Switch_1 #1121065.png" x="497" y="20" w="91" h="54" pX="0.5" pY="0.5"/>
   <sprite n="Switch_2 #1121891.png" x="628" y="20" w="86" h="54" pX="0.5" pY="0.5"/>
   <sprite n="Switch_3 #1122693.png" x="754" y="20" w="84" h="54" pX="0.5" pY="0.5"/>
   <sprite n="Switch_4 #1122549.png" x="878" y="20" w="83" h="54" pX="0.5" pY="0.5"/>
+  <sprite n="Switch_5 #1120074.png" x="244" y="20" w="72" h="52" pX="0.5" pY="0.5"/>
+  <sprite n="Switch_6 #1119144.png" x="132" y="20" w="72" h="50" pX="0.5" pY="0.5"/>
+  <sprite n="Switch_7 #1121689.png" x="20" y="20" w="72" h="49" pX="0.5" pY="0.5"/>
 </TextureAtlas>
