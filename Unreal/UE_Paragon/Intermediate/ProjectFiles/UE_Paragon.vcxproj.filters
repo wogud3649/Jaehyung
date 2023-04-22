@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="..\..\UE_Paragon.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{42C82776-4D7A-460B-88D1-D394C0AAC82F}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\UE_Paragon.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\UE_ParagonEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <Filter Include="Config">
+      <UniqueIdentifier>{45CC8992-3FEA-4FFC-BB17-ED91A6EED558}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultInput.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Source\UE_Paragon">
+      <UniqueIdentifier>{D4DF0F29-B724-48B6-A970-D31C5A77BEBD}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\UE_Paragon\BT_FindRandPos.cpp">
+      <Filter>Source\UE_Paragon</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UE_Paragon\BT_FindRandPos.h">
+      <Filter>Source\UE_Paragon</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UE_Paragon\MyAIController.cpp">
+      <Filter>Source\UE_Paragon</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UE_Paragon\MyAIController.h">
+      <Filter>Source\UE_Paragon</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UE_Paragon\MyAnimInstance.cpp">
+      <Filter>Source\UE_Paragon</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UE_Paragon\MyAnimInstance.h">
+      <Filter>Source\UE_Paragon</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UE_Paragon\MyCharacter.cpp">
+      <Filter>Source\UE_Paragon</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UE_Paragon\MyCharacter.h">
+      <Filter>Source\UE_Paragon</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UE_Paragon\MyGameInstance.cpp">
+      <Filter>Source\UE_Paragon</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UE_Paragon\MyGameInstance.h">
+      <Filter>Source\UE_Paragon</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UE_Paragon\MyStatComponent.cpp">
+      <Filter>Source\UE_Paragon</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UE_Paragon\MyStatComponent.h">
+      <Filter>Source\UE_Paragon</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UE_Paragon\MyUserWidget.cpp">
+      <Filter>Source\UE_Paragon</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UE_Paragon\MyUserWidget.h">
+      <Filter>Source\UE_Paragon</Filter>
+    </ClInclude>
+    <None Include="..\..\Source\UE_Paragon\UE_Paragon.Build.cs">
+      <Filter>Source\UE_Paragon</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\UE_Paragon\UE_Paragon.cpp">
+      <Filter>Source\UE_Paragon</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UE_Paragon\UE_Paragon.h">
+      <Filter>Source\UE_Paragon</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UE_Paragon\UE_ParagonGameModeBase.cpp">
+      <Filter>Source\UE_Paragon</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UE_Paragon\UE_ParagonGameModeBase.h">
+      <Filter>Source\UE_Paragon</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
