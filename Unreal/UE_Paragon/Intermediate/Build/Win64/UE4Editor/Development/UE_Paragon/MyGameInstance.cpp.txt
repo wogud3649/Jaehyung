@@ -1,0 +1,8 @@
+C:\Users\wogud\Desktop\Github\Jaehyung\Jaehyung\Unreal\UE_Paragon\Intermediate\Build\Win64\UE4Editor\Development\UE_Paragon\Definitions.UE_Paragon.h
+C:\Users\wogud\Desktop\Github\Jaehyung\Jaehyung\Unreal\UE_Paragon\Source\UE_Paragon\MyGameInstance.h
+C:\Users\wogud\Desktop\Github\Jaehyung\Jaehyung\Unreal\UE_Paragon\Source\UE_Paragon\MyStatComponent.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Classes\Engine/DataTable.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Public\DataTableUtils.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DataTable.generated.h
+C:\Users\wogud\Desktop\Github\Jaehyung\Jaehyung\Unreal\UE_Paragon\Intermediate\Build\Win64\UE4Editor\Inc\UE_Paragon\MyStatComponent.generated.h
+C:\Users\wogud\Desktop\Github\Jaehyung\Jaehyung\Unreal\UE_Paragon\Intermediate\Build\Win64\UE4Editor\Inc\UE_Paragon\MyGameInstance.generated.h
