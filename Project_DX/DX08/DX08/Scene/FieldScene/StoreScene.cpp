@@ -4,7 +4,6 @@
 StoreScene::StoreScene()
 {
 	_brick = make_shared<Brick>();
-	_brick->SetPlayer(PLAYER);
 }
 
 StoreScene::~StoreScene()

@@ -4,7 +4,6 @@
 TestScene::TestScene()
 {
 	_brick = make_shared<Brick>();
-	_brick->SetPlayer(PLAYER);
 }
 
 TestScene::~TestScene()

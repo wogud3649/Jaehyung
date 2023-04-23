@@ -16,8 +16,6 @@ void Brick::SpawnMonster()
 	{
 		shared_ptr<MushroomEnt> mushroomEnt = make_shared<MushroomEnt>();
 		mushroomEnt->SetPos(_monsterSpawn[i]);
-		if (_player.expired() == false)
-			mushroomEnt->SetPlayer(_player.lock());
 		_mushroomEnts.emplace_back(mushroomEnt);
 	}
 }
@@ -28,14 +26,11 @@ void Brick::Update()
 	{
 		block->Update();
 
-		if (_player.expired() == false)
+		HIT_RESULT result = block->Block(PLAYER->GetFootCollider());
+		if (result.isHit)
 		{
-			HIT_RESULT result = block->Block(_player.lock()->GetFootCollider());
-			if (result.isHit)
-			{
-				if (result.dir == Direction::UP)
-					_player.lock()->Ground();
-			}
+			if (result.dir == Direction::UP)
+				PLAYER->Ground();
 		}
 
 		for (auto mushroomEnt : _mushroomEnts)
@@ -62,16 +57,13 @@ void Brick::Update()
 	{
 		floor->Update();
 
-		if (_player.expired() == false)
+		if (PLAYER->GetJumpPower() <= 0.0f)
 		{
-			if (_player.lock()->GetJumpPower() <= 0.0f)
+			if (PLAYER->GetIsBungee() == false)
 			{
-				if (_player.lock()->GetIsBungee() == false)
-				{
-					HIT_RESULT result = floor->TopBlock(_player.lock()->GetFootCollider());
-					if (result.dir == Direction::UP)
-						_player.lock()->Ground();
-				}
+				HIT_RESULT result = floor->TopBlock(PLAYER->GetFootCollider());
+				if (result.dir == Direction::UP)
+					PLAYER->Ground();
 			}
 		}
 
@@ -98,6 +90,7 @@ void Brick::Update()
 
 	bool headHit = false;
 	bool attackHit = false;
+	bool headSkillHit = false;
 	bool skillHit = false;
 	UINT activeMonsters = 0;
 
@@ -105,36 +98,43 @@ void Brick::Update()
 	{
 		mushroomEnt->Update();
 		
-		if (_player.expired() == false)
+		if (mushroomEnt->GetAlive())
 		{
-			if (mushroomEnt->GetAlive())
+			if (mushroomEnt->GetHeadCol()->IsCollision(PLAYER->GetFootCollider()).isHit && PLAYER->GetJumpPower() < 0.0f && mushroomEnt->GetHeadCol()->GetActive())
 			{
-				if (mushroomEnt->GetHeadCol()->IsCollision(_player.lock()->GetFootCollider()).isHit && _player.lock()->GetJumpPower() < 0.0f && mushroomEnt->GetHeadCol()->GetActive())
+				headHit = true;
+				mushroomEnt->Duck();
+			}
+
+			if (mushroomEnt->GetDuckBodyCol()->GetActive())
+			{
+				if (PLAYER->GetAttackCol()->GetActive())
 				{
-					headHit = true;
-					mushroomEnt->Duck();
+					HIT_RESULT result = mushroomEnt->GetDuckBodyCol()->IsCollision(PLAYER->GetAttackCol());
+					if (result.isHit)
+					{
+						attackHit = true;
+						mushroomEnt->Damaged(PLAYER->GetAttackDamage());
+					}
 				}
 
-				if (mushroomEnt->GetDuckBodyCol()->GetActive())
+				if (PLAYER->GetProjCol()->GetActive())
 				{
-					if (_player.lock()->GetAttackCol()->GetActive())
+					HIT_RESULT result = mushroomEnt->GetDuckBodyCol()->IsCollision(PLAYER->GetProjCol());
+					if (result.isHit)
 					{
-						HIT_RESULT result = mushroomEnt->GetDuckBodyCol()->IsCollision(_player.lock()->GetAttackCol());
-						if (result.isHit)
-						{
-							attackHit = true;
-							mushroomEnt->Damaged(_player.lock()->GetAttackDamage());
-						}
+						headSkillHit = true;
+						mushroomEnt->Damaged(PLAYER->GetProjDamage());
 					}
+				}
 
-					if (_player.lock()->GetProjCol()->GetActive())
+				if (PLAYER->GetSkillCol()->GetActive())
+				{
+					HIT_RESULT result = mushroomEnt->GetDuckBodyCol()->IsCollision(PLAYER->GetSkillCol());
+					if (result.isHit)
 					{
-						HIT_RESULT result = mushroomEnt->GetDuckBodyCol()->IsCollision(_player.lock()->GetProjCol());
-						if (result.isHit)
-						{
-							skillHit = true;
-							mushroomEnt->Damaged(_player.lock()->GetProjDamage());
-						}
+						skillHit = true;
+						mushroomEnt->Damaged(PLAYER->GetProjDamage());
 					}
 				}
 			}
@@ -146,16 +146,15 @@ void Brick::Update()
 
 	_activeMonsters = activeMonsters;
 
-
-	if (_player.expired() == false)
-	{
-		if (headHit)
-			_player.lock()->Bounce();
-		if (attackHit)
-			_player.lock()->AttackHit();
-		if (skillHit)
-			_player.lock()->SkillHit();
-	}
+	if (headHit)
+		PLAYER->Bounce();
+	if (attackHit)
+		PLAYER->AttackHit();
+	if (headSkillHit)
+		PLAYER->HeadHit();
+	if (skillHit)
+		PLAYER->SkillHit();
+	
 }
 
 void Brick::Render()

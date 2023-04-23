@@ -16,8 +16,6 @@ public:
 	void Render();
 	void PostRender();
 
-	void SetPlayer(shared_ptr<Advanced_Player> player) { _player = player; }
-
 	void SetBlockCollider(Vector2 start, Vector2 end);
 	void SetFloorCollider(Vector2 start, Vector2 end);
 	void DeleteBlockCollider();
@@ -76,8 +74,6 @@ private:
 
 	vector<shared_ptr<RectCollider>> _blocks;
 	vector<shared_ptr<RectCollider>> _floors;
-
-	weak_ptr<Advanced_Player> _player;
 
 	vector<shared_ptr<MushroomEnt>> _mushroomEnts;
 	vector<Vector2> _monsterSpawn;

@@ -26,7 +26,6 @@ public:
 	void Damaged(int damage);
 	void Dead();
 
-	void SetTarget(shared_ptr<Advanced_Player> player) { _player = player; }
 	void SetOriginPos(Vector2 pos);
 	
 	shared_ptr<CircleCollider> GetHeadCollider() { return _headCol; }
@@ -98,8 +97,6 @@ private:
 
 	int _maxDamage = 15;
 	int _minDamage = 4;
-
-	weak_ptr<Advanced_Player> _player;
 
 	AttackType _attackType = AttackType::STAMP;
 

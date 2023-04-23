@@ -19,7 +19,7 @@ r => 'y' if sprite is rotated-->
   <sprite n="JumpAttack_1 #2183914.png" x="134" y="20" w="74" h="88" pX="0.5" pY="0.5"/>
   <sprite n="JumpAttack_2 #2181342.png" x="248" y="20" w="69" h="89" pX="0.5" pY="0.5"/>
   <sprite n="JumpAttack_3 #2182919.png" x="357" y="20" w="105" h="106" pX="0.5" pY="0.5"/>
-  <sprite n="JumpAttack_6 #2184273.png" x="502" y="20" w="83" h="106" pX="0.5" pY="0.5"/>
   <sprite n="JumpAttack_4 #2185122.png" x="625" y="20" w="103" h="107" pX="0.5" pY="0.5"/>
   <sprite n="JumpAttack_5 #2183866.png" x="768" y="20" w="83" h="107" pX="0.5" pY="0.5"/>
+  <sprite n="JumpAttack_6 #2184273.png" x="502" y="20" w="83" h="106" pX="0.5" pY="0.5"/>
 </TextureAtlas>

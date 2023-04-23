@@ -61,6 +61,24 @@ Player::Player()
 		for (auto sprite : row)
 			sprite->GetTransform()->SetParent(_bodyCol->GetTransform());
 
+	for (auto sprite : _sprites[4])
+		sprite->GetTransform()->MoveY(12);
+
+	for (auto sprite : _sprites[5])
+		sprite->GetTransform()->MoveY(12);
+
+	for (auto sprite : _sprites[6])
+		sprite->GetTransform()->MoveY(20);
+
+	for (auto sprite : _sprites[7])
+		sprite->GetTransform()->MoveY(20);
+
+	for (auto sprite : _sprites[8])
+		sprite->GetTransform()->MoveY(30);
+
+	for (auto sprite : _sprites[9])
+		sprite->GetTransform()->MoveY(55);
+
 	_actions[SkulType::SKUL][State::IDLE]->Play();
 }
 

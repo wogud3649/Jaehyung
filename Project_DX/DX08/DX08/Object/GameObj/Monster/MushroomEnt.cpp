@@ -118,9 +118,6 @@ void MushroomEnt::Function()
 
 void MushroomEnt::Collision()
 {
-	if (_player.expired())
-		return;
-
 	Detect();
 }
 
@@ -228,7 +225,7 @@ void MushroomEnt::Fall()
 
 void MushroomEnt::Detect()
 {
-	HIT_RESULT result = _detectCol->SideCollision(_player.lock()->GetFootCollider());
+	HIT_RESULT result = _detectCol->SideCollision(PLAYER->GetFootCollider());
 	
 	if (result.isHit)
 	{
@@ -281,14 +278,11 @@ void MushroomEnt::AttackMid()
 		_attackCol->Activate();
 	}
 	
-	if (_player.expired() == false)
+	HIT_RESULT result = _attackCol->IsCollision(PLAYER->GetBodyCollider());
+	if (result.isHit)
 	{
-		HIT_RESULT result = _attackCol->IsCollision(_player.lock()->GetBodyCollider());
-		if (result.isHit)
-		{
-			int damage = rand() % (_maxDamage - _minDamage) + _minDamage;
-			_player.lock()->Damaged(damage, _direction);
-		}
+		int damage = rand() % (_maxDamage - _minDamage) + _minDamage;
+		PLAYER->Damaged(damage, _direction);
 	}
 }
 

@@ -17,7 +17,7 @@ CharacterUI::CharacterUI()
 	skillIcon->GetTransform()->SetParent(_characterUI->GetTransform());
 	skillIcon->SetCurFrame(Vector2(0, 0));
 	skillIcon->GetTransform()->SetScale(Vector2(2.0f, 2.0f));
-	skillIcon->GetTransform()->Move(Vector2(-13, 12));
+	skillIcon->GetTransform()->Move(Vector2(0, 12));
 	_skillIcons.emplace_back(skillIcon);
 
 	_extraSkillSlot = make_shared<Quad>(L"Resources/Texture/UI/ExtraSkillSlot.png");
@@ -56,7 +56,7 @@ void CharacterUI::Update()
 	Vector2 curFrame;
 	vector<ItemInfo> info = INVENTORY->GetEquipedSkulInfo();
 
-	if (info[0].rarity == Rarity::NONE || info[0].rarity == Rarity::NORMAL)
+	if (info[!_isFirstSkul].rarity == Rarity::NONE || info[!_isFirstSkul].rarity == Rarity::NORMAL)
 		_activeExtraSkillSlot = false;
 	else
 		_activeExtraSkillSlot = true;
@@ -74,6 +74,34 @@ void CharacterUI::Update()
 		_skillIcons[0]->SetCurFrame(Vector2(0, 1));
 		_skillIcons[1]->SetCurFrame(Vector2(1, 1));
 		break;
+	case 3:
+		_skillIcons[0]->SetCurFrame(Vector2(0, 2));
+		_skillIcons[1]->SetCurFrame(Vector2(1, 2));
+		break;
+	case 4:
+		_skillIcons[0]->SetCurFrame(Vector2(0, 1));
+		_skillIcons[1]->SetCurFrame(Vector2(1, 1));
+		break;
+	case 5:
+		_skillIcons[0]->SetCurFrame(Vector2(0, 2));
+		_skillIcons[1]->SetCurFrame(Vector2(1, 2));
+		break;
+	case 6:
+		_skillIcons[0]->SetCurFrame(Vector2(0, 1));
+		_skillIcons[1]->SetCurFrame(Vector2(1, 1));
+		break;
+	case 7:
+		_skillIcons[0]->SetCurFrame(Vector2(0, 2));
+		_skillIcons[1]->SetCurFrame(Vector2(1, 2));
+		break;
+	case 8:
+		_skillIcons[0]->SetCurFrame(Vector2(0, 1));
+		_skillIcons[1]->SetCurFrame(Vector2(1, 1));
+		break;
+	case 9:
+		_skillIcons[0]->SetCurFrame(Vector2(0, 2));
+		_skillIcons[1]->SetCurFrame(Vector2(1, 2));
+		break;
 	default:
 		break;
 	}
@@ -90,13 +118,14 @@ void CharacterUI::PostRender()
 {
 	_characterUI->Render();
 	_skullIcon->Render();
-	for (auto skillIcon : _skillIcons)
-		skillIcon->PostRender();
 
 	if (_activeExtraSkillSlot)
 		_extraSkillSlot->Render();
 	if (_activeOrbSlot)
 		_orbSlot->Render();
+
+	for (auto skillIcon : _skillIcons)
+		skillIcon->PostRender();
 	
 	wstring money = L"Money : " + to_wstring(INVENTORY->GetMoney());
 	RECT rect;

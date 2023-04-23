@@ -49,225 +49,223 @@ void Yggdrasil::Update()
 
 	Idle();
 
-	if (_player.expired() == false)
+	switch (_attackType)
+	{
+	case Yggdrasil::STAMP:
+		switch (_curState)
+		{
+		case State::IDLE:
+			SetIdle();
+			break;
+		case State::ATTACKREADY:
+			StampAttackReady();
+			break;
+		case State::ATTACK:
+			StampAttack();
+			break;
+		case State::ATTACKAFTER:
+			StampAttackAfter();
+			break;
+		case State::ATTACKEND:
+			StampAttackReady();
+			break;
+		default:
+			break;
+		}
+		break;
+	case Yggdrasil::SWEEP:
+		switch (_curState)
+		{
+		case State::IDLE:
+			SetIdle();
+			break;
+		case State::ATTACKREADY:
+			SweepAttackReady();
+			break;
+		case State::ATTACK:
+			SweepAttack();
+			break;
+		case State::ATTACKAFTER:
+			SweepAttackAfter();
+			break;
+		case State::ATTACKEND:
+			SweepAttackEnd();
+			break;
+		default:
+			break;
+		}
+		break;
+	default:
+		break;
+	}
+
+	if (PLAYER->GetJumpPower() <= 0.0f)
+	{
+		HIT_RESULT result;
+		if (_rightBranchCol->GetActive())
+		{
+			if (PLAYER->GetIsBungee() == false)
+			{
+				result = _rightBranchCol->TopBlock(PLAYER->GetFootCollider());
+				if (result.dir == Direction::UP)
+					PLAYER->Ground();
+			}
+		}
+		if (_leftBranchCol->GetActive())
+		{
+			if (PLAYER->GetIsBungee() == false)
+			{
+				result = _leftBranchCol->TopBlock(PLAYER->GetFootCollider());
+				if (result.dir == Direction::UP)
+					PLAYER->Ground();
+			}
+		}
+	}
+
+	if (_curAttackDelay > 0.0f)
+		_curAttackDelay -= DELTA_TIME;
+		
+	if (_curState == State::ATTACK)
 	{
 		switch (_attackType)
 		{
 		case Yggdrasil::STAMP:
-			switch (_curState)
+			if ((_isRightHand && _rightHandCol->GetTransform()->GetWorldPos().y <= _attackPos.y + 10.0f) || (!_isRightHand && _leftHandCol->GetTransform()->GetWorldPos().y <= _attackPos.y + 10.0f))
 			{
-			case State::IDLE:
-				SetIdle();
-				break;
-			case State::ATTACKREADY:
-				StampAttackReady();
-				break;
-			case State::ATTACK:
-				StampAttack();
-				break;
-			case State::ATTACKAFTER:
-				StampAttackAfter();
-				break;
-			case State::ATTACKEND:
-				StampAttackReady();
-				break;
-			default:
-				break;
+				CAMERA->ShakeStart(10, 1);
+				_curState = State::ATTACKAFTER;
+				_curAttackDelay = _maxAttackDelay;
+
+				_spikeReady = true;
+				EFFECT->Play("FistSlamImpact_7x4", Vector2(_attackPos.x, _attackPos.y + 130));
 			}
 			break;
 		case Yggdrasil::SWEEP:
-			switch (_curState)
+			if (_isRightHand)
 			{
-			case State::IDLE:
-				SetIdle();
-				break;
-			case State::ATTACKREADY:
-				SweepAttackReady();
-				break;
-			case State::ATTACK:
-				SweepAttack();
-				break;
-			case State::ATTACKAFTER:
-				SweepAttackAfter();
-				break;
-			case State::ATTACKEND:
-				SweepAttackEnd();
-				break;
-			default:
-				break;
+				if (_rightHand->GetTransform()->GetWorldPos().x > _originRightHandPos.x + 1700)
+				{
+					_curState = State::ATTACKAFTER;
+					_curAttackDelay = _maxAttackDelay;
+				}
+			}
+			else
+			{
+				if (_leftHand->GetTransform()->GetWorldPos().x < _originLeftHandPos.x - 1700)
+				{
+					_curState = State::ATTACKAFTER;
+					_curAttackDelay = _maxAttackDelay;
+				}
 			}
 			break;
 		default:
 			break;
 		}
-
-		if (_player.lock()->GetJumpPower() <= 0.0f)
+	}
+	else if (_curAttackDelay <= 0.0f)
+	{
+		float curX;
+		int attackType;
+		switch (_curState)
 		{
-			HIT_RESULT result;
-			if (_rightBranchCol->GetActive())
+		case State::IDLE:
+			attackType = rand() % 2;
+			switch (attackType)
 			{
-				if (_player.lock()->GetIsBungee() == false)
-				{
-					result = _rightBranchCol->TopBlock(_player.lock()->GetFootCollider());
-					if (result.dir == Direction::UP)
-						_player.lock()->Ground();
-				}
-			}
-			if (_leftBranchCol->GetActive())
-			{
-				if (_player.lock()->GetIsBungee() == false)
-				{
-					result = _leftBranchCol->TopBlock(_player.lock()->GetFootCollider());
-					if (result.dir == Direction::UP)
-						_player.lock()->Ground();
-				}
-			}
-		}
-
-		if (_curAttackDelay > 0.0f)
-			_curAttackDelay -= DELTA_TIME;
-			
-		if (_curState == State::ATTACK)
-		{
-			switch (_attackType)
-			{
-			case Yggdrasil::STAMP:
-				if ((_isRightHand && _rightHandCol->GetTransform()->GetWorldPos().y <= _attackPos.y + 10.0f) || (!_isRightHand && _leftHandCol->GetTransform()->GetWorldPos().y <= _attackPos.y + 10.0f))
-				{
-					CAMERA->ShakeStart(10, 1);
-					_curState = State::ATTACKAFTER;
-					_curAttackDelay = _maxAttackDelay;
-
-					_spikeReady = true;
-					EFFECT->Play("FistSlamImpact_7x4", Vector2(_attackPos.x, _attackPos.y + 130));
-				}
+			case 0:
+				_attackType = AttackType::STAMP;
 				break;
-			case Yggdrasil::SWEEP:
-				if (_isRightHand)
-				{
-					if (_rightHand->GetTransform()->GetWorldPos().x > _originRightHandPos.x + 1700)
-					{
-						_curState = State::ATTACKAFTER;
-						_curAttackDelay = _maxAttackDelay;
-					}
-				}
-				else
-				{
-					if (_leftHand->GetTransform()->GetWorldPos().x < _originLeftHandPos.x - 1700)
-					{
-						_curState = State::ATTACKAFTER;
-						_curAttackDelay = _maxAttackDelay;
-					}
-				}
+			case 1:
+				_attackType = AttackType::SWEEP;
 				break;
 			default:
 				break;
 			}
-		}
-		else if (_curAttackDelay <= 0.0f)
-		{
-			float curX;
-			int attackType;
-			switch (_curState)
+			_curState = State::ATTACKREADY;
+			_curAttackDelay = _maxAttackDelay;
+			curX = PLAYER->GetFootCollider()->GetTransform()->GetPos().x;
+			if (curX > _body->GetTransform()->GetWorldPos().x)
+				_isRightHand = false; 
+			else
+				_isRightHand = true;
+			break;
+		case State::ATTACKREADY:
+			if (_attackType == AttackType::SWEEP)
 			{
-			case State::IDLE:
-				attackType = rand() % 2;
-				switch (attackType)
-				{
-				case 0:
-					_attackType = AttackType::STAMP;
-					break;
-				case 1:
-					_attackType = AttackType::SWEEP;
-					break;
-				default:
-					break;
-				}
-				_curState = State::ATTACKREADY;
-				_curAttackDelay = _maxAttackDelay;
-				curX = _player.lock()->GetFootCollider()->GetTransform()->GetPos().x;
-				if (curX > _body->GetTransform()->GetWorldPos().x)
-					_isRightHand = false; 
-				else
-					_isRightHand = true;
-				break;
-			case State::ATTACKREADY:
-				if (_attackType == AttackType::SWEEP)
-				{
-					if (_isRightHand)
-					{
-						EFFECT->SetParent("Sweeping_4x1", _rightHand->GetTransform());
-						EFFECT->Play("Sweeping_4x1", Vector2(-210, -50), true);
-					}
-					else
-					{
-						EFFECT->SetParent("Sweeping_4x1", _leftHand->GetTransform());
-						EFFECT->Play("Sweeping_4x1", Vector2(210, -50), false);
-					}
-					CAMERA->ShakeStart(5, 2);
-				}
-				_curState = State::ATTACK;
-				_attackPos.x = _player.lock()->GetFootCollider()->GetTransform()->GetPos().x;
 				if (_isRightHand)
 				{
-					_rightHandCol->GetTransform()->Update();
-					_rightHandCol->Activate();
+					EFFECT->SetParent("Sweeping_4x1", _rightHand->GetTransform());
+					EFFECT->Play("Sweeping_4x1", Vector2(-210, -50), true);
 				}
 				else
 				{
-					_leftHandCol->GetTransform()->Update();
-					_leftHandCol->Activate();
+					EFFECT->SetParent("Sweeping_4x1", _leftHand->GetTransform());
+					EFFECT->Play("Sweeping_4x1", Vector2(210, -50), false);
 				}
-				break;
-			case State::ATTACKAFTER:
-				if (_attackType = AttackType::SWEEP)
-				{
-					EFFECT->Stop("Sweeping_4x1");
-				}
-				_curState = State::ATTACKEND;
-				if (_isRightHand)
-					_rightHandCol->DeActivate();
-				else
-					_leftHandCol->DeActivate();
-				_curAttackDelay = _maxAttackDelay;
-				break;
-			case State::ATTACKEND:
-				_curState = State::IDLE;
-				_curAttackDelay = _maxAttackDelay;
-				break;
-			default:
-				break;
+				CAMERA->ShakeStart(5, 2);
 			}
-		}
-
-		if (_spikeReady)
-		{
-			_curSpikeDelay -= DELTA_TIME;
-
-			if (_curSpikeDelay < 0.0f)
+			_curState = State::ATTACK;
+			_attackPos.x = PLAYER->GetFootCollider()->GetTransform()->GetPos().x;
+			if (_isRightHand)
 			{
-				_spikePos.x = _player.lock()->GetFootCollider()->GetTransform()->GetWorldPos().x;
-				EFFECT->Play("WarnSign_10x1", { _spikePos.x, _spikePos.y - 130 });
-				_curSpikeDelay = _maxSpikeDelay;
-				_spikeReady = false;
-			}
-		}
-		if (_spikeActive)
-		{
-			if (_spikeUp)
-			{
-				if (_spikeCol->GetTransform()->GetWorldPos().y < _spikePos.y)
-					_spikeCol->GetTransform()->MoveY(1000.0f * DELTA_TIME);
+				_rightHandCol->GetTransform()->Update();
+				_rightHandCol->Activate();
 			}
 			else
 			{
-				if (_spikeCol->GetTransform()->GetWorldPos().y > _spikePos.y - 300)
-					_spikeCol->GetTransform()->MoveY(-1000.0f * DELTA_TIME);
+				_leftHandCol->GetTransform()->Update();
+				_leftHandCol->Activate();
 			}
-
-			Hit();
+			break;
+		case State::ATTACKAFTER:
+			if (_attackType = AttackType::SWEEP)
+			{
+				EFFECT->Stop("Sweeping_4x1");
+			}
+			_curState = State::ATTACKEND;
+			if (_isRightHand)
+				_rightHandCol->DeActivate();
+			else
+				_leftHandCol->DeActivate();
+			_curAttackDelay = _maxAttackDelay;
+			break;
+		case State::ATTACKEND:
+			_curState = State::IDLE;
+			_curAttackDelay = _maxAttackDelay;
+			break;
+		default:
+			break;
 		}
 	}
+
+	if (_spikeReady)
+	{
+		_curSpikeDelay -= DELTA_TIME;
+
+		if (_curSpikeDelay < 0.0f)
+		{
+			_spikePos.x = PLAYER->GetFootCollider()->GetTransform()->GetWorldPos().x;
+			EFFECT->Play("WarnSign_10x1", { _spikePos.x, _spikePos.y - 130 });
+			_curSpikeDelay = _maxSpikeDelay;
+			_spikeReady = false;
+		}
+	}
+	if (_spikeActive)
+	{
+		if (_spikeUp)
+		{
+			if (_spikeCol->GetTransform()->GetWorldPos().y < _spikePos.y)
+				_spikeCol->GetTransform()->MoveY(1000.0f * DELTA_TIME);
+		}
+		else
+		{
+			if (_spikeCol->GetTransform()->GetWorldPos().y > _spikePos.y - 300)
+				_spikeCol->GetTransform()->MoveY(-1000.0f * DELTA_TIME);
+		}
+
+		Hit();
+	}
+	
 }
 
 void Yggdrasil::Render()
@@ -450,21 +448,21 @@ void Yggdrasil::Hit()
 
 	if (_spikeActive)
 	{
-		result = _spikeCol->SideCollision(_player.lock()->GetBodyCollider());
+		result = _spikeCol->SideCollision(PLAYER->GetBodyCollider());
 		if (result.isHit)
-			_player.lock()->Damaged(damage, result.dir);
+			PLAYER->Damaged(damage, result.dir);
 	}
 	else if (_isRightHand)
 	{
-		result = _rightHandCol->SideCollision(_player.lock()->GetBodyCollider());
+		result = _rightHandCol->SideCollision(PLAYER->GetBodyCollider());
 		if (result.isHit)
-			_player.lock()->Damaged(damage, result.dir);
+			PLAYER->Damaged(damage, result.dir);
 	}
 	else
 	{
-		result = _leftHandCol->SideCollision(_player.lock()->GetBodyCollider());
+		result = _leftHandCol->SideCollision(PLAYER->GetBodyCollider());
 		if (result.isHit)
-			_player.lock()->Damaged(damage, result.dir);
+			PLAYER->Damaged(damage, result.dir);
 	}
 }
 
@@ -495,17 +493,17 @@ void Yggdrasil::StampAttackAfter()
 	{
 		_rightHand->GetTransform()->Move(SetLERP(_rightHand->GetTransform()->GetWorldPos(), _attackPos, DELTA_TIME * 8.0f));
 
-		HIT_RESULT result = _rightHandCol->Block(_player.lock()->GetFootCollider());
+		HIT_RESULT result = _rightHandCol->Block(PLAYER->GetFootCollider());
 		if (result.dir == Direction::UP)
-			_player.lock()->Ground();
+			PLAYER->Ground();
 	}
 	else
 	{
 		_leftHand->GetTransform()->Move(SetLERP(_leftHand->GetTransform()->GetWorldPos(), _attackPos, DELTA_TIME * 8.0f));
 
-		HIT_RESULT result = _leftHandCol->Block(_player.lock()->GetFootCollider());
+		HIT_RESULT result = _leftHandCol->Block(PLAYER->GetFootCollider());
 		if (result.dir == Direction::UP)
-			_player.lock()->Ground();
+			PLAYER->Ground();
 	}
 }
 

@@ -16,10 +16,10 @@ oH => original height
 r => 'y' if sprite is rotated-->
 <TextureAtlas imagePath="JUMPATTACK.png" width="728" height="122" scale="1" format="RGBA8888">
   <sprite n="JumpAttack_0 #2185623.png" x="20" y="20" w="59" h="57" pX="0.5" pY="0.5"/>
-  <sprite n="JumpAttack_2 #2182822.png" x="119" y="20" w="51" h="59" pX="0.5" pY="0.5"/>
   <sprite n="JumpAttack_1 #2182215.png" x="210" y="20" w="56" h="60" pX="0.5" pY="0.5"/>
-  <sprite n="JumpAttack_6 #2184011.png" x="306" y="20" w="62" h="69" pX="0.5" pY="0.5"/>
+  <sprite n="JumpAttack_2 #2182822.png" x="119" y="20" w="51" h="59" pX="0.5" pY="0.5"/>
+  <sprite n="JumpAttack_3 #2183472.png" x="629" y="20" w="79" h="82" pX="0.5" pY="0.5"/>
   <sprite n="JumpAttack_4 #2184658.png" x="408" y="20" w="78" h="71" pX="0.5" pY="0.5"/>
   <sprite n="JumpAttack_5 #2184671.png" x="526" y="20" w="63" h="72" pX="0.5" pY="0.5"/>
-  <sprite n="JumpAttack_3 #2183472.png" x="629" y="20" w="79" h="82" pX="0.5" pY="0.5"/>
+  <sprite n="JumpAttack_6 #2184011.png" x="306" y="20" w="62" h="69" pX="0.5" pY="0.5"/>
 </TextureAtlas>

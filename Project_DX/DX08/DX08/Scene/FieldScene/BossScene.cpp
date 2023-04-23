@@ -4,9 +4,6 @@
 BossScene::BossScene()
 {
 	_brick = make_shared<Brick>();
-	_brick->SetPlayer(PLAYER);
-
-	YGGDRASIL->SetTarget(PLAYER);
 
 	_healthBar = make_shared<Slider>(L"Resources/Texture/UI/BossHealthBar.png");
 	_healthBar->SetOpaque(0.9f);
@@ -71,7 +68,7 @@ void BossScene::Update()
 		if (PLAYER->GetProjCol()->IsCollision(YGGDRASIL->GetHeadCollider()).isHit)
 		{
 			YGGDRASIL->Damaged(PLAYER->GetProjDamage());
-			PLAYER->SkillHit();
+			PLAYER->HeadHit();
 		}
 	}
 

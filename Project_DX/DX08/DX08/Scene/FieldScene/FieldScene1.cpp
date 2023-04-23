@@ -4,7 +4,6 @@
 FieldScene1::FieldScene1()
 {
 	_brick = make_shared<Brick>();
-	_brick->SetPlayer(PLAYER);
 }
 
 FieldScene1::~FieldScene1()

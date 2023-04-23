@@ -25,8 +25,10 @@ public:
 	void Attack();
 	void AttackHit();
 	void Skill();
+	void HeadHit();
 	void SkillHit();
 	void Damaged(int damage, Direction dir);
+	void CastFireArrow();
 
 	void Dead();
 	void Revive();
@@ -40,6 +42,8 @@ public:
 
 	shared_ptr<CircleCollider> GetProjCol() { return _projCol; }
 	float GetProjDamage();
+
+	shared_ptr<CircleCollider> GetSkillCol() { return _skillCol; }
 
 	const bool& GetIsBungee() { return _isBungee; }
 
@@ -55,12 +59,15 @@ private:
 	void AttackColEnd();
 	void FallEnd();
 	void SkillEnd();
+	void ActivateSkillCol();
+	void DeactivateSkillCol();
 	void SetCallback();
 
 	void SetAction(State state);
 	void SetSkul(SkulType skulType);
 
 	shared_ptr<CircleCollider> _attackCol;
+	shared_ptr<CircleCollider> _skillCol;
 
 	float _baseMaxHp = 100.0f;
 	float _maxHp = _baseMaxHp;
@@ -116,8 +123,9 @@ private:
 	float _projSpeed = 800.0f;
 	float _maxProjCD = _baseScd;
 	float _curProjCD = _baseScd;
-	bool _isProjRight = true;
-	bool _isProjFired = false;
+	bool _isSkillRight = true;
+	bool _isSkillUsed = false;
+	bool _isSecondSkillUsed = false;
 	int _maxProjDamage = 70;
 	int _minProjDamage = 50;
 
@@ -129,6 +137,8 @@ private:
 	ATTRIBUTE _attribute = 0;
 
 	StatAttributes _statAttributes;
+
+	shared_ptr<FireArrow> _fireArrow;
 
 	shared_ptr<ReverseBuffer> _reverseBuffer;
 };

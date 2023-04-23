@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Object\GameObj\FireArrow.h" />
     <ClInclude Include="Framework\Utility\DirectWrite.h" />
     <ClInclude Include="Object\UI\FadePanel.h" />
     <ClInclude Include="Scene\FieldScene\FieldScene1.h" />
@@ -224,6 +225,7 @@
     <ClInclude Include="Scene\BasicScene\UIScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Object\GameObj\FireArrow.cpp" />
     <ClCompile Include="Framework\Utility\DirectWrite.cpp" />
     <ClCompile Include="Object\UI\FadePanel.cpp" />
     <ClCompile Include="Scene\FieldScene\FieldScene1.cpp" />

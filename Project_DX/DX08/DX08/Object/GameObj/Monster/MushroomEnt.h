@@ -33,7 +33,6 @@ public:
 
 	void SetPos(Vector2 pos) { _standBodyCol->GetTransform()->SetPos(pos); }
 	void SetEdge(Direction dir);
-	void SetPlayer(shared_ptr<Advanced_Player> player) { _player = player; }
 
 	const shared_ptr<CircleCollider>& GetStandBodyCol() { return _standBodyCol; }
 	const shared_ptr<CircleCollider>& GetDuckBodyCol() { return _duckBodyCol; }
@@ -84,8 +83,6 @@ private:
 	State _oldState = _curState;
 
 	Direction _direction = Direction::RIGHT;
-
-	weak_ptr<Advanced_Player> _player;
 
 	float _maxIdleDuration = 3.0f;
 	float _curIdleDuration = _maxIdleDuration;
