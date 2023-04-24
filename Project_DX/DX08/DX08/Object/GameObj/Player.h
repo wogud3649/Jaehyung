@@ -30,6 +30,7 @@ public:
 		ATTACKB,
 		JUMPATTACK,
 		SKILL,
+		SKILL2,
 
 		StateSize
 	};

@@ -24,7 +24,6 @@ Inventory::Inventory()
 
 	CreateSlots();
 	RootItem(1);
-	RootItem(4);
 	RootItem(5);
 	RootItem(6);
 	RootItem(7);

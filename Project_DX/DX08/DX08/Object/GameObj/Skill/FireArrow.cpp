@@ -4,10 +4,12 @@
 FireArrow::FireArrow()
 {
 	_quad = make_shared<Quad>(L"Resources/Texture/Effect/Wizard/FireArrow/FireArrow.png");
+	_quad->GetTransform()->SetParent(_transform);
 	_quad->SetPS(ADD_PS(L"Shader/LRTexturePixelShader.hlsl"));
 	_col = make_shared<CircleCollider>(12);
 
 	_col->GetTransform()->SetParent(_quad->GetTransform());
+	_col->DeActivate();
 
 	_reverseBuffer = make_shared<ReverseBuffer>();
 }
@@ -34,8 +36,7 @@ void FireArrow::Update()
 
 	if (_curDuration < 0)
 	{
-		_curDuration = _maxDuration;
-		_isActive = false;
+		DeActivate();
 	}
 }
 
@@ -49,6 +50,13 @@ void FireArrow::Render()
 	_col->Render();
 }
 
+void FireArrow::SetActive()
+{
+	Skill::SetActive();
+
+	_col->Activate();
+}
+
 void FireArrow::SetRight(bool isRight)
 {
 	_isRight = isRight;
@@ -57,5 +65,15 @@ void FireArrow::SetRight(bool isRight)
 
 void FireArrow::Hit()
 {
+	DeActivate();
+}
+
+void FireArrow::DeActivate()
+{
+	Skill::DeActivate();
+
+	_curDuration = _maxDuration;
+	_quad->GetTransform()->SetPos(Vector2(0, 0));
+
 	_col->DeActivate();
 }

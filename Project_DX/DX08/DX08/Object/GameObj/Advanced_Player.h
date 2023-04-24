@@ -25,10 +25,12 @@ public:
 	void Attack();
 	void AttackHit();
 	void Skill();
+	void Skill2();
 	void HeadHit();
 	void SkillHit();
 	void Damaged(int damage, Direction dir);
 	void CastFireArrow();
+	void CastMeteor();
 
 	void Dead();
 	void Revive();
@@ -37,13 +39,14 @@ public:
 	const float& GetMaxHp() { return _maxHp; }
 	const float& GetJumpPower() { return _curJumpPower; }
 
-	shared_ptr<CircleCollider> GetAttackCol() { return _attackCol; }
-	float GetAttackDamage();
+	const shared_ptr<CircleCollider>& GetAttackCol() { return _attackCol; }
+	const float& GetAttackDamage();
 
-	shared_ptr<CircleCollider> GetProjCol() { return _projCol; }
-	float GetProjDamage();
+	const shared_ptr<CircleCollider>& GetProjCol() { return _projCol; }
+	const float& GetProjDamage();
 
-	shared_ptr<CircleCollider> GetSkillCol() { return _skillCol; }
+	const shared_ptr<CircleCollider>& GetArrowCol() { return _fireArrow->GetCollider(); }
+	const float& GetSkillDamage();
 
 	const bool& GetIsBungee() { return _isBungee; }
 
@@ -126,7 +129,7 @@ private:
 	float _curProjCD = _baseScd;
 	bool _isSkillRight = true;
 	bool _isSkillUsed = false;
-	bool _isSecondSkillUsed = false;
+	bool _isSkill2Used = false;
 	int _maxProjDamage = 70;
 	int _minProjDamage = 50;
 
@@ -140,6 +143,7 @@ private:
 	StatAttributes _statAttributes;
 
 	shared_ptr<FireArrow> _fireArrow;
+	shared_ptr<Meteor> _meteor;
 
 	shared_ptr<ReverseBuffer> _reverseBuffer;
 };

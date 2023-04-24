@@ -206,9 +206,14 @@ void Player::CreateAction(SkulType _skulType)
 				sortY = MyXML::Sort::MIDDLE;
 				break;
 			case 9:
-				if (_skulType == SkulType::HEADLESS)
-					break;
 				state = "SKILL";
+				type = Action::Type::END;
+				speed = 0.1f;
+				sortX = MyXML::Sort::MIDDLE;
+				sortY = MyXML::Sort::MIDDLE;
+				break;
+			case 10:
+				state = "SKILL2";
 				type = Action::Type::END;
 				speed = 0.1f;
 				sortX = MyXML::Sort::MIDDLE;
@@ -217,6 +222,10 @@ void Player::CreateAction(SkulType _skulType)
 			default:
 				break;
 			}
+			if (_skulType == SkulType::HEADLESS && state == "SKILL")
+				break;
+			if (_skulType == SkulType::SKUL && state == "SKILL2")
+				break;
 
 			wstring stateW(state.begin(), state.end());
 
@@ -327,6 +336,13 @@ void Player::CreateAction(SkulType _skulType)
 					if (_skulType == SkulType::HEADLESS)
 						break;
 					state = "SKILL";
+					type = Action::Type::END;
+					speed = 0.1f;
+					sortX = MyXML::Sort::MIDDLE;
+					sortY = MyXML::Sort::MIDDLE;
+					break;
+				case 10:
+					state = "SKILL2";
 					type = Action::Type::END;
 					speed = 0.1f;
 					sortX = MyXML::Sort::MIDDLE;

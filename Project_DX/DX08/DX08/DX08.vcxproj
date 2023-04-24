@@ -151,7 +151,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Object\GameObj\FireArrow.h" />
+    <ClInclude Include="Object\GameObj\Skill\Meteor.h" />
+    <ClInclude Include="Object\GameObj\Skill\FireArrow.h" />
     <ClInclude Include="Framework\Utility\DirectWrite.h" />
     <ClInclude Include="Object\UI\FadePanel.h" />
     <ClInclude Include="Scene\FieldScene\FieldScene1.h" />
@@ -214,6 +215,7 @@
     <ClInclude Include="Object\UI\Store.h" />
     <ClInclude Include="Object\UI\Slider.h" />
     <ClInclude Include="Object\UI\SpriteSlider.h" />
+    <ClInclude Include="Object\GameObj\Skill\Skill.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Framework\Render\VertexBuffer.h" />
     <ClInclude Include="Framework\Render\VertexShader.h" />
@@ -225,7 +227,8 @@
     <ClInclude Include="Scene\BasicScene\UIScene.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Object\GameObj\FireArrow.cpp" />
+    <ClCompile Include="Object\GameObj\Skill\Meteor.cpp" />
+    <ClCompile Include="Object\GameObj\Skill\FireArrow.cpp" />
     <ClCompile Include="Framework\Utility\DirectWrite.cpp" />
     <ClCompile Include="Object\UI\FadePanel.cpp" />
     <ClCompile Include="Scene\FieldScene\FieldScene1.cpp" />
@@ -301,6 +304,7 @@
     <ClCompile Include="Object\UI\Store.cpp" />
     <ClCompile Include="Object\UI\Slider.cpp" />
     <ClCompile Include="Object\UI\SpriteSlider.cpp" />
+    <ClCompile Include="Object\GameObj\Skill\Skill.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX08.rc" />

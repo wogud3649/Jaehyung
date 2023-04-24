@@ -111,7 +111,9 @@ using namespace DirectX;
 #include "Object/BasicObj/EffectManager.h"
 
 // GameObject
-#include "Object/GameObj/FireArrow.h"
+#include "Object/GameObj/Skill/Skill.h"
+#include "Object/GameObj/Skill/FireArrow.h"
+#include "Object/GameObj/Skill/Meteor.h"
 #include "Object/GameObj/Player.h"
 #include "Object/GameObj/Advanced_Player.h"
 #include "Object/GameObj/Monster/MushroomEnt.h"

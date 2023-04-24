@@ -128,13 +128,13 @@ void Brick::Update()
 					}
 				}
 
-				if (PLAYER->GetSkillCol()->GetActive())
+				if (PLAYER->GetArrowCol()->GetActive())
 				{
-					HIT_RESULT result = mushroomEnt->GetDuckBodyCol()->IsCollision(PLAYER->GetSkillCol());
+					HIT_RESULT result = mushroomEnt->GetDuckBodyCol()->IsCollision(PLAYER->GetArrowCol());
 					if (result.isHit)
 					{
 						skillHit = true;
-						mushroomEnt->Damaged(PLAYER->GetProjDamage());
+						mushroomEnt->Damaged(PLAYER->GetSkillDamage());
 					}
 				}
 			}

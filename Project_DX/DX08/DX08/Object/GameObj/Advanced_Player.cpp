@@ -23,6 +23,7 @@ Advanced_Player::Advanced_Player()
 	_skillCol->DeActivate();
 
 	_fireArrow = make_shared<FireArrow>();
+	_meteor = make_shared<Meteor>();
 
 	SetCallback();
 }
@@ -38,6 +39,7 @@ void Advanced_Player::Update()
 	_projCol->Update();
 	_skillCol->Update();
 	_fireArrow->Update();
+	_meteor->Update();
 
 	SetIdle();
 	Attack();
@@ -66,7 +68,8 @@ void Advanced_Player::Update()
 		{
 			_headDelay = _maxHeadDelay;
 			_isHeadOn = true;
-			SetSkul(SkulType::SKUL);
+			if (_curSkul == SkulType::HEADLESS)
+				SetSkul(SkulType::SKUL);
 		}
 	}
 
@@ -404,6 +407,18 @@ void Advanced_Player::Skill()
 	}
 }
 
+void Advanced_Player::Skill2()
+{
+	if (KEY_DOWN('S'))
+	{
+		if (_isSkill2Used)
+			return;
+
+		_isSkill2Used = true;
+		SetAction(State::SKILL2);
+	}
+}
+
 void Advanced_Player::HeadHit()
 {
 	_headDelay = _maxHeadDelay;
@@ -416,6 +431,7 @@ void Advanced_Player::HeadHit()
 void Advanced_Player::SkillHit()
 {
 	_skillCol->DeActivate();
+	_fireArrow->Hit();
 }
 
 void Advanced_Player::Damaged(int damage, Direction dir)
@@ -446,6 +462,11 @@ void Advanced_Player::CastFireArrow()
 	SetAction(State::IDLE);
 }
 
+void Advanced_Player::CastMeteor()
+{
+
+}
+
 void Advanced_Player::Dead()
 {
 
@@ -456,7 +477,7 @@ void Advanced_Player::Revive()
 
 }
 
-float Advanced_Player::GetAttackDamage()
+const float& Advanced_Player::GetAttackDamage()
 {
 	int ad = (rand() % (_maxAttackDamage - _minAttackDamage) + _minAttackDamage);
 	ad += _statAttributes.ad;
@@ -468,7 +489,7 @@ float Advanced_Player::GetAttackDamage()
 	return ad;
 }
 
-float Advanced_Player::GetProjDamage()
+const float& Advanced_Player::GetProjDamage()
 {
 	int ap = (rand() % (_maxProjDamage - _minProjDamage) + _minProjDamage);
 	ap += _statAttributes.ap;
@@ -480,6 +501,19 @@ float Advanced_Player::GetProjDamage()
 	return ap;
 }
 
+const float& Advanced_Player::GetSkillDamage()
+{
+	int power = _fireArrow->GetPower();
+	power += rand() % 5;
+	power += _statAttributes.ap;
+
+	int temp = rand() % 100;
+	if (temp < _critPercent + _statAttributes.crp)
+		power *= 2;
+
+	return power;
+}
+
 void Advanced_Player::SetEquipStats(StatAttributes stats)
 {
 	_statAttributes = stats;
@@ -487,8 +521,8 @@ void Advanced_Player::SetEquipStats(StatAttributes stats)
 	_maxHp = _baseMaxHp + _statAttributes.hp;
 	_def = _baseDef + _statAttributes.def;
 	_critPercent = _baseCrp + _statAttributes.crp;
-	_maxHeadDelay = _baseScd * ((float)(361 - _statAttributes.scd) / 100);
-	_maxProjCD = _baseScd * ((float)(361 - _statAttributes.scd) / 100);
+	_maxHeadDelay = _baseScd * ((float)(100 - _statAttributes.scd) / 100);
+	_maxProjCD = _baseScd * ((float)(100 - _statAttributes.scd) / 100);
 	_maxChangeCD = _baseCcd * ((float)(100 - _statAttributes.ccd) / 100);
 }
 
@@ -589,6 +623,7 @@ void Advanced_Player::SkillEnd()
 
 void Advanced_Player::ActivateSkillCol()
 {
+	_skillCol->GetTransform()->Update();
 	_skillCol->Activate();
 }
 

@@ -228,7 +228,13 @@
     <ClInclude Include="Object\UI\FadePanel.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Object\GameObj\FireArrow.h">
+    <ClInclude Include="Object\GameObj\Skill\FireArrow.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\GameObj\Skill\Meteor.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\GameObj\Skill\Skill.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -431,7 +437,13 @@
     <ClCompile Include="Object\UI\FadePanel.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Object\GameObj\FireArrow.cpp">
+    <ClCompile Include="Object\GameObj\Skill\FireArrow.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\GameObj\Skill\Meteor.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\GameObj\Skill\Skill.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
