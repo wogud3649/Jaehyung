@@ -383,6 +383,23 @@ void Inventory::TakeOffItem(int index)
 	if (index == -1)
 		return;
 
+	if (index == 0)
+	{
+		if (_itemDatas[1].itemCode == 0)
+			return;
+
+		if (PLAYER->GetIsFirstSkul())
+			PLAYER->SwapSkul();
+	}
+	else if (index == 1)
+	{
+		if (_itemDatas[0].itemCode == 0)
+			return;
+
+		if (!PLAYER->GetIsFirstSkul())
+			PLAYER->SwapSkul();
+	}
+
 	ItemInfo info = _itemDatas[index];
 	if (info.itemCode == 0)
 		return;
@@ -405,6 +422,17 @@ void Inventory::TakeOffItem(int index)
 
 void Inventory::RemoveItem(int index)
 {
+	if (index == 0)
+	{
+		if (_itemDatas[1].itemCode == 0)
+			return;
+	}
+	else if (index == 1)
+	{
+		if (_itemDatas[0].itemCode == 0)
+			return;
+	}
+
 	_itemDatas[index].SetEmpty();
 	_instanceDatas[index].curFrame = Vector2(0, 0);
 	_instanceBuffer->Update();
@@ -416,6 +444,14 @@ bool Inventory::SellItem(int index)
 {
 	if (index == -1)
 		return false;
+
+	if (index == 0)
+		if (_itemDatas[1].itemCode == 0)
+			return false;
+
+	else if (index == 1)
+		if (_itemDatas[0].itemCode == 0)
+			return false;
 
 	ItemInfo info = _itemDatas[index];
 	if (info.itemCode == 0)

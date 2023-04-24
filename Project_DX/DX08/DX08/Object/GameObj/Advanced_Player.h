@@ -50,6 +50,7 @@ public:
 	void SetEquipStats(StatAttributes stats);
 
 	void SwapSkul();
+	bool GetIsFirstSkul() { return _isFirstSkul; }
 
 private:
 	void SetIdle();

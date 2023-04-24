@@ -54,3 +54,8 @@ void FireArrow::SetRight(bool isRight)
 	_isRight = isRight;
 	_reverseBuffer->_data.reverse = !_isRight;
 }
+
+void FireArrow::Hit()
+{
+	_col->DeActivate();
+}

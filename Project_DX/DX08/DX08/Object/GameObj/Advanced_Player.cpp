@@ -48,7 +48,8 @@ void Advanced_Player::Update()
 	Fall();
 	Skill();
 	Bungee();
-	SwapSkul();
+	if (KEY_DOWN(VK_SPACE))
+		SwapSkul();
 
 	Player::Update();
 
@@ -498,42 +499,39 @@ void Advanced_Player::SwapSkul()
 	if (data[_isFirstSkul].itemCode == 0)
 		return;
 
-	if (KEY_DOWN(VK_SPACE))
+	_isFirstSkul = !_isFirstSkul;
+	UI->SwapSkul(_isFirstSkul);
+	switch (data[!_isFirstSkul].itemCode)
 	{
-		_isFirstSkul = !_isFirstSkul;
-		UI->SwapSkul(_isFirstSkul);
-		switch (data[!_isFirstSkul].itemCode)
-		{
-		case 1:
-			SetSkul(SkulType::SKUL);
-			break;
-		case 2:
-			SetSkul(SkulType::WAREWOLFN);
-			break;
-		case 3:
-			SetSkul(SkulType::WIZARDN);
-			break;
-		case 4:
-			SetSkul(SkulType::WAREWOLFR);
-			break;
-		case 5:
-			SetSkul(SkulType::WIZARDR);
-			break;
-		case 6:
-			SetSkul(SkulType::WAREWOLFU);
-			break;
-		case 7:
-			SetSkul(SkulType::WIZARDU);
-			break;
-		case 8:
-			SetSkul(SkulType::WAREWOLFL);
-			break;
-		case 9:
-			SetSkul(SkulType::WIZARDL);
-			break;
-		default:
-			break;
-		}
+	case 1:
+		SetSkul(SkulType::SKUL);
+		break;
+	case 2:
+		SetSkul(SkulType::WAREWOLFN);
+		break;
+	case 3:
+		SetSkul(SkulType::WIZARDN);
+		break;
+	case 4:
+		SetSkul(SkulType::WAREWOLFR);
+		break;
+	case 5:
+		SetSkul(SkulType::WIZARDR);
+		break;
+	case 6:
+		SetSkul(SkulType::WAREWOLFU);
+		break;
+	case 7:
+		SetSkul(SkulType::WIZARDU);
+		break;
+	case 8:
+		SetSkul(SkulType::WAREWOLFL);
+		break;
+	case 9:
+		SetSkul(SkulType::WIZARDL);
+		break;
+	default:
+		break;
 	}
 }
 
