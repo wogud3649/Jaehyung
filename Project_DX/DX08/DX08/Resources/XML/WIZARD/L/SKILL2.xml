@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created with Free texture packer v0.6.7 http://free-tex-packer.com
+Format:
+n  => name
+x  => x pos
+y  => y pos
+w  => width
+h  => height
+pX => x pos of the pivot point
+pY => y pos of the pivot point
+oX => x-corner offset
+oY => y-corner offset
+oW => original width
+oH => original height
+r => 'y' if sprite is rotated-->
+<TextureAtlas imagePath="SKILL2.png" width="589" height="133" scale="1" format="RGBA8888">
+  <sprite n="Meteor_Attack_0 #2180877.png" x="20" y="20" w="83" h="90" pX="0.5" pY="0.5"/>
+  <sprite n="Meteor_Attack_4.png" x="143" y="20" w="70" h="90" pX="0.5" pY="0.5"/>
+  <sprite n="Meteor_Attack_3.png" x="253" y="20" w="70" h="91" pX="0.5" pY="0.5"/>
+  <sprite n="Meteor_Attack_2 #2185242.png" x="363" y="20" w="83" h="92" pX="0.5" pY="0.5"/>
+  <sprite n="Meteor_Attack_1 #2186967.png" x="486" y="20" w="83" h="93" pX="0.5" pY="0.5"/>
+</TextureAtlas>
