@@ -50,15 +50,6 @@ void Store::Render()
 
 	for (auto item : _items)
 		item->Render();
-
-	wstring price = to_wstring(_itemInfos[0].price);
-	Vector2 tempPos = _itemCols[0]->GetTransform()->GetWorldPos();
-	RECT rect;
-	rect.left = tempPos.x - 50;
-	rect.right = tempPos.x + 50;
-	rect.top = tempPos.y - 50;
-	rect.bottom = tempPos.y - 50;
-	DirectWrite::GetInstance()->RenderText(price, rect);
 }
 
 void Store::SetCallBack()
@@ -133,6 +124,21 @@ void Store::StoreSettings()
 	col->GetTransform()->SetParent(_quad->GetTransform());
 	col->GetTransform()->Move(tempVec);
 	_cols.emplace_back(col);
+
+	shared_ptr<CircleCollider> itemCol = make_shared<CircleCollider>(15);
+	itemCol->GetTransform()->SetParent(col->GetTransform());
+	itemCol->GetTransform()->MoveY(50);
+	_itemCols.emplace_back(itemCol);
+
+	shared_ptr<Sprite> sprite = make_shared<Sprite>(L"Resources/Texture/Item/ItemIcons_10x3.png", Vector2(10, 3), Vector2(825, 390));
+	sprite->GetTransform()->SetParent(itemCol->GetTransform());
+	sprite->SetCurFrame(Vector2(0, 0));
+	_items.emplace_back(sprite);
+
+	ItemInfo info = ItemInfo();
+	_itemInfos.emplace_back(info);
+
+	tempVec.x += 84;
 }
 
 void Store::SetRandomItems()
@@ -146,9 +152,9 @@ void Store::SetRandomItems()
 			indexes.emplace_back(i);
 		}
 	}
-	
+
 	if (indexes.size() < 4)
-		return; // TODO : 아이템 총 개수가 4개 보다 작을 시
+		return;
 
 	std::random_shuffle(indexes.begin(), indexes.end());
 

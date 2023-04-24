@@ -49,6 +49,7 @@ void Advanced_Player::Update()
 	Move();
 	Fall();
 	Skill();
+	Skill2();
 	Bungee();
 	if (KEY_DOWN(VK_SPACE))
 		SwapSkul();
@@ -151,6 +152,18 @@ void Advanced_Player::Update()
 		}
 	}
 
+	if (_isSkill2Used)
+	{
+		_curSkill2CD -= DELTA_TIME;
+		UI->SetSkillRatio(1, _curSkill2CD / _maxSkill2CD);
+
+		if (_curSkill2CD < 0.0f)
+		{
+			_isSkill2Used = false;
+			_curSkill2CD = _maxSkill2CD;
+		}
+	}
+
 	if (_isBungee)
 	{
 		_curBungeeCD -= DELTA_TIME;
@@ -173,6 +186,7 @@ void Advanced_Player::Render()
 		_proj->Render();
 	}
 
+	_meteor->Render();
 	_fireArrow->Render();
 	_attackCol->Render();
 	_projCol->Render();
@@ -195,7 +209,7 @@ void Advanced_Player::Flip()
 {
 	if (KEY_PRESS(VK_RIGHT))
 	{
-		if (_curState == State::ATTACKA || _curState == State::ATTACKB || _curState == State::JUMPATTACK || _curState == State::DASH || _curState == State::SKILL)
+		if (_curState == State::ATTACKA || _curState == State::ATTACKB || _curState == State::JUMPATTACK || _curState == State::DASH || _curState == State::SKILL || _curState == State::SKILL2)
 			return;
 		if (_direction == Direction::RIGHT)
 			return;
@@ -204,7 +218,7 @@ void Advanced_Player::Flip()
 	}
 	if (KEY_PRESS(VK_LEFT))
 	{
-		if (_curState == State::ATTACKA || _curState == State::ATTACKB || _curState == State::JUMPATTACK || _curState == State::DASH || _curState == State::SKILL)
+		if (_curState == State::ATTACKA || _curState == State::ATTACKB || _curState == State::JUMPATTACK || _curState == State::DASH || _curState == State::SKILL || _curState == State::SKILL2)
 			return;
 		if (_direction == Direction::LEFT)
 			return;
@@ -217,7 +231,7 @@ void Advanced_Player::Move()
 {
 	if (KEY_PRESS(VK_RIGHT))
 	{
-		if (_curState == State::ATTACKA || _curState == State::ATTACKB || _curState == State::DASH || _curState == State::SKILL)
+		if (_curState == State::ATTACKA || _curState == State::ATTACKB || _curState == State::DASH || _curState == State::SKILL || _curState == State::SKILL2)
 			return;
 		_footCol->GetTransform()->MoveX(_speed * DELTA_TIME);
 		if (_curState == State::JUMP || _curState == State::JUMPATTACK || _curState == State::FALLREPEAT || _curState == State::FALL)
@@ -227,7 +241,7 @@ void Advanced_Player::Move()
 	}
 	if (KEY_PRESS(VK_LEFT))
 	{
-		if (_curState == State::ATTACKA || _curState == State::ATTACKB || _curState == State::DASH || _curState == State::SKILL)
+		if (_curState == State::ATTACKA || _curState == State::ATTACKB || _curState == State::DASH || _curState == State::SKILL || _curState == State::SKILL2)
 			return;
 		_footCol->GetTransform()->MoveX(-_speed * DELTA_TIME);
 		if (_curState == State::JUMP || _curState == State::JUMPATTACK || _curState == State::FALLREPEAT || _curState == State::FALL)
@@ -242,7 +256,7 @@ void Advanced_Player::Jump()
 {
 	if (KEY_DOWN('C') && KEY_PRESS(VK_DOWN) == false)
 	{
-		if (_curState == State::ATTACKA || _curState == State::ATTACKB || _curState == State::JUMPATTACK || _curState == State::SKILL || _curState == State::DASH)
+		if (_curState == State::ATTACKA || _curState == State::ATTACKB || _curState == State::JUMPATTACK || _curState == State::SKILL || _curState == State::DASH || _curState == State::SKILL2)
 			return;
 		if (_isDoubleJump)
 			return;
@@ -299,7 +313,7 @@ void Advanced_Player::Fall()
 	if (_curJumpPower < -950.0f)
 		_curJumpPower = -950.0f;
 	
-	if (_curJumpPower <= 0 && _curState != State::FALLREPEAT && _curState != State::JUMPATTACK && _curState != State::SKILL)
+	if (_curJumpPower <= 0 && _curState != State::FALLREPEAT && _curState != State::JUMPATTACK && _curState != State::SKILL && _curState != State::SKILL2)
 	{
 		if (_curState == State::WALK && _curJumpPower >= -100.0f)
 			return;
@@ -334,7 +348,7 @@ void Advanced_Player::Attack()
 {
 	if (KEY_DOWN('X'))
 	{
-		if (_curState == State::ATTACKA || _curState == State::ATTACKB || _curState == State::JUMPATTACK || _curState == State::DASH || _curState == State::SKILL)
+		if (_curState == State::ATTACKA || _curState == State::ATTACKB || _curState == State::JUMPATTACK || _curState == State::DASH || _curState == State::SKILL || _curState == State::SKILL2)
 			return;
 
 		if (_curState == State::JUMP || _curState == State::FALLREPEAT || _curState == State::FALL)
@@ -381,26 +395,6 @@ void Advanced_Player::Skill()
 			else
 				_reverseBuffer->_data.reverse = 1;
 			break;
-		case Player::HEADLESS:
-			break;
-		case Player::WAREWOLFN:
-			break;
-		case Player::WIZARDN:
-			break;
-		case Player::WAREWOLFR:
-			break;
-		case Player::WIZARDR:
-			break;
-		case Player::WAREWOLFU:
-			break;
-		case Player::WIZARDU:
-			break;
-		case Player::WAREWOLFL:
-			break;
-		case Player::WIZARDL:
-			break;
-		case Player::SkulTypeSize:
-			break;
 		default:
 			break;
 		}
@@ -430,8 +424,12 @@ void Advanced_Player::HeadHit()
 
 void Advanced_Player::SkillHit()
 {
-	_skillCol->DeActivate();
 	_fireArrow->Hit();
+}
+
+void Advanced_Player::MeteorHit(int index)
+{
+	_meteor->Hit(index);
 }
 
 void Advanced_Player::Damaged(int damage, Direction dir)
@@ -464,7 +462,10 @@ void Advanced_Player::CastFireArrow()
 
 void Advanced_Player::CastMeteor()
 {
-
+	_meteor->SetPos(_bodyCol->GetTransform()->GetWorldPos());
+	_meteor->SetRandomSpeeds();
+	_meteor->SetActive();
+	SetAction(State::IDLE);
 }
 
 void Advanced_Player::Dead()
@@ -658,77 +659,31 @@ void Advanced_Player::SetCallback()
 	_actions[SkulType::HEADLESS][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
 	_actions[SkulType::HEADLESS][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
 
-	_actions[SkulType::WAREWOLFN][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 2);
-	_actions[SkulType::WAREWOLFN][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 3);
-	_actions[SkulType::WAREWOLFN][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
-	_actions[SkulType::WAREWOLFN][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
-	_actions[SkulType::WAREWOLFN][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
-	_actions[SkulType::WAREWOLFN][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
-	_actions[SkulType::WAREWOLFN][State::SKILL]->SetMidCallBack(std::bind(&Advanced_Player::ActivateSkillCol, this), 2);
-	_actions[SkulType::WAREWOLFN][State::SKILL]->SetMidCallBack(std::bind(&Advanced_Player::DeactivateSkillCol, this), 3);
-	_actions[SkulType::WAREWOLFN][State::SKILL]->SetCallBack(std::bind(&Advanced_Player::SkillEnd, this));
+	for (int i = 2; i < SkulType::SkulTypeSize; i += 2)
+	{
+		_actions[i][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 2);
+		_actions[i][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 3);
+		_actions[i][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
+		_actions[i][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
+		_actions[i][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
+		_actions[i][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
+		_actions[i][State::SKILL]->SetMidCallBack(std::bind(&Advanced_Player::ActivateSkillCol, this), 2);
+		_actions[i][State::SKILL]->SetMidCallBack(std::bind(&Advanced_Player::DeactivateSkillCol, this), 3);
+		_actions[i][State::SKILL]->SetCallBack(std::bind(&Advanced_Player::SkillEnd, this));
+		_actions[i][State::SKILL2]->SetCallBack(std::bind(&Advanced_Player::SkillEnd, this));
+	}
 
-	_actions[SkulType::WIZARDN][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 2);
-	_actions[SkulType::WIZARDN][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 3);
-	_actions[SkulType::WIZARDN][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
-	_actions[SkulType::WIZARDN][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
-	_actions[SkulType::WIZARDN][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
-	_actions[SkulType::WIZARDN][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
-	_actions[SkulType::WIZARDN][State::SKILL]->SetCallBack(std::bind(&Advanced_Player::CastFireArrow, this));
-
-	_actions[SkulType::WAREWOLFR][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 2);
-	_actions[SkulType::WAREWOLFR][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 3);
-	_actions[SkulType::WAREWOLFR][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
-	_actions[SkulType::WAREWOLFR][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
-	_actions[SkulType::WAREWOLFR][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
-	_actions[SkulType::WAREWOLFR][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
-	_actions[SkulType::WAREWOLFR][State::SKILL]->SetMidCallBack(std::bind(&Advanced_Player::ActivateSkillCol, this), 2);
-	_actions[SkulType::WAREWOLFR][State::SKILL]->SetMidCallBack(std::bind(&Advanced_Player::DeactivateSkillCol, this), 3);
-	_actions[SkulType::WAREWOLFR][State::SKILL]->SetCallBack(std::bind(&Advanced_Player::SkillEnd, this));
-
-	_actions[SkulType::WIZARDR][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 2);
-	_actions[SkulType::WIZARDR][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 3);
-	_actions[SkulType::WIZARDR][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
-	_actions[SkulType::WIZARDR][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
-	_actions[SkulType::WIZARDR][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
-	_actions[SkulType::WIZARDR][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
-	_actions[SkulType::WIZARDR][State::SKILL]->SetCallBack(std::bind(&Advanced_Player::CastFireArrow, this));
-
-	_actions[SkulType::WAREWOLFU][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 2);
-	_actions[SkulType::WAREWOLFU][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 3);
-	_actions[SkulType::WAREWOLFU][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
-	_actions[SkulType::WAREWOLFU][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
-	_actions[SkulType::WAREWOLFU][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
-	_actions[SkulType::WAREWOLFU][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
-	_actions[SkulType::WAREWOLFU][State::SKILL]->SetMidCallBack(std::bind(&Advanced_Player::ActivateSkillCol, this), 2);
-	_actions[SkulType::WAREWOLFU][State::SKILL]->SetMidCallBack(std::bind(&Advanced_Player::DeactivateSkillCol, this), 3);
-	_actions[SkulType::WAREWOLFU][State::SKILL]->SetCallBack(std::bind(&Advanced_Player::SkillEnd, this));
-
-	_actions[SkulType::WIZARDU][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 2);
-	_actions[SkulType::WIZARDU][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 3);
-	_actions[SkulType::WIZARDU][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
-	_actions[SkulType::WIZARDU][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
-	_actions[SkulType::WIZARDU][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
-	_actions[SkulType::WIZARDU][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
-	_actions[SkulType::WIZARDU][State::SKILL]->SetCallBack(std::bind(&Advanced_Player::CastFireArrow, this));
-
-	_actions[SkulType::WAREWOLFL][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 2);
-	_actions[SkulType::WAREWOLFL][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 3);
-	_actions[SkulType::WAREWOLFL][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
-	_actions[SkulType::WAREWOLFL][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
-	_actions[SkulType::WAREWOLFL][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
-	_actions[SkulType::WAREWOLFL][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
-	_actions[SkulType::WAREWOLFL][State::SKILL]->SetMidCallBack(std::bind(&Advanced_Player::ActivateSkillCol, this), 2);
-	_actions[SkulType::WAREWOLFL][State::SKILL]->SetMidCallBack(std::bind(&Advanced_Player::DeactivateSkillCol, this), 3);
-	_actions[SkulType::WAREWOLFL][State::SKILL]->SetCallBack(std::bind(&Advanced_Player::SkillEnd, this));
-
-	_actions[SkulType::WIZARDL][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 2);
-	_actions[SkulType::WIZARDL][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 3);
-	_actions[SkulType::WIZARDL][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
-	_actions[SkulType::WIZARDL][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
-	_actions[SkulType::WIZARDL][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
-	_actions[SkulType::WIZARDL][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
-	_actions[SkulType::WIZARDL][State::SKILL]->SetCallBack(std::bind(&Advanced_Player::CastFireArrow, this));
+	for (int i = 3; i < SkulType::SkulTypeSize; i += 2)
+	{
+		_actions[i][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 2);
+		_actions[i][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 3);
+		_actions[i][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
+		_actions[i][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
+		_actions[i][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
+		_actions[i][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
+		_actions[i][State::SKILL]->SetCallBack(std::bind(&Advanced_Player::CastFireArrow, this));
+		_actions[i][State::SKILL2]->SetMidCallBack(std::bind(&Advanced_Player::CastMeteor, this), 2);
+	}
 }
 
 void Advanced_Player::SetAction(State state)

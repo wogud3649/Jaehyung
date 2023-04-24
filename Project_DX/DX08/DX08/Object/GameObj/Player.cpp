@@ -10,46 +10,46 @@ Player::Player()
 	CreateAction(SkulType::WAREWOLFN);
 	CreateAction(SkulType::WIZARDN);
 
-	for (int i = 10; i < 20; i++)
+	for (int i = 11; i < 22; i++)
 	{
 		_sprites[4].emplace_back(_sprites[2][i]);
 		_actions[4].emplace_back(_actions[2][i]);
 	}
 
-	for (int i = 10; i < 20; i++)
+	for (int i = 11; i < 22; i++)
 	{
 		_sprites[5].emplace_back(_sprites[3][i]);
 		_actions[5].emplace_back(_actions[3][i]);
 	}
 
-	for (int i = 20; i < 30; i++)
+	for (int i = 22; i < 33; i++)
 	{
 		_sprites[6].emplace_back(_sprites[2][i]);
 		_actions[6].emplace_back(_actions[2][i]);
 	}
 
-	for (int i = 20; i < 30; i++)
+	for (int i = 22; i < 33; i++)
 	{
 		_sprites[7].emplace_back(_sprites[3][i]);
 		_actions[7].emplace_back(_actions[3][i]);
 	}
 
-	for (int i = 30; i < 40; i++)
+	for (int i = 33; i < 44; i++)
 	{
 		_sprites[8].emplace_back(_sprites[2][i]);
 		_actions[8].emplace_back(_actions[2][i]);
 	}
 
-	for (int i = 30; i < 40; i++)
+	for (int i = 33; i < 44; i++)
 	{
 		_sprites[9].emplace_back(_sprites[3][i]);
 		_actions[9].emplace_back(_actions[3][i]);
 	}
 
-	_sprites[2].resize(10);
-	_sprites[3].resize(10);
-	_actions[2].resize(10);
-	_actions[3].resize(10);
+	_sprites[2].resize(11);
+	_sprites[3].resize(11);
+	_actions[2].resize(11);
+	_actions[3].resize(11);
 
 	_footCol = make_shared<CircleCollider>(15);
 
@@ -65,13 +65,13 @@ Player::Player()
 		sprite->GetTransform()->MoveY(12);
 
 	for (auto sprite : _sprites[5])
-		sprite->GetTransform()->MoveY(12);
+		sprite->GetTransform()->MoveY(20);
 
 	for (auto sprite : _sprites[6])
 		sprite->GetTransform()->MoveY(20);
 
 	for (auto sprite : _sprites[7])
-		sprite->GetTransform()->MoveY(20);
+		sprite->GetTransform()->MoveY(30);
 
 	for (auto sprite : _sprites[8])
 		sprite->GetTransform()->MoveY(30);

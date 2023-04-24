@@ -3,6 +3,8 @@
 
 FireArrow::FireArrow()
 {
+	Skill::Skill();
+
 	_quad = make_shared<Quad>(L"Resources/Texture/Effect/Wizard/FireArrow/FireArrow.png");
 	_quad->GetTransform()->SetParent(_transform);
 	_quad->SetPS(ADD_PS(L"Shader/LRTexturePixelShader.hlsl"));
@@ -12,6 +14,8 @@ FireArrow::FireArrow()
 	_col->DeActivate();
 
 	_reverseBuffer = make_shared<ReverseBuffer>();
+
+	_isActive = false;
 }
 
 FireArrow::~FireArrow()
@@ -52,7 +56,7 @@ void FireArrow::Render()
 
 void FireArrow::SetActive()
 {
-	Skill::SetActive();
+	_isActive = true;
 
 	_col->Activate();
 }
@@ -70,7 +74,7 @@ void FireArrow::Hit()
 
 void FireArrow::DeActivate()
 {
-	Skill::DeActivate();
+	_isActive = false;
 
 	_curDuration = _maxDuration;
 	_quad->GetTransform()->SetPos(Vector2(0, 0));

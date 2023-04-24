@@ -12,7 +12,7 @@ public:
 	void SetRight(bool isRight);
 
 	virtual void Hit();
-	virtual void DeActivate();
+	void DeActivate();
 
 	const shared_ptr<CircleCollider>& GetCollider() { return _col; }
 
@@ -20,4 +20,7 @@ private:
 	shared_ptr<Quad> _quad;
 	shared_ptr<CircleCollider> _col;
 	shared_ptr<ReverseBuffer> _reverseBuffer;
+
+	float _speed = 1000.0f;
+	bool _isActive = false;
 };

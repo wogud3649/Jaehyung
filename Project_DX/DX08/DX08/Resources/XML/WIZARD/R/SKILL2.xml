@@ -15,9 +15,9 @@ oW => original width
 oH => original height
 r => 'y' if sprite is rotated-->
 <TextureAtlas imagePath="SKILL2.png" width="495" height="104" scale="1" format="RGBA8888">
-  <sprite n="Meteor_Attack_2 #2186275.png" x="20" y="20" w="68" h="53" pX="0.5" pY="0.5"/>
-  <sprite n="Meteor_Attack_4 #2185603.png" x="128" y="20" w="44" h="56" pX="0.5" pY="0.5"/>
   <sprite n="Meteor_Attack_0 #2181881.png" x="212" y="20" w="66" h="57" pX="0.5" pY="0.5"/>
-  <sprite n="Meteor_Attack_3 #2185016.png" x="318" y="20" w="49" h="57" pX="0.5" pY="0.5"/>
   <sprite n="Meteor_Attack_1 #2184691.png" x="407" y="20" w="68" h="64" pX="0.5" pY="0.5"/>
+  <sprite n="Meteor_Attack_2 #2186275.png" x="20" y="20" w="68" h="53" pX="0.5" pY="0.5"/>
+  <sprite n="Meteor_Attack_3 #2185016.png" x="318" y="20" w="49" h="57" pX="0.5" pY="0.5"/>
+  <sprite n="Meteor_Attack_4 #2185603.png" x="128" y="20" w="44" h="56" pX="0.5" pY="0.5"/>
 </TextureAtlas>

@@ -92,6 +92,8 @@ void Brick::Update()
 	bool attackHit = false;
 	bool headSkillHit = false;
 	bool skillHit = false;
+	bool skill2Hit = false;
+	int index = -1;
 	UINT activeMonsters = 0;
 
 	for (auto mushroomEnt : _mushroomEnts)
@@ -137,6 +139,22 @@ void Brick::Update()
 						mushroomEnt->Damaged(PLAYER->GetSkillDamage());
 					}
 				}
+
+				for (int i = 0; i < 3; i++)
+				{
+					vector<shared_ptr<CircleCollider>> cols = PLAYER->GetMeteorCols();
+
+					if (cols[i]->GetActive())
+					{
+						HIT_RESULT result = mushroomEnt->GetDuckBodyCol()->IsCollision(cols[i]);
+						if (result.isHit)
+						{
+							index = i;
+							skill2Hit = true;
+							mushroomEnt->Damaged(PLAYER->GetSkillDamage());
+						}
+					}
+				}
 			}
 		}
 
@@ -154,6 +172,8 @@ void Brick::Update()
 		PLAYER->HeadHit();
 	if (skillHit)
 		PLAYER->SkillHit();
+	if (skill2Hit)
+		PLAYER->MeteorHit(index);
 	
 }
 

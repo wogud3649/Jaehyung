@@ -28,6 +28,7 @@ public:
 	void Skill2();
 	void HeadHit();
 	void SkillHit();
+	void MeteorHit(int index);
 	void Damaged(int damage, Direction dir);
 	void CastFireArrow();
 	void CastMeteor();
@@ -47,6 +48,8 @@ public:
 
 	const shared_ptr<CircleCollider>& GetArrowCol() { return _fireArrow->GetCollider(); }
 	const float& GetSkillDamage();
+
+	const vector<shared_ptr<CircleCollider>>& GetMeteorCols() { return _meteor->GetColliders(); }
 
 	const bool& GetIsBungee() { return _isBungee; }
 
@@ -129,7 +132,11 @@ private:
 	float _curProjCD = _baseScd;
 	bool _isSkillRight = true;
 	bool _isSkillUsed = false;
+
+	float _maxSkill2CD = _baseScd;
+	float _curSkill2CD = _baseScd;
 	bool _isSkill2Used = false;
+
 	int _maxProjDamage = 70;
 	int _minProjDamage = 50;
 

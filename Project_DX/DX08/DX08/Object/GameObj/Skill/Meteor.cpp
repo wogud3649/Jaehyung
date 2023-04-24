@@ -3,7 +3,8 @@
 
 Meteor::Meteor()
 {
-	
+	Skill::Skill();
+
 	for (int i = 0; i < 3; i++)
 	{
 		shared_ptr<Quad> quad = make_shared<Quad>(L"Resources/Texture/Effect/Wizard/Meteor/Meteor.png");
@@ -29,45 +30,58 @@ Meteor::~Meteor()
 
 void Meteor::Update()
 {
-	if (_isActive == false)
-		return;
-
-	for (auto quad : _quads)
-		quad->Update();
-
-	for (auto col : _cols)
-		col->Update();
-
-	for (auto quad : _quads)
+	int _curActive = 0;
+	for (auto isActive : _isActives)
 	{
-		quad->GetTransform()->MoveX(_speed);
-		quad->GetTransform()->MoveY(_curJumpPower);
+		if (isActive)
+			_curActive++;
+	}
+	if (_curActive == 0)
+	{
+		DeActivateAll();
+		return;
 	}
 
-	_curJumpPower -= DELTA_TIME;
+	for (int i = 0; i < 3; i++)
+	{
+		if (_isActives[i])
+		{
+			_quads[i]->Update();
+			_cols[i]->Update();
+		}
+	}
+
+	for (int i = 0; i < 3; i++)
+	{
+		_quads[i]->GetTransform()->MoveX(_speeds[i] * DELTA_TIME);
+		_quads[i]->GetTransform()->MoveY(_curJumpPower * DELTA_TIME);
+	}
+
+	_curJumpPower -= GRAVITY * GRAVITY * DELTA_TIME;
 	_curDuration -= DELTA_TIME;
 
 	if (_curDuration < 0)
 	{
-		DeActivate();
+		DeActivateAll();
 	}
 }
 
 void Meteor::Render()
 {
-	if (_isActive == false)
-		return;
-
-	for (auto quad : _quads)
-		quad->Render();
-
-	for (auto col : _cols)
-		col->Render();
+	for (int i = 0; i < 3; i++)
+	{
+		if (_isActives[i])
+		{
+			_quads[i]->Render();
+			_cols[i]->Render();
+		}
+	}
 }
 
 void Meteor::SetActive()
 {
-	Skill::SetActive();
+	for (auto isActive : _isActives)
+		isActive = true;
 
 	for (auto col : _cols)
 		col->Activate();
@@ -75,30 +89,37 @@ void Meteor::SetActive()
 
 void Meteor::SetRandomSpeeds()
 {
-	for (auto speed : _speeds)
+	for (int i = 0; i < 3; i++)
 	{
-		speed = rand() % 100;
+		int speed = rand() % 200;
 		int sign = rand() % 2;
 		if (sign == 1)
 			speed *= -1;
+
+		_speeds[i] = speed;
 	}
 }
 
-void Meteor::Hit()
+void Meteor::Hit(int index)
 {
-	DeActivate();
+	DeActivate(index);
 }
 
-void Meteor::DeActivate()
+void Meteor::DeActivate(int index)
 {
-	Skill::DeActivate();
+	_cols[index]->DeActivate();
 
+	_isActives[index] = false;
+}
+
+void Meteor::DeActivateAll()
+{
 	_curDuration = _maxDuration;
 	_curJumpPower = _maxJumpPower;
 
-	for (auto quad : _quads)
-		quad->GetTransform()->SetPos(Vector2(0, 0));
-
-	for (auto col : _cols)
-		col->DeActivate();
+	for (int i = 0; i < 3; i++)
+	{
+		_quads[i]->GetTransform()->SetPos(Vector2(0, 0));
+		_isActives[i] = false;
+	}
 }
