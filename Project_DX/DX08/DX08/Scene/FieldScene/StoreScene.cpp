@@ -73,5 +73,4 @@ void StoreScene::CreateInteractObj()
 	INTERACTOBJ->GetDoor()->Activate();
 
 	INTERACTOBJ->GetChest()->Extinct();
-	INTERACTOBJ->SetPlayer(PLAYER);
 }

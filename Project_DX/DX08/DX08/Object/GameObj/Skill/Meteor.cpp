@@ -80,6 +80,16 @@ void Meteor::Render()
 
 void Meteor::SetActive()
 {
+	_curDuration = _maxDuration;
+	_curJumpPower = _maxJumpPower;
+
+	for (int i = 0; i < 3; i++)
+	{
+		_quads[i]->GetTransform()->SetPos(Vector2(0, 0));
+		_quads[i]->Update();
+		_cols[i]->GetTransform()->Update();
+	}
+
 	for (auto isActive : _isActives)
 		isActive = true;
 
@@ -114,12 +124,9 @@ void Meteor::DeActivate(int index)
 
 void Meteor::DeActivateAll()
 {
-	_curDuration = _maxDuration;
-	_curJumpPower = _maxJumpPower;
-
 	for (int i = 0; i < 3; i++)
 	{
-		_quads[i]->GetTransform()->SetPos(Vector2(0, 0));
+		_cols[i]->DeActivate();
 		_isActives[i] = false;
 	}
 }

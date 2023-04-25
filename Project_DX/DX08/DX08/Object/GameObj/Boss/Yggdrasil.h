@@ -1,5 +1,5 @@
 #pragma once
-class Yggdrasil
+class Yggdrasil : public Creature
 {
 public:
 	enum AttackType
@@ -19,8 +19,8 @@ public:
 	Yggdrasil();
 	~Yggdrasil();
 
-	void Update();
-	void Render();
+	virtual void Update() override;
+	virtual void Render() override;
 	void HandRender();
 
 	void Damaged(int damage);
@@ -52,18 +52,24 @@ private:
 	void SpikeAttack();
 	void SpikeFlipDir();
 	void SpikeStop();
+	void Spike();
 
 	void SweepAttackReady();
 	void SweepAttack();
 	void SweepAttackAfter();
 	void SweepAttackEnd();
 
+	void Branches();
+	void Attacks();
+
 	Vector2 SetLERP(Vector2 objPos, Vector2 targetPos, float speed);
 	float SetLERP(float start, float end, float speed);
 	void SetIdle();
 	void Idle();
+	void SwitchAttackType();
 
 	void DeActivate();
+	void AfterDead();
 
 	shared_ptr<Quad> _body;
 	Vector2 _originBodyPos;
@@ -84,10 +90,6 @@ private:
 	shared_ptr<RectCollider> _rightHandCol;
 	shared_ptr<RectCollider> _leftHandCol;
 
-	int _maxHp = 1000;
-	int _curHp = _maxHp;
-	bool _isAlive = true;
-
 	float _damagedDelay = 0.1f;
 	bool _isDamaged = false;
 
@@ -98,9 +100,6 @@ private:
 
 	State _curState = State::IDLE;
 	bool _isRightHand = true;
-
-	int _maxDamage = 15;
-	int _minDamage = 4;
 
 	AttackType _attackType = AttackType::STAMP;
 

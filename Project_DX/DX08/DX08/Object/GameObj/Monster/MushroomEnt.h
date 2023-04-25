@@ -26,7 +26,7 @@ public:
 	void PostRender();
 
 	void Ground();
-	void Damaged(int damage, ATTRIBUTE attribute = 0);
+	void Damaged(int damage);
 	void Dead();
 	void Duck();
 	void Flip(Direction dir);
@@ -92,6 +92,9 @@ private:
 
 	bool _isAlive = true;
 
+	float _damagedDelay = 0.1f;
+	bool _isDamaged = false;
+
 	int _maxDamage = 10;
 	int _minDamage = 5;
 
@@ -105,4 +108,6 @@ private:
 	
 	bool _isRightEdge = false;
 	bool _isLeftEdge = false;
+
+	shared_ptr<ColorBuffer> _colorBuffer;
 };

@@ -13,12 +13,6 @@ InteractObjManager::~InteractObjManager()
 {
 }
 
-void InteractObjManager::SetPlayer(shared_ptr<Advanced_Player> player)
-{
-	_door->SetPlayer(player);
-	_chest->SetPlayer(player);
-}
-
 void InteractObjManager::ExtinctChest()
 {
 	_chest->Extinct();

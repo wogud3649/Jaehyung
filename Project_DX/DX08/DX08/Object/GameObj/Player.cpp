@@ -3,6 +3,8 @@
 
 Player::Player()
 {
+	_isAlive = true;
+
 	_sprites.resize(SkulType::SkulTypeSize);
 	_actions.resize(SkulType::SkulTypeSize);
 	CreateAction(SkulType::SKUL);

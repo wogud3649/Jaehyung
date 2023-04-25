@@ -21,6 +21,7 @@ void FadePanel::Update()
 
 	FadeIn();
 	FadeOut();
+	Loading();
 }
 
 void FadePanel::PostRender()
@@ -50,14 +51,37 @@ void FadePanel::FadeIn()
 	if (_isFadeIn == false)
 		return;
 
-	_delay -= DELTA_TIME;
-	float ratio = _delay / 3.0f;
+	_curDelay -= DELTA_TIME;
+	float ratio = _curDelay / _maxDelay;
 	_colorBuffer->_data.color = { _color.x, _color.y, _color.z, 1 - ratio };
 
-	if (_delay < 0)
+	if (_curDelay < 0)
 	{
 		_isFadeIn = false;
-		_delay = 3.0f;
+		_curDelay = _maxDelay;
+		StartLoading();
+	}
+}
+
+void FadePanel::StartLoading()
+{
+	if (_isLoading)
+		return;
+
+	_isLoading = true;
+	_curDelay = 1.5f;
+}
+
+void FadePanel::Loading()
+{
+	if (_isLoading == false)
+		return;
+
+	_curDelay -= DELTA_TIME;
+	if (_curDelay < 0)
+	{
+		_curDelay = _maxDelay;
+		_isLoading = false;
 		StartFadeOut();
 	}
 }
@@ -67,13 +91,13 @@ void FadePanel::FadeOut()
 	if (_isFadeOut == false)
 		return;
 
-	_delay -= DELTA_TIME;
-	float ratio = _delay / 3.0f;
+	_curDelay -= DELTA_TIME;
+	float ratio = _curDelay / _maxDelay;
 	_colorBuffer->_data.color = { _color.x, _color.y, _color.z, ratio };
 
-	if (_delay < 0)
+	if (_curDelay < 0)
 	{
 		_isFadeOut = false;
-		_delay = 3.0f;
+		_curDelay = _maxDelay;
 	}
 }

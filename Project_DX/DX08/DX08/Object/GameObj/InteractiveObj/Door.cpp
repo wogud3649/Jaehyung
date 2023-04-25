@@ -24,6 +24,41 @@ void Door::Update()
 	InteractObj::Update();
 
 	Enter();
+
+	if (_isEntered)
+	{
+		if (FADEPANEL->GetDelay() < 0.1f)
+		{
+			_isEntered = false;
+			INTERACTOBJ->AddStageLevel();
+
+			switch (_doorType)
+			{
+			case Door::NORMAL:
+				SCENE->SetScene("FieldScene1");
+				break;
+			case Door::ITEM:
+				SCENE->SetScene("FieldScene1");
+				break;
+			case Door::SKULL:
+				SCENE->SetScene("FieldScene1");
+				break;
+			case Door::ADVANTURER:
+				SCENE->SetScene("FieldScene1");
+				break;
+			case Door::STOREDOOR:
+				SCENE->SetScene("StoreScene");
+				if (_endEvent != nullptr)
+					_endEvent();
+				break;
+			case Door::BOSS:
+				SCENE->SetScene("BossScene");
+				break;
+			default:
+				break;
+			}
+		}
+	}
 }
 
 void Door::Render()
@@ -178,44 +213,19 @@ void Door::CreateAction()
 
 void Door::Enter()
 {
-	if (_player.expired())
-		return;
 	if (_isActive == false)
 		return;
 	
-	HIT_RESULT result = _col->IsCollision(_player.lock()->GetBodyCollider());
+	HIT_RESULT result = _col->IsCollision(PLAYER->GetBodyCollider());
 	
 	if (result.isHit == false)
 		return;
 	
 	if (KEY_DOWN('X'))
 	{
-		INTERACTOBJ->AddStageLevel();
-
-		switch (_doorType)
-		{
-		case Door::NORMAL:
-			SCENE->SetScene("FieldScene1");
-			break;
-		case Door::ITEM:
-			SCENE->SetScene("FieldScene1");
-			break;
-		case Door::SKULL:
-			SCENE->SetScene("FieldScene1");
-			break;
-		case Door::ADVANTURER:
-			SCENE->SetScene("FieldScene1");
-			break;
-		case Door::STOREDOOR:
-			SCENE->SetScene("StoreScene");
-			if (_endEvent != nullptr)
-				_endEvent();
-			break;
-		case Door::BOSS:
-			SCENE->SetScene("BossScene");
-			break;
-		default:
-			break;
-		}
+		_isEntered = true;
+		FADEPANEL->SetColor({ 0,0,0 });
+		FADEPANEL->SetDelay(1.0f);
+		FADEPANEL->StartFadeIn();
 	}
 }

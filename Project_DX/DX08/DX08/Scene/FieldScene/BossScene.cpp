@@ -72,6 +72,28 @@ void BossScene::Update()
 		}
 	}
 
+	if (PLAYER->GetArrowCol()->GetActive())
+	{
+		if (PLAYER->GetArrowCol()->IsCollision(YGGDRASIL->GetHeadCollider()).isHit)
+		{
+			YGGDRASIL->Damaged(PLAYER->GetSkillDamage());
+			PLAYER->SkillHit();
+		}
+	}
+
+	vector<shared_ptr<CircleCollider>> cols = PLAYER->GetMeteorCols();
+	for (int i = 0; i < 3; i++)
+	{
+		if (cols[i]->GetActive())
+		{
+			if (cols[i]->IsCollision(YGGDRASIL->GetHeadCollider()).isHit)
+			{
+				YGGDRASIL->Damaged(PLAYER->GetSkillDamage());
+				PLAYER->MeteorHit(i);
+			}
+		}
+	}
+
 	SceneClear();
 }
 
@@ -129,5 +151,4 @@ void BossScene::CreateInteractObj()
 	INTERACTOBJ->GetChest()->GetTransform()->SetPos(Vector2(temp.x, temp.y + 16));
 	INTERACTOBJ->GetChest()->Extinct();
 	INTERACTOBJ->GetChest()->SetRandom();
-	INTERACTOBJ->SetPlayer(PLAYER);
 }

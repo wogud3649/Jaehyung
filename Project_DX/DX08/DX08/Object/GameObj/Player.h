@@ -1,5 +1,5 @@
 #pragma once
-class Player
+class Player : public Creature
 {
 public:
 	enum SkulType
@@ -36,10 +36,10 @@ public:
 	};
 
 	Player();
-	~Player();
+	virtual ~Player();
 
-	virtual void Update();
-	virtual void Render();
+	virtual void Update() override;
+	virtual void Render() override;
 
 	shared_ptr<CircleCollider> GetBodyCollider() { return _bodyCol; }
 	shared_ptr<CircleCollider> GetFootCollider() { return _footCol; }
@@ -60,7 +60,6 @@ protected:
 	vector<vector<shared_ptr<Sprite>>> _sprites;
 	vector<vector<shared_ptr<Action>>> _actions;
 
-	bool _isAlive = true;
 	Direction _direction = Direction::RIGHT;
 
 	float _attackSpeed = 0.09f;

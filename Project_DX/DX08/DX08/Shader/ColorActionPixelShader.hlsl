@@ -40,7 +40,7 @@ float4 PS(PixelInput input) : SV_TARGET
 	result.x = result.x + color.x;
 	result.y = result.y + color.y;
 	result.z = result.z + color.z;
-	result.w = color.w;
+	result.w = result.w + color.w;
 
 	return result;
 }

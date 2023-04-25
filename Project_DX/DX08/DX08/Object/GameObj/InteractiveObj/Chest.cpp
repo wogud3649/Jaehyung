@@ -219,10 +219,8 @@ void Chest::OpenChest()
 {
 	if (_isOpen)
 		return;
-	if (_player.expired())
-		return;
 
-	HIT_RESULT result = _col->IsCollision(_player.lock()->GetBodyCollider());
+	HIT_RESULT result = _col->IsCollision(PLAYER->GetBodyCollider());
 	if (result.isHit)
 	{
 		if (KEY_DOWN('X'))
@@ -250,10 +248,7 @@ void Chest::ItemPop()
 
 void Chest::TakeItem()
 {
-	if (_player.expired())
-		return;
-
-	HIT_RESULT result = _itemCol->IsCollision(_player.lock()->GetBodyCollider());
+	HIT_RESULT result = _itemCol->IsCollision(PLAYER->GetBodyCollider());
 	if (result.isHit == false)
 		return;
 

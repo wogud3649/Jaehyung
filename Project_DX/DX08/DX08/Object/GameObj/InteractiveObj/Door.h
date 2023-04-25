@@ -32,5 +32,7 @@ private:
 
 	DoorType _doorType;
 
+	bool _isEntered = false;
+
 	function<void(void)> _endEvent = nullptr;
 };

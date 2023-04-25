@@ -51,6 +51,7 @@ public:
 	const int& GetBlockIndex();
 	const bool& CheckOverlap(Vector2 pos);
 	const bool& CheckActive(int index);
+
 private:
 	void CreateBlocks();
 

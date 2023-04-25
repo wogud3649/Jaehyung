@@ -3,6 +3,11 @@
 
 Advanced_Player::Advanced_Player()
 {
+	_maxHp = _baseMaxHp;
+	_curHp = _maxHp;
+	_maxDamage = 30;
+	_minDamage = 20;
+
 	_attackCol = make_shared<CircleCollider>(50);
 	_attackCol->GetTransform()->SetParent(_footCol->GetTransform());
 	_attackCol->GetTransform()->MoveX(5);
@@ -490,7 +495,7 @@ void Advanced_Player::Revive()
 
 const float& Advanced_Player::GetAttackDamage()
 {
-	int ad = (rand() % (_maxAttackDamage - _minAttackDamage) + _minAttackDamage);
+	int ad = (rand() % (_maxDamage - _minDamage) + _minDamage);
 	ad += _statAttributes.ad;
 
 	int temp = rand() % 100;

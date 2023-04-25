@@ -56,6 +56,9 @@ void FireArrow::Render()
 
 void FireArrow::SetActive()
 {
+	_quad->Update();
+	_col->GetTransform()->Update();
+
 	_isActive = true;
 
 	_col->Activate();

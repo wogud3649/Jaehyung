@@ -8,8 +8,6 @@ public:
 	virtual void Update();
 	virtual void Render();
 
-	void SetPlayer(shared_ptr<Advanced_Player> player) { _player = player; }
-
 	virtual void Spawn();
 	virtual void Extinct();
 	virtual void Activate();
@@ -27,6 +25,4 @@ protected:
 
 	bool _isSpawn = false;
 	bool _isActive = false;
-
-	weak_ptr<Advanced_Player> _player;
 };

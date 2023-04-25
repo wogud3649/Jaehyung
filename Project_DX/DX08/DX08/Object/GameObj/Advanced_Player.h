@@ -3,7 +3,7 @@ class Advanced_Player : public Player
 {
 public:
 	Advanced_Player();
-	~Advanced_Player();
+	virtual ~Advanced_Player();
 
 	virtual void Update() override;
 	virtual void Render() override;
@@ -78,8 +78,6 @@ private:
 	shared_ptr<CircleCollider> _skillCol;
 
 	float _baseMaxHp = 100.0f;
-	float _maxHp = _baseMaxHp;
-	float _curHp = _baseMaxHp;
 
 	UINT _baseDef = 0;
 	UINT _def = _baseDef;
@@ -119,9 +117,6 @@ private:
 	float _maxComboDuration = 0.9f;
 	float _curComboDuration = _maxComboDuration;
 	bool _isAttackB = false;
-
-	UINT _maxAttackDamage = 30;
-	UINT _minAttackDamage = 20;
 	
 	UINT _baseCrp = 10;
 	UINT _critPercent = _baseCrp;

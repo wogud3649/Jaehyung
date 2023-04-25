@@ -20,6 +20,8 @@ void MushroomEnt::Update()
 	if (_isAlive == false)
 		return;
 
+	_colorBuffer->Update();
+
 	_detectCol->Update();
 	_standBodyCol->Update();
 	_duckBodyCol->Update();
@@ -56,12 +58,25 @@ void MushroomEnt::Update()
 			Move();
 		}
 	}
+
+	if (_isDamaged)
+	{
+		_damagedDelay -= DELTA_TIME;
+		if (_damagedDelay < 0)
+		{
+			_colorBuffer->_data.color.x = 0;
+			_damagedDelay = 0.1f;
+			_isDamaged = false;
+		}
+	}
 }
 
 void MushroomEnt::Render()
 {
 	if (_isAlive == false)
 		return;
+
+	_colorBuffer->SetPSBuffer(2);
 
 	_sprites[_curState]->SetActionClip(_actions[_curState]->GetCurClip());
 	_sprites[_curState]->Render();
@@ -83,14 +98,17 @@ void MushroomEnt::Ground()
 	_curJumpPower = 0.0f;
 }
 
-void MushroomEnt::Damaged(int damage, ATTRIBUTE attribute)
+void MushroomEnt::Damaged(int damage)
 {
 	_curHp -= damage;
+	_isDamaged = true;
+
+	_colorBuffer->_data.color.x = 0.4f;
 
 	if (_curHp < 0.0f)
 	{
-		Dead();
 		_curHp = 0;
+		Dead();
 	}
 }
 
@@ -155,6 +173,7 @@ void MushroomEnt::SetAction(State state)
 	_curState = state;
 	if (_curState == _oldState)
 		return;
+
 	_sprites[_curState]->SetDirection(_direction);
 	_actions[_curState]->Play();
 	_actions[_oldState]->Reset();
@@ -483,6 +502,7 @@ void MushroomEnt::SetSprites()
 	for (auto sprite : _sprites)
 	{
 		sprite->GetTransform()->SetParent(_standBodyCol->GetTransform());
+		sprite->SetPS(ADD_PS(L"Shader/ColorActionPixelShader.hlsl"));
 		sprite->GetTransform()->MoveY(25.0f);
 	}
 
@@ -526,4 +546,7 @@ void MushroomEnt::SetColliders()
 	_attackCol = make_shared<CircleCollider>(90);
 	_attackCol->GetTransform()->SetParent(_standBodyCol->GetTransform());
 	_attackCol->DeActivate();
+
+	_colorBuffer = make_shared<ColorBuffer>();
+	_colorBuffer->_data.color = { 0, 0, 0, 0 };
 }

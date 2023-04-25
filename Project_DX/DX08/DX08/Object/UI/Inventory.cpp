@@ -24,11 +24,6 @@ Inventory::Inventory()
 
 	CreateSlots();
 	RootItem(1);
-	RootItem(5);
-	RootItem(6);
-	RootItem(7);
-	RootItem(8);
-	RootItem(9);
 	DATA_M->SetDuplicate(1);
 
 	shared_ptr<Sprite> skillIcon1= make_shared<Sprite>(L"Resources/Texture/SkillIcon/SkillIcons.png",Vector2(2,3), Vector2(48,72));
@@ -489,6 +484,7 @@ bool Inventory::RootItem(int itemCode)
 	if (info.itemCode == 0)
 		return false;
 
+	DATA_M->SetDuplicate(itemCode);
 	bool success = false;
 	switch (info.itemType)
 	{

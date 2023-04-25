@@ -25,8 +25,6 @@ public:
 		return nullptr;
 	}
 
-	void SetPlayer(shared_ptr<Advanced_Player> player);
-
 	void ExtinctChest();
 
 	const shared_ptr<Door>& GetDoor() { return _door; }

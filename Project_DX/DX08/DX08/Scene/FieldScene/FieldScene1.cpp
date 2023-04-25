@@ -105,5 +105,4 @@ void FieldScene1::CreateInteractObj()
 	INTERACTOBJ->GetChest()->GetTransform()->SetPos(Vector2(temp.x, temp.y + 16));
 	INTERACTOBJ->GetChest()->Extinct();
 	INTERACTOBJ->GetChest()->SetRandom();
-	INTERACTOBJ->SetPlayer(PLAYER);
 }
