@@ -71,6 +71,7 @@ private:
 
 	shared_ptr<FilterBuffer> _filterBuffer;
 	shared_ptr<ColorBuffer> _colorBuffer;
+	shared_ptr<ReverseBuffer> _reverseBuffer;
 
 	shared_ptr<Quad> _rightHand;
 	Vector2 _originRightHandPos;
@@ -83,9 +84,12 @@ private:
 	shared_ptr<RectCollider> _rightHandCol;
 	shared_ptr<RectCollider> _leftHandCol;
 
-	int _maxHp = 50;
+	int _maxHp = 1000;
 	int _curHp = _maxHp;
 	bool _isAlive = true;
+
+	float _damagedDelay = 0.1f;
+	bool _isDamaged = false;
 
 	Vector2 _attackPos = Vector2(0, 170);
 	Vector2 _spikePos = Vector2(0, 170);

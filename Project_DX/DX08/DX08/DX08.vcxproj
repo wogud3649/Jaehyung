@@ -155,6 +155,7 @@
     <ClInclude Include="Object\GameObj\Skill\FireArrow.h" />
     <ClInclude Include="Framework\Utility\DirectWrite.h" />
     <ClInclude Include="Object\UI\FadePanel.h" />
+    <ClInclude Include="Object\GameObj\Item\Potion.h" />
     <ClInclude Include="Scene\FieldScene\FieldScene1.h" />
     <ClInclude Include="Object\GameObj\InteractiveObj\InteractObjManager.h" />
     <ClInclude Include="Object\GameObj\InteractiveObj\Door.h" />
@@ -231,6 +232,7 @@
     <ClCompile Include="Object\GameObj\Skill\FireArrow.cpp" />
     <ClCompile Include="Framework\Utility\DirectWrite.cpp" />
     <ClCompile Include="Object\UI\FadePanel.cpp" />
+    <ClCompile Include="Object\GameObj\Item\Potion.cpp" />
     <ClCompile Include="Scene\FieldScene\FieldScene1.cpp" />
     <ClCompile Include="Object\GameObj\InteractiveObj\InteractObjManager.cpp" />
     <ClCompile Include="Object\GameObj\InteractiveObj\Door.cpp" />
@@ -355,6 +357,16 @@
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">VS</EntryPointName>
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VS</EntryPointName>
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">VS</EntryPointName>
+    </FxCompile>
+    <FxCompile Include="Shader\ColorActionPixelShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">PS</EntryPointName>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">PS</EntryPointName>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Shader\ColorFilterPixelShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>

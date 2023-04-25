@@ -143,25 +143,43 @@ void Store::StoreSettings()
 
 void Store::SetRandomItems()
 {
-	vector<int> indexes;
+	vector<int> skulIndexes;
+	vector<int> itemIndexes;
+
+	for (int i = 1; i < 10; i++)
+	{
+		if (DATA_M->CheckDuplicate(i) == false)
+		{
+			skulIndexes.emplace_back(i);
+		}
+	}
 
 	for (int i = 10; i < 28; i++)
 	{
 		if (DATA_M->CheckDuplicate(i) == false)
 		{
-			indexes.emplace_back(i);
+			itemIndexes.emplace_back(i);
 		}
 	}
 
-	if (indexes.size() < 4)
+	if (itemIndexes.size() < 4)
 		return;
 
-	std::random_shuffle(indexes.begin(), indexes.end());
+	std::random_shuffle(itemIndexes.begin(), itemIndexes.end());
 
 	for (int i = 0; i < 4; i++)
 	{
-		ItemInfo info = DATA_M->GetItemByItemCode(indexes[i]);
+		ItemInfo info = DATA_M->GetItemByItemCode(itemIndexes[i]);
 		_itemInfos[i] = info;
 		_items[i]->SetCurFrame(Vector2(info.frameX, info.frameY));
 	}
+
+	if (skulIndexes.size() < 1)
+		return;
+
+	std::random_shuffle(skulIndexes.begin(), skulIndexes.end());
+
+	ItemInfo info = DATA_M->GetItemByItemCode(skulIndexes[0]);
+	_itemInfos[4] = info;
+	_items[4]->SetCurFrame(Vector2(info.frameX, info.frameY));
 }

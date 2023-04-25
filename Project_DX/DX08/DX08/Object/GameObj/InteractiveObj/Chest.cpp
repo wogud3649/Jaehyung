@@ -19,6 +19,8 @@ Chest::Chest()
 
 	_itemCol = make_shared<CircleCollider>(15);
 	_itemCol->GetTransform()->SetParent(_item->GetTransform());
+
+	_potion = make_shared<Potion>();
 }
 
 Chest::~Chest()
@@ -38,6 +40,7 @@ void Chest::Update()
 	{
 		_itemCol->Update();
 		_item->Update();
+		_potion->Update();
 		ItemPop();
 
 		_itemActivateDelay -= DELTA_TIME;
@@ -57,6 +60,7 @@ void Chest::Render()
 	{
 		_item->Render();
 		_itemCol->Render();
+		_potion->Render();
 	}
 }
 
@@ -227,6 +231,8 @@ void Chest::OpenChest()
 			Activate();
 			_col->DeActivate();
 			_isOpen = true;
+			_potion->SetPos(_col->GetTransform()->GetWorldPos());
+			_potion->Activate();
 		}
 	}
 }

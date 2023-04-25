@@ -237,6 +237,9 @@
     <ClInclude Include="Object\GameObj\Skill\Skill.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Object\GameObj\Item\Potion.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DX08.cpp">
@@ -446,6 +449,9 @@
     <ClCompile Include="Object\GameObj\Skill\Skill.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Object\GameObj\Item\Potion.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX08.rc">
@@ -475,5 +481,6 @@
     <FxCompile Include="Shader\UI\SliderSpritePixelShader.hlsl" />
     <FxCompile Include="Shader\ColorFilterPixelShader.hlsl" />
     <FxCompile Include="Shader\ColorPixelShader.hlsl" />
+    <FxCompile Include="Shader\ColorActionPixelShader.hlsl" />
   </ItemGroup>
 </Project>

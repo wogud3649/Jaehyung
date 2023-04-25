@@ -31,4 +31,6 @@ private:
 	bool _isOpen = false;
 
 	float _itemActivateDelay = 1.2f;
+
+	shared_ptr<Potion> _potion;
 };

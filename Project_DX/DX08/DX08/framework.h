@@ -119,6 +119,7 @@ using namespace DirectX;
 #include "Object/GameObj/Monster/MushroomEnt.h"
 #include "Object/GameObj/Boss/Yggdrasil.h"
 #include "Object/GameObj/InteractiveObj/InteractObj.h"
+#include "Object/GameObj/Item/Potion.h"
 #include "Object/GameObj/InteractiveObj/Chest.h"
 #include "Object/GameObj/InteractiveObj/Door.h"
 #include "Object/GameObj/InteractiveObj/InteractObjManager.h"

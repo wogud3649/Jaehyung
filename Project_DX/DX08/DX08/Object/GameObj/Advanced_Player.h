@@ -33,6 +33,7 @@ public:
 	void CastFireArrow();
 	void CastMeteor();
 
+	void Heal(int value);
 	void Dead();
 	void Revive();
 

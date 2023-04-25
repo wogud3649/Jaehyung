@@ -468,6 +468,16 @@ void Advanced_Player::CastMeteor()
 	SetAction(State::IDLE);
 }
 
+void Advanced_Player::Heal(int value)
+{
+	if (value < 0)
+		return;
+
+	_curHp += value;
+	if (_curHp > _maxHp)
+		_curHp = _maxHp;
+}
+
 void Advanced_Player::Dead()
 {
 
