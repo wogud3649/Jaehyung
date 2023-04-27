@@ -219,6 +219,7 @@
     <ClInclude Include="Object\UI\Slider.h" />
     <ClInclude Include="Object\UI\SpriteSlider.h" />
     <ClInclude Include="Object\GameObj\Skill\Skill.h" />
+    <ClInclude Include="Framework\Utility\SoundManager.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Framework\Render\VertexBuffer.h" />
     <ClInclude Include="Framework\Render\VertexShader.h" />
@@ -313,6 +314,7 @@
     <ClCompile Include="Object\UI\SpriteSlider.cpp" />
     <ClCompile Include="Object\GameObj\Skill\Skill.cpp" />
     <ClCompile Include="Object\GameObj\Skill\ThrowHead.cpp" />
+    <ClCompile Include="Framework\Utility\SoundManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX08.rc" />
