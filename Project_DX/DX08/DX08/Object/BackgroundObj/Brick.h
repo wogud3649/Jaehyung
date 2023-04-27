@@ -54,6 +54,20 @@ public:
 
 private:
 	void CreateBlocks();
+	void UpdateBlocks();
+	void BlockPlayerCollision(const shared_ptr<RectCollider>& block);
+	void BlockMonsterCollision(const shared_ptr<RectCollider>& block);
+
+	void UpdateFloors();
+	void FloorPlayerCollision(const shared_ptr<RectCollider>& floor);
+	void FloorMonsterCollision(const shared_ptr<RectCollider>& floor);
+
+	void UpdateMonsters();
+	bool MonsterHeadCollision(const shared_ptr<MushroomEnt>& mushroomEnt);
+	bool MonsterPlayerAttackCollision(const shared_ptr<MushroomEnt>& mushroomEnt);
+	bool MonsterPlayerThrowHeadCollision(const shared_ptr<MushroomEnt>& mushroomEnt);
+	bool MonsterPlayerFireArrowCollision(const shared_ptr<MushroomEnt>& mushroomEnt);
+	bool MonsterPlayerMeteorCollision(const shared_ptr<MushroomEnt>& mushroomEnt, const int& index);
 
 	shared_ptr<Quad> _quad;
 	vector<shared_ptr<Transform>> _transforms;

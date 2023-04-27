@@ -1,22 +1,23 @@
 #include "framework.h"
-#include "FireArrow.h"
+#include "ThrowHead.h"
 
-FireArrow::FireArrow()
+ThrowHead::ThrowHead()
 {
-	_quad = make_shared<Quad>(L"Resources/Texture/Effect/Wizard/FireArrow/FireArrow.png");
+	_quad = make_shared<Quad>(L"Resources/Texture/SKUL/Head.png");
 	_quad->GetTransform()->SetParent(_transform);
 	_quad->SetPS(ADD_PS(L"Shader/LRTexturePixelShader.hlsl"));
+	_quad->GetTransform()->SetScale(Vector2(2, 2));
 	_col = make_shared<CircleCollider>(12);
 
 	_col->GetTransform()->SetParent(_quad->GetTransform());
 	_col->DeActivate();
 }
 
-FireArrow::~FireArrow()
+ThrowHead::~ThrowHead()
 {
 }
 
-void FireArrow::Update()
+void ThrowHead::Update()
 {
 	if (_isActive == false)
 		return;
@@ -38,7 +39,7 @@ void FireArrow::Update()
 	}
 }
 
-void FireArrow::Render()
+void ThrowHead::Render()
 {
 	Skill::Render();
 
@@ -49,7 +50,7 @@ void FireArrow::Render()
 	_col->Render();
 }
 
-void FireArrow::SetActive()
+void ThrowHead::SetActive()
 {
 	Skill::SetActive();
 
@@ -59,12 +60,12 @@ void FireArrow::SetActive()
 	_col->Activate();
 }
 
-void FireArrow::Hit()
+void ThrowHead::Hit()
 {
 	DeActivate();
 }
 
-void FireArrow::DeActivate()
+void ThrowHead::DeActivate()
 {
 	_isActive = false;
 
@@ -72,4 +73,6 @@ void FireArrow::DeActivate()
 	_quad->GetTransform()->SetPos(Vector2(0, 0));
 
 	_col->DeActivate();
+
+	_endEvent();
 }

@@ -3,6 +3,8 @@
 
 MushroomEnt::MushroomEnt()
 {
+	_isAlive = true;
+
 	SetColliders();
 	SetSprites();
 	CreateAction();

@@ -21,9 +21,7 @@ private:
 
 	void TakeItem();
 
-	shared_ptr<Sprite> _item;
-	ItemInfo _itemInfo;
-	shared_ptr<CircleCollider> _itemCol;
+	shared_ptr<Item> _item;
 
 	Rarity _rarity = Rarity::NONE;
 

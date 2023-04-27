@@ -14,13 +14,6 @@ Advanced_Player::Advanced_Player()
 	_attackCol->GetTransform()->MoveY(25);
 	_attackCol->DeActivate();
 
-	_proj = make_shared<Quad>(L"Resources/Texture/SKUL/Head.png", Vector2(1,1));
-	_proj->SetPS(ADD_PS(L"Shader/LRTexturePixelShader.hlsl"));
-	_proj->Update();
-	_projCol = make_shared<CircleCollider>(_proj->GetSize().y * 0.7f);
-	_projCol->GetTransform()->SetParent(_proj->GetTransform());
-	_projCol->DeActivate();
-
 	_reverseBuffer = make_shared<ReverseBuffer>();
 
 	_skillCol = make_shared<CircleCollider>(50);
@@ -29,6 +22,7 @@ Advanced_Player::Advanced_Player()
 
 	_fireArrow = make_shared<FireArrow>();
 	_meteor = make_shared<Meteor>();
+	_throwHead = make_shared<ThrowHead>();
 
 	SetCallback();
 }
@@ -41,8 +35,9 @@ void Advanced_Player::Update()
 {
 	_reverseBuffer->Update();
 	_attackCol->Update();
-	_projCol->Update();
 	_skillCol->Update();
+
+	_throwHead->Update();
 	_fireArrow->Update();
 	_meteor->Update();
 
@@ -61,7 +56,7 @@ void Advanced_Player::Update()
 
 	Player::Update();
 
-	float ratio = _curHp / _maxHp;
+	float ratio = static_cast<float>(_curHp) / static_cast<float>(_maxHp);
 	UI->SetHpRatio(ratio);
 
 	if (!_isHeadOn)
@@ -138,34 +133,25 @@ void Advanced_Player::Update()
 
 	if (_isSkillUsed)
 	{
-		_curProjCD -= DELTA_TIME;
-		_proj->Update();
+		_curSkillCD -= DELTA_TIME;
+		UI->SetSkillRatio(0, _curSkillCD / _maxSkillCD);
 
-		UI->SetSkillRatio(0, _curProjCD / _maxProjCD);
-
-		if (_curProjCD < 0.0f)
+		if (_curSkillCD < 0.0f)
 		{
 			_isSkillUsed = false;
-			_curProjCD = _maxProjCD;
-		}
-		if (_projCol->GetActive())
-		{
-			if (_reverseBuffer->_data.reverse == 0)
-				_proj->GetTransform()->MoveX(_projSpeed * DELTA_TIME);
-			else
-				_proj->GetTransform()->MoveX(-_projSpeed * DELTA_TIME);
+			_curSkillCD = _maxSkillCD;
 		}
 	}
 
 	if (_isSkill2Used)
 	{
 		_curSkill2CD -= DELTA_TIME;
-		UI->SetSkillRatio(1, _curSkill2CD / _maxSkill2CD);
+		UI->SetSkillRatio(1, _curSkill2CD / _maxSkillCD);
 
 		if (_curSkill2CD < 0.0f)
 		{
 			_isSkill2Used = false;
-			_curSkill2CD = _maxSkill2CD;
+			_curSkill2CD = _maxSkillCD;
 		}
 	}
 
@@ -186,15 +172,11 @@ void Advanced_Player::Render()
 
 	Player::Render();
 
-	if (_projCol->GetActive())
-	{
-		_proj->Render();
-	}
-
 	_meteor->Render();
 	_fireArrow->Render();
+	_throwHead->Render();
+
 	_attackCol->Render();
-	_projCol->Render();
 	_skillCol->Render();
 }
 
@@ -383,26 +365,13 @@ void Advanced_Player::Skill()
 {
 	if (KEY_DOWN('A'))
 	{
+		if (_curSkul == SkulType::HEADLESS)
+			return;
 		if (_isSkillUsed)
 			return;
 
 		_isSkillUsed = true;
 		SetAction(State::SKILL);
-		switch (_curSkul)
-		{
-		case Player::SKUL:
-			_proj->GetTransform()->SetPos(_bodyCol->GetTransform()->GetWorldPos());
-			_projCol->GetTransform()->UpdateSRT();
-			_projCol->Activate();
-
-			if (_direction == Direction::RIGHT)
-				_reverseBuffer->_data.reverse = 0;
-			else
-				_reverseBuffer->_data.reverse = 1;
-			break;
-		default:
-			break;
-		}
 	}
 }
 
@@ -410,6 +379,8 @@ void Advanced_Player::Skill2()
 {
 	if (KEY_DOWN('S'))
 	{
+		if (_curSkul == SkulType::HEADLESS || _curSkul == SkulType::SKUL)
+			return;
 		if (_isSkill2Used)
 			return;
 
@@ -418,16 +389,17 @@ void Advanced_Player::Skill2()
 	}
 }
 
-void Advanced_Player::HeadHit()
+void Advanced_Player::ThrowHeadHit()
 {
 	_headDelay = _maxHeadDelay;
 	_isHeadOn = true;
-	SetSkul(SkulType::SKUL);
-	_projCol->DeActivate();
-	_footCol->GetTransform()->SetPos(_proj->GetTransform()->GetWorldPos());
+	if (_curSkul == SkulType::HEADLESS)
+		SetSkul(SkulType::SKUL);
+	_throwHead->DeActivate();
+	_footCol->GetTransform()->SetPos(_throwHead->GetCollider()->GetTransform()->GetWorldPos());
 }
 
-void Advanced_Player::SkillHit()
+void Advanced_Player::FireArrowHit()
 {
 	_fireArrow->Hit();
 }
@@ -452,6 +424,17 @@ void Advanced_Player::Damaged(int damage, Direction dir)
 		_isKnockBackRight = false;
 
 	_curHp -= damage;
+}
+
+void Advanced_Player::CastThrowHead()
+{
+	_throwHead->SetPos(_bodyCol->GetTransform()->GetWorldPos());
+	_throwHead->SetActive();
+	if (_direction == Direction::RIGHT)
+		_throwHead->SetRight(true);
+	else if (_direction == Direction::LEFT)
+		_throwHead->SetRight(false);
+	SetSkul(SkulType::HEADLESS);
 }
 
 void Advanced_Player::CastFireArrow()
@@ -505,21 +488,26 @@ const float& Advanced_Player::GetAttackDamage()
 	return ad;
 }
 
-const float& Advanced_Player::GetProjDamage()
-{
-	int ap = (rand() % (_maxProjDamage - _minProjDamage) + _minProjDamage);
-	ap += _statAttributes.ap;
-
-	int temp = rand() % 100;
-	if (temp < _critPercent + _statAttributes.crp)
-		ap *= 2;
-	
-	return ap;
-}
-
 const float& Advanced_Player::GetSkillDamage()
 {
-	int power = _fireArrow->GetPower();
+	int power;
+	switch (_skillType)
+	{
+	case Advanced_Player::NONE:
+		power = 0;
+		break;
+	case Advanced_Player::THROWHEAD:
+		power = _throwHead->GetPower();
+		break;
+	case Advanced_Player::FIREARROW:
+		power = _fireArrow->GetPower();
+		break;
+	case Advanced_Player::METEOR:
+		break;
+		power = _meteor->GetPower();
+	default:
+		break;
+	}
 	power += rand() % 5;
 	power += _statAttributes.ap;
 
@@ -538,7 +526,7 @@ void Advanced_Player::SetEquipStats(StatAttributes stats)
 	_def = _baseDef + _statAttributes.def;
 	_critPercent = _baseCrp + _statAttributes.crp;
 	_maxHeadDelay = _baseScd * ((float)(100 - _statAttributes.scd) / 100);
-	_maxProjCD = _baseScd * ((float)(100 - _statAttributes.scd) / 100);
+	_maxSkillCD = _baseScd * ((float)(100 - _statAttributes.scd) / 100);
 	_maxChangeCD = _baseCcd * ((float)(100 - _statAttributes.ccd) / 100);
 }
 
@@ -626,13 +614,19 @@ void Advanced_Player::FallEnd()
 
 void Advanced_Player::SkillEnd()
 {
-	if (_curSkul == SkulType::SKUL && _projCol->GetActive())
+	if (_curSkul == SkulType::SKUL && _throwHead->GetCollider()->GetActive())
 	{
 		_isHeadOn = false;
 		SetSkul(SkulType::HEADLESS);
 	}
+	else if (_curSkul == SkulType::HEADLESS)
+	{
+		_isHeadOn = true;
+		SetSkul(SkulType::SKUL);
+	}
 	else
 	{
+		_isHeadOn = true;
 		SetAction(State::IDLE);
 	}
 }
@@ -665,7 +659,7 @@ void Advanced_Player::SetCallback()
 	_actions[SkulType::SKUL][State::ATTACKB]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
 	_actions[SkulType::SKUL][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 1);
 	_actions[SkulType::SKUL][State::JUMPATTACK]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 2);
-	_actions[SkulType::SKUL][State::SKILL]->SetCallBack(std::bind(&Advanced_Player::SkillEnd, this));
+	_actions[SkulType::SKUL][State::SKILL]->SetMidCallBack(std::bind(&Advanced_Player::CastThrowHead, this), 2);
 
 	_actions[SkulType::HEADLESS][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackMid, this), 2);
 	_actions[SkulType::HEADLESS][State::ATTACKA]->SetMidCallBack(std::bind(&Advanced_Player::AttackColEnd, this), 3);
@@ -699,6 +693,8 @@ void Advanced_Player::SetCallback()
 		_actions[i][State::SKILL]->SetCallBack(std::bind(&Advanced_Player::CastFireArrow, this));
 		_actions[i][State::SKILL2]->SetMidCallBack(std::bind(&Advanced_Player::CastMeteor, this), 2);
 	}
+
+	_throwHead->SetEndEvent(std::bind(&Advanced_Player::SkillEnd, this));
 }
 
 void Advanced_Player::SetAction(State state)

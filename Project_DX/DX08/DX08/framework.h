@@ -113,6 +113,7 @@ using namespace DirectX;
 // GameObject
 #include "Object/GameObj/Creature.h"
 #include "Object/GameObj/Skill/Skill.h"
+#include "Object/GameObj/Skill/ThrowHead.h"
 #include "Object/GameObj/Skill/FireArrow.h"
 #include "Object/GameObj/Skill/Meteor.h"
 #include "Object/GameObj/Player.h"
@@ -120,6 +121,7 @@ using namespace DirectX;
 #include "Object/GameObj/Monster/MushroomEnt.h"
 #include "Object/GameObj/Boss/Yggdrasil.h"
 #include "Object/GameObj/InteractiveObj/InteractObj.h"
+#include "Object/GameObj/Item/Item.h"
 #include "Object/GameObj/Item/Potion.h"
 #include "Object/GameObj/InteractiveObj/Chest.h"
 #include "Object/GameObj/InteractiveObj/Door.h"

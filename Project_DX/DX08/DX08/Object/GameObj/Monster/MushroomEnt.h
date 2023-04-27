@@ -1,5 +1,5 @@
 #pragma once
-class MushroomEnt
+class MushroomEnt : public Creature
 {
 public:
 	enum DetectState
@@ -7,6 +7,7 @@ public:
 		NONE,
 		FIND
 	};
+
 	enum State
 	{
 		IDLE,
@@ -19,10 +20,10 @@ public:
 		STAND
 	};
 	MushroomEnt();
-	~MushroomEnt();
+	virtual ~MushroomEnt();
 
-	void Update();
-	void Render();
+	virtual void Update() override;
+	virtual void Render() override;
 	void PostRender();
 
 	void Ground();
@@ -39,6 +40,7 @@ public:
 	const shared_ptr<RectCollider>& GetHeadCol() { return _headCol; }
 
 	bool GetAlive() { return _isAlive; }
+
 private:
 	void Function();
 	void Collision();
@@ -87,16 +89,8 @@ private:
 	float _maxIdleDuration = 3.0f;
 	float _curIdleDuration = _maxIdleDuration;
 
-	float _maxHp = 100.0f;
-	float _curHp = _maxHp;
-
-	bool _isAlive = true;
-
 	float _damagedDelay = 0.1f;
 	bool _isDamaged = false;
-
-	int _maxDamage = 10;
-	int _minDamage = 5;
 
 	float _curJumpPower = 50.0f;
 	float _moveSpeed = 80.0f;

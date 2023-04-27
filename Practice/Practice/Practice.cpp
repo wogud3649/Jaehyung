@@ -12,77 +12,47 @@
 
 using namespace std;
 
-vector<bool> visited;
-vector<string> result;
+vector<vector<int>> direction =
+	{	{1, 0},
+		{0, 1},
+		{-1, 0},
+		{0, -1} };
 
-void DFS(int here, const vector<vector<string>>& tickets)
+void dfs(vector<vector<int>>& answer, int x, int y, int dir, int count, int n)
 {
-	visited[here] = true;
-	string thereString = tickets[here][1];
-	result.push_back(thereString);
-
-	if (result.size() == tickets.size())
+	if (count > n * n)
 		return;
 
-	if (std::all_of(visited.begin(), visited.end(), [](const bool& value)-> bool { return value == true; }))
-		return;
+	answer[y][x] = count;
 
-	for (int i = 0; i < tickets.size(); i++)
+	int tempX = x + direction[dir][0];
+	int tempY = y + direction[dir][1];
+	if (tempX > n - 1 || tempY > n - 1 || tempX < 0 || tempY < 0 || answer[tempY][tempX] != 0)
 	{
-		if (visited[i] == true)
-			continue;
-
-		if (thereString == tickets[i][0])
-		{
-			DFS(i, tickets);
-			return;
-		}
+		dir++;
+		dir %= 4;
 	}
+
+	dfs(answer, x + direction[dir][0], y + direction[dir][1], dir, ++count, n);
 }
 
-vector<string> solution(vector<vector<string>> tickets) {
+vector<vector<int>> solution(int n) {
+	vector<vector<int>> answer = vector<vector<int>>(n, vector<int>(n, 0));
 
-	visited.resize(tickets.size(), false);
+	int x = 0;
+	int y = 0;
+	int dir = 0;
+	int count = 0;
 
-	std::sort(tickets.begin(), tickets.end());
+	dfs(answer, x, y, dir, ++count, n);
 
-	int startIndex = 0;
-
-	for (int i = 0; i < tickets.size(); i++)
-	{
-		if (tickets[i][0] == "ICN")
-		{
-			startIndex = i;
-			break;
-		}
-	}
-
-	result.push_back("ICN");
-	DFS(startIndex, tickets);
-
-	return result;
+	return answer;
 }
 
 
 int main()
 {
-	vector<vector<string>> temp;
-	//[["ICN", "BOO"], ["ICN", "COO"], ["COO", "DOO"], ["DOO", "COO"], ["BOO", "DOO"], ["DOO", "BOO"], ["BOO", "ICN"], ["COO", "BOO"]]
-
-	temp.push_back({ "BOO", "DOO" }); //
-	temp.push_back({ "BOO", "ICN" }); //
-	temp.push_back({ "COO", "BOO" }); //
-	temp.push_back({ "COO", "DOO" }); //
-	temp.push_back({ "DOO", "BOO" }); //
-	temp.push_back({ "DOO", "COO" }); //
-	temp.push_back({ "ICN", "BOO" }); //
-	temp.push_back({ "ICN", "COO" }); //
-
-	// 테스트 실패 케이스
-	// ICN BOO DOO BOO ICN COO BOO(X) DOO COO (X)
-	// ICN BOO DOO BOO ICN COO DOO COO BOO (O)
-
-	solution(temp);
+	solution(6);
 
 	return 0;
 }

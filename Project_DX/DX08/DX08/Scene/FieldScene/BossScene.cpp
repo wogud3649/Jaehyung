@@ -63,12 +63,12 @@ void BossScene::Update()
 		}
 	}
 
-	if (PLAYER->GetProjCol()->GetActive())
+	if (PLAYER->GetThrowHeadCol()->GetActive())
 	{
-		if (PLAYER->GetProjCol()->IsCollision(YGGDRASIL->GetHeadCollider()).isHit)
+		if (PLAYER->GetThrowHeadCol()->IsCollision(YGGDRASIL->GetHeadCollider()).isHit)
 		{
-			YGGDRASIL->Damaged(PLAYER->GetProjDamage());
-			PLAYER->HeadHit();
+			YGGDRASIL->Damaged(PLAYER->GetSkillDamage());
+			PLAYER->ThrowHeadHit();
 		}
 	}
 
@@ -77,7 +77,7 @@ void BossScene::Update()
 		if (PLAYER->GetArrowCol()->IsCollision(YGGDRASIL->GetHeadCollider()).isHit)
 		{
 			YGGDRASIL->Damaged(PLAYER->GetSkillDamage());
-			PLAYER->SkillHit();
+			PLAYER->FireArrowHit();
 		}
 	}
 

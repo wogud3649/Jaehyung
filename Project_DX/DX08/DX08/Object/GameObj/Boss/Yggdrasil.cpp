@@ -3,7 +3,7 @@
 
 Yggdrasil::Yggdrasil()
 {
-	_maxHp = 1000;
+	_maxHp = 100;
 	_curHp = _maxHp;
 	_isAlive = true;
 

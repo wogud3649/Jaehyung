@@ -67,7 +67,7 @@ Player::Player()
 		sprite->GetTransform()->MoveY(12);
 
 	for (auto sprite : _sprites[5])
-		sprite->GetTransform()->MoveY(20);
+		sprite->GetTransform()->MoveY(30);
 
 	for (auto sprite : _sprites[6])
 		sprite->GetTransform()->MoveY(20);

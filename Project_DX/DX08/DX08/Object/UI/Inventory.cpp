@@ -24,6 +24,8 @@ Inventory::Inventory()
 
 	CreateSlots();
 	RootItem(1);
+	RootItem(4);
+	RootItem(5);
 	DATA_M->SetDuplicate(1);
 
 	shared_ptr<Sprite> skillIcon1= make_shared<Sprite>(L"Resources/Texture/SkillIcon/SkillIcons.png",Vector2(2,3), Vector2(48,72));

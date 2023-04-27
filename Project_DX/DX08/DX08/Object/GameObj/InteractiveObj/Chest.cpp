@@ -11,14 +11,9 @@ Chest::Chest()
 	_col->DeActivate();
 
 	_actions[_selected][_isActive]->Play();
-
-	_item = make_shared<Sprite>(L"Resources/Texture/Item/ItemIcons_10x3.png", Vector2(10, 3), Vector2(825, 390));
-	_item->SetCurFrame(Vector2(0, 0));
-	_item->GetTransform()->SetParent(_sprites[0][0]->GetTransform());
-	_item->GetTransform()->SetScale(Vector2(2, 2));
-
-	_itemCol = make_shared<CircleCollider>(15);
-	_itemCol->GetTransform()->SetParent(_item->GetTransform());
+	
+	_item = make_shared<Item>();
+	_item->DeActivate();
 
 	_potion = make_shared<Potion>();
 }
@@ -38,7 +33,6 @@ void Chest::Update()
 
 	if (_isOpen)
 	{
-		_itemCol->Update();
 		_item->Update();
 		_potion->Update();
 		ItemPop();
@@ -59,7 +53,6 @@ void Chest::Render()
 	if (_isOpen)
 	{
 		_item->Render();
-		_itemCol->Render();
 		_potion->Render();
 	}
 }
@@ -122,10 +115,8 @@ void Chest::SetRandom()
 		_selected = 3;
 	}
 
-	_itemInfo = DATA_M->GetItemByItemCode(temp);
-
-	_item->SetCurFrame(Vector2(_itemInfo.frameX, _itemInfo.frameY));
-	_item->GetTransform()->SetPos(Vector2(0, 0));
+	_item->SetItem(temp);
+	_item->SetPos(_sprites[0][0]->GetTransform()->GetWorldPos());
 }
 
 void Chest::CreateAction()
@@ -237,26 +228,26 @@ void Chest::OpenChest()
 
 void Chest::ItemPop()
 {
-	if (_item->GetTransform()->GetWorldPos().y < _sprites[_selected][0]->GetTransform()->GetWorldPos().y)
+	if (_item->GetPos().y < _sprites[_selected][0]->GetTransform()->GetWorldPos().y)
 		return;
 
-	_itemCol->Activate();
+	if (_item->GetActive() == false)
+		_item->Activate();
 
-	_item->GetTransform()->MoveY(_popSpeed * DELTA_TIME);
+	_item->MoveY(_popSpeed * DELTA_TIME);
 	_popSpeed -= (GRAVITY * GRAVITY * DELTA_TIME);
 }
 
 void Chest::TakeItem()
 {
-	HIT_RESULT result = _itemCol->IsCollision(PLAYER->GetBodyCollider());
+	if (_item->GetActive());
+	HIT_RESULT result = _item->GetCollider()->IsCollision(PLAYER->GetBodyCollider());
 	if (result.isHit == false)
 		return;
 
 	if (KEY_DOWN('X'))
 	{
-		_item->SetCurFrame(Vector2(0, 0));
-		_itemCol->DeActivate();
-		INVENTORY->RootItem(_itemInfo.itemCode);
-		_itemInfo.SetEmpty();
+		INVENTORY->RootItem(_item->GetItem());
+		_item->DeActivate();
 	}
 }

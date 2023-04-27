@@ -22,159 +22,9 @@ void Brick::SpawnMonster()
 
 void Brick::Update()
 {
-	for (const auto& block : _blocks)
-	{
-		block->Update();
-
-		HIT_RESULT result = block->Block(PLAYER->GetFootCollider());
-		if (result.isHit)
-		{
-			if (result.dir == Direction::UP)
-				PLAYER->Ground();
-		}
-
-		for (auto mushroomEnt : _mushroomEnts)
-		{
-			HIT_RESULT result = block->Block(mushroomEnt->GetStandBodyCol());
-			if (result.isHit)
-			{
-				float entX = mushroomEnt->GetStandBodyCol()->GetTransform()->GetWorldPos().x;
-				float blockX = block->GetTransform()->GetWorldPos().x;
-				if (result.dir == Direction::UP)
-				{
-					if (result.distance.x + 32 > block->GetWorldHalfSize().x)
-						mushroomEnt->Flip(Direction::LEFT);
-					else if (result.distance.x - 32 < -block->GetWorldHalfSize().x)
-						mushroomEnt->Flip(Direction::RIGHT);
-					mushroomEnt->Ground();
-				}
-				else if (result.dir == Direction::LEFT || result.dir == Direction::RIGHT)
-					mushroomEnt->Flip(result.dir);
-			}
-		}
-	}
-	for (const auto& floor : _floors)
-	{
-		floor->Update();
-
-		if (PLAYER->GetJumpPower() <= 0.0f)
-		{
-			if (PLAYER->GetIsBungee() == false)
-			{
-				HIT_RESULT result = floor->TopBlock(PLAYER->GetFootCollider());
-				if (result.dir == Direction::UP)
-					PLAYER->Ground();
-			}
-		}
-
-		for (auto mushroomEnt : _mushroomEnts)
-		{
-			HIT_RESULT result = floor->TopBlock(mushroomEnt->GetStandBodyCol());
-			if (result.isHit)
-			{
-				float entX = mushroomEnt->GetStandBodyCol()->GetTransform()->GetWorldPos().x;
-				float blockX = floor->GetTransform()->GetWorldPos().x;
-				if (result.dir == Direction::UP)
-				{
-					if (result.distance.x + 32 > floor->GetWorldHalfSize().x)
-						mushroomEnt->Flip(Direction::LEFT);
-					else if (result.distance.x - 32 < -floor->GetWorldHalfSize().x)
-						mushroomEnt->Flip(Direction::RIGHT);
-					mushroomEnt->Ground();
-				}
-				else if (result.dir == Direction::LEFT || result.dir == Direction::RIGHT)
-					mushroomEnt->Flip(result.dir);
-			}
-		}
-	}
-
-	bool headHit = false;
-	bool attackHit = false;
-	bool headSkillHit = false;
-	bool skillHit = false;
-	bool skill2Hit = false;
-	int index = -1;
-	UINT activeMonsters = 0;
-
-	for (auto mushroomEnt : _mushroomEnts)
-	{
-		mushroomEnt->Update();
-		
-		if (mushroomEnt->GetAlive())
-		{
-			if (mushroomEnt->GetHeadCol()->IsCollision(PLAYER->GetFootCollider()).isHit && PLAYER->GetJumpPower() < 0.0f && mushroomEnt->GetHeadCol()->GetActive())
-			{
-				headHit = true;
-				mushroomEnt->Duck();
-			}
-
-			if (mushroomEnt->GetDuckBodyCol()->GetActive())
-			{
-				if (PLAYER->GetAttackCol()->GetActive())
-				{
-					HIT_RESULT result = mushroomEnt->GetDuckBodyCol()->IsCollision(PLAYER->GetAttackCol());
-					if (result.isHit)
-					{
-						attackHit = true;
-						mushroomEnt->Damaged(PLAYER->GetAttackDamage());
-					}
-				}
-
-				if (PLAYER->GetProjCol()->GetActive())
-				{
-					HIT_RESULT result = mushroomEnt->GetDuckBodyCol()->IsCollision(PLAYER->GetProjCol());
-					if (result.isHit)
-					{
-						headSkillHit = true;
-						mushroomEnt->Damaged(PLAYER->GetProjDamage());
-					}
-				}
-
-				if (PLAYER->GetArrowCol()->GetActive())
-				{
-					HIT_RESULT result = mushroomEnt->GetDuckBodyCol()->IsCollision(PLAYER->GetArrowCol());
-					if (result.isHit)
-					{
-						skillHit = true;
-						mushroomEnt->Damaged(PLAYER->GetSkillDamage());
-					}
-				}
-
-				for (int i = 0; i < 3; i++)
-				{
-					vector<shared_ptr<CircleCollider>> cols = PLAYER->GetMeteorCols();
-
-					if (cols[i]->GetActive())
-					{
-						HIT_RESULT result = mushroomEnt->GetDuckBodyCol()->IsCollision(cols[i]);
-						if (result.isHit)
-						{
-							index = i;
-							skill2Hit = true;
-							mushroomEnt->Damaged(PLAYER->GetSkillDamage());
-						}
-					}
-				}
-			}
-		}
-
-		if (mushroomEnt->GetAlive())
-			activeMonsters++;
-	}
-
-	_activeMonsters = activeMonsters;
-
-	if (headHit)
-		PLAYER->Bounce();
-	if (attackHit)
-		PLAYER->AttackHit();
-	if (headSkillHit)
-		PLAYER->HeadHit();
-	if (skillHit)
-		PLAYER->SkillHit();
-	if (skill2Hit)
-		PLAYER->MeteorHit(index);
-	
+	UpdateBlocks();
+	UpdateFloors();
+	UpdateMonsters();
 }
 
 void Brick::Render()
@@ -446,6 +296,202 @@ void Brick::CreateBlocks()
 	}
 
 	_instanceBuffer = make_shared<VertexBuffer>(_instanceDatas.data(), sizeof(InstanceData), _instanceDatas.size(), 0, true);
+}
+
+void Brick::UpdateBlocks()
+{
+	for (const auto& block : _blocks)
+	{
+		block->Update();
+
+		BlockPlayerCollision(block);
+		BlockMonsterCollision(block);
+	}
+}
+
+void Brick::BlockPlayerCollision(const shared_ptr<RectCollider>& block)
+{
+	HIT_RESULT result = block->Block(PLAYER->GetFootCollider());
+	if (result.isHit == false)
+		return;
+	
+	if (result.dir == Direction::UP)
+		PLAYER->Ground();
+}
+
+void Brick::BlockMonsterCollision(const shared_ptr<RectCollider>& block)
+{
+	for (auto mushroomEnt : _mushroomEnts)
+	{
+		HIT_RESULT result = block->Block(mushroomEnt->GetStandBodyCol());
+		if (result.isHit == false)
+			continue;
+		
+		float entX = mushroomEnt->GetStandBodyCol()->GetTransform()->GetWorldPos().x;
+		float blockX = block->GetTransform()->GetWorldPos().x;
+		if (result.dir == Direction::UP)
+		{
+			if (result.distance.x + 32 > block->GetWorldHalfSize().x)
+				mushroomEnt->Flip(Direction::LEFT);
+			else if (result.distance.x - 32 < -block->GetWorldHalfSize().x)
+				mushroomEnt->Flip(Direction::RIGHT);
+			mushroomEnt->Ground();
+		}
+		else if (result.dir == Direction::LEFT || result.dir == Direction::RIGHT)
+			mushroomEnt->Flip(result.dir);
+	}
+}
+
+void Brick::UpdateFloors()
+{
+	for (const auto& floor : _floors)
+	{
+		floor->Update();
+
+		FloorPlayerCollision(floor);
+		FloorMonsterCollision(floor);
+	}
+}
+
+void Brick::FloorPlayerCollision(const shared_ptr<RectCollider>& floor)
+{
+	if (PLAYER->GetJumpPower() > 0.0f)
+		return;
+	if (PLAYER->GetIsBungee())
+		return;
+	
+	HIT_RESULT result = floor->TopBlock(PLAYER->GetFootCollider());
+	if (result.dir == Direction::UP)
+		PLAYER->Ground();
+}
+
+void Brick::FloorMonsterCollision(const shared_ptr<RectCollider>& floor)
+{
+	for (auto mushroomEnt : _mushroomEnts)
+	{
+		HIT_RESULT result = floor->TopBlock(mushroomEnt->GetStandBodyCol());
+		if (result.isHit == false)
+			continue;
+		
+		float entX = mushroomEnt->GetStandBodyCol()->GetTransform()->GetWorldPos().x;
+		float blockX = floor->GetTransform()->GetWorldPos().x;
+		if (result.dir != Direction::UP)
+			continue;
+		
+		if (result.distance.x + 32 > floor->GetWorldHalfSize().x)
+			mushroomEnt->Flip(Direction::LEFT);
+		else if (result.distance.x - 32 < -floor->GetWorldHalfSize().x)
+			mushroomEnt->Flip(Direction::RIGHT);
+		mushroomEnt->Ground();
+	}
+}
+
+void Brick::UpdateMonsters()
+{
+	bool headHit = false;
+	bool attackHit = false;
+	bool throwHeadHit = false;
+	bool fireArrowHit = false;
+	bool meteorHit = false;
+	int index = -1;
+	UINT activeMonsters = 0;
+
+	for (auto mushroomEnt : _mushroomEnts)
+	{
+		mushroomEnt->Update();
+
+		if (mushroomEnt->GetAlive() == false)
+			continue;
+		
+		headHit = MonsterHeadCollision(mushroomEnt);
+		activeMonsters++;
+
+		if (mushroomEnt->GetDuckBodyCol()->GetActive() == false)
+			continue;
+
+		attackHit = MonsterPlayerAttackCollision(mushroomEnt);
+		throwHeadHit = MonsterPlayerThrowHeadCollision(mushroomEnt);
+		fireArrowHit = MonsterPlayerFireArrowCollision(mushroomEnt);
+
+		for (int i = 0; i < 3; i++)
+			meteorHit = MonsterPlayerMeteorCollision(mushroomEnt, i);
+	}
+
+	_activeMonsters = activeMonsters;
+
+	if (headHit)
+		PLAYER->Bounce();
+	if (attackHit)
+		PLAYER->AttackHit();
+	if (throwHeadHit)
+		PLAYER->ThrowHeadHit();
+	if (fireArrowHit)
+		PLAYER->FireArrowHit();
+	if (meteorHit)
+		PLAYER->MeteorHit(index);
+}
+
+bool Brick::MonsterHeadCollision(const shared_ptr<MushroomEnt>& mushroomEnt)
+{
+	if (mushroomEnt->GetHeadCol()->IsCollision(PLAYER->GetFootCollider()).isHit == false || PLAYER->GetJumpPower() >= 0.0f || mushroomEnt->GetHeadCol()->GetActive() == false)
+		return false;
+
+	mushroomEnt->Duck();
+	return true;
+}
+
+bool Brick::MonsterPlayerAttackCollision(const shared_ptr<MushroomEnt>& mushroomEnt)
+{
+	if (PLAYER->GetAttackCol()->GetActive() == false)
+		return false;
+	
+	HIT_RESULT result = mushroomEnt->GetDuckBodyCol()->IsCollision(PLAYER->GetAttackCol());
+	if (result.isHit == false)
+		return false;
+	
+	mushroomEnt->Damaged(PLAYER->GetAttackDamage());
+	return true;
+}
+
+bool Brick::MonsterPlayerThrowHeadCollision(const shared_ptr<MushroomEnt>& mushroomEnt)
+{
+	if (PLAYER->GetThrowHeadCol()->GetActive() == false)
+		return false;
+	
+	HIT_RESULT result = mushroomEnt->GetDuckBodyCol()->IsCollision(PLAYER->GetThrowHeadCol());
+	if (result.isHit == false)
+		return false;
+
+	mushroomEnt->Damaged(PLAYER->GetSkillDamage());
+	return true;
+}
+
+bool Brick::MonsterPlayerFireArrowCollision(const shared_ptr<MushroomEnt>& mushroomEnt)
+{
+	if (PLAYER->GetArrowCol()->GetActive() == false)
+		return false;
+	
+	HIT_RESULT result = mushroomEnt->GetDuckBodyCol()->IsCollision(PLAYER->GetArrowCol());
+	if (result.isHit == false)
+		return false;
+
+	mushroomEnt->Damaged(PLAYER->GetSkillDamage());
+	return true;
+}
+
+bool Brick::MonsterPlayerMeteorCollision(const shared_ptr<MushroomEnt>& mushroomEnt, const int& index)
+{
+	vector<shared_ptr<CircleCollider>> cols = PLAYER->GetMeteorCols();
+
+	if (cols[index]->GetActive() == false)
+		return false;
+	
+	HIT_RESULT result = mushroomEnt->GetDuckBodyCol()->IsCollision(cols[index]);
+	if (result.isHit == false)
+		return false;
+	
+	mushroomEnt->Damaged(PLAYER->GetSkillDamage());
+	return true;
 }
 
 const int& Brick::GetBlockIndex()

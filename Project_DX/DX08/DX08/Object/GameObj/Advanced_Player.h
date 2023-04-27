@@ -2,6 +2,13 @@
 class Advanced_Player : public Player
 {
 public:
+	enum SkillType
+	{
+		NONE,
+		THROWHEAD,
+		FIREARROW,
+		METEOR
+	};
 	Advanced_Player();
 	virtual ~Advanced_Player();
 
@@ -26,10 +33,12 @@ public:
 	void AttackHit();
 	void Skill();
 	void Skill2();
-	void HeadHit();
-	void SkillHit();
+	void ThrowHeadHit();
+	void FireArrowHit();
 	void MeteorHit(int index);
 	void Damaged(int damage, Direction dir);
+
+	void CastThrowHead();
 	void CastFireArrow();
 	void CastMeteor();
 
@@ -44,13 +53,10 @@ public:
 	const shared_ptr<CircleCollider>& GetAttackCol() { return _attackCol; }
 	const float& GetAttackDamage();
 
-	const shared_ptr<CircleCollider>& GetProjCol() { return _projCol; }
-	const float& GetProjDamage();
-
+	const shared_ptr<CircleCollider>& GetThrowHeadCol() { return _throwHead->GetCollider(); }
 	const shared_ptr<CircleCollider>& GetArrowCol() { return _fireArrow->GetCollider(); }
-	const float& GetSkillDamage();
-
 	const vector<shared_ptr<CircleCollider>>& GetMeteorCols() { return _meteor->GetColliders(); }
+	const float& GetSkillDamage();
 
 	const bool& GetIsBungee() { return _isBungee; }
 
@@ -121,20 +127,12 @@ private:
 	UINT _baseCrp = 10;
 	UINT _critPercent = _baseCrp;
 
-	shared_ptr<Quad> _proj;
-	shared_ptr<CircleCollider> _projCol;
-	float _projSpeed = 800.0f;
-	float _maxProjCD = _baseScd;
-	float _curProjCD = _baseScd;
-	bool _isSkillRight = true;
+	float _maxSkillCD = _baseScd;
+	float _curSkillCD = _baseScd;
 	bool _isSkillUsed = false;
 
-	float _maxSkill2CD = _baseScd;
 	float _curSkill2CD = _baseScd;
 	bool _isSkill2Used = false;
-
-	int _maxProjDamage = 70;
-	int _minProjDamage = 50;
 
 	float _baseCcd = 15.0f;
 	float _maxChangeCD = _baseCcd;
@@ -145,6 +143,8 @@ private:
 
 	StatAttributes _statAttributes;
 
+	SkillType _skillType = SkillType::NONE;
+	shared_ptr<ThrowHead> _throwHead;
 	shared_ptr<FireArrow> _fireArrow;
 	shared_ptr<Meteor> _meteor;
 
