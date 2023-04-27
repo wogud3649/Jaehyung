@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <sstream>
 #include <map>
 #include <unordered_map>
 #include <algorithm>
@@ -13,13 +12,20 @@
 
 using namespace std;
 
-int solution(int number, int n, int m) {
-    return number % n == 0 && number % m == 0;
+int solution(int a, int b, bool flag) {
+	int answer = 0;
+
+	if (flag)
+		answer = a + b;
+	else
+		answer = a - b;
+
+	return answer;
 }
 
 int main()
 {
-    solution(60, 2, 3);
+	solution(-4, 7, true);
 
 	return 0;
 }

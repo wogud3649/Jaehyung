@@ -13,13 +13,23 @@
 
 using namespace std;
 
-int solution(int number, int n, int m) {
-    return number % n == 0 && number % m == 0;
+int solution(string n_str) {
+    int answer = 0;
+
+    answer = stoi(n_str);
+
+    for (int i = 0; i < n_str.size(); i++)
+    {
+        answer *= 10;
+        answer += n_str[i] - '0';
+    }
+
+    return answer;
 }
 
 int main()
 {
-    solution(60, 2, 3);
+    solution("10");
 
-	return 0;
+    return 0;
 }

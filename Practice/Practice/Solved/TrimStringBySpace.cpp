@@ -13,13 +13,23 @@
 
 using namespace std;
 
-int solution(int number, int n, int m) {
-    return number % n == 0 && number % m == 0;
+vector<string> solution(string my_string)
+{
+	vector<string> answer;
+
+	stringstream ss(my_string);
+	ss.str(my_string);
+
+	string temp;
+	while (ss >> temp)
+		answer.emplace_back(temp);
+
+	return answer;
 }
 
 int main()
 {
-    solution(60, 2, 3);
+	solution("i love you");
 
 	return 0;
 }
