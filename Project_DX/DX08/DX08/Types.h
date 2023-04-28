@@ -61,6 +61,8 @@ using ATTRIBUTE = unsigned char;
 
 #define INTERACTOBJ InteractObjManager::GetInstance()
 
+#define SOUND SoundManager::GetInstance()
+
 enum Direction
 {
 	LEFT,

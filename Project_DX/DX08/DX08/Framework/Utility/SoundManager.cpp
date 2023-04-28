@@ -6,6 +6,8 @@ SoundManager::SoundManager()
 {
 	FMOD::System_Create(&_soundSystem);
 	_soundSystem->init(MAX_CHANNEL, FMOD_INIT_NORMAL, nullptr);
+
+	AddSounds();
 }
 
 SoundManager::~SoundManager()
@@ -111,4 +113,108 @@ bool SoundManager::IsPlaySound(string key)
 	_soundMap[key]->_channel->isPlaying(IN & isPlay);
 
 	return isPlay;
+}
+
+void SoundManager::AddSounds()
+{
+	// BGM
+	Add("Tutorial", "Resources/Sound/Tutorial.wav", true);
+	Add("Chapter1", "Resources/Sound/Chapter1.wav", true);
+
+	// SoundEffect
+	// Player
+	{
+		// Skul
+		Add("Skul_Atk 1", "Resources/Sound/Skul_Atk 1.wav");
+		Add("Skul_Atk 2", "Resources/Sound/Skul_Atk 2.wav");
+		Add("Skul_Jump_Atk", "Resources/Sound/Skul_Jump_Atk.wav");
+		Add("Skul_SkullBack", "Resources/Sound/Skul_SkullBack.wav");
+		Add("Skul_SkullThrowing", "Resources/Sound/Skul_SkullThrowing.wav");
+
+		// Wizard
+		Add("Wizard_Hit", "Resources/Sound/Wizard_Hit.wav");
+		Add("Wizard_Hit_Large", "Resources/Sound/Wizard_Hit_Large.wav");
+		Add("Wizard_FireArrow_Ready", "Resources/Sound/Wizard_FireArow_Ready.wav");
+		Add("Wizard_FireArrow_Shot", "Resources/Sound/Wizard_FireArow_Shot.wav");
+		Add("Wizard_Meteor_Throw", "Resources/Sound/Wizard_Meteor_Throw.wav");
+		Add("Wizard_Meteor_Throw2", "Resources/Sound/Wizard_Meteor_Throw2.wav");
+		Add("Wizard_Meteor_Falling", "Resources/Sound/Wizard_Meteor_Falling.wav");
+	}
+
+	// Monster
+	{
+		// Boss
+		Add("ElderEnt_FistSlam", "Resources/Sound/ElderEnt_FistSlam.wav");
+		Add("ElderEnt_FistSlam_Recovery", "Resources/Sound/ElderEnt_FistSlam_Recovery.wav");
+		Add("ElderEnt_Groggy_Recovery", "Resources/Sound/ElderEnt_Groggy_Recovery.wav");
+		Add("ElderEnt_Roar_Short", "Resources/Sound/ElderEnt_Roar_Short.wav");
+		Add("ElderEnt_Sweeping", "Resources/Sound/ElderEnt_Sweeping.wav");
+		Add("ElderEnt_Sweeping_Roar", "Resources/Sound/ElderEnt_Sweeping_Roar.wav");
+		Add("ElderEnt_Up 1", "Resources/Sound/ElderEnt_Up 1.wav");
+		Add("ElderEnt_Up 2", "Resources/Sound/ElderEnt_Up 2.wav");
+
+		// MushroomEnt
+		Add("GiantMushroomEnt_Impact", "Resources/Sound/GiantMushroomEnt_Impact.wav");
+		Add("GiantMushroomEnt_Ready", "Resources/Sound/GiantMushroomEnt_Ready.wav");
+		Add("GiantMushroomEnt_Sit_Impact", "Resources/Sound/GiantMushroomEnt_Sit_Impact.wav");
+		Add("GiantMushroomEnt_Sit_Ready", "Resources/Sound/GiantMushroomEnt_Sit_Ready.wav");
+		Add("GiantMushroomEnt_SitToStand", "Resources/Sound/GiantMushroomEnt_SitToStand.wav");
+		Add("GiantMushroomEnt_StandToSit", "Resources/Sound/GiantMushroomEnt_StandToSit.wav");
+		Add("GiantMushroomEnt_Voice", "Resources/Sound/GiantMushroomEnt_Voice.wav");
+	}
+
+	// UI
+	{
+		Add("UI_Close", "Resources/Sound/UI_Close.wav");
+		Add("UI_GetAbility", "Resources/Sound/UI_GetAbility.wav");
+		Add("UI_Inventory_Close", "Resources/Sound/UI_Inventory_Close.wav");
+		Add("UI_Inventory_Open", "Resources/Sound/UI_Inventory_Open.wav");
+		Add("UI_MenuClose", "Resources/Sound/UI_MenuClose.wav");
+		Add("UI_MenuMove", "Resources/Sound/UI_MenuMove.wav");
+		Add("UI_MenuOpen", "Resources/Sound/UI_MenuOpen.wav");
+		Add("UI_Move", "Resources/Sound/UI_Move.wav");
+		Add("UI_Open", "Resources/Sound/UI_Open.wav");
+		Add("UI_Talk", "Resources/Sound/UI_Talk.wav");
+	}
+
+	// Object
+	{
+		Add("Object_DestroyItem_Completed", "Resources/Sound/Object_DestroyItem_Completed.wav");
+		Add("Object_GainGold", "Resources/Sound/Object_GainGold.wav");
+		Add("Object_GainItem", "Resources/Sound/Object_GainItem.wav");
+		Add("Object_OpenBox", "Resources/Sound/Object_OpenBox.wav");
+		Add("184_HealingOrb_Get_a_v1", "Resources/Sound/184_HealingOrb_Get_a_v1.wav");
+		Add("Chef_Drink", "Resources/Sound/Chef_Drink.wav");
+	}
+
+	// Hit
+	{
+		Add("Burn", "Resources/Sound/Burn.wav");
+		Add("Hit_Flame_Short", "Resources/Sound/Hit_Flame_Short.wav");
+		Add("Hit_Flame_Small", "Resources/Sound/Hit_Flame_Small.wav");
+		Add("Hit_Sword_Small", "Resources/Sound/Hit_Sword_Small.wav");
+	}
+
+	// Atmosphere
+	{
+		Add("Earthquake", "Resources/Sound/Earthquake.wav");
+		Add("State_Earthquake", "Resources/Sound/State_Earthquake.wav");
+		Add("Wind", "Resources/Sound/Wind.wav");
+	}
+
+	// ETC
+	Add("183_Skull_Get_a_v1", "Resources/Sound/183_Skull_Get_a_v1.wav");
+	Add("183_Skull_Get_b_v1", "Resources/Sound/183_Skull_Get_b_v1.wav");
+	Add("Atk_Flame_Very_Small", "Resources/Sound/Atk_Flame_Very_Small.wav");
+	Add("Atk_Stomp_Medium", "Resources/Sound/Atk_Stomp_Medium.wav");
+	Add("DQG_Atk_Ready", "Resources/Sound/DQG_Atk_Ready.wav");
+	Add("enm_tp", "Resources/Sound/enm_tp.wav");
+	Add("EntSkul_Root_Attack", "Resources/Sound/EntSkul_Root_Attack.wav");
+	Add("Fighter_Whoosh_Light2", "Resources/Sound/Fighter_Whoosh_Light2.wav");
+	Add("HammerGiant_Stomp_Charge", "Resources/Sound/HammerGiant_Stomp_Charge.wav");
+	Add("Skul_LandingImpact", "Resources/Sound/Skul_LandingImpact.wav");
+	Add("SkulTeleport", "Resources/Sound/SkulTeleport.wav");
+	Add("Hunter_Attack 1", "Resources/Sound/Hunter_Attack 1.wav");
+	Add("Hunter_Attack 2", "Resources/Sound/Hunter_Attack 2.wav");
+	Add("Hunter_DrawArrow", "Resources/Sound/Hunter_DrawArrow.wav");
 }

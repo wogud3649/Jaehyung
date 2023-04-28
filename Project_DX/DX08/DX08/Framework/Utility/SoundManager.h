@@ -45,6 +45,8 @@ public:
 	bool IsPlaySound(string key);
 
 private:
+	void AddSounds();
+
 	static SoundManager* _instance;
 
 	FMOD::System* _soundSystem = nullptr;

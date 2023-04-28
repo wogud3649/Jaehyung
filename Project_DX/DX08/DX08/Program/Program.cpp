@@ -20,6 +20,7 @@ void Program::Update()
 
 	InputManager::GetInstance()->Update();
 	Timer::GetInstance()->Update();
+	SOUND->Update();
 	CAMERA->Update();
 
 	FADEPANEL->Update();
