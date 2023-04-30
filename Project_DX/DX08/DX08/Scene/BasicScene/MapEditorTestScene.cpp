@@ -28,6 +28,7 @@ MapEditorTestScene::~MapEditorTestScene()
 
 void MapEditorTestScene::Init()
 {
+	SOUND->StopBgm();
 }
 
 void MapEditorTestScene::Fin()

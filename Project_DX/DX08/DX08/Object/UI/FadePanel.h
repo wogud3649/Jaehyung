@@ -10,6 +10,7 @@ public:
 
 	void StartFadeIn();
 	void StartFadeOut();
+	void StartHitted();
 
 	void SetDelay(float delay) { _maxDelay = delay; _curDelay = _maxDelay; }
 	void SetColor(XMFLOAT3 color) { _color = color; }
@@ -20,6 +21,7 @@ private:
 	void StartLoading();
 	void Loading();
 	void FadeOut();
+	void Hitted();
 	shared_ptr<Quad> _filter;
 	shared_ptr<ColorBuffer> _colorBuffer;
 
@@ -30,5 +32,7 @@ private:
 	bool _isFadeIn = false;
 	bool _isFadeOut = false;
 	bool _isLoading = false;
-};
 
+	float _hittedDelay = 0.1f;
+	bool _isHitted = false;
+};

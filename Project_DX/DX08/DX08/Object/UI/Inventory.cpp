@@ -48,7 +48,14 @@ Inventory::~Inventory()
 void Inventory::Update()
 {
 	if (KEY_DOWN('I'))
+	{
 		_inventoryOpen = !_inventoryOpen;
+
+		if (_inventoryOpen)
+			SOUND->Play("UI_Inventory_Open");
+		else
+			SOUND->Play("UI_Inventory_Close");
+	}
 
 	if (_curMoney < _goalMoney)
 	{
@@ -56,6 +63,9 @@ void Inventory::Update()
 			_curMoney++;
 		else
 			_curMoney = LERP(_curMoney, _goalMoney, 0.02f);
+
+		if (SOUND->IsPlaySound("Object_GainGold") == false)
+			SOUND->Play("Object_GainGold");
 	}
 	if (_curMoney > _goalMoney)
 	{
@@ -82,12 +92,19 @@ void Inventory::Update()
 			_curSelected = 16;
 		else
 			_curSelected = 0;
+
+		SOUND->Play("UI_MenuMove");
 	}
 
 	if (KEY_DOWN(VK_RBUTTON))
 	{
 		_detailedInfo = !_detailedInfo;
 		SetInfoPannels();
+
+		if (_detailedInfo)
+			SOUND->Play("UI_MenuOpen");
+		else
+			SOUND->Play("UI_MenuClose");
 	}
 
 	if (KEY_DOWN(VK_UP))
@@ -137,7 +154,11 @@ void Inventory::Update()
 	}
 
 	if (_curSelected != _oldSelected)
+	{
 		SetInfoPannels();
+
+		SOUND->Play("UI_Move");
+	}
 
 	if (_itemChanged)
 		SetPlayerStats();
@@ -371,6 +392,8 @@ void Inventory::EquipItem(int index)
 		_itemDatas[index].SetEmpty();
 		_instanceDatas[index].curFrame = Vector2(0, 0);
 		_instanceBuffer->Update();
+
+		SOUND->Play("UI_GetAbility");
 	}
 }
 
@@ -408,12 +431,17 @@ void Inventory::TakeOffItem(int index)
 			_itemDatas[i] = info;
 			_instanceDatas[i].curFrame = { info.frameX, info.frameY };
 			success = true;
+
 			break;
 		}
 	}
 
 	if (success)
+	{
 		RemoveItem(index);
+
+		SOUND->Play("UI_GetAbility");
+	}
 }
 
 void Inventory::RemoveItem(int index)
@@ -460,6 +488,7 @@ bool Inventory::SellItem(int index)
 
 	RemoveItem(index);
 
+	SOUND->Play("Object_DestroyItem_Completed");
 	return true;
 }
 

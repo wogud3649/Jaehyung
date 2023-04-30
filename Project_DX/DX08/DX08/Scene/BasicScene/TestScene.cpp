@@ -12,6 +12,8 @@ TestScene::~TestScene()
 
 void TestScene::Init()
 {
+	SOUND->Play("Chapter1", true);
+
 	if (_filePath == L"")
 		_filePath = L"Maps/Field1.map";
 

@@ -218,6 +218,8 @@ void MushroomEnt::Duck()
 		SetAction(State::DUCK);
 		_isAction = true;
 		_duckBodyCol->Activate();
+
+		SOUND->Play("GiantMushroomEnt_StandToSit");
 	}
 }
 
@@ -231,6 +233,8 @@ bool MushroomEnt::Stand()
 		SetAction(State::STAND);
 		_isAction = true;
 		_duckBodyCol->DeActivate();
+
+		SOUND->Play("GiantMushroomEnt_SitToStand");
 	}
 
 	return true;
@@ -276,9 +280,15 @@ void MushroomEnt::Attack()
 		return;
 
 	if (_isDuck)
+	{
 		SetAction(State::DUCKATTACK);
+		SOUND->Play("GiantMushroomEnt_Sit_Ready");
+	}
 	else
+	{
 		SetAction(State::ATTACK);
+		SOUND->Play("GiantMushroomEnt_Ready");
+	}
 
 	_isAction = true;
 }
@@ -305,6 +315,11 @@ void MushroomEnt::AttackMid()
 		int damage = rand() % (_maxDamage - _minDamage) + _minDamage;
 		PLAYER->Damaged(damage, _direction);
 	}
+	
+	if (_curState == State::ATTACK)
+		SOUND->Play("GiantMushroomEnt_Impact");
+	else
+		SOUND->Play("GiantMushroomEnt_Sit_Impact");
 }
 
 void MushroomEnt::StandEnd()

@@ -36,7 +36,8 @@ public:
 
 	void Update();
 	void Add(string key, string file, bool bgm = false);
-	void Play(string key, float volume = 1.0f);
+	void Play(string key, bool bgm = false, float volume = 0.05f);
+	void StopBgm();
 	void Stop(string key);
 	void Pause(string key);
 	void Resume(string key);
@@ -53,5 +54,6 @@ private:
 
 	unordered_map<string, shared_ptr<SoundInfo>> _soundMap;
 	const int MAX_CHANNEL = 15;
-};
 
+	string _curBgm = "";
+};

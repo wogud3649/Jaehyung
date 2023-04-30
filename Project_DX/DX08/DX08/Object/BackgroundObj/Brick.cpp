@@ -403,18 +403,26 @@ void Brick::UpdateMonsters()
 		if (mushroomEnt->GetAlive() == false)
 			continue;
 		
-		headHit = MonsterHeadCollision(mushroomEnt);
+		if (MonsterHeadCollision(mushroomEnt))
+			headHit = true;
 		activeMonsters++;
 
 		if (mushroomEnt->GetDuckBodyCol()->GetActive() == false)
 			continue;
 
-		attackHit = MonsterPlayerAttackCollision(mushroomEnt);
-		throwHeadHit = MonsterPlayerThrowHeadCollision(mushroomEnt);
-		fireArrowHit = MonsterPlayerFireArrowCollision(mushroomEnt);
+		if (MonsterPlayerAttackCollision(mushroomEnt))
+			attackHit = true;
+		if (MonsterPlayerThrowHeadCollision(mushroomEnt))
+			throwHeadHit = true;
+		if (MonsterPlayerFireArrowCollision(mushroomEnt))
+			fireArrowHit = true;
 
 		for (int i = 0; i < 3; i++)
-			meteorHit = MonsterPlayerMeteorCollision(mushroomEnt, i);
+			if (MonsterPlayerMeteorCollision(mushroomEnt, i))
+			{
+				meteorHit = true;
+				index = i;
+			}
 	}
 
 	_activeMonsters = activeMonsters;

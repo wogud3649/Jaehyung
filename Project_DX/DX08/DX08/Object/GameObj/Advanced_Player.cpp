@@ -253,12 +253,16 @@ void Advanced_Player::Jump()
 			_isDoubleJump = true;
 			SetAction(State::JUMP);
 			_curJumpPower = _maxJumpPower;
+
+			SOUND->Play("Dash_Small"); 
 			return;
 		}
 		_isGround = false;
 		_isJump = true;
 		SetAction(State::JUMP);
 		_curJumpPower = _maxJumpPower;
+
+		SOUND->Play("Dash_Small");
 	}
 }
 
@@ -287,6 +291,8 @@ void Advanced_Player::Dash()
 		_curJumpPower = 0.0f;
 		SetAction(State::DASH);
 		_isDodge = true;
+
+		SOUND->Play("Default_Dash", false, 0.01f);
 	}
 }
 
@@ -329,6 +335,8 @@ void Advanced_Player::Bounce()
 	_curJumpPower = _maxJumpPower;
 	if (_curState == FALL || _curState == FALLREPEAT || _curState == JUMPATTACK)
 		SetAction(State::JUMP);
+
+	SOUND->Play("Trap_Jump");
 }
 
 void Advanced_Player::Attack()
@@ -341,17 +349,23 @@ void Advanced_Player::Attack()
 		if (_curState == State::JUMP || _curState == State::FALLREPEAT || _curState == State::FALL)
 		{
 			SetAction(State::JUMPATTACK);
+
+			SOUND->Play("Skul_Jump_Atk");
 		}
 		else if (_isAttackB)
 		{
 			_isAttackB = false;
 			_curComboDuration = _maxComboDuration;
 			SetAction(State::ATTACKB);
+
+			SOUND->Play("Skul_Atk_2");
 		}
 		else
 		{
 			_isAttackB = true;
 			SetAction(State::ATTACKA);
+
+			SOUND->Play("Skul_Atk_1");
 		}
 	}
 }
@@ -359,6 +373,18 @@ void Advanced_Player::Attack()
 void Advanced_Player::AttackHit()
 {
 	_attackCol->DeActivate();
+
+	if (_curSkul == SkulType::SKUL || _curSkul == SkulType::HEADLESS || _curSkul == SkulType::WIZARDN || _curSkul == SkulType::WIZARDR || _curSkul == SkulType::WIZARDU || _curSkul == SkulType::WIZARDL)
+	{
+		if (_isAttackB)
+			SOUND->Play("Wizard_Hit");
+		else
+			SOUND->Play("Wizard_Hit_Large");
+	}
+	else
+	{
+		SOUND->Play("Hit_Sword_Small");
+	}
 }
 
 void Advanced_Player::Skill()
@@ -372,6 +398,25 @@ void Advanced_Player::Skill()
 
 		_isSkillUsed = true;
 		SetAction(State::SKILL);
+
+		if (_curSkul == SkulType::SKUL)
+		{
+			_skillType = SkillType::THROWHEAD;
+
+			SOUND->Play("Skul_SkullThrowing");
+		}
+		else if (_curSkul == SkulType::WAREWOLFN || _curSkul == SkulType::WAREWOLFR || _curSkul == SkulType::WAREWOLFU || _curSkul == SkulType::WAREWOLFL)
+		{
+			_skillType = SkillType::MELEE;
+
+			SOUND->Play("Skul_Atk_2");
+		}
+		else if (_curSkul == SkulType::WIZARDN || _curSkul == SkulType::WIZARDR || _curSkul == SkulType::WIZARDU || _curSkul == SkulType::WIZARDL)
+		{
+			_skillType = SkillType::FIREARROW;
+
+			SOUND->Play("Wizard_FireArrow_Ready");
+		}
 	}
 }
 
@@ -386,6 +431,19 @@ void Advanced_Player::Skill2()
 
 		_isSkill2Used = true;
 		SetAction(State::SKILL2);
+
+		if (_curSkul == SkulType::WAREWOLFN || _curSkul == SkulType::WAREWOLFR || _curSkul == SkulType::WAREWOLFU || _curSkul == SkulType::WAREWOLFL)
+		{
+			_skillType == SkillType::MELEE;
+
+			SOUND->Play("Skul_Atk_2");
+		}
+		else if (_curSkul == SkulType::WIZARDN || _curSkul == SkulType::WIZARDR || _curSkul == SkulType::WIZARDU || _curSkul == SkulType::WIZARDL)
+		{
+			_skillType = SkillType::METEOR;
+
+			SOUND->Play("Wizard_Meteor_Throw");
+		}
 	}
 }
 
@@ -397,16 +455,22 @@ void Advanced_Player::ThrowHeadHit()
 		SetSkul(SkulType::SKUL);
 	_throwHead->DeActivate();
 	_footCol->GetTransform()->SetPos(_throwHead->GetCollider()->GetTransform()->GetWorldPos());
+
+	SOUND->Play("Skul_SkullBack");
 }
 
 void Advanced_Player::FireArrowHit()
 {
 	_fireArrow->Hit();
+
+	SOUND->Play("Atk_Flame_Very_Small");
 }
 
 void Advanced_Player::MeteorHit(int index)
 {
 	_meteor->Hit(index);
+
+	SOUND->Play("Atk_Flame_Very_Small");
 }
 
 void Advanced_Player::Damaged(int damage, Direction dir)
@@ -423,7 +487,11 @@ void Advanced_Player::Damaged(int damage, Direction dir)
 	else
 		_isKnockBackRight = false;
 
+	CAMERA->ShakeStart(10.0f, 0.2f);
+	FADEPANEL->StartHitted();
 	_curHp -= damage;
+
+	SOUND->Play("Wizard_Hit");
 }
 
 void Advanced_Player::CastThrowHead()
@@ -446,6 +514,8 @@ void Advanced_Player::CastFireArrow()
 	else if (_direction == Direction::LEFT)
 		_fireArrow->SetRight(false);
 	SetAction(State::IDLE);
+
+	SOUND->Play("Wizard_FireArrow_Shot");
 }
 
 void Advanced_Player::CastMeteor()
@@ -464,6 +534,8 @@ void Advanced_Player::Heal(int value)
 	_curHp += value;
 	if (_curHp > _maxHp)
 		_curHp = _maxHp;
+
+	SOUND->Play("GetHealingOrb");
 }
 
 void Advanced_Player::Dead()
@@ -493,18 +565,21 @@ const float& Advanced_Player::GetSkillDamage()
 	int power;
 	switch (_skillType)
 	{
-	case Advanced_Player::NONE:
+	case SkillType::NONE:
 		power = 0;
 		break;
-	case Advanced_Player::THROWHEAD:
+	case SkillType::MELEE:
+		power = _maxDamage;
+		break;
+	case SkillType::THROWHEAD:
 		power = _throwHead->GetPower();
 		break;
-	case Advanced_Player::FIREARROW:
+	case SkillType::FIREARROW:
 		power = _fireArrow->GetPower();
 		break;
-	case Advanced_Player::METEOR:
-		break;
+	case SkillType::METEOR:
 		power = _meteor->GetPower();
+		break;
 	default:
 		break;
 	}

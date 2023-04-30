@@ -148,7 +148,7 @@ void Store::SetRandomItems()
 
 	for (int i = 1; i < 10; i++)
 	{
-		if (DATA_M->CheckDuplicate(i) == false)
+		if (true/*DATA_M->CheckDuplicate(i) == false*/)
 		{
 			skulIndexes.emplace_back(i);
 		}
@@ -156,7 +156,7 @@ void Store::SetRandomItems()
 
 	for (int i = 10; i < 28; i++)
 	{
-		if (DATA_M->CheckDuplicate(i) == false)
+		if (true/*DATA_M->CheckDuplicate(i) == false*/)
 		{
 			itemIndexes.emplace_back(i);
 		}

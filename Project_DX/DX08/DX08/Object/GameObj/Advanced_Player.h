@@ -5,6 +5,7 @@ public:
 	enum SkillType
 	{
 		NONE,
+		MELEE,
 		THROWHEAD,
 		FIREARROW,
 		METEOR
@@ -36,13 +37,13 @@ public:
 	void ThrowHeadHit();
 	void FireArrowHit();
 	void MeteorHit(int index);
-	void Damaged(int damage, Direction dir);
 
 	void CastThrowHead();
 	void CastFireArrow();
 	void CastMeteor();
 
 	void Heal(int value);
+	void Damaged(int damage, Direction dir);
 	void Dead();
 	void Revive();
 

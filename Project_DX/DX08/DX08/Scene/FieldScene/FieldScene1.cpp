@@ -12,6 +12,8 @@ FieldScene1::~FieldScene1()
 
 void FieldScene1::Init()
 {
+	SOUND->Play("Chapter1", true);
+
 	int randInt = rand() % 2;
 
 	wstring filePath;

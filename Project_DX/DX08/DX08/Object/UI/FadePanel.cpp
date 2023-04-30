@@ -22,6 +22,7 @@ void FadePanel::Update()
 	FadeIn();
 	FadeOut();
 	Loading();
+	Hitted();
 }
 
 void FadePanel::PostRender()
@@ -46,8 +47,17 @@ void FadePanel::StartFadeOut()
 	_isFadeOut = true;
 }
 
+void FadePanel::StartHitted()
+{
+	if (_isHitted)
+		return;
+
+	_isHitted = true;
+}
+
 void FadePanel::FadeIn()
 {
+	// This is FadeOut
 	if (_isFadeIn == false)
 		return;
 
@@ -88,6 +98,7 @@ void FadePanel::Loading()
 
 void FadePanel::FadeOut()
 {
+	// This is FadeIn
 	if (_isFadeOut == false)
 		return;
 
@@ -99,5 +110,21 @@ void FadePanel::FadeOut()
 	{
 		_isFadeOut = false;
 		_curDelay = _maxDelay;
+	}
+}
+
+void FadePanel::Hitted()
+{
+	if (_isHitted == false)
+		return;
+
+	_hittedDelay -= DELTA_TIME;
+	_colorBuffer->_data.color = { 1, 0, 0, 0.2f };
+
+	if (_hittedDelay < 0)
+	{
+		_isHitted = false;
+		_hittedDelay = 0.1f;
+		_colorBuffer->_data.color = { 0, 0, 0, 0 };
 	}
 }

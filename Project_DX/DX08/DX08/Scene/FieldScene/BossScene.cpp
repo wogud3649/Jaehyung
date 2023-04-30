@@ -17,6 +17,8 @@ BossScene::~BossScene()
 
 void BossScene::Init()
 {
+	SOUND->Play("Chapter1_Boss", true);
+
 	YGGDRASIL->Activate();
 	wstring filePath = L"Maps/BossField1.map";
 	_brick->Load(filePath);

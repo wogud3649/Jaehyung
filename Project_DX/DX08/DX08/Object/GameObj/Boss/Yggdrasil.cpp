@@ -140,6 +140,9 @@ void Yggdrasil::Dead()
 	EFFECT->Stop("Sweeping_4x1");
 
 	INVENTORY->AddMoney(500);
+
+	SOUND->Play("State_Earthquake");
+	SOUND->StopBgm();
 }
 
 void Yggdrasil::SetOriginPos(Vector2 pos)
@@ -324,6 +327,8 @@ void Yggdrasil::SpikeAttack()
 	_spikeCol->GetTransform()->SetPos(Vector2(_spikePos.x, _spikePos.y - 300.0f));
 	EFFECT->Stop("WarnSign_10x1");
 	EFFECT->Play("Spike_15x1", _spikePos);
+
+	SOUND->Play("Hit_Sword_Small");
 }
 
 void Yggdrasil::SpikeFlipDir()
@@ -509,6 +514,9 @@ void Yggdrasil::Attacks()
 
 				_spikeReady = true;
 				EFFECT->Play("FistSlamImpact_7x4", Vector2(_attackPos.x, _attackPos.y + 130));
+
+				SOUND->Play("ElderEnt_FistSlam");
+				SOUND->Play("Atk_Smoke_Long");
 			}
 			break;
 		case Yggdrasil::SWEEP:
@@ -528,6 +536,9 @@ void Yggdrasil::Attacks()
 					_curAttackDelay = _maxAttackDelay;
 				}
 			}
+
+			if (SOUND->IsPlaySound("ElderEnt_Sweeping") == false)
+				SOUND->Play("ElderEnt_Sweeping");
 			break;
 		default:
 			break;
@@ -559,6 +570,8 @@ void Yggdrasil::Attacks()
 				_isRightHand = false;
 			else
 				_isRightHand = true;
+
+			SOUND->Play("ElderEnt_Up_1");
 			break;
 		case State::ATTACKREADY:
 			if (_attackType == AttackType::SWEEP)
@@ -599,6 +612,8 @@ void Yggdrasil::Attacks()
 			else
 				_leftHandCol->DeActivate();
 			_curAttackDelay = _maxAttackDelay;
+
+			SOUND->Play("ElderEnt_Groggy_Recovery", false, 0.1f);
 			break;
 		case State::ATTACKEND:
 			_curState = State::IDLE;

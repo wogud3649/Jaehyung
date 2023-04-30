@@ -80,6 +80,8 @@ void Door::Activate()
 	_actions[_selected][_isActive]->Play();
 
 	_col->Activate();
+
+	SOUND->Play("UI_Open");
 }
 
 void Door::SetRandom()
@@ -227,5 +229,7 @@ void Door::Enter()
 		FADEPANEL->SetColor({ 0,0,0 });
 		FADEPANEL->SetDelay(1.0f);
 		FADEPANEL->StartFadeIn();
+
+		SOUND->Play("SkulTeleport");
 	}
 }

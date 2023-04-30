@@ -12,6 +12,8 @@ StoreScene::~StoreScene()
 
 void StoreScene::Init()
 {
+	SOUND->Play("DemonCastle", true);
+
 	wstring filePath = L"Maps/Store.map";
 
 	_brick->Load(filePath);

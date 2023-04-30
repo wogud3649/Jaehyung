@@ -3,6 +3,8 @@
 
 FireArrow::FireArrow()
 {
+	_power = 50.0f;
+
 	_quad = make_shared<Quad>(L"Resources/Texture/Effect/Wizard/FireArrow/FireArrow.png");
 	_quad->GetTransform()->SetParent(_transform);
 	_quad->SetPS(ADD_PS(L"Shader/LRTexturePixelShader.hlsl"));

@@ -3,7 +3,7 @@
 
 Meteor::Meteor()
 {
-	Skill::Skill();
+	_power = 30.0f;
 
 	for (int i = 0; i < 3; i++)
 	{
@@ -57,6 +57,11 @@ void Meteor::Update()
 		_quads[i]->GetTransform()->MoveY(_curJumpPower * DELTA_TIME);
 	}
 
+	if (_curJumpPower > 0)
+	{
+		if (_curJumpPower - GRAVITY * GRAVITY * DELTA_TIME < 0)
+			SOUND->Play("Wizard_Meteor_Falling");
+	}
 	_curJumpPower -= GRAVITY * GRAVITY * DELTA_TIME;
 	_curDuration -= DELTA_TIME;
 

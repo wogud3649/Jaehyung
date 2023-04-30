@@ -32,7 +32,8 @@ void SceneManager::Update()
 {
 	if (_curScene == nullptr) return;
 
-	INVENTORY->Update();
+	if (_curSceneIndex != 0)
+		INVENTORY->Update();
 	UI->Update();
 
 	if (INVENTORY->IsOpen() == false)

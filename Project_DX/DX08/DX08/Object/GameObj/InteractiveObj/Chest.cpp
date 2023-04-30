@@ -81,7 +81,7 @@ void Chest::SetRandom()
 	
 	for (int i = 10; i < 28; i++)
 	{
-		if (DATA_M->CheckDuplicate(i) == false)
+		if (true/*DATA_M->CheckDuplicate(i) == false*/)
 		{
 			check = true;
 			break;
@@ -89,9 +89,9 @@ void Chest::SetRandom()
 	}
 
 	if (check == false)
-		return; // TODO : 아이템 상자 생성 실패 시 어떻게 처리할 지
+		return;
 
-	while (DATA_M->CheckDuplicate(temp))
+	while (false/*DATA_M->CheckDuplicate(temp)*/)
 		int temp = rand() % 18 + 10;
 	
 	if (temp < 17)
@@ -222,6 +222,8 @@ void Chest::OpenChest()
 			_isOpen = true;
 			_potion->SetPos(_col->GetTransform()->GetWorldPos());
 			_potion->Activate();
+
+			SOUND->Play("Object_OpenBox");
 		}
 	}
 }
@@ -240,7 +242,9 @@ void Chest::ItemPop()
 
 void Chest::TakeItem()
 {
-	if (_item->GetActive());
+	if (_item->GetActive() == false)
+		return;
+
 	HIT_RESULT result = _item->GetCollider()->IsCollision(PLAYER->GetBodyCollider());
 	if (result.isHit == false)
 		return;
@@ -249,5 +253,7 @@ void Chest::TakeItem()
 	{
 		INVENTORY->RootItem(_item->GetItem());
 		_item->DeActivate();
+
+		SOUND->Play("GetItem");
 	}
 }
