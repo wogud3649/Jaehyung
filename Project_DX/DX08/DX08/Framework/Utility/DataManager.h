@@ -30,7 +30,7 @@ public:
 
 	const ItemInfo& GetItemByItemCode(int itemCode);
 	const unordered_map<int, ItemInfo>& GetItemTable() { return _itemTable; }
-	//const bool& CheckDuplicate(UINT itemCode) { return _checkDuplicate[itemCode]; }
+	const bool& CheckDuplicate(UINT itemCode) { return _checkDuplicate[itemCode]; }
 
 private:
 	static DataManager* _instance;

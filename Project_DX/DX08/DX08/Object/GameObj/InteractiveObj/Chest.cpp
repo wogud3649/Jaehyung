@@ -81,7 +81,7 @@ void Chest::SetRandom()
 	
 	for (int i = 10; i < 28; i++)
 	{
-		if (true/*DATA_M->CheckDuplicate(i) == false*/)
+		if (DATA_M->CheckDuplicate(i) == false)
 		{
 			check = true;
 			break;
@@ -91,7 +91,7 @@ void Chest::SetRandom()
 	if (check == false)
 		return;
 
-	while (false/*DATA_M->CheckDuplicate(temp)*/)
+	while (DATA_M->CheckDuplicate(temp))
 		int temp = rand() % 18 + 10;
 	
 	if (temp < 17)
