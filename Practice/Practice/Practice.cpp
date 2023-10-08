@@ -13,36 +13,30 @@
 
 using namespace std;
 
-vector<int> a = { 1,2,3,4,5,3,5,6,7,8,1,2,3 };
-vector<int> cache(a.size(), 1);
-//                        5,4,4,4,3,2,2,2,2,1
-
-void LIS(int num)
+string solution(vector<string> participant, vector<string> completion)
 {
-    if (num > a.size() - 2)
-        return;
+    map<string, int> answer;
 
-    LIS(num + 1);
+    for (string name : participant)
+        answer[name]++;
 
-    for (int i = a.size() - 1; i > num; i--)
+    for (string name : completion)
+        answer[name]--;
+
+    for (const pair<string, int> pair : answer)
     {
-        if (a[num] <= a[i])
-            cache[num] = max(cache[num], cache[i] + 1);
+        if (pair.second == 1)
+            return pair.first;
     }
 
-    return;
+    return "";
 }
 
-int main() {
-    LIS(0);
-
-    for (int i = cache.size() - 1; i > 0; i--)
-    {
-        if (cache[i - 1] < cache[i])
-            cache[i - 1] = cache[i];
-    }
-
-    cout << *max_element(cache.begin(), cache.end()) << endl;
+int main()
+{
+    vector<string> Participant = {"leo","kiki","eden"};
+    vector<string> Completion = {"eden","kiki"};
+    solution(Participant, Completion);
 
     return 0;
 }
