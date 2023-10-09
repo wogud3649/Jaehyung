@@ -1,2 +1,0 @@
-C:\Users\wogud\Desktop\Github\Jaehyung\Jaehyung\Unreal\UE_Paragon\Intermediate\Build\Win64\UE4Editor\Development\UE_Paragon\Definitions.UE_Paragon.h
-C:\Users\wogud\Desktop\Github\Jaehyung\Jaehyung\Unreal\UE_Paragon\Source\UE_Paragon\UE_Paragon.h
