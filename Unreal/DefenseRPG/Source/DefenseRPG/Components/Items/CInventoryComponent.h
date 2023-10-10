@@ -9,13 +9,16 @@ class DEFENSERPG_API UCInventoryComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-//private:
-	//UPROPERTY(VisibleAnywhere)
-		//TSubclassOf<UWidgetComponent> InventoryWidget;
+private:
+	UPROPERTY(VisibleAnywhere)
+		TSubclassOf<class UCUW_Inventory> InventoryWidgetClass;
 
 public:
 	UCInventoryComponent();
 
 protected:
 	virtual void BeginPlay() override;
+
+private:
+	UCUW_Inventory* InventoryWidget;
 };

@@ -35,7 +35,7 @@ void ACPlayerController::PlayerTick(float DeltaTime)
 
 	if (bPawnMoving)
 	{
-		if (GetDistanceFromPawn(HitResultUnderCursor.ImpactPoint) < 110.0f)
+		if (GetDistanceFromPawn(HitResultUnderCursor.ImpactPoint) < 120.0f)
 		{
 			bPawnMoving = false;
 			SetDestinationEffectVisibility(false);
