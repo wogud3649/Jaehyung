@@ -13,19 +13,28 @@ public:
 	ACPlayerController();
 
 protected:
-	bool bMoveToMouseCursor : 1;
-
+	virtual void BeginPlay() override;
 	virtual void PlayerTick(float DeltaTime) override;
 	virtual void SetupInputComponent() override;
 
-	void OnResetVR();
-
 	void MoveToMouseCursor();
-
-	void MoveToTouchLocation(const ETouchIndex::Type FingerIndex, const FVector Location);
-
-	void SetNewMoveDestination(const FVector DestLocation);
+	void SetNewMoveDestination();
+	float GetDistanceFromPawn(FVector DestLocation);
 
 	void OnSetDestinationPressed();
 	void OnSetDestinationReleased();
+
+	void SpawnDestinationEffect();
+	void SetDestinationEffectVisibility(bool bVisibility);
+	void SetDestinationEffectLocation(FVector EffectLocation);
+
+protected:
+	FHitResult HitResultUnderCursor;
+	bool bMoveToMouseCursor = false;
+
+	class UParticleSystem* DestinationEffectTemplate;
+	class UParticleSystemComponent* DestinationEffect;
+	bool bVisible = false;
+
+	bool bPawnMoving = false;
 };

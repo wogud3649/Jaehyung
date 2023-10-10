@@ -16,8 +16,11 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "Camera")
 		class USpringArmComponent* SpringArm;
 
-	UPROPERTY(VisibleAnywhere, Category = "Camera")
+	UPROPERTY(VisibleAnywhere, Category = "Cursor")
 		class UDecalComponent* Decal;
+
+	UPROPERTY(VisibleAnywhere, Category = "Inventory")
+		class UCInventoryComponent* Inventory;
 
 public:
 	FORCEINLINE class UCameraComponent* GetCamera() const { return Camera; }

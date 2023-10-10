@@ -2,13 +2,26 @@
 #include "Global.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "Runtime/Engine/Classes/Components/DecalComponent.h"
-#include "HeadMountedDisplayFunctionLibrary.h"
+#include "Particles/ParticleSystem.h"
+#include "Particles/ParticleSystemComponent.h"
 #include "Player/CPlayer.h"
 
 ACPlayerController::ACPlayerController()
 {
+	// Particle
+	CHelpers::GetAsset<UParticleSystem>(&DestinationEffectTemplate, "ParticleSystem'/Game/Resources/Particles/P_Sparks.P_Sparks'");
+
+	// Cursor
 	bShowMouseCursor = true;
-	DefaultMouseCursor = EMouseCursor::Crosshairs;
+	DefaultMouseCursor = EMouseCursor::Default;
+}
+
+void ACPlayerController::BeginPlay()
+{
+	Super::BeginPlay();
+
+	// SpawnParticle
+	SpawnDestinationEffect();
 }
 
 void ACPlayerController::PlayerTick(float DeltaTime)
@@ -19,74 +32,59 @@ void ACPlayerController::PlayerTick(float DeltaTime)
 	{
 		MoveToMouseCursor();
 	}
+
+	if (bPawnMoving)
+	{
+		if (GetDistanceFromPawn(HitResultUnderCursor.ImpactPoint) < 110.0f)
+		{
+			bPawnMoving = false;
+			SetDestinationEffectVisibility(false);
+		}
+	}
 }
 
 void ACPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
-
-	InputComponent->BindAction("SetDestination", IE_Pressed, this, &ACPlayerController::OnSetDestinationPressed);
-	InputComponent->BindAction("SetDestination", IE_Released, this, &ACPlayerController::OnSetDestinationReleased);
-
-	InputComponent->BindTouch(EInputEvent::IE_Pressed, this, &ACPlayerController::MoveToTouchLocation);
-	InputComponent->BindTouch(EInputEvent::IE_Repeat, this, &ACPlayerController::MoveToTouchLocation);
-
-	InputComponent->BindAction("ResetVR", IE_Pressed, this, &ACPlayerController::OnResetVR);
-}
-
-void ACPlayerController::OnResetVR()
-{
-	UHeadMountedDisplayFunctionLibrary::ResetOrientationAndPosition();
+	 
+	// BindAction
+	InputComponent->BindAction("RightClick", IE_Pressed, this, &ACPlayerController::OnSetDestinationPressed);
+	InputComponent->BindAction("RightClick", IE_Released, this, &ACPlayerController::OnSetDestinationReleased);
 }
 
 void ACPlayerController::MoveToMouseCursor()
 {
-	if (UHeadMountedDisplayFunctionLibrary::IsHeadMountedDisplayEnabled())
-	{
-		if (ACPlayer* player = Cast<ACPlayer>(GetPawn()))
-		{
-			if (player->GetDecal())
-			{
-				UAIBlueprintHelperLibrary::SimpleMoveToLocation(this, player->GetDecal()->GetComponentLocation());
-			}
-		}
-	}
-	else
-	{
-		FHitResult Hit;
-		GetHitResultUnderCursor(ECC_Visibility, false, Hit);
+	// Set HitResult
+	GetHitResultUnderCursor(ECC_Visibility, false, HitResultUnderCursor);
 
-		if (Hit.bBlockingHit)
-		{
-			SetNewMoveDestination(Hit.ImpactPoint);
-		}
-	}
+	// Check Hit
+	CheckFalse(HitResultUnderCursor.bBlockingHit);
+
+	// Set Destination
+	SetNewMoveDestination();
 }
 
-void ACPlayerController::MoveToTouchLocation(const ETouchIndex::Type FingerIndex, const FVector Location)
+void ACPlayerController::SetNewMoveDestination()
 {
-	FVector2D ScreenSpaceLocation(Location);
+	FVector DestLocation = HitResultUnderCursor.ImpactPoint;
 
-	FHitResult HitResult;
-	GetHitResultAtScreenPosition(ScreenSpaceLocation, CurrentClickTraceChannel, true, HitResult);
-	if (HitResult.bBlockingHit)
-	{
-		SetNewMoveDestination(HitResult.ImpactPoint);
-	}
+	float const Distance = GetDistanceFromPawn(DestLocation);
+
+	CheckFalse((Distance > 120.0f));
+	UAIBlueprintHelperLibrary::SimpleMoveToLocation(this, DestLocation);
+	SetDestinationEffectLocation(DestLocation);
+
+	bPawnMoving = true;
+	SetDestinationEffectVisibility(true);
 }
 
-void ACPlayerController::SetNewMoveDestination(const FVector DestLocation)
+float ACPlayerController::GetDistanceFromPawn(FVector DestLocation)
 {
 	APawn* const pawn = GetPawn();
-	if (pawn)
-	{
-		float const Distance = FVector::Dist(DestLocation, pawn->GetActorLocation());
+	if (!pawn)
+		return 0;
 
-		if ((Distance > 120.0f))
-		{
-			UAIBlueprintHelperLibrary::SimpleMoveToLocation(this, DestLocation);
-		}
-	}
+	return FVector::Dist(DestLocation, pawn->GetActorLocation());
 }
 
 void ACPlayerController::OnSetDestinationPressed()
@@ -97,4 +95,38 @@ void ACPlayerController::OnSetDestinationPressed()
 void ACPlayerController::OnSetDestinationReleased()
 {
 	bMoveToMouseCursor = false;
+}
+
+void ACPlayerController::SpawnDestinationEffect()
+{
+	CheckNull(DestinationEffectTemplate);
+
+	DestinationEffect = UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), DestinationEffectTemplate, HitResultUnderCursor.ImpactPoint);
+	SetDestinationEffectVisibility(false);
+}
+
+void ACPlayerController::SetDestinationEffectVisibility(bool bVisibility)
+{
+	CheckNull(DestinationEffect);
+
+	CheckTrue(bVisible == bVisibility);
+
+	bVisible = bVisibility;
+
+	// TODO : 다른 방식 찾아보기
+	if (bVisible)
+	{
+		DestinationEffect->ActivateSystem();
+	}
+	else
+	{
+		DestinationEffect->DeactivateSystem();
+	}
+}
+
+void ACPlayerController::SetDestinationEffectLocation(FVector EffectLocation)
+{
+	CheckNull(DestinationEffect);
+
+	DestinationEffect->SetWorldLocation(EffectLocation);
 }
