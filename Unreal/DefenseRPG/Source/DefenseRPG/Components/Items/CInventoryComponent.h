@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Components/Items/CItemComponent.h"
 #include "CInventoryComponent.generated.h"
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -18,6 +19,9 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+
+public:
+	bool RootItem(const FItemData InItemData);
 
 private:
 	UCUW_Inventory* InventoryWidget;

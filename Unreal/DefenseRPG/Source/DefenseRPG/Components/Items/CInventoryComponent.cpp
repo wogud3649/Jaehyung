@@ -15,3 +15,8 @@ void UCInventoryComponent::BeginPlay()
 	InventoryWidget = CreateWidget<UCUW_Inventory, APlayerController>(Cast<ACharacter>(GetOwner())->GetController<APlayerController>(), InventoryWidgetClass);
 	InventoryWidget->AddToViewport();
 }
+
+bool UCInventoryComponent::RootItem(const FItemData InItemData)
+{
+	return InventoryWidget->RootItem(InItemData);
+}

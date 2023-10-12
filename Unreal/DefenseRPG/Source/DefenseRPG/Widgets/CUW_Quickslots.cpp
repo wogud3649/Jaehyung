@@ -8,22 +8,26 @@ void UCUW_Quickslots::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	UHorizontalBox* buttons = Cast<UHorizontalBox>(GetWidgetFromName("Buttons"));
-	if (buttons)
-	{
-		TArray<UWidget*> Widgets = buttons->GetAllChildren();
-		for (int32 i = 0; i < Widgets.Num(); i++)
-		{
-			UCUW_Button* button = Cast<UCUW_Button>(Widgets[i]);
-			if (button)
-			{
-				Buttons.Add(button);
-			}
-		}
-	}
+	SetButtons();
 }
 
-void UCUW_Quickslots::SetTexture(int32 Index, UTexture2D* Texture)
+void UCUW_Quickslots::SetItemData(int32 Index, const FItemData InItemData)
 {
-	Buttons[Index]->SetTexture(Texture);
+	Buttons[Index]->SetItemData(InItemData);
+}
+
+void UCUW_Quickslots::SetButtons()
+{
+	UHorizontalBox* buttons = Cast<UHorizontalBox>(GetWidgetFromName("Buttons"));
+	CheckNull(buttons);
+
+	TArray<UWidget*> widgets = buttons->GetAllChildren();
+	for (UWidget* widget : widgets)
+	{
+		UCUW_Button* button = Cast<UCUW_Button>(widget);
+		if (button)
+		{
+			Buttons.Add(button);
+		}
+	}
 }

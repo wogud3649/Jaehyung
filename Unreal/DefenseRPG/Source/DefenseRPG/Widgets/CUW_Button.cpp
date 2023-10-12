@@ -1,11 +1,15 @@
 #include "CUW_Button.h"
 #include "Global.h"
+#include "Engine/DataTable.h"
 #include "Engine/Texture2D.h"
 #include "Components/Button.h"
+#include "Components/Items/CItemComponent.h"
 #include "Styling/SlateColor.h"
 
 void UCUW_Button::OnClicked()
 {
+	if (OnItemButtonClicked.IsBound())
+		OnItemButtonClicked.Broadcast(ItemData);
 }
 
 void UCUW_Button::OnPressed()
@@ -28,25 +32,33 @@ void UCUW_Button::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	Button = Cast<UButton>(GetWidgetFromName("Button"));
-	if (Button)
-	{
-		Button->OnClicked.AddDynamic(this, &UCUW_Button::OnClicked);
-		Button->OnPressed.AddDynamic(this, &UCUW_Button::OnPressed);
-		Button->OnReleased.AddDynamic(this, &UCUW_Button::OnReleased);
-		Button->OnHovered.AddDynamic(this, &UCUW_Button::OnHovered);
-		Button->OnUnhovered.AddDynamic(this, &UCUW_Button::OnUnhovered);
-	}
+	SetButton();
 }
 
-void UCUW_Button::SetTexture(UTexture2D* Texture)
+void UCUW_Button::SetItemData(FItemData InItemData)
 {
-	ButtonStyle.Normal.SetResourceObject(Texture);
+	ItemData = InItemData;
+
+	FButtonStyle ButtonStyle;
+
+	ButtonStyle.Normal.SetResourceObject(ItemData.Texture);
 	ButtonStyle.Normal.TintColor = FSlateColor(FLinearColor(1, 1, 1, 0.5));
-	ButtonStyle.Hovered.SetResourceObject(Texture);
+	ButtonStyle.Hovered.SetResourceObject(ItemData.Texture);
 	ButtonStyle.Hovered.TintColor = FSlateColor(FLinearColor(1, 1, 1, 0.75));
-	ButtonStyle.Pressed.SetResourceObject(Texture);
+	ButtonStyle.Pressed.SetResourceObject(ItemData.Texture);
 	ButtonStyle.Pressed.TintColor = FSlateColor(FLinearColor(1, 1, 1, 1));
 
 	Button->SetStyle(ButtonStyle);
+}
+
+void UCUW_Button::SetButton()
+{
+	Button = Cast<UButton>(GetWidgetFromName("Button"));
+	CheckNull(Button);
+
+	Button->OnClicked.AddDynamic(this, &UCUW_Button::OnClicked);
+	Button->OnPressed.AddDynamic(this, &UCUW_Button::OnPressed);
+	Button->OnReleased.AddDynamic(this, &UCUW_Button::OnReleased);
+	Button->OnHovered.AddDynamic(this, &UCUW_Button::OnHovered);
+	Button->OnUnhovered.AddDynamic(this, &UCUW_Button::OnUnhovered);
 }

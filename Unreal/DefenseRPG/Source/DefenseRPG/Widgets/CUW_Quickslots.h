@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "Components/Items/CItemComponent.h"
 #include "CUW_Quickslots.generated.h"
 
 UCLASS()
@@ -10,13 +11,16 @@ class DEFENSERPG_API UCUW_Quickslots : public UUserWidget
 	GENERATED_BODY()
 
 public:
-	FORCEINLINE int32 GetNum() { return Buttons.Num(); }
+	FORCEINLINE const TArray<class UCUW_Button*> GetButtons() { return Buttons; }
 
 public:
 	virtual void NativeConstruct() override;
 
-	void SetTexture(int32 Index, class UTexture2D* Texture);
+	void SetItemData(int32 Index, const FItemData InItemData);
 
 private:
-	TArray<class UCUW_Button*> Buttons;
+	void SetButtons();
+
+private:
+	TArray<UCUW_Button*> Buttons;
 };

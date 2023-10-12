@@ -74,26 +74,28 @@ void ACPlayer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	// Decal
-	if (Decal)
-	{
-		if (APlayerController* PC = Cast<APlayerController>(GetController()))
-		{
-			FHitResult HitResult;
-			PC->GetHitResultUnderCursor(ECC_Visibility, true, HitResult);
-			
-			if (HitResult.bBlockingHit)
-			{
-				FVector CursorFV = HitResult.ImpactNormal;
-				FRotator CursorR = CursorFV.Rotation();
-				Decal->SetWorldLocation(HitResult.Location);
-				Decal->SetWorldRotation(CursorR);
-			}
-		}
-	} // Decal End
+	TickDecal();
 }
 
 void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+}
+
+void ACPlayer::TickDecal()
+{
+	CheckNull(Decal);
+
+	APlayerController* PC = Cast<APlayerController>(GetController());
+	CheckNull(PC);
+
+	FHitResult HitResult;
+	PC->GetHitResultUnderCursor(ECC_Visibility, true, HitResult);
+
+	CheckFalse(HitResult.bBlockingHit);
+
+	FVector CursorFV = HitResult.ImpactNormal;
+	FRotator CursorR = CursorFV.Rotation();
+	Decal->SetWorldLocation(HitResult.Location);
+	Decal->SetWorldRotation(CursorR);
 }

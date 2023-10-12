@@ -18,19 +18,28 @@ struct FItemData : public FTableRowBase
 
 public:
 	UPROPERTY(EditAnywhere)
-		EItemType ItemType;
+		int32 ItemCode = -1;
 
 	UPROPERTY(EditAnywhere)
-		class UTexture2D* Texture;
+		EItemType ItemType = EItemType::Default;
 
 	UPROPERTY(EditAnywhere)
-		FName Name;
+		class UTexture2D* Texture = NULL;
 
 	UPROPERTY(EditAnywhere)
-		int32 Price;
+		FString Name = "";
 
 	UPROPERTY(EditAnywhere)
-		bool bStackable;
+		int32 Price = 0;
+
+	UPROPERTY(EditAnywhere)
+		bool bStackable = false;
+
+	UPROPERTY(EditAnywhere)
+		int32 MaxStackSize = 1;
+
+	UPROPERTY(EditAnywhere)
+		int32 StackSize = 1;
 };
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -39,8 +48,17 @@ class DEFENSERPG_API UCItemComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:
+	FORCEINLINE const FItemData GetItemData() { return Data; }
+
+public:
 	UCItemComponent();
 
 protected:
 	virtual void BeginPlay() override;
+
+public:
+	void SetItemCode(const int32 ItemCode);
+
+private:
+	FItemData Data;
 };
