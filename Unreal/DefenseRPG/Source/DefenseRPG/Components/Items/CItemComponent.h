@@ -21,6 +21,9 @@ public:
 		int32 ItemCode = -1;
 
 	UPROPERTY(EditAnywhere)
+		TSubclassOf<class ACItem> ItemClass;
+
+	UPROPERTY(EditAnywhere)
 		EItemType ItemType = EItemType::Default;
 
 	UPROPERTY(EditAnywhere)
@@ -40,6 +43,9 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		int32 StackSize = 1;
+
+	UPROPERTY(EditAnywhere)
+		FName SocketName = NAME_None;
 };
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )

@@ -2,6 +2,7 @@
 #include "Global.h"
 #include "GameFramework/Character.h"
 #include "Widgets/CUW_Inventory.h"
+#include "Items/CItem.h"
 
 UCInventoryComponent::UCInventoryComponent()
 {
@@ -18,5 +19,12 @@ void UCInventoryComponent::BeginPlay()
 
 bool UCInventoryComponent::RootItem(const FItemData InItemData)
 {
-	return InventoryWidget->RootItem(InItemData);
+	bool result = InventoryWidget->RootItem(InItemData);
+
+	return result;
+}
+
+void UCInventoryComponent::SelectItem(int32 Index)
+{
+	InventoryWidget->SelectItem(Index);
 }

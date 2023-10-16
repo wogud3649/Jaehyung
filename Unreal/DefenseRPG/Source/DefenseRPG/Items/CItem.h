@@ -24,4 +24,12 @@ protected:
 
 public:
 	virtual void Tick(float DeltaTime) override;
+
+	virtual void Rooted();
+	virtual void OnSelected();
+	virtual void OffSelected();
+	virtual void Dumped();
+
+protected:
+	virtual void SetCollisionEnabled(bool bCollisionEnable);
 };

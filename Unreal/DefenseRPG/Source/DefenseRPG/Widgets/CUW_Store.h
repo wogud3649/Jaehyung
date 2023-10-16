@@ -20,6 +20,12 @@ public:
 	UFUNCTION()
 		void OnItemButtonClicked(const FItemData InItemData);
 
+	UFUNCTION()
+		void OnOKButtonClicked();
+
+	UFUNCTION()
+		void OnCancelButtonClicked();
+
 	FORCEINLINE void SetLinkedPlayer(class APlayerController* PlayerController) { LinkedPlayer = PlayerController; }
 	FORCEINLINE const APlayerController* GetLinkedPlayer() { return LinkedPlayer; }
 
@@ -32,14 +38,20 @@ public:
 
 private:
 	void SetButtons();
+	void SetConfirmation();
 	void BuyItem(const FItemData InItemData);
 	void UpdateStop();
 
 private:
 	class UOverlay* StoreOverlay;
 	class UButton* Window;
-	TArray<class UCUW_Button*> Buttons;
+	TArray<class UCUW_StoreButton*> Buttons;
 	APlayerController* LinkedPlayer;
 	FVector2D MousePos;
 	bool bUpdateStop;
+
+	class USizeBox* Confirmation;
+	UButton* OKButton;
+	UButton* CancelButton;
+	FItemData TempItemData;
 };

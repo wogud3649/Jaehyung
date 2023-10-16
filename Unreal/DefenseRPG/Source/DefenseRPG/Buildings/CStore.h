@@ -29,6 +29,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = "Store")
 		class UCStoreComponent* Store;
 
+	UPROPERTY(VisibleAnywhere, Category = "Name")
+		class UWidgetComponent* NameWidget;
+
 public:
 	ACStore();
 

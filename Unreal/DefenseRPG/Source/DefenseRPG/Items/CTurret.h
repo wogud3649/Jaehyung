@@ -21,4 +21,15 @@ protected:
 
 public:
 	virtual void Tick(float DeltaTime) override;
+
+	virtual void Rooted() override;
+	virtual void OnSelected() override;
+	virtual void OffSelected() override;
+	virtual void Dumped() override;
+
+protected:
+	virtual void SetCollisionEnabled(bool bCollisionEnable) override;
+
+private:
+	bool bFollowCursor;
 };

@@ -23,6 +23,8 @@ protected:
 public:
 	bool RootItem(const FItemData InItemData);
 
+	void SelectItem(int32 Index);
+
 private:
 	UCUW_Inventory* InventoryWidget;
 };

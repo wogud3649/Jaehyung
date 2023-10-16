@@ -10,6 +10,9 @@ void UCUW_Button::OnClicked()
 {
 	if (OnItemButtonClicked.IsBound())
 		OnItemButtonClicked.Broadcast(ItemData);
+
+	if (OnButtonClicked.IsBound())
+		OnButtonClicked.Broadcast(this);
 }
 
 void UCUW_Button::OnPressed()

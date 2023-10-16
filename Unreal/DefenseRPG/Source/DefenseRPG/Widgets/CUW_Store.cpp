@@ -8,7 +8,8 @@
 #include "Components/Items/CInventoryComponent.h"
 #include "Blueprint/WidgetLayoutLibrary.h"
 #include "Components/CanvasPanelSlot.h"
-#include "Widgets/CUW_Button.h"
+#include "Components/SizeBox.h"
+#include "Widgets/CUW_StoreButton.h"
 
 void UCUW_Store::OnWindowPressed()
 {
@@ -30,7 +31,26 @@ void UCUW_Store::OnItemButtonClicked(const FItemData InItemData)
 {
 	CheckTrue(InItemData.ItemCode == -1);
 
-	BuyItem(InItemData);
+	Confirmation->SetVisibility(ESlateVisibility::Visible);
+	TempItemData = InItemData;
+}
+
+void UCUW_Store::OnOKButtonClicked()
+{
+	Confirmation->SetVisibility(ESlateVisibility::Hidden);
+
+	CheckTrue(TempItemData.ItemCode == -1);
+
+	BuyItem(TempItemData);
+}
+
+void UCUW_Store::OnCancelButtonClicked()
+{
+	Confirmation->SetVisibility(ESlateVisibility::Hidden);
+
+	CheckTrue(TempItemData.ItemCode == -1);
+
+	TempItemData = FItemData();
 }
 
 void UCUW_Store::UpdateLocation()
@@ -54,6 +74,7 @@ void UCUW_Store::NativeConstruct()
 	Super::NativeConstruct();
 
 	SetButtons();
+	SetConfirmation();
 }
 
 void UCUW_Store::SetButtons()
@@ -74,7 +95,7 @@ void UCUW_Store::SetButtons()
 
 		for (UWidget* widget : widgets)
 		{
-			Buttons.Add(Cast<UCUW_Button>(widget));
+			Buttons.Add(Cast<UCUW_StoreButton>(widget));
 		}
 	}
 
@@ -96,9 +117,30 @@ void UCUW_Store::SetButtons()
 		}
 	}
 
-	for (UCUW_Button* button : Buttons)
+	for (UCUW_StoreButton* button : Buttons)
 	{
 		button->OnItemButtonClicked.AddDynamic(this, &UCUW_Store::OnItemButtonClicked);
+	}
+}
+
+void UCUW_Store::SetConfirmation()
+{
+	Confirmation = Cast<USizeBox>(GetWidgetFromName("Confirmation"));
+	if (Confirmation)
+	{
+		Confirmation->SetVisibility(ESlateVisibility::Hidden);
+	}
+
+	OKButton = Cast<UButton>(GetWidgetFromName("OKButton"));
+	if (OKButton)
+	{
+		OKButton->OnClicked.AddDynamic(this, &UCUW_Store::OnOKButtonClicked);
+	}
+
+	CancelButton = Cast<UButton>(GetWidgetFromName("CancelButton"));
+	if (CancelButton)
+	{
+		CancelButton->OnClicked.AddDynamic(this, &UCUW_Store::OnCancelButtonClicked);
 	}
 }
 

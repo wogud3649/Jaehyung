@@ -25,4 +25,49 @@ void ACTurret::BeginPlay()
 void ACTurret::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	if (bFollowCursor)
+	{
+		FHitResult hitResult;
+		UGameplayStatics::GetPlayerController(GetWorld(), 0)->GetHitResultUnderCursor(ECC_Visibility, false, hitResult);
+
+		if (hitResult.bBlockingHit)
+		{
+			SetActorLocation(hitResult.ImpactPoint);
+		}
+	}
+}
+
+void ACTurret::Rooted()
+{
+	bFollowCursor = true;
+	SetCollisionEnabled(false);
+}
+
+void ACTurret::OnSelected()
+{
+	SetActorHiddenInGame(false);
+}
+
+void ACTurret::OffSelected()
+{
+	SetActorHiddenInGame(true);
+}
+
+void ACTurret::Dumped()
+{
+	bFollowCursor = false;
+	SetCollisionEnabled(true);
+}
+
+void ACTurret::SetCollisionEnabled(bool bCollisionEnable)
+{
+	if (bCollisionEnable)
+	{
+		Mesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	}
+	else
+	{
+		Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	}
 }

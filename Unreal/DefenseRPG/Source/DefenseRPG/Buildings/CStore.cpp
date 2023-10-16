@@ -2,6 +2,8 @@
 #include "Global.h"
 #include "Components/BoxComponent.h"
 #include "Components/Buildings/CStoreComponent.h"
+#include "Components/WidgetComponent.h"
+#include "Widgets/CUW_Name.h"
 
 void ACStore::OnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
@@ -22,6 +24,7 @@ ACStore::ACStore()
 	CHelpers::CreateComponent<USceneComponent>(this, &Scene, "Scene");
 	CHelpers::CreateComponent<UStaticMeshComponent>(this, &Mesh, "Mesh", Scene);
 	CHelpers::CreateComponent<UBoxComponent>(this, &Box, "Box", Mesh);
+	CHelpers::CreateComponent<UWidgetComponent>(this, &NameWidget, "NameWidget", Mesh);
 
 	// CreateActorComponent
 	CHelpers::CreateActorComponent<UCStoreComponent>(this, &Store, "Store");
@@ -37,6 +40,13 @@ ACStore::ACStore()
 	Box->SetRelativeLocation(FVector(0, 0, 250));
 	Box->SetRelativeScale3D(FVector(1.5, 1.5, 8));
 
+	// Name
+	TSubclassOf<UCUW_Name> nameClass;
+	CHelpers::GetClass<UCUW_Name>(&nameClass, "WidgetBlueprint'/Game/Widgets/BP_CUW_Name.BP_CUW_Name_C'");
+	NameWidget->SetWidgetClass(nameClass);
+	NameWidget->SetRelativeLocation(FVector(0, 0, 100));
+	NameWidget->SetWidgetSpace(EWidgetSpace::Screen);
+
 	// Tick
  	PrimaryActorTick.bCanEverTick = true;
 }
@@ -47,6 +57,9 @@ void ACStore::BeginPlay()
 
 	Box->OnComponentBeginOverlap.AddDynamic(this, &ACStore::OnComponentBeginOverlap);
 	Box->OnComponentEndOverlap.AddDynamic(this, &ACStore::OnComponentEndOverlap);
+
+	NameWidget->InitWidget();
+	Cast<UCUW_Name>(NameWidget->GetUserWidgetObject())->SetNameText("Store");
 }
 
 void ACStore::Tick(float DeltaTime)

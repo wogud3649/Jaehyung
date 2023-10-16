@@ -23,3 +23,23 @@ void ACItem::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }
+
+void ACItem::Rooted()
+{
+}
+
+void ACItem::OnSelected()
+{
+}
+
+void ACItem::OffSelected()
+{
+}
+
+void ACItem::Dumped()
+{
+}
+
+void ACItem::SetCollisionEnabled(bool bCollisionEnable)
+{
+}

@@ -6,6 +6,7 @@
 #include "CUW_Button.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FItemButtonClicked, const FItemData, InItemData);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FButtonClicked, class UCUW_Button*, InButton);
 
 UCLASS()
 class DEFENSERPG_API UCUW_Button : public UUserWidget
@@ -34,15 +35,18 @@ public:
 	UPROPERTY(BlueprintAssignable)
 		FItemButtonClicked OnItemButtonClicked;
 
+	UPROPERTY(BlueprintAssignable)
+		FButtonClicked OnButtonClicked;
+
 public:
 	virtual void NativeConstruct() override;
 
-	void SetItemData(FItemData InItemData);
+	virtual void SetItemData(FItemData InItemData);
 
-private:
+protected:
 	void SetButton();
 
-private:
+protected:
 	class UButton* Button;
 
 	FItemData ItemData;
