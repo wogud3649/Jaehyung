@@ -40,4 +40,17 @@ public:
 
 protected:
 	void TickDecal();
+
+	void OnLeftPressed();
+	void OnLeftReleased();
+	void On1Pressed();
+	void On2Pressed();
+	void On3Pressed();
+	void On4Pressed();
+	void On5Pressed();
+	void On6Pressed();
+	void On7Pressed();
+	void On8Pressed();
+	void On9Pressed();
+	void On0Pressed();
 };

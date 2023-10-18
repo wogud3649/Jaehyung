@@ -54,6 +54,22 @@ void UCUW_Button::SetItemData(FItemData InItemData)
 	Button->SetStyle(ButtonStyle);
 }
 
+void UCUW_Button::InitItemData()
+{
+	ItemData = FItemData();
+
+	FButtonStyle ButtonStyle;
+
+	ButtonStyle.Normal.SetResourceObject(ItemData.Texture);
+	ButtonStyle.Normal.TintColor = FSlateColor(FLinearColor(1, 1, 1, 0.5));
+	ButtonStyle.Hovered.SetResourceObject(ItemData.Texture);
+	ButtonStyle.Hovered.TintColor = FSlateColor(FLinearColor(1, 1, 1, 0.75));
+	ButtonStyle.Pressed.SetResourceObject(ItemData.Texture);
+	ButtonStyle.Pressed.TintColor = FSlateColor(FLinearColor(1, 1, 1, 1));
+
+	Button->SetStyle(ButtonStyle);
+}
+
 void UCUW_Button::SetButton()
 {
 	Button = Cast<UButton>(GetWidgetFromName("Button"));

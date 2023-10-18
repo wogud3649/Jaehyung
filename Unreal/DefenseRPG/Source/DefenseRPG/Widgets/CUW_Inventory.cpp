@@ -2,6 +2,7 @@
 #include "Global.h"
 #include "Components/TextBlock.h"
 #include "Components/Border.h"
+#include "Components/Items/CItemComponent.h"
 #include "Items/CItem.h"
 #include "Widgets/CUW_Quickslots.h"
 #include "Widgets/CUW_Button.h"
@@ -31,30 +32,32 @@ void UCUW_Inventory::NativeConstruct()
 	SetButtons();
 	Items.SetNum(Buttons.Num());
 	OnSelected(Selected);
+	SetDefaultItemData();
 }
 
-bool UCUW_Inventory::RootItem(const FItemData InItemData)
+bool UCUW_Inventory::RootItem(ACItem* InItem)
 {
-	if (Money < InItemData.Price)
+	FItemData itemData = InItem->GetItemComponent()->GetItemData();
+	if (Money < itemData.Price)
 		return false;
 
 	int32 quickIndex = -1;
 
-	if (InItemData.bStackable)
+	if (itemData.bStackable)
 	{
 		for (int i = 0; i < Buttons.Num(); i++)
 		{
 			FItemData buttonItemData = Buttons[i]->GetItemData();
 
-			if (buttonItemData.ItemCode == InItemData.ItemCode)
+			if (buttonItemData.ItemCode == itemData.ItemCode)
 			{
 				if (buttonItemData.StackSize < buttonItemData.MaxStackSize)
 				{
 					buttonItemData.StackSize++;
 					Buttons[i]->SetItemData(buttonItemData);
-					SubMoney(InItemData.Price);
+					SubMoney(itemData.Price);
 
-					OnRootItem(InItemData, i);
+					OnRootItem(InItem, i);
 
 					return true;
 				}
@@ -68,10 +71,10 @@ bool UCUW_Inventory::RootItem(const FItemData InItemData)
 
 		if (quickIndex != -1)
 		{
-			Buttons[quickIndex]->SetItemData(InItemData);
-			SubMoney(InItemData.Price);
+			Buttons[quickIndex]->SetItemData(itemData);
+			SubMoney(itemData.Price);
 
-			OnRootItem(InItemData, quickIndex);
+			OnRootItem(InItem, quickIndex);
 
 			return true;
 		}
@@ -85,16 +88,22 @@ bool UCUW_Inventory::RootItem(const FItemData InItemData)
 			if (buttonItemData.ItemCode != -1)
 				continue;
 
-			Buttons[i]->SetItemData(InItemData);
-			SubMoney(InItemData.Price);
+			Buttons[i]->SetItemData(itemData);
+			SubMoney(itemData.Price);
 
-			OnRootItem(InItemData, i);
+			OnRootItem(InItem, i);
 
 			return true;
 		}
 	}
 
 	return false;
+}
+
+void UCUW_Inventory::DumpItem(int32 Index)
+{
+	Items[Index] = nullptr;
+	Buttons[Index]->SetItemData(DefaultItemData);
 }
 
 void UCUW_Inventory::SelectItem(int32 Index)
@@ -109,27 +118,35 @@ void UCUW_Inventory::SelectItem(int32 Index)
 	OldSelected = Selected;
 }
 
-void UCUW_Inventory::OnRootItem(const FItemData InItemData, int32 Index)
+void UCUW_Inventory::PlayAction(bool bLeftClick)
 {
-	ACItem* item = Cast<ACItem>(UGameplayStatics::BeginDeferredActorSpawnFromClass(GetWorld(), InItemData.ItemClass, FTransform(), ESpawnActorCollisionHandlingMethod::AlwaysSpawn, GetOwningPlayerPawn()));
-	if (item)
+	CheckNull(Items[Selected]);
+
+	if (Items[Selected]->PlayAction(bLeftClick))
 	{
-		UGameplayStatics::FinishSpawningActor(item, FTransform());
+		DumpItem(Selected);
+	}
+}
 
-		Items[Index] = item;
-		item->Rooted();
-		if (Selected != Index)
-			item->OffSelected();
+void UCUW_Inventory::OnRootItem(ACItem* InItem, int32 Index)
+{
+	CheckNull(InItem);
 
-		USkeletalMeshComponent* skeletal = CHelpers::GetComponent<USkeletalMeshComponent>(GetOwningPlayerPawn());
-		if (skeletal)
+	InItem->Rooted();
+	if (Selected != Index)
+		InItem->OffSelected();
+
+	FItemData itemData = InItem->GetItemComponent()->GetItemData();
+	USkeletalMeshComponent* skeletal = CHelpers::GetComponent<USkeletalMeshComponent>(GetOwningPlayerPawn());
+	if (skeletal)
+	{
+		if (itemData.SocketName != NAME_None)
 		{
-			if (InItemData.SocketName != NAME_None)
-			{
-				item->AttachToComponent(skeletal, FAttachmentTransformRules::KeepRelativeTransform, InItemData.SocketName);
-			}
+			InItem->AttachToComponent(skeletal, FAttachmentTransformRules::KeepRelativeTransform, itemData.SocketName);
 		}
 	}
+
+	Items[Index] = InItem;
 }
 
 void UCUW_Inventory::SetMoney()
@@ -175,6 +192,13 @@ void UCUW_Inventory::UpdateMoney()
 
 	FString moneyText = FString::FromInt(Money) + " $";
 	MoneyText->SetText(FText::FromString(moneyText));
+}
+
+void UCUW_Inventory::SetDefaultItemData()
+{
+	UTexture2D* texture;
+	CHelpers::GetAssetDynamic<UTexture2D>(&texture, "Texture2D'/Game/Resources/Textures/T_Black.T_Black'");
+	DefaultItemData.Texture = texture;
 }
 
 void UCUW_Inventory::OnSelected(int32 Index)

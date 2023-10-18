@@ -80,6 +80,20 @@ void ACPlayer::Tick(float DeltaTime)
 void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+	// BindAction
+	InputComponent->BindAction("LeftClick", IE_Pressed, this, &ACPlayer::OnLeftPressed);
+	InputComponent->BindAction("LeftClick", IE_Released, this, &ACPlayer::OnLeftReleased);
+	InputComponent->BindAction("1", IE_Pressed, this, &ACPlayer::On1Pressed);
+	InputComponent->BindAction("2", IE_Pressed, this, &ACPlayer::On2Pressed);
+	InputComponent->BindAction("3", IE_Pressed, this, &ACPlayer::On3Pressed);
+	InputComponent->BindAction("4", IE_Pressed, this, &ACPlayer::On4Pressed);
+	InputComponent->BindAction("5", IE_Pressed, this, &ACPlayer::On5Pressed);
+	InputComponent->BindAction("6", IE_Pressed, this, &ACPlayer::On6Pressed);
+	InputComponent->BindAction("7", IE_Pressed, this, &ACPlayer::On7Pressed);
+	InputComponent->BindAction("8", IE_Pressed, this, &ACPlayer::On8Pressed);
+	InputComponent->BindAction("9", IE_Pressed, this, &ACPlayer::On9Pressed);
+	InputComponent->BindAction("0", IE_Pressed, this, &ACPlayer::On0Pressed);
 }
 
 void ACPlayer::TickDecal()
@@ -98,4 +112,63 @@ void ACPlayer::TickDecal()
 	FRotator CursorR = CursorFV.Rotation();
 	Decal->SetWorldLocation(HitResult.Location);
 	Decal->SetWorldRotation(CursorR);
+}
+
+void ACPlayer::OnLeftPressed()
+{
+	Inventory->PlayAction(true);
+}
+
+void ACPlayer::OnLeftReleased()
+{
+}
+
+void ACPlayer::On1Pressed()
+{
+	Inventory->SelectItem(0);
+}
+
+void ACPlayer::On2Pressed()
+{
+	Inventory->SelectItem(1);
+}
+
+void ACPlayer::On3Pressed()
+{
+	Inventory->SelectItem(2);
+}
+
+void ACPlayer::On4Pressed()
+{
+	Inventory->SelectItem(3);
+}
+
+void ACPlayer::On5Pressed()
+{
+	Inventory->SelectItem(4);
+}
+
+void ACPlayer::On6Pressed()
+{
+	Inventory->SelectItem(5);
+}
+
+void ACPlayer::On7Pressed()
+{
+	Inventory->SelectItem(6);
+}
+
+void ACPlayer::On8Pressed()
+{
+	Inventory->SelectItem(7);
+}
+
+void ACPlayer::On9Pressed()
+{
+	Inventory->SelectItem(8);
+}
+
+void ACPlayer::On0Pressed()
+{
+	Inventory->SelectItem(9);
 }

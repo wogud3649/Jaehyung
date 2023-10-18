@@ -17,6 +17,9 @@ protected:
 		class UCItemComponent* Item;
 
 public:
+	FORCEINLINE UCItemComponent* GetItemComponent() { return Item; }
+
+public:
 	ACItem();
 
 protected:
@@ -29,6 +32,7 @@ public:
 	virtual void OnSelected();
 	virtual void OffSelected();
 	virtual void Dumped();
+	virtual bool PlayAction(bool bLeftClick);
 
 protected:
 	virtual void SetCollisionEnabled(bool bCollisionEnable);

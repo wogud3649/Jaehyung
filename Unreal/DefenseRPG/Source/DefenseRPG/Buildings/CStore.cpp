@@ -15,6 +15,9 @@ void ACStore::OnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, 
 
 void ACStore::OnComponentEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
+	APlayerController* playerController = Cast<APlayerController>(OtherActor->GetInstigatorController());
+	CheckNull(playerController);
+
 	Store->EndLink();
 }
 

@@ -40,6 +40,11 @@ void ACItem::Dumped()
 {
 }
 
+bool ACItem::PlayAction(bool bLeftClick)
+{
+	return false;
+}
+
 void ACItem::SetCollisionEnabled(bool bCollisionEnable)
 {
 }

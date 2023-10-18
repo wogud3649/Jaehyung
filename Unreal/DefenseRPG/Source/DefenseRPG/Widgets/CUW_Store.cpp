@@ -9,6 +9,7 @@
 #include "Blueprint/WidgetLayoutLibrary.h"
 #include "Components/CanvasPanelSlot.h"
 #include "Components/SizeBox.h"
+#include "Items/CItem.h"
 #include "Widgets/CUW_StoreButton.h"
 
 void UCUW_Store::OnWindowPressed()
@@ -149,5 +150,16 @@ void UCUW_Store::BuyItem(const FItemData InItemData)
 	UCInventoryComponent* inventory = CHelpers::GetComponent<UCInventoryComponent>(LinkedPlayer->GetPawn());
 	CheckNull(inventory);
 
-	inventory->RootItem(InItemData);
+	ACItem* item = Cast<ACItem>(UGameplayStatics::BeginDeferredActorSpawnFromClass(GetWorld(), InItemData.ItemClass, FTransform(), ESpawnActorCollisionHandlingMethod::AlwaysSpawn));
+	if (item)
+	{
+		if (inventory->RootItem(item))
+		{
+			UGameplayStatics::FinishSpawningActor(item, FTransform());
+		}
+		else
+		{
+			item->Destroy();
+		}
+	}
 }

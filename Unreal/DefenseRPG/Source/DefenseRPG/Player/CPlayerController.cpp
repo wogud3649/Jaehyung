@@ -33,14 +33,14 @@ void ACPlayerController::PlayerTick(float DeltaTime)
 		MoveToMouseCursor();
 	}
 
-	if (bPawnMoving)
-	{
-		if (GetDistanceFromPawn(HitResultUnderCursor.ImpactPoint) < 120.0f)
-		{
-			bPawnMoving = false;
-			SetDestinationEffectVisibility(false);
-		}
-	}
+	//if (bPawnMoving)
+	//{
+	//	if (GetDistanceFromPawn(HitResultUnderCursor.ImpactPoint) < 120.0f)
+	//	{
+	//		bPawnMoving = false;
+	//		SetDestinationEffectVisibility(false);
+	//	}
+	//}
 }
 
 void ACPlayerController::SetupInputComponent()
@@ -75,7 +75,7 @@ void ACPlayerController::SetNewMoveDestination()
 	SetDestinationEffectLocation(DestLocation);
 
 	bPawnMoving = true;
-	SetDestinationEffectVisibility(true);
+	//SetDestinationEffectVisibility(true);
 }
 
 float ACPlayerController::GetDistanceFromPawn(FVector DestLocation)
@@ -102,7 +102,7 @@ void ACPlayerController::SpawnDestinationEffect()
 	CheckNull(DestinationEffectTemplate);
 
 	DestinationEffect = UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), DestinationEffectTemplate, HitResultUnderCursor.ImpactPoint);
-	SetDestinationEffectVisibility(false);
+	//SetDestinationEffectVisibility(false);
 }
 
 void ACPlayerController::SetDestinationEffectVisibility(bool bVisibility)

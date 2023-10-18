@@ -21,9 +21,12 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
-	bool RootItem(const FItemData InItemData);
+	bool RootItem(class ACItem* InItem);
+	void DumpItem(int32 Index);
 
 	void SelectItem(int32 Index);
+
+	void PlayAction(bool bLeftClick);
 
 private:
 	UCUW_Inventory* InventoryWidget;

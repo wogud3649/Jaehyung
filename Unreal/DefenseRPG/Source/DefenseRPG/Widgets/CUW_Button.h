@@ -42,6 +42,7 @@ public:
 	virtual void NativeConstruct() override;
 
 	virtual void SetItemData(FItemData InItemData);
+	void InitItemData();
 
 protected:
 	void SetButton();

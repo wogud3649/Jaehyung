@@ -17,14 +17,24 @@ void UCInventoryComponent::BeginPlay()
 	InventoryWidget->AddToViewport();
 }
 
-bool UCInventoryComponent::RootItem(const FItemData InItemData)
+bool UCInventoryComponent::RootItem(ACItem* InItem)
 {
-	bool result = InventoryWidget->RootItem(InItemData);
+	bool result = InventoryWidget->RootItem(InItem);
 
 	return result;
+}
+
+void UCInventoryComponent::DumpItem(int32 Index)
+{
+	InventoryWidget->DumpItem(Index);
 }
 
 void UCInventoryComponent::SelectItem(int32 Index)
 {
 	InventoryWidget->SelectItem(Index);
+}
+
+void UCInventoryComponent::PlayAction(bool bLeftClick)
+{
+	InventoryWidget->PlayAction(bLeftClick);
 }
