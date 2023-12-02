@@ -13,30 +13,28 @@
 
 using namespace std;
 
-string solution(vector<string> participant, vector<string> completion)
+bool solution(vector<string> phone_book)
 {
-    map<string, int> answer;
+    sort(phone_book.begin(), phone_book.end());
 
-    for (string name : participant)
-        answer[name]++;
-
-    for (string name : completion)
-        answer[name]--;
-
-    for (const pair<string, int> pair : answer)
+    for (int i = 0; i < phone_book.size() - 1; i++)
     {
-        if (pair.second == 1)
-            return pair.first;
+        for (int j = i + 1; j < phone_book.size(); j++)
+        {
+            if (phone_book[i][phone_book[i].size() - 1] != phone_book[j][phone_book[i].size() - 1])
+                break;
+            if (phone_book[j].find(phone_book[i]) == string::npos)
+                return false;
+        }
     }
 
-    return "";
+    return true;
 }
 
 int main()
 {
-    vector<string> Participant = {"leo","kiki","eden"};
-    vector<string> Completion = {"eden","kiki"};
-    solution(Participant, Completion);
+    vector<string> phone_book = { "119", "97674223", "1195524421" };
+    solution(phone_book);
 
     return 0;
 }
